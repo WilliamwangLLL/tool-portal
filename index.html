@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>王磊的工具箱 | Tool Portal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #0a0e1a;
+            --card: #1a1f35;
+            --card-hover: #252b45;
+            --border: #2a3444;
+            --text: #e2e8f0;
+            --text-dim: #8892a4;
+            --accent: #f59e0b;
+            --accent-soft: #fbbf24;
+            --blue: #3b82f6;
+            --green: #10b981;
+            --purple: #8b5cf6;
+            --red: #ef4444;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 20px 60px;
+            background: linear-gradient(135deg, rgba(245,158,11,0.1), rgba(59,130,246,0.1));
+            border-radius: 20px;
+            margin-bottom: 40px;
+            border: 1px solid var(--border);
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, var(--accent-soft), var(--blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: var(--text-dim);
+            margin-bottom: 20px;
+        }
+
+        .stats {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--accent);
+            font-family: 'Courier New', monospace;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-dim);
+            margin-top: 4px;
+        }
+
+        .section {
+            margin-bottom: 50px;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            padding-left: 15px;
+            border-left: 4px solid var(--accent);
+            color: var(--text);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), var(--blue));
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            background: var(--card-hover);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 12px;
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--text);
+        }
+
+        .card-desc {
+            font-size: 0.95rem;
+            color: var(--text-dim);
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .card-meta {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .tag-business {
+            background: rgba(245,158,11,0.15);
+            color: var(--accent-soft);
+            border: 1px solid rgba(245,158,11,0.3);
+        }
+
+        .tag-history {
+            background: rgba(139,92,246,0.15);
+            color: var(--purple);
+            border: 1px solid rgba(139,92,246,0.3);
+        }
+
+        .tag-tool {
+            background: rgba(59,130,246,0.15);
+            color: var(--blue);
+            border: 1px solid rgba(59,130,246,0.3);
+        }
+
+        .card-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-top: 12px;
+            transition: gap 0.3s ease;
+        }
+
+        .card-link:hover {
+            gap: 10px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-dim);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border);
+            margin-top: 60px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 15px;
+        }
+
+        .footer-links a {
+            color: var(--text-dim);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🚀 王磊的工具箱</h1>
+            <p class="subtitle">一站式访问所有工具和项目</p>
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-value" id="toolCount">4</div>
+                    <div class="stat-label">工具数量</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value" id="categoryCount">2</div>
+                    <div class="stat-label">分类</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">100%</div>
+                    <div class="stat-label">在线率</div>
+                </div>
+            </div>
+        </header>
+
+        <div class="section">
+            <h2 class="section-title">📊 商业工具</h2>
+            <div class="grid">
+                <div class="card" onclick="window.open('https://williamwanglll.github.io/huacai-dashboard/', '_blank')">
+                    <div class="card-icon">📈</div>
+                    <h3 class="card-title">华彩作战指挥仪表盘</h3>
+                    <p class="card-desc">双口径利润模型、敏感性分析、战略杠杆分析。支持 S2→S5 阶段化定价和续报率模拟。</p>
+                    <div class="card-meta">
+                        <span class="tag tag-business">商业分析</span>
+                        <span class="tag tag-tool">财务建模</span>
+                    </div>
+                    <a href="https://williamwanglll.github.io/huacai-dashboard/" target="_blank" class="card-link">
+                        打开工具 →
+                    </a>
+                </div>
+
+                <div class="card" onclick="window.open('https://williamwanglll.github.io/huacai-settlement/', '_blank')">
+                    <div class="card-icon">💰</div>
+                    <h3 class="card-title">华彩内部结算仪表盘</h3>
+                    <p class="card-desc">团队结算比例计算工具。核心公式：结算比例 = 续报率 + 阶段补贴。支持 2980/1880 两种课程。</p>
+                    <div class="card-meta">
+                        <span class="tag tag-business">团队管理</span>
+                        <span class="tag tag-tool">绩效核算</span>
+                    </div>
+                    <a href="https://williamwanglll.github.io/huacai-settlement/" target="_blank" class="card-link">
+                        打开工具 →
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">📚 知识项目</h2>
+            <div class="grid">
+                <div class="card" onclick="window.open('https://williamwanglll.github.io/mao-legacy/', '_blank')">
+                    <div class="card-icon">🏛️</div>
+                    <h3 class="card-title">毛泽东历史功过 v1</h3>
+                    <p class="card-desc">中英双语历史网站，从革命、建国、治理、国际关系等多维度客观介绍毛泽东的一生。</p>
+                    <div class="card-meta">
+                        <span class="tag tag-history">历史</span>
+                        <span class="tag tag-tool">教育</span>
+                    </div>
+                    <a href="https://williamwanglll.github.io/mao-legacy/" target="_blank" class="card-link">
+                        访问网站 →
+                    </a>
+                </div>
+
+                <div class="card" onclick="window.open('https://williamwanglll.github.io/mao-legacy-v2/', '_blank')">
+                    <div class="card-icon">🎨</div>
+                    <h3 class="card-title">毛泽东历史功过 v2</h3>
+                    <p class="card-desc">v1 的现代化升级版，更精美的设计、更流畅的交互、优化的视觉层次和排版布局。</p>
+                    <div class="card-meta">
+                        <span class="tag tag-history">历史</span>
+                        <span class="tag tag-tool">教育</span>
+                    </div>
+                    <a href="https://williamwanglll.github.io/mao-legacy-v2/" target="_blank" class="card-link">
+                        访问网站 →
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>© 2026 王磊的工具箱 | 持续更新中</p>
+            <div class="footer-links">
+                <a href="https://github.com/WilliamwangLLL" target="_blank">GitHub</a>
+                <a href="#" onclick="alert('更多工具即将上线！')">关于</a>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // 自动统计工具数量
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.card');
+            document.getElementById('toolCount').textContent = cards.length;
+            
+            const sections = document.querySelectorAll('.section');
+            document.getElementById('categoryCount').textContent = sections.length;
+        });
+    </script>
+</body>
+</html>
