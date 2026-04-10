@@ -190,7 +190,8 @@ function calc(si){
   const gmvOther=p[sk+'_gmv_other']||0;
   const gmv=gmvCourse+gmvOther;
   const settlePrice=p[sk+'_settle_price']||0;
-  const settleCost=openCount*settlePrice;
+  const settleCount=Math.max(0,paid-refC); // 缴费-退费（含延期）
+  const settleCost=settleCount*settlePrice;
   const refAmt=p[sk+'_refund_amt']||0;
   const taCount=p[sk+'_ta_count']||0;
   const taSalary=p[sk+'_ta_salary']||0;
@@ -211,7 +212,7 @@ function calc(si){
   const taLoad=taCount>0?paid/taCount:0;
   return{paid,refC,delayC,openCount,openRate,refRate,renewCount,renewRate,
     kitCount,kitRate,nextTuition,gmvCourse,gmvOther,gmv,
-    settlePrice,settleCost,refAmt,
+    settlePrice,settleCount,settleCost,refAmt,
     taCount,taSalary,sp,instrSalary,dirSalary,
     taCost,instrCost,dirCost,totalHR,otherCost,taxRate,taxCost,
     totalCost,profit,profitRate,hrRatio,taLoad};
@@ -256,7 +257,7 @@ function renderInput(si){
 
   h+='<div class="section-label">💸 结算与退费</div>';
   h+=fi('settle_price','上阶结算单价/人');
-  h+=fr('上阶结算费',fC(d.settleCost),`${fU(d.openCount)}人×${fC(d.settlePrice)}`);
+  h+=fr('上阶结算费',fC(d.settleCost),`(${fU(d.paid)}-${fU(d.refC)})×${fC(d.settlePrice)} = ${fU(d.settleCount)}人×${fC(d.settlePrice)}`);
   h+=fi('refund_amt','课中退费金额');
 
   h+='<div class="section-label">👨‍🏫 人力配置（月额）</div>';
@@ -297,7 +298,7 @@ function renderResult(si){
   h+='<div class="tw"><table class="dt"><thead><tr><th>项目</th><th>金额</th><th>占营收</th></tr></thead><tbody>';
   const cr=(l,v)=>`<tr><td>${l}</td><td class="neg">${fC(v)}</td><td>${d.gmv>0?fP(v/d.gmv):'—'}</td></tr>`;
   cr2=(l,v,cls)=>`<tr style="font-weight:700;background:var(--s3)"><td>${l}</td><td class="${cls}">${fC(v)}</td><td>${d.gmv>0?fP(v/d.gmv):'—'}</td></tr>`;
-  h+=cr(`上阶结算 (${fU(d.openCount)}人×${fC(d.settlePrice)})`,d.settleCost);
+  h+=cr(`上阶结算 (${fU(d.settleCount)}人×${fC(d.settlePrice)})`,d.settleCost);
   h+=cr(`二讲 (${fU(d.taCount)}人×${fC(d.taSalary)}×${d.sp}月)`,d.taCost);
   h+=cr(`主讲 (${fC(d.instrSalary)}/月×${d.sp}月)`,d.instrCost);
   h+=cr(`导演 (${fC(d.dirSalary)}/月×${d.sp}月)`,d.dirCost);
@@ -326,6 +327,123 @@ function renderResult(si){
       h+=`<tr><td>第${mi+1}月</td><td>${fC(mRev)}</td><td class="neg">${fC(mCost)}</td><td class="${mProfit>=0?'pos':'neg'}">${fC(mProfit)}</td><td class="${mPR>=0?'pos':'neg'}">${fP(mPR)}</td></tr>`;
     }
     h+='</tbody></table></div></div>';
+  }
+
+  // ===== AI Analysis: Sensitivity + Uplift =====
+  if(d.gmv>0){
+    const sk=STAGES[si],basePR=d.profitRate;
+    // Sensitivity: try adjusting each lever by a small step, measure profit rate change
+    const levers=[
+      {key:'renew',label:'续费人数',step:1,dir:1,unit:'人'},
+      {key:'next_tuition',label:'下阶学费',step:100,dir:1,unit:'元'},
+      {key:'paid',label:'缴费人数',step:1,dir:1,unit:'人'},
+      {key:'refund_count',label:'退费人数',step:-1,dir:-1,unit:'人'},
+      {key:'delay',label:'延期人数',step:-1,dir:-1,unit:'人'},
+      {key:'settle_price',label:'上阶结算单价',step:-50,dir:-1,unit:'元'},
+      {key:'refund_amt',label:'课中退费金额',step:-5000,dir:-1,unit:'元'},
+      {key:'ta_count',label:'二讲人数',step:-1,dir:-1,unit:'人'},
+      {key:'ta_salary',label:'二讲月薪',step:-1000,dir:-1,unit:'元'},
+      {key:'instructor_salary',label:'主讲月薪',step:-1000,dir:-1,unit:'元'},
+      {key:'director_salary',label:'导演月薪',step:-1000,dir:-1,unit:'元'},
+      {key:'other_cost',label:'其他成本',step:-5000,dir:-1,unit:'元'},
+      {key:'gmv_other',label:'其他营收',step:5000,dir:1,unit:'元'},
+    ];
+    const impacts=[];
+    for(const lev of levers){
+      const fullKey=sk+'_'+lev.key;
+      const orig=P[fullKey]||0;
+      const nv=orig+lev.step;
+      if(nv<0&&lev.key!=='refund_count'&&lev.key!=='delay')continue;
+      const oldP=JSON.parse(JSON.stringify(P));
+      P[fullKey]=Math.max(nv,0);
+      const newD=calc(si);
+      const delta=newD.profitRate-basePR;
+      P[fullKey]=orig; // restore
+      // restore P from oldP
+      for(const k in oldP)P[k]=oldP[k];
+      if(Math.abs(delta)<1e-9)continue;
+      const stepLabel=lev.step>0?`+${Math.abs(lev.step)}${lev.unit}`:`-${Math.abs(lev.step)}${lev.unit}`;
+      impacts.push({label:lev.label,step:stepLabel,delta,key:lev.key,levStep:lev.step,dir:lev.dir});
+    }
+    impacts.sort((a,b)=>Math.abs(b.delta)-Math.abs(a.delta));
+
+    if(impacts.length>0){
+      const maxD=Math.max(1e-9,...impacts.map(x=>Math.abs(x.delta)));
+      h+='<div class="panel" style="margin-bottom:16px"><div class="panel-title">🤖 AI 分析：参数敏感度排名</div>';
+      h+='<div style="font-size:13px;color:var(--t3);margin-bottom:10px">每个参数变动一小步对利润率的影响（从大到小）</div>';
+      h+='<div style="display:grid;gap:6px">';
+      impacts.slice(0,10).forEach((it,i)=>{
+        const barW=Math.max(4,Math.round(Math.abs(it.delta)/maxD*100));
+        const sign=it.delta>0?'+':'';
+        const color=it.delta>0?'var(--g)':'var(--r)';
+        h+=`<div style="display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;padding:8px 12px;border:1px solid var(--bd);background:var(--s2);border-radius:8px">`;
+        h+=`<div><div style="font-weight:700;font-size:13px">${i+1}. ${it.label}</div><div style="font-size:12px;color:var(--t3)">${it.step} → 利润率 ${sign}${fN(it.delta*100,2)}%</div></div>`;
+        h+=`<div style="display:flex;align-items:center;gap:8px"><div style="width:100px;height:6px;border-radius:3px;background:var(--bd);overflow:hidden"><div style="height:100%;border-radius:3px;width:${barW}%;background:${color}"></div></div><div style="font-size:13px;font-weight:900;min-width:60px;text-align:right;color:${color}">${sign}${fN(it.delta*100,2)}%</div></div>`;
+        h+=`</div>`;
+      });
+      h+='</div></div>';
+
+      // ===== Uplift Plan: how to reach +5% profit rate =====
+      const targetDelta=0.05;
+      const goalPR=basePR+targetDelta;
+      // Greedy: iteratively pick the best lever
+      let wp=JSON.parse(JSON.stringify(P));
+      let curPR=basePR;
+      const changes=[];
+      const maxIter=500;
+      for(let iter=0;iter<maxIter&&curPR<goalPR-1e-6;iter++){
+        let bestKey=null,bestVal=null,bestGain=-Infinity,bestLev=null;
+        for(const lev of levers){
+          const fullKey=sk+'_'+lev.key;
+          const cur=wp[fullKey]||0;
+          let nv=cur+lev.step;
+          if(nv<0)nv=0;
+          if(Math.abs(nv-cur)<1e-9)continue;
+          // Some bounds
+          if(lev.key==='renew'&&nv>(wp[sk+'_paid']||0))continue;
+          if(lev.key==='ta_count'&&nv<0)continue;
+          const savedP=JSON.parse(JSON.stringify(P));
+          for(const k in wp)P[k]=wp[k];
+          P[fullKey]=nv;
+          const gain=calc(si).profitRate-curPR;
+          for(const k in savedP)P[k]=savedP[k]; // restore global P
+          if(gain>bestGain+1e-9){bestGain=gain;bestKey=fullKey;bestVal=nv;bestLev=lev}
+        }
+        if(!bestKey||bestGain<=1e-9)break;
+        wp[bestKey]=bestVal;curPR+=bestGain;
+        // Track change
+        const existing=changes.find(c=>c.key===bestKey);
+        if(existing){existing.to=bestVal}else{changes.push({key:bestKey,label:bestLev.label,from:P[bestKey]||0,to:bestVal,unit:bestLev.unit})}
+      }
+
+      h+='<div class="panel" style="margin-bottom:16px"><div class="panel-title">🎯 提升建议：利润率 +5%</div>';
+      const feasible=curPR>=goalPR-1e-4;
+      h+=`<div style="display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap">`;
+      h+=`<div style="padding:10px 14px;background:var(--s2);border:1px solid var(--bd);border-radius:8px;font-size:14px;flex:1;min-width:120px"><span>当前利润率</span><b style="display:block;font-size:18px;margin-top:2px">${fP(basePR)}</b></div>`;
+      h+=`<div style="padding:10px 14px;background:var(--pl);border:1px solid var(--pb);border-radius:8px;font-size:14px;flex:1;min-width:120px;color:var(--p)"><span>目标利润率</span><b style="display:block;font-size:18px;margin-top:2px">${fP(goalPR)}</b></div>`;
+      const achColor=feasible?'var(--gb)':'var(--rb)',achBd=feasible?'var(--gbd)':'var(--rbd)',achTxt=feasible?'var(--g)':'var(--r)';
+      h+=`<div style="padding:10px 14px;background:${achColor};border:1px solid ${achBd};border-radius:8px;font-size:14px;flex:1;min-width:120px;color:${achTxt}"><span>${feasible?'可达成 ✓':'最大可达 ⚠'}</span><b style="display:block;font-size:18px;margin-top:2px">${fP(curPR)}</b></div>`;
+      h+=`</div>`;
+
+      if(changes.length===0){
+        h+=`<div style="padding:12px;background:var(--s2);border:1px solid var(--bd);border-radius:8px;font-size:13px;color:var(--t2)">当前参数已在极限范围，无法通过单参数调整提升 5%。建议结构性优化（如提价、增加续费率等）。</div>`;
+      }else{
+        h+='<div class="tw"><table class="dt"><thead><tr><th>调整项</th><th>当前值</th><th></th><th>目标值</th><th>变化</th></tr></thead><tbody>';
+        changes.forEach(c=>{
+          const delta=c.to-c.from;
+          const ds=`${delta>0?'+':''}${fI(delta)}${c.unit}`;
+          h+=`<tr><td style="font-weight:700">${c.label}</td><td>${fI(c.from)}${c.unit}</td><td style="color:var(--p);font-weight:900">→</td><td style="font-weight:800;color:var(--p)">${fI(c.to)}${c.unit}</td><td style="font-weight:800;color:${delta>0?'var(--g)':'var(--r)'}">${ds}</td></tr>`;
+        });
+        h+='</tbody></table></div>';
+        const topC=changes.slice(0,3).map(c=>c.label).join('、');
+        h+=`<div style="margin-top:10px;padding:12px;background:var(--s2);border:1px solid var(--bd);border-radius:8px;font-size:13px;color:var(--t2);line-height:1.6">`;
+        h+=`<b>关键洞察：</b>影响最大的杠杆是 <b>${topC}</b>。`;
+        if(feasible)h+=`通过 ${changes.length} 项参数调整，可将利润率从 <b>${fP(basePR)}</b> 提升至 <b>${fP(goalPR)}</b>。`;
+        else h+=`在合理范围内最多可提升至 <b>${fP(curPR)}</b>，距目标还差 <b>${fN((goalPR-curPR)*100,1)}%</b>。`;
+        h+=`</div>`;
+      }
+      h+='</div>';
+    }
   }
 
   document.getElementById('resultPanel').innerHTML=h;
