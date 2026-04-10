@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>阶段经营驾驶舱</title>
+<style>
+:root{--bg:#f5f7fb;--s:#fff;--s2:#f8fafc;--s3:#f1f5f9;--bd:#e2e8f0;--bd2:#cbd5e1;--t:#0f172a;--t2:#475569;--t3:#94a3b8;--p:#4f46e5;--pl:#eef2ff;--pb:#c7d2fe;--g:#16a34a;--gb:#f0fdf4;--gbd:#bbf7d0;--a:#d97706;--ab:#fffbeb;--abd:#fde68a;--r:#dc2626;--rb:#fef2f2;--rbd:#fecaca;--rad:14px;--sh:0 2px 8px rgba(0,0,0,.04);--f:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB',sans-serif;--tr:.2s ease}
+[data-theme="dark"]{--bg:#0f172a;--s:#1e293b;--s2:#1e293b;--s3:#334155;--bd:#334155;--bd2:#475569;--t:#f1f5f9;--t2:#94a3b8;--t3:#64748b;--p:#818cf8;--pl:#1e1b4b;--pb:#4338ca;--g:#4ade80;--gb:#052e16;--gbd:#166534;--a:#fbbf24;--ab:#451a03;--abd:#92400e;--r:#f87171;--rb:#450a0a;--rbd:#991b1b;--sh:0 2px 8px rgba(0,0,0,.2)}
+*{box-sizing:border-box;margin:0}
+body{font-family:var(--f);background:var(--bg);color:var(--t);line-height:1.6;font-size:15px;transition:background var(--tr),color var(--tr)}
+.page{max-width:1200px;margin:0 auto;padding:24px 28px 60px}
+
+/* Header */
+.hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:12px}
+.hdr-left h1{font-size:22px;font-weight:800}
+.hdr-left p{font-size:13px;color:var(--t3);margin-top:2px}
+.hdr-actions{display:flex;gap:8px;align-items:center}
+.btn{display:inline-flex;align-items:center;gap:5px;border:1px solid var(--bd);background:var(--s);padding:8px 14px;border-radius:8px;color:var(--t2);font-size:14px;font-weight:600;cursor:pointer;transition:all var(--tr);white-space:nowrap}
+.btn:hover{border-color:var(--p);color:var(--p);background:var(--pl)}
+.btn-icon{width:36px;height:36px;padding:0;justify-content:center;border-radius:8px;font-size:16px}
+
+/* Tabs */
+.tabs{display:flex;gap:0;border-bottom:2px solid var(--bd);margin-bottom:24px}
+.tab{padding:12px 24px;font-size:15px;font-weight:700;cursor:pointer;border:none;background:transparent;color:var(--t3);border-bottom:3px solid transparent;margin-bottom:-2px;transition:all var(--tr)}
+.tab:hover{color:var(--t)}
+.tab.active{color:var(--p);border-bottom-color:var(--p)}
+
+/* Two column layout */
+.layout{display:grid;grid-template-columns:380px 1fr;gap:24px;align-items:start}
+@media(max-width:900px){.layout{grid-template-columns:1fr}}
+
+/* Input panel */
+.panel{background:var(--s);border:1px solid var(--bd);border-radius:var(--rad);padding:20px;box-shadow:var(--sh)}
+.panel-title{font-weight:800;font-size:15px;margin-bottom:14px;display:flex;align-items:center;gap:6px}
+.section-label{font-weight:700;font-size:12px;color:var(--p);padding:10px 0 4px;text-transform:uppercase;letter-spacing:.03em}
+.f-grid{display:grid;gap:6px}
+.f-row{display:grid;grid-template-columns:1fr 130px;gap:8px;align-items:center;padding:8px 12px;background:var(--s2);border:1px solid var(--bd);border-radius:8px;font-size:14px}
+.f-row.computed{background:var(--pl);border-color:var(--pb)}
+.f-lbl{color:var(--t2);font-size:13px;font-weight:600}
+.f-row.computed .f-lbl{color:var(--p);font-weight:700}
+.f-val{font-weight:800;text-align:right;font-variant-numeric:tabular-nums;font-size:14px;color:var(--t)}
+.f-row.computed .f-val{color:var(--p)}
+.f-formula{font-size:11px;color:var(--t3);font-family:'SF Mono','Menlo',monospace;text-align:right;grid-column:1/-1}
+.f-inp{width:100%;padding:7px 10px;border:1px solid var(--bd);border-radius:7px;text-align:right;background:var(--s);font-weight:700;font-size:14px;font-variant-numeric:tabular-nums;color:var(--t)}
+.f-inp:focus{outline:none;border-color:var(--p);box-shadow:0 0 0 3px rgba(79,70,229,.1)}
+
+/* KPI cards */
+.kpi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
+.kpi{background:var(--s2);border:1px solid var(--bd);border-radius:12px;padding:14px;transition:all var(--tr)}
+.kpi-l{color:var(--t3);font-size:12px;font-weight:600}
+.kpi-v{font-size:22px;font-weight:900;margin-top:4px;font-variant-numeric:tabular-nums}
+.kpi-f{font-size:11px;color:inherit;opacity:.55;margin-top:3px;font-family:'SF Mono','Menlo',monospace}
+.kpi.good{background:var(--gb);border-color:var(--gbd);color:var(--g)}
+.kpi.warn{background:var(--ab);border-color:var(--abd);color:var(--a)}
+.kpi.bad{background:var(--rb);border-color:var(--rbd);color:var(--r)}
+
+/* Tables */
+.tw{overflow-x:auto;border-radius:10px;border:1px solid var(--bd)}
+.dt{width:100%;border-collapse:collapse;font-size:13px;font-variant-numeric:tabular-nums}
+.dt th,.dt td{padding:9px 12px;text-align:right;border-bottom:1px solid var(--bd)}
+.dt th{background:var(--s3);color:var(--t2);font-weight:700;font-size:13px}
+.dt th:first-child,.dt td:first-child{text-align:left}
+.dt tr:hover td{background:var(--pl)}
+.pos{color:var(--g);font-weight:700}.neg{color:var(--r);font-weight:700}
+
+.result-title{font-weight:800;font-size:14px;margin:16px 0 8px;display:flex;align-items:center;gap:6px}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="hdr">
+    <div class="hdr-left">
+      <h1>📋 阶段经营驾驶舱</h1>
+      <p>各阶段负责人视角 · 填数据看结果</p>
+    </div>
+    <div class="hdr-actions">
+      <button class="btn" id="resetBtn">↺ 重置</button>
+      <button class="btn-icon btn" id="themeToggle" title="主题">🌙</button>
+    </div>
+  </div>
+
+  <div class="tabs" id="tabs"></div>
+
+  <div class="layout">
+    <div class="panel" id="inputPanel"></div>
+    <div id="resultPanel"></div>
+  </div>
+</div>
+
+<script>
+const STAGES=['L2','L3','L4','L5'];
+const STAGE_NAMES=['二阶','三阶','四阶','五阶'];
+let stageTab=0;
+
+// Default params per stage
+const STAGE_DP={};
+STAGES.forEach(sk=>{
+  STAGE_DP[sk+'_paid']=0;
+  STAGE_DP[sk+'_refund_count']=0;
+  STAGE_DP[sk+'_delay']=0;
+  STAGE_DP[sk+'_renew']=0;
+  STAGE_DP[sk+'_starter_kit']=0;
+  STAGE_DP[sk+'_next_tuition']=0;
+  STAGE_DP[sk+'_gmv_other']=0;
+  STAGE_DP[sk+'_settle_price']=0;
+  STAGE_DP[sk+'_refund_amt']=0;
+  STAGE_DP[sk+'_ta_count']=0;
+  STAGE_DP[sk+'_ta_salary']=0;
+  STAGE_DP[sk+'_instructor_salary']=0;
+  STAGE_DP[sk+'_director_salary']=0;
+  STAGE_DP[sk+'_service_period']=3;
+  STAGE_DP[sk+'_other_cost']=0;
+});
+STAGE_DP._tax=0.045;
+STAGE_DP._hq=0.06;
+
+let P=JSON.parse(JSON.stringify(STAGE_DP));
+const LK='stage_dashboard_v1';
+function save(){try{localStorage.setItem(LK,JSON.stringify(P))}catch(e){}}
+function load(){try{const d=JSON.parse(localStorage.getItem(LK));if(!d)return;for(const k in STAGE_DP)if(typeof d[k]==='number'&&Number.isFinite(d[k]))P[k]=d[k]}catch(e){}}
+
+const cl=(v,lo,hi)=>Math.min(Math.max(v,lo),hi);
+const fC=v=>new Intl.NumberFormat('zh-CN',{style:'currency',currency:'CNY',maximumFractionDigits:0}).format(v||0);
+const fI=v=>new Intl.NumberFormat('zh-CN',{maximumFractionDigits:0}).format(v||0);
+const fU=v=>fI(Math.round(v||0));
+const fP=v=>new Intl.NumberFormat('zh-CN',{minimumFractionDigits:1,maximumFractionDigits:1}).format((v||0)*100)+'%';
+const fN=(v,d=2)=>new Intl.NumberFormat('zh-CN',{minimumFractionDigits:d,maximumFractionDigits:d}).format(v||0);
+
+function calc(si){
+  const sk=STAGES[si],p=P;
+  const paid=p[sk+'_paid']||0;
+  const refC=p[sk+'_refund_count']||0;
+  const delayC=p[sk+'_delay']||0;
+  const openCount=Math.max(0,paid-refC-delayC);
+  const openRate=paid>0?openCount/paid:0;
+  const refRate=paid>0?refC/paid:0;
+  const renewCount=p[sk+'_renew']||0;
+  const renewRate=openCount>0?renewCount/openCount:0;
+  const kitCount=p[sk+'_starter_kit']||0;
+  const kitRate=openCount>0?kitCount/openCount:0;
+  const nextTuition=p[sk+'_next_tuition']||0;
+  const gmvCourse=renewCount*nextTuition;
+  const gmvOther=p[sk+'_gmv_other']||0;
+  const gmv=gmvCourse+gmvOther;
+  const settlePrice=p[sk+'_settle_price']||0;
+  const settleCost=openCount*settlePrice;
+  const refAmt=p[sk+'_refund_amt']||0;
+  const taCount=p[sk+'_ta_count']||0;
+  const taSalary=p[sk+'_ta_salary']||0;
+  const sp=p[sk+'_service_period']||1;
+  const instrSalary=p[sk+'_instructor_salary']||0;
+  const dirSalary=p[sk+'_director_salary']||0;
+  const otherCost=p[sk+'_other_cost']||0;
+  const taCost=taSalary*taCount*sp;
+  const instrCost=instrSalary*sp;
+  const dirCost=dirSalary*sp;
+  const totalHR=taCost+instrCost+dirCost;
+  const taxRate=p._tax+p._hq;
+  const taxCost=gmv*taxRate;
+  const totalCost=settleCost+refAmt+totalHR+otherCost+taxCost;
+  const profit=gmv-totalCost;
+  const profitRate=gmv>0?profit/gmv:0;
+  const hrRatio=gmv>0?totalHR/gmv:0;
+  const taLoad=taCount>0?paid/taCount:0;
+  return{paid,refC,delayC,openCount,openRate,refRate,renewCount,renewRate,
+    kitCount,kitRate,nextTuition,gmvCourse,gmvOther,gmv,
+    settlePrice,settleCost,refAmt,
+    taCount,taSalary,sp,instrSalary,dirSalary,
+    taCost,instrCost,dirCost,totalHR,otherCost,taxRate,taxCost,
+    totalCost,profit,profitRate,hrRatio,taLoad};
+}
+
+function renderTabs(){
+  document.getElementById('tabs').innerHTML=STAGE_NAMES.map((n,i)=>
+    `<button class="tab${i===stageTab?' active':''}" data-tab="${i}">${n}</button>`
+  ).join('');
+}
+
+function renderInput(si){
+  const sk=STAGES[si],d=calc(si);
+  const fi=(key,label)=>{
+    const v=P[sk+'_'+key]||0;
+    const isInt=['paid','refund_count','delay','renew','starter_kit','ta_count','service_period'].includes(key);
+    const isP=false;
+    const dv=isInt?fI(v):fI(v);
+    return `<div class="f-row"><div class="f-lbl">${label}</div><input class="f-inp" value="${dv}" data-key="${sk}_${key}"/></div>`;
+  };
+  const fr=(label,val,formula)=>
+    `<div class="f-row computed"><div class="f-lbl">${label}</div><div class="f-val">${val}</div>${formula?`<div class="f-formula">${formula}</div>`:''}</div>`;
+
+  let h='<div class="panel-title">📝 经营数据输入</div><div class="f-grid">';
+
+  h+='<div class="section-label">👥 学员数据</div>';
+  h+=fi('paid','缴费人数');
+  h+=fi('refund_count','退费人数');
+  h+=fi('delay','延期人数');
+  h+=fr('开课人数',fU(d.openCount),`${fU(d.paid)}-${fU(d.refC)}-${fU(d.delayC)}`);
+  h+=fr('开课率',fP(d.openRate),'开课÷缴费');
+  h+=fi('renew','续费人数');
+  h+=fr('续费率',fP(d.renewRate),'续费÷开课');
+  h+=fi('starter_kit','开学套装购买人数');
+  h+=fr('套装转化率',fP(d.kitRate),'购买÷开课');
+
+  h+='<div class="section-label">💰 营收</div>';
+  h+=fi('next_tuition','下阶学费单价');
+  h+=fr('课程营收',fC(d.gmvCourse),`${fU(d.renewCount)}人×${fC(d.nextTuition)}`);
+  h+=fi('gmv_other','其他营收');
+  h+=fr('总营收',fC(d.gmv),`${fC(d.gmvCourse)}+${fC(d.gmvOther)}`);
+
+  h+='<div class="section-label">💸 结算与退费</div>';
+  h+=fi('settle_price','上阶结算单价/人');
+  h+=fr('上阶结算费',fC(d.settleCost),`${fU(d.openCount)}人×${fC(d.settlePrice)}`);
+  h+=fi('refund_amt','课中退费金额');
+
+  h+='<div class="section-label">👨‍🏫 人力配置（月额）</div>';
+  h+=fi('ta_count','二讲人数');
+  h+=fi('ta_salary','二讲月薪/人');
+  h+=fi('instructor_salary','主讲月薪总额');
+  h+=fi('director_salary','导演月薪总额');
+  h+=fi('service_period','服务周期(月)');
+
+  h+='<div class="section-label">📎 其他</div>';
+  h+=fi('other_cost','其他成本(金额)');
+
+  h+='</div>';
+  document.getElementById('inputPanel').innerHTML=h;
+}
+
+function renderResult(si){
+  const d=calc(si);
+  let h='';
+
+  // KPI
+  h+='<div class="panel" style="margin-bottom:16px"><div class="panel-title">📊 核心指标</div>';
+  h+='<div class="kpi-grid">';
+  const kpi=(l,v,t,f)=>`<div class="kpi ${t}"><div class="kpi-l">${l}</div><div class="kpi-v">${v}</div><div class="kpi-f">${f||''}</div></div>`;
+  h+=kpi('总营收',fC(d.gmv),'','课程+其他');
+  h+=kpi('利润额',fC(d.profit),d.profit>=0?'good':'bad','营收-总成本');
+  h+=kpi('利润率',fP(d.profitRate),d.profitRate>=.15?'good':d.profitRate>=.05?'warn':'bad','利润÷营收');
+  h+=kpi('开课率',fP(d.openRate),d.openRate>=.95?'good':d.openRate>=.9?'warn':'bad','开课÷缴费');
+  h+=kpi('退费率',fP(d.refRate),d.refRate<=.05?'good':d.refRate<=.1?'warn':'bad','退费÷缴费');
+  h+=kpi('续费率',fP(d.renewRate),d.renewRate>=.5?'good':d.renewRate>=.3?'warn':'bad','续费÷开课');
+  h+=kpi('套装转化率',fP(d.kitRate),d.kitRate>=.5?'good':d.kitRate>=.3?'warn':'bad','购买÷开课');
+  h+=kpi('人力费比',fP(d.hrRatio),d.hrRatio<=.3?'good':d.hrRatio<=.5?'warn':'bad','人力÷营收');
+  h+=kpi('二讲带班量',fN(d.taLoad,0)+'人','','缴费÷二讲');
+  h+='</div></div>';
+
+  // Cost breakdown
+  h+='<div class="panel" style="margin-bottom:16px"><div class="panel-title">💵 成本分解</div>';
+  h+='<div class="tw"><table class="dt"><thead><tr><th>项目</th><th>金额</th><th>占营收</th></tr></thead><tbody>';
+  const cr=(l,v)=>`<tr><td>${l}</td><td class="neg">${fC(v)}</td><td>${d.gmv>0?fP(v/d.gmv):'—'}</td></tr>`;
+  cr2=(l,v,cls)=>`<tr style="font-weight:700;background:var(--s3)"><td>${l}</td><td class="${cls}">${fC(v)}</td><td>${d.gmv>0?fP(v/d.gmv):'—'}</td></tr>`;
+  h+=cr(`上阶结算 (${fU(d.openCount)}人×${fC(d.settlePrice)})`,d.settleCost);
+  h+=cr(`二讲 (${fU(d.taCount)}人×${fC(d.taSalary)}×${d.sp}月)`,d.taCost);
+  h+=cr(`主讲 (${fC(d.instrSalary)}/月×${d.sp}月)`,d.instrCost);
+  h+=cr(`导演 (${fC(d.dirSalary)}/月×${d.sp}月)`,d.dirCost);
+  h+=cr2('人力小计',d.totalHR,'neg');
+  h+=cr('课中退费',d.refAmt);
+  h+=cr('其他成本',d.otherCost);
+  h+=cr(`税费 (${fP(d.taxRate)})`,d.taxCost);
+  h+=cr2('总成本',d.totalCost,'neg');
+  h+=cr2('利润',d.profit,d.profit>=0?'pos':'neg');
+  h+='</tbody></table></div></div>';
+
+  // Monthly split
+  if(d.sp>0&&d.gmv>0){
+    h+='<div class="panel"><div class="panel-title">📅 月度拆分</div>';
+    h+='<div class="tw"><table class="dt"><thead><tr><th>月份</th><th>营收</th><th>成本</th><th>利润</th><th>利润率</th></tr></thead><tbody>';
+    const mRev=d.gmv/d.sp;
+    for(let mi=0;mi<d.sp;mi++){
+      const mHR=d.taSalary*d.taCount+d.instrSalary+d.dirSalary;
+      const mSettle=d.settleCost/d.sp;
+      const mOther=d.otherCost/d.sp;
+      const mTax=mRev*d.taxRate;
+      const mRef=d.refAmt/d.sp;
+      const mCost=mHR+mSettle+mOther+mTax+mRef;
+      const mProfit=mRev-mCost;
+      const mPR=mRev>0?mProfit/mRev:0;
+      h+=`<tr><td>第${mi+1}月</td><td>${fC(mRev)}</td><td class="neg">${fC(mCost)}</td><td class="${mProfit>=0?'pos':'neg'}">${fC(mProfit)}</td><td class="${mPR>=0?'pos':'neg'}">${fP(mPR)}</td></tr>`;
+    }
+    h+='</tbody></table></div></div>';
+  }
+
+  document.getElementById('resultPanel').innerHTML=h;
+}
+
+function render(){
+  renderTabs();
+  renderInput(stageTab);
+  renderResult(stageTab);
+}
+
+// Event: tab click
+document.getElementById('tabs').addEventListener('click',e=>{
+  const t=e.target;
+  if(t.dataset.tab!==undefined){stageTab=+t.dataset.tab;render();save()}
+});
+
+// Event: input change
+document.addEventListener('change',e=>{
+  const t=e.target;
+  if(t.classList?.contains('f-inp')&&t.dataset.key){
+    const raw=String(t.value).replace(/,/g,'').trim(),num=Number(raw);
+    if(!Number.isFinite(num))return;
+    P[t.dataset.key]=Math.max(num,0);
+    render();save();
+  }
+});
+
+// Event: reset
+document.getElementById('resetBtn').addEventListener('click',()=>{
+  if(!confirm('确认重置所有数据？'))return;
+  P=JSON.parse(JSON.stringify(STAGE_DP));render();save();
+});
+
+// Event: theme
+document.getElementById('themeToggle').addEventListener('click',function(){
+  const h=document.documentElement,n=h.dataset.theme==='dark'?'light':'dark';
+  h.dataset.theme=n;this.textContent=n==='dark'?'☀️':'🌙';
+});
+
+load();render();
+</script>
+</body>
+</html>

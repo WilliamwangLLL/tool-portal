@@ -189,12 +189,6 @@
     </div>
   </div>
 
-  <div class="card" style="margin-top:12px">
-    <div class="card-h"><div><div class="card-t">📋 各阶段经营驾驶舱</div><div class="card-s">每个阶段的负责人视角：输入经营数据，查看经营结果与过程指标</div></div></div>
-    <div class="pred-tabs" id="stageTabs"></div>
-    <div id="stageDetailContent"></div>
-  </div>
-
   <hr class="divider"/>
 
   <!-- ========== PART 2: RESULTS ========== -->
@@ -848,7 +842,7 @@ function renderScenarios(){
   SC.forEach((s,i)=>{h+=`<span class="schip${i===AS?' active':''}" data-si="${i}">${s.name} <span data-sdel="${i}" style="margin-left:3px;cursor:pointer;opacity:.5">×</span></span>`});
   document.getElementById('scenarioBar').innerHTML=h;
 }
-function render(){if(VM==='actual')syncAR();const m=CM(P);renderL1();renderStage();renderKPI(m);renderFunnel(m);renderCharts(m);renderTable(m);renderImpact(m);renderPredictor();renderStageDetail();renderScenarios()}
+function render(){if(VM==='actual')syncAR();const m=CM(P);renderL1();renderStage();renderKPI(m);renderFunnel(m);renderCharts(m);renderTable(m);renderImpact(m);renderPredictor();renderScenarios()}
 
 document.addEventListener('click',e=>{
   const t=e.target;
@@ -859,7 +853,6 @@ document.addEventListener('click',e=>{
   if(t.classList?.contains('msw-btn')){VM=t.dataset.mode||'model';document.querySelectorAll('.msw-btn').forEach(b=>b.classList.toggle('active',b.dataset.mode===VM));render();save();return}
   if(t.id==='toggleTable'){TV=!TV;document.getElementById('tableWrap').style.display=TV?'block':'none';t.textContent=TV?'收起':'展开';return}
   if(t.dataset.predTab!==undefined){const i=+t.dataset.predTab;if(i!==predTab){predTab=i;renderPredictor()}return}
-  if(t.dataset.stageTab!==undefined){const i=+t.dataset.stageTab;if(i!==stageTab){stageTab=i;renderStageDetail()}return}
   if(t.id==='saveScenario'){const name=prompt('方案名称：',`方案${SC.length+1}`);if(!name)return;SC.push({name,params:JSON.parse(JSON.stringify(P))});AS=SC.length-1;renderScenarios();save();return}
   if(t.dataset.si!==undefined&&!t.dataset.sdel){const i=+t.dataset.si;if(SC[i]){P=JSON.parse(JSON.stringify(SC[i].params));AS=i;render();save()}return}
   if(t.dataset.sdel!==undefined){const i=+t.dataset.sdel;SC.splice(i,1);if(AS>=SC.length)AS=SC.length-1;renderScenarios();save();return}
