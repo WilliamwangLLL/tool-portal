@@ -8,483 +8,527 @@
 :root{--bg:#f5f7fb;--s:#fff;--s2:#f8fafc;--s3:#f1f5f9;--bd:#e2e8f0;--bd2:#cbd5e1;--t:#0f172a;--t2:#475569;--t3:#94a3b8;--p:#4f46e5;--pl:#eef2ff;--pb:#c7d2fe;--g:#16a34a;--gb:#f0fdf4;--gbd:#bbf7d0;--a:#d97706;--ab:#fffbeb;--abd:#fde68a;--r:#dc2626;--rb:#fef2f2;--rbd:#fecaca;--rad:14px;--sh:0 2px 8px rgba(0,0,0,.04);--f:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB',sans-serif;--tr:.2s ease}
 [data-theme="dark"]{--bg:#0f172a;--s:#1e293b;--s2:#1e293b;--s3:#334155;--bd:#334155;--bd2:#475569;--t:#f1f5f9;--t2:#94a3b8;--t3:#64748b;--p:#818cf8;--pl:#1e1b4b;--pb:#4338ca;--g:#4ade80;--gb:#052e16;--gbd:#166534;--a:#fbbf24;--ab:#451a03;--abd:#92400e;--r:#f87171;--rb:#450a0a;--rbd:#991b1b;--sh:0 2px 8px rgba(0,0,0,.2)}
 *{box-sizing:border-box;margin:0}
-body{font-family:var(--f);background:var(--bg);color:var(--t);line-height:1.6;font-size:15px;transition:background var(--tr),color var(--tr)}
-.page{max-width:1200px;margin:0 auto;padding:24px 28px 60px}
-
-/* Header */
+body{font-family:var(--f);background:var(--bg);color:var(--t);line-height:1.6;font-size:15px}
+.page{max-width:1300px;margin:0 auto;padding:24px 28px 60px}
 .hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:12px}
 .hdr-left h1{font-size:22px;font-weight:800}
 .hdr-left p{font-size:13px;color:var(--t3);margin-top:2px}
-.hdr-actions{display:flex;gap:8px;align-items:center}
+.hdr-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 .btn{display:inline-flex;align-items:center;gap:5px;border:1px solid var(--bd);background:var(--s);padding:8px 14px;border-radius:8px;color:var(--t2);font-size:14px;font-weight:600;cursor:pointer;transition:all var(--tr);white-space:nowrap}
 .btn:hover{border-color:var(--p);color:var(--p);background:var(--pl)}
+.btn-sm{padding:5px 10px;font-size:12px}
 .btn-icon{width:36px;height:36px;padding:0;justify-content:center;border-radius:8px;font-size:16px}
-
-/* Tabs */
-.tabs{display:flex;gap:0;border-bottom:2px solid var(--bd);margin-bottom:24px}
+.tabs{display:flex;gap:0;border-bottom:2px solid var(--bd);margin-bottom:20px}
 .tab{padding:12px 24px;font-size:15px;font-weight:700;cursor:pointer;border:none;background:transparent;color:var(--t3);border-bottom:3px solid transparent;margin-bottom:-2px;transition:all var(--tr)}
-.tab:hover{color:var(--t)}
-.tab.active{color:var(--p);border-bottom-color:var(--p)}
-
-/* Two column layout */
-.layout{display:grid;grid-template-columns:380px 1fr;gap:24px;align-items:start}
-@media(max-width:900px){.layout{grid-template-columns:1fr}}
-
-/* Input panel */
-.panel{background:var(--s);border:1px solid var(--bd);border-radius:var(--rad);padding:20px;box-shadow:var(--sh)}
-.panel-title{font-weight:800;font-size:15px;margin-bottom:14px;display:flex;align-items:center;gap:6px}
+.tab:hover{color:var(--t)}.tab.active{color:var(--p);border-bottom-color:var(--p)}
+.layout{display:grid;grid-template-columns:400px 1fr;gap:20px;align-items:start}
+@media(max-width:960px){.layout{grid-template-columns:1fr}}
+.panel{background:var(--s);border:1px solid var(--bd);border-radius:var(--rad);padding:18px;box-shadow:var(--sh);margin-bottom:14px}
+.panel-title{font-weight:800;font-size:15px;margin-bottom:12px;display:flex;align-items:center;gap:6px;justify-content:space-between}
 .section-label{font-weight:700;font-size:12px;color:var(--p);padding:10px 0 4px;text-transform:uppercase;letter-spacing:.03em}
-.f-grid{display:grid;gap:6px}
-.f-row{display:grid;grid-template-columns:1fr 130px;gap:8px;align-items:center;padding:8px 12px;background:var(--s2);border:1px solid var(--bd);border-radius:8px;font-size:14px}
+.f-grid{display:grid;gap:5px}
+.f-row{display:grid;grid-template-columns:1fr 120px;gap:8px;align-items:center;padding:7px 10px;background:var(--s2);border:1px solid var(--bd);border-radius:8px;font-size:14px}
 .f-row.computed{background:var(--pl);border-color:var(--pb)}
 .f-lbl{color:var(--t2);font-size:13px;font-weight:600}
 .f-row.computed .f-lbl{color:var(--p);font-weight:700}
 .f-val{font-weight:800;text-align:right;font-variant-numeric:tabular-nums;font-size:14px;color:var(--t)}
 .f-row.computed .f-val{color:var(--p)}
 .f-formula{font-size:11px;color:var(--t3);font-family:'SF Mono','Menlo',monospace;text-align:right;grid-column:1/-1}
-.f-inp{width:100%;padding:7px 10px;border:1px solid var(--bd);border-radius:7px;text-align:right;background:var(--s);font-weight:700;font-size:14px;font-variant-numeric:tabular-nums;color:var(--t)}
+.f-inp{width:100%;padding:6px 8px;border:1px solid var(--bd);border-radius:7px;text-align:right;background:var(--s);font-weight:700;font-size:14px;font-variant-numeric:tabular-nums;color:var(--t)}
 .f-inp:focus{outline:none;border-color:var(--p);box-shadow:0 0 0 3px rgba(79,70,229,.1)}
-
-/* KPI cards */
-.kpi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
-.kpi{background:var(--s2);border:1px solid var(--bd);border-radius:12px;padding:14px;transition:all var(--tr)}
+.f-note{width:100%;padding:8px 10px;border:1px solid var(--bd);border-radius:7px;background:var(--s);font-size:13px;color:var(--t);resize:vertical;min-height:50px;font-family:var(--f)}
+.f-note:focus{outline:none;border-color:var(--p)}
+.kpi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}
+.kpi{background:var(--s2);border:1px solid var(--bd);border-radius:12px;padding:12px}
 .kpi-l{color:var(--t3);font-size:12px;font-weight:600}
-.kpi-v{font-size:22px;font-weight:900;margin-top:4px;font-variant-numeric:tabular-nums}
-.kpi-f{font-size:11px;color:inherit;opacity:.55;margin-top:3px;font-family:'SF Mono','Menlo',monospace}
+.kpi-v{font-size:20px;font-weight:900;margin-top:3px;font-variant-numeric:tabular-nums}
+.kpi-f{font-size:11px;color:inherit;opacity:.55;margin-top:2px;font-family:'SF Mono','Menlo',monospace}
+.kpi-tgt{font-size:11px;margin-top:3px;font-weight:700}
 .kpi.good{background:var(--gb);border-color:var(--gbd);color:var(--g)}
 .kpi.warn{background:var(--ab);border-color:var(--abd);color:var(--a)}
 .kpi.bad{background:var(--rb);border-color:var(--rbd);color:var(--r)}
-
-/* Tables */
 .tw{overflow-x:auto;border-radius:10px;border:1px solid var(--bd)}
 .dt{width:100%;border-collapse:collapse;font-size:13px;font-variant-numeric:tabular-nums}
-.dt th,.dt td{padding:9px 12px;text-align:right;border-bottom:1px solid var(--bd)}
-.dt th{background:var(--s3);color:var(--t2);font-weight:700;font-size:13px}
+.dt th,.dt td{padding:8px 10px;text-align:right;border-bottom:1px solid var(--bd)}
+.dt th{background:var(--s3);color:var(--t2);font-weight:700;font-size:12px}
 .dt th:first-child,.dt td:first-child{text-align:left}
 .dt tr:hover td{background:var(--pl)}
 .pos{color:var(--g);font-weight:700}.neg{color:var(--r);font-weight:700}
-
-.result-title{font-weight:800;font-size:14px;margin:16px 0 8px;display:flex;align-items:center;gap:6px}
+.track-list{display:grid;gap:6px;margin-bottom:12px}
+.track-chip{display:flex;justify-content:space-between;align-items:center;padding:8px 12px;border:1px solid var(--bd);border-radius:8px;cursor:pointer;transition:all var(--tr);font-size:13px}
+.track-chip:hover{border-color:var(--p)}
+.track-chip.active{border-color:var(--p);background:var(--pl);color:var(--p)}
+.track-chip .phase{font-size:11px;padding:2px 8px;border-radius:4px;font-weight:700}
+.phase-teach{background:var(--ab);color:var(--a)}
+.phase-renew{background:var(--gb);color:var(--g)}
+.phase-done{background:var(--s3);color:var(--t3)}
+.month-nav{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.month-nav button{background:var(--s);border:1px solid var(--bd);border-radius:8px;width:36px;height:36px;font-size:16px;cursor:pointer;font-weight:700;color:var(--t2)}
+.month-nav button:hover{border-color:var(--p);color:var(--p)}
+.month-label{font-size:18px;font-weight:800;min-width:120px;text-align:center}
 </style>
 </head>
 <body>
 <div class="page">
   <div class="hdr">
-    <div class="hdr-left">
-      <h1>📋 阶段经营驾驶舱</h1>
-      <p>各阶段负责人视角 · 填数据看结果</p>
-    </div>
+    <div class="hdr-left"><h1>📋 阶段经营驾驶舱</h1><p>轨次管理 + 月度综合看板</p></div>
     <div class="hdr-actions">
       <span id="syncStatus" style="font-size:12px;color:var(--g);font-weight:600;transition:opacity .3s;opacity:0">已保存</span>
-      <button class="btn" id="resetBtn">↺ 重置</button>
+      <button class="btn" id="snapBtn">📸 快照</button>
+      <button class="btn" id="histBtn">📂 历史</button>
       <button class="btn-icon btn" id="themeToggle" title="主题">🌙</button>
     </div>
   </div>
-
   <div class="tabs" id="tabs"></div>
-
   <div class="layout">
-    <div class="panel" id="inputPanel"></div>
-    <div id="resultPanel"></div>
+    <div id="leftPanel"></div>
+    <div id="rightPanel"></div>
   </div>
 </div>
+<div id="modalContainer"></div>
 
 <script>
-const STAGES=['L2','L3','L4','L5'];
-const STAGE_NAMES=['二阶','三阶','四阶','五阶'];
-let stageTab=0;
+const STAGES=['L2','L3','L4','L5'],STAGE_NAMES=['二阶','三阶','四阶','五阶'];
+let stageTab=0,selTrack=null,viewMonth=null;
 
-// Default params per stage
-const STAGE_DP={};
-STAGES.forEach(sk=>{
-  STAGE_DP[sk+'_paid']=0;
-  STAGE_DP[sk+'_refund_count']=0;
-  STAGE_DP[sk+'_delay']=0;
-  STAGE_DP[sk+'_renew']=0;
-  STAGE_DP[sk+'_starter_kit']=0;
-  STAGE_DP[sk+'_next_tuition']=0;
-  STAGE_DP[sk+'_gmv_other']=0;
-  STAGE_DP[sk+'_settle_price']=0;
-  STAGE_DP[sk+'_refund_amt']=0;
-  STAGE_DP[sk+'_ta_count']=0;
-  STAGE_DP[sk+'_ta_salary']=0;
-  STAGE_DP[sk+'_instructor_salary']=0;
-  STAGE_DP[sk+'_director_salary']=0;
-  STAGE_DP[sk+'_service_period']=3;
-  STAGE_DP[sk+'_other_cost']=0;
-});
-STAGE_DP._tax=0.045;
-STAGE_DP._hq=0.06;
+// Data: per stage -> { common: {...}, tracks: [...], targets: {...}, note: '' }
+// common: 阶段统一参数 (各轨通用)
+const EMPTY_COMMON={next_tuition:0,settle_price:0,ta_salary:0,instructor_salary:0,director_salary:0,service_period:3};
+// track: 轨次独有参数
+const EMPTY_TRACK={paid:0,refund_count:0,delay:0,renew:0,ta_count:0,refund_amt:0,gmv_other:0,other_cost:0};
+const EMPTY_TARGETS={profit_rate:0,renew_rate:0,open_rate:0,refund_rate:0,hr_ratio:0};
+let DATA={};
+STAGES.forEach(sk=>{DATA[sk]={common:{...EMPTY_COMMON},tracks:[],targets:{...EMPTY_TARGETS},note:''}});
+const TAX=0.045,HQ=0.06,TAX_RATE=TAX+HQ;
 
-let P=JSON.parse(JSON.stringify(STAGE_DP));
-
-// Supabase config
+// Supabase
 const SB_URL='https://azdceashmagvvbxvwuwc.supabase.co';
 const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF6ZGNlYXNobWFndnZieHZ3dXdjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU4MTc1MzcsImV4cCI6MjA5MTM5MzUzN30.7HTZLJld9kJ__vNSHI3IdvDTxR-E1fO3MbzRIWPI8QU';
-const SB_HEADERS={'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type':'application/json','Prefer':'return=minimal'};
+const SB_H={'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type':'application/json','Prefer':'return=minimal'};
+const SB_R={'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY};
 
-let _saving=false,_pendingSave=false;
+let _saving=false,_pending=false;
 async function save(){
-  if(_saving){_pendingSave=true;return}
-  _saving=true;
+  if(_saving){_pending=true;return}_saving=true;
   try{
-    // 按阶段拆分存储
     for(const sk of STAGES){
-      const row={};
-      for(const k in P){if(k.startsWith(sk+'_'))row[k]=P[k]}
-      row._tax=P._tax;row._hq=P._hq;
-      await fetch(SB_URL+'/rest/v1/stage_data?stage=eq.'+sk,{
-        method:'PATCH',headers:SB_HEADERS,body:JSON.stringify({data:row,updated_at:new Date().toISOString()})
-      });
+      await fetch(SB_URL+'/rest/v1/stage_data?stage=eq.'+sk,{method:'PATCH',headers:SB_H,
+        body:JSON.stringify({data:DATA[sk],updated_at:new Date().toISOString()})});
     }
     showStatus('已保存');
-  }catch(e){showStatus('保存失败: '+e.message)}
-  _saving=false;
-  if(_pendingSave){_pendingSave=false;save()}
+  }catch(e){showStatus('保存失败')}
+  _saving=false;if(_pending){_pending=false;save()}
 }
-
 async function load(){
   try{
-    const res=await fetch(SB_URL+'/rest/v1/stage_data?select=stage,data',{headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY}});
-    const rows=await res.json();
-    if(!Array.isArray(rows))return;
+    const res=await fetch(SB_URL+'/rest/v1/stage_data?select=stage,data',{headers:SB_R});
+    const rows=await res.json();if(!Array.isArray(rows))return;
     for(const row of rows){
       if(row.data&&typeof row.data==='object'){
-        for(const k in row.data){
-          if(k in STAGE_DP||k==='_tax'||k==='_hq'){
-            if(typeof row.data[k]==='number'&&Number.isFinite(row.data[k]))P[k]=row.data[k];
-          }
-        }
+        const sk=row.stage;if(!DATA[sk])continue;
+        if(Array.isArray(row.data.tracks))DATA[sk].tracks=row.data.tracks;
+        if(row.data.common)DATA[sk].common={...EMPTY_COMMON,...row.data.common};
+        if(row.data.targets)DATA[sk].targets={...EMPTY_TARGETS,...row.data.targets};
+        if(typeof row.data.note==='string')DATA[sk].note=row.data.note;
       }
     }
     showStatus('数据已加载');
-  }catch(e){showStatus('加载失败，使用本地默认值')}
+  }catch(e){showStatus('加载失败')}
+}
+function showStatus(m){const el=document.getElementById('syncStatus');if(el){el.textContent=m;el.style.opacity='1';setTimeout(()=>{el.style.opacity='0'},2000)}}
+
+// Snapshots
+async function saveSnapshot(){
+  const sk=STAGES[stageTab];
+  const note=prompt('快照备注：',STAGE_NAMES[stageTab]+' '+new Date().toLocaleDateString('zh-CN'));
+  if(note===null)return;
+  try{
+    await fetch(SB_URL+'/rest/v1/stage_snapshots',{method:'POST',headers:SB_H,
+      body:JSON.stringify({stage:sk,data:DATA[sk],note})});
+    showStatus('快照已保存');
+  }catch(e){alert('保存失败')}
+}
+async function showHistory(){
+  const sk=STAGES[stageTab];let rows=[];
+  try{const res=await fetch(SB_URL+'/rest/v1/stage_snapshots?stage=eq.'+sk+'&order=created_at.desc&limit=20',{headers:SB_R});rows=await res.json()}catch(e){}
+  let h=`<div style="font-size:16px;font-weight:800;margin-bottom:14px">📂 ${STAGE_NAMES[stageTab]} 历史快照</div>`;
+  if(!rows.length)h+='<p style="color:var(--t3)">暂无快照</p>';
+  else rows.forEach(r=>{
+    const t=new Date(r.created_at).toLocaleString('zh-CN');
+    h+=`<div class="track-chip" data-snap-id="${r.id}"><div><b>${r.note||'无备注'}</b><div style="font-size:11px;color:var(--t3)">${t}</div></div><span style="color:var(--p);font-weight:700">恢复→</span></div>`;
+  });
+  h+='<button class="btn" style="margin-top:14px;width:100%;justify-content:center" id="closeModal">关闭</button>';
+  document.getElementById('modalContainer').innerHTML=`<div style="position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:100;display:flex;align-items:center;justify-content:center"><div style="background:var(--s);border-radius:16px;padding:24px;max-width:500px;width:90%;max-height:80vh;overflow-y:auto">${h}</div></div>`;
+  document.getElementById('closeModal').onclick=()=>{document.getElementById('modalContainer').innerHTML=''};
+  document.querySelectorAll('[data-snap-id]').forEach(el=>{
+    el.onclick=async()=>{
+      try{const res=await fetch(SB_URL+'/rest/v1/stage_snapshots?id=eq.'+el.dataset.snapId+'&select=data',{headers:SB_R});
+        const arr=await res.json();if(arr[0]?.data){DATA[STAGES[stageTab]]=arr[0].data;render();save();showStatus('已恢复')}}catch(e){}
+      document.getElementById('modalContainer').innerHTML='';
+    };
+  });
 }
 
-function showStatus(msg){
-  const el=document.getElementById('syncStatus');
-  if(el){el.textContent=msg;el.style.opacity='1';setTimeout(()=>{el.style.opacity='0'},2000)}
-}
-
-const cl=(v,lo,hi)=>Math.min(Math.max(v,lo),hi);
+// Helpers
 const fC=v=>new Intl.NumberFormat('zh-CN',{style:'currency',currency:'CNY',maximumFractionDigits:0}).format(v||0);
 const fI=v=>new Intl.NumberFormat('zh-CN',{maximumFractionDigits:0}).format(v||0);
 const fU=v=>fI(Math.round(v||0));
-const fP=v=>new Intl.NumberFormat('zh-CN',{minimumFractionDigits:1,maximumFractionDigits:1}).format((v||0)*100)+'%';
-const fN=(v,d=2)=>new Intl.NumberFormat('zh-CN',{minimumFractionDigits:d,maximumFractionDigits:d}).format(v||0);
+const fP=v=>(v*100).toFixed(1)+'%';
+const fN=(v,d=2)=>v.toFixed(d);
+function monthAdd(ym,n){let [y,m]=ym.split('-').map(Number);m+=n;while(m>12){m-=12;y++}while(m<1){m+=12;y--}return y+'-'+String(m).padStart(2,'0')}
+function monthDiff(a,b){const [ay,am]=a.split('-').map(Number),[by,bm]=b.split('-').map(Number);return(by-ay)*12+(bm-am)}
+function curMonth(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')}
 
-function calc(si){
-  const sk=STAGES[si],p=P;
-  const paid=p[sk+'_paid']||0;
-  const refC=p[sk+'_refund_count']||0;
-  const delayC=p[sk+'_delay']||0;
-  const openCount=Math.max(0,paid-refC-delayC);
-  const openRate=paid>0?openCount/paid:0;
-  const refRate=paid>0?refC/paid:0;
-  const renewCount=p[sk+'_renew']||0;
-  const renewRate=openCount>0?renewCount/openCount:0;
-  const kitCount=p[sk+'_starter_kit']||0;
-  const kitRate=openCount>0?kitCount/openCount:0;
-  const nextTuition=p[sk+'_next_tuition']||0;
-  const gmvCourse=renewCount*nextTuition;
-  const gmvOther=p[sk+'_gmv_other']||0;
-  const gmv=gmvCourse+gmvOther;
-  const settlePrice=p[sk+'_settle_price']||0;
-  const settleCount=Math.max(0,paid-refC); // 缴费-退费（含延期）
-  const settleCost=settleCount*settlePrice;
-  const refAmt=p[sk+'_refund_amt']||0;
-  const taCount=p[sk+'_ta_count']||0;
-  const taSalary=p[sk+'_ta_salary']||0;
-  const sp=p[sk+'_service_period']||1;
-  const instrSalary=p[sk+'_instructor_salary']||0;
-  const dirSalary=p[sk+'_director_salary']||0;
-  const otherCost=p[sk+'_other_cost']||0;
-  const taCost=taSalary*taCount*sp;
-  const instrCost=instrSalary*sp;
-  const dirCost=dirSalary*sp;
+// Merge common params into track for calculation
+function mergeTrack(sk,t){
+  const c=DATA[sk].common;
+  return{...t,next_tuition:c.next_tuition||0,settle_price:c.settle_price||0,ta_salary:c.ta_salary||0,
+    instructor_salary:c.instructor_salary||0,director_salary:c.director_salary||0,service_period:c.service_period||3};
+}
+// Calc single track
+function calcTrack(t){
+  const paid=t.paid||0,refC=t.refund_count||0,delayC=t.delay||0;
+  const openCount=Math.max(0,paid-refC-delayC),openRate=paid>0?openCount/paid:0;
+  const renewCount=t.renew||0,renewRate=openCount>0?renewCount/openCount:0;
+  const settleCount=Math.max(0,paid-refC),settleCost=settleCount*(t.settle_price||0);
+  const gmvCourse=renewCount*(t.next_tuition||0),gmv=gmvCourse+(t.gmv_other||0);
+  const sp=t.service_period||3;
+  const taCost=(t.ta_count||0)*(t.ta_salary||0)*sp;
+  const instrCost=(t.instructor_salary||0)*sp,dirCost=(t.director_salary||0)*sp;
   const totalHR=taCost+instrCost+dirCost;
-  const taxRate=p._tax+p._hq;
-  const taxCost=gmv*taxRate;
-  const totalCost=settleCost+refAmt+totalHR+otherCost+taxCost;
-  const profit=gmv-totalCost;
-  const profitRate=gmv>0?profit/gmv:0;
-  const hrRatio=gmv>0?totalHR/gmv:0;
-  const taLoad=taCount>0?paid/taCount:0;
-  return{paid,refC,delayC,openCount,openRate,refRate,renewCount,renewRate,
-    kitCount,kitRate,nextTuition,gmvCourse,gmvOther,gmv,
-    settlePrice,settleCount,settleCost,refAmt,
-    taCount,taSalary,sp,instrSalary,dirSalary,
-    taCost,instrCost,dirCost,totalHR,otherCost,taxRate,taxCost,
-    totalCost,profit,profitRate,hrRatio,taLoad};
+  const totalCost=settleCost+(t.refund_amt||0)+totalHR+(t.other_cost||0)+gmv*TAX_RATE;
+  const profit=gmv-totalCost,profitRate=gmv>0?profit/gmv:0;
+  return{paid,refC,delayC,openCount,openRate,renewCount,renewRate,settleCount,settleCost,
+    gmvCourse,gmv,sp,taCost,instrCost,dirCost,totalHR,totalCost,profit,profitRate,
+    hrRatio:gmv>0?totalHR/gmv:0,taLoad:(t.ta_count||0)>0?paid/(t.ta_count||1):0,
+    revPerTA:(t.ta_count||0)>0?gmv/(t.ta_count||1):0};
 }
 
+// Calc single track's contribution in a specific month (0-indexed month within the track)
+function calcTrackMonth(t,mi){
+  const sp=t.service_period||3;
+  const paid=t.paid||0,refC=t.refund_count||0;
+  const openCount=Math.max(0,paid-refC-(t.delay||0));
+  const settleCount=Math.max(0,paid-refC);
+  const renewCount=t.renew||0;
+  let revenue=0,cost=0;
+  // Settlement: month 1 only
+  if(mi===0)cost+=settleCount*(t.settle_price||0);
+  // Monthly HR
+  cost+=(t.ta_count||0)*(t.ta_salary||0)+(t.instructor_salary||0)+(t.director_salary||0);
+  // Refund + other: spread
+  cost+=(t.refund_amt||0)/sp;
+  cost+=(t.other_cost||0)/sp;
+  // Revenue: last month only
+  if(mi===sp-1){
+    revenue=renewCount*(t.next_tuition||0)+(t.gmv_other||0);
+  }
+  cost+=revenue*TAX_RATE;
+  return{revenue,cost,profit:revenue-cost,openCount,renewCount,paid};
+}
+
+// Aggregate all tracks for a natural month
+function calcMonthAggregate(sk,ym){
+  const stage=DATA[sk];
+  const details=[];
+  let totRev=0,totCost=0,totPaid=0,totOpen=0,totRenew=0,totTA=0;
+  for(let ti=0;ti<stage.tracks.length;ti++){
+    const rawT=stage.tracks[ti],t=mergeTrack(sk,rawT);
+    const diff=monthDiff(rawT.start_month,ym);
+    const sp=t.service_period||3;
+    if(diff<0||diff>=sp)continue;
+    const m=calcTrackMonth(t,diff);
+    const phase=diff<sp-1?'教学期':'续费期';
+    details.push({track:t,rawTrack:rawT,trackIdx:ti,monthIndex:diff,phase,...m,label:rawT.start_month+'轨',phaseLabel:`第${diff+1}月(${phase})`});
+    totRev+=m.revenue;totCost+=m.cost;
+    totPaid+=t.paid||0;totOpen+=m.openCount;
+    if(diff===sp-1)totRenew+=m.renewCount;
+    totTA+=(t.ta_count||0);
+  }
+  const profit=totRev-totCost,profitRate=totRev>0?profit/totRev:0;
+  const hrRatio=totRev>0?details.reduce((s,d)=>{const t=d.track;return s+(t.ta_count||0)*(t.ta_salary||0)+(t.instructor_salary||0)+(t.director_salary||0)},0)/totRev:0;
+  return{details,totRev,totCost,profit,profitRate,totPaid,totOpen,totRenew,totTA,hrRatio,
+    revPerTA:totTA>0?totRev/totTA:0};
+}
+
+// ===== Render =====
 function renderTabs(){
   document.getElementById('tabs').innerHTML=STAGE_NAMES.map((n,i)=>
-    `<button class="tab${i===stageTab?' active':''}" data-tab="${i}">${n}</button>`
-  ).join('');
+    `<button class="tab${i===stageTab?' active':''}" data-tab="${i}">${n}</button>`).join('');
 }
 
-function renderInput(si){
-  const sk=STAGES[si],d=calc(si);
-  const fi=(key,label)=>{
-    const v=P[sk+'_'+key]||0;
-    const isInt=['paid','refund_count','delay','renew','starter_kit','ta_count','service_period'].includes(key);
-    const isP=false;
-    const dv=isInt?fI(v):fI(v);
-    return `<div class="f-row"><div class="f-lbl">${label}</div><input class="f-inp" value="${dv}" data-key="${sk}_${key}"/></div>`;
-  };
-  const fr=(label,val,formula)=>
-    `<div class="f-row computed"><div class="f-lbl">${label}</div><div class="f-val">${val}</div>${formula?`<div class="f-formula">${formula}</div>`:''}</div>`;
-
-  let h='<div class="panel-title">📝 经营数据输入</div><div class="f-grid">';
-
-  h+='<div class="section-label">👥 学员数据</div>';
-  h+=fi('paid','缴费人数');
-  h+=fi('refund_count','退费人数');
-  h+=fi('delay','延期人数');
-  h+=fr('开课人数',fU(d.openCount),`${fU(d.paid)}-${fU(d.refC)}-${fU(d.delayC)}`);
-  h+=fr('开课率',fP(d.openRate),'开课÷缴费');
-  h+=fi('renew','续费人数');
-  h+=fr('续费率',fP(d.renewRate),'续费÷开课');
-  h+=fi('starter_kit','开学套装购买人数');
-  h+=fr('套装转化率',fP(d.kitRate),'购买÷开课');
-
-  h+='<div class="section-label">💰 营收</div>';
-  h+=fi('next_tuition','下阶学费单价');
-  h+=fr('课程营收',fC(d.gmvCourse),`${fU(d.renewCount)}人×${fC(d.nextTuition)}`);
-  h+=fi('gmv_other','其他营收');
-  h+=fr('总营收',fC(d.gmv),`${fC(d.gmvCourse)}+${fC(d.gmvOther)}`);
-
-  h+='<div class="section-label">💸 结算与退费</div>';
-  h+=fi('settle_price','上阶结算单价/人');
-  h+=fr('上阶结算费',fC(d.settleCost),`(${fU(d.paid)}-${fU(d.refC)})×${fC(d.settlePrice)} = ${fU(d.settleCount)}人×${fC(d.settlePrice)}`);
-  h+=fi('refund_amt','课中退费金额');
-
-  h+='<div class="section-label">👨‍🏫 人力配置（月额）</div>';
-  h+=fi('ta_count','二讲人数');
-  h+=fi('ta_salary','二讲月薪/人');
-  h+=fi('instructor_salary','主讲月薪总额');
-  h+=fi('director_salary','导演月薪总额');
-  h+=fi('service_period','服务周期(月)');
-
-  h+='<div class="section-label">📎 其他</div>';
-  h+=fi('other_cost','其他成本(金额)');
-
-  h+='</div>';
-  document.getElementById('inputPanel').innerHTML=h;
-}
-
-function renderResult(si){
-  const d=calc(si);
+function renderLeft(){
+  const sk=STAGES[stageTab],stage=DATA[sk];
   let h='';
 
-  // KPI
-  h+='<div class="panel" style="margin-bottom:16px"><div class="panel-title">📊 核心指标</div>';
-  h+='<div class="kpi-grid">';
-  const kpi=(l,v,t,f)=>`<div class="kpi ${t}"><div class="kpi-l">${l}</div><div class="kpi-v">${v}</div><div class="kpi-f">${f||''}</div></div>`;
-  h+=kpi('总营收',fC(d.gmv),'','课程+其他');
-  h+=kpi('利润额',fC(d.profit),d.profit>=0?'good':'bad','营收-总成本');
-  h+=kpi('利润率',fP(d.profitRate),d.profitRate>=.15?'good':d.profitRate>=.05?'warn':'bad','利润÷营收');
-  h+=kpi('开课率',fP(d.openRate),d.openRate>=.95?'good':d.openRate>=.9?'warn':'bad','开课÷缴费');
-  h+=kpi('退费率',fP(d.refRate),d.refRate<=.05?'good':d.refRate<=.1?'warn':'bad','退费÷缴费');
-  h+=kpi('续费率',fP(d.renewRate),d.renewRate>=.5?'good':d.renewRate>=.3?'warn':'bad','续费÷开课');
-  h+=kpi('套装转化率',fP(d.kitRate),d.kitRate>=.5?'good':d.kitRate>=.3?'warn':'bad','购买÷开课');
-  h+=kpi('人力费比',fP(d.hrRatio),d.hrRatio<=.3?'good':d.hrRatio<=.5?'warn':'bad','人力÷营收');
-  h+=kpi('二讲带班量',fN(d.taLoad,0)+'人','','缴费÷二讲');
+  // Track management
+  h+='<div class="panel"><div class="panel-title"><span>📦 轨次管理</span><button class="btn btn-sm" id="addTrack">+ 新增轨次</button></div>';
+  if(!stage.tracks.length){
+    h+='<p style="color:var(--t3);font-size:13px">暂无轨次，点击上方新增</p>';
+  }else{
+    h+='<div class="track-list">';
+    stage.tracks.forEach((t,i)=>{
+      const sp=t.service_period||3;
+      const vm=viewMonth||curMonth();
+      const diff=monthDiff(t.start_month,vm);
+      let phaseH='';
+      if(diff>=0&&diff<sp){
+        phaseH=diff<sp-1?`<span class="phase phase-teach">第${diff+1}月·教学</span>`:`<span class="phase phase-renew">第${diff+1}月·续费</span>`;
+      }else if(diff>=sp){
+        phaseH='<span class="phase phase-done">已结束</span>';
+      }else{phaseH='<span class="phase phase-done">未开始</span>'}
+      h+=`<div class="track-chip${selTrack===i?' active':''}" data-track="${i}">
+        <div><b>${t.start_month}轨</b> <span style="font-size:12px;color:var(--t3)">缴费${fU(t.paid)}人</span></div>
+        <div style="display:flex;align-items:center;gap:8px">${phaseH}<span style="cursor:pointer;color:var(--r);font-size:16px" data-del-track="${i}" title="删除">×</span></div>
+      </div>`;
+    });
+    h+='</div>';
+  }
+  h+='</div>';
+
+  // Stage-level common params
+  const cmn=stage.common;
+  const fc=(key,label)=>`<div class="f-row"><div class="f-lbl">${label}</div><input class="f-inp" value="${fI(cmn[key]||0)}" data-ckey="${key}"/></div>`;
+  const fr=(label,val,formula)=>`<div class="f-row computed"><div class="f-lbl">${label}</div><div class="f-val">${val}</div>${formula?`<div class="f-formula">${formula}</div>`:''}</div>`;
+
+  h+='<div class="panel"><div class="panel-title"><span>⚙️ 阶段统一参数</span></div><div class="f-grid">';
+  h+='<div class="section-label">💰 价格与结算</div>';
+  h+=fc('next_tuition','下阶学费单价');
+  h+=fc('settle_price','上阶结算单价/人');
+  h+='<div class="section-label">👨‍🏫 人力薪资（月额）</div>';
+  h+=fc('ta_salary','二讲月薪/人');
+  h+=fc('instructor_salary','主讲月薪总额');
+  h+=fc('director_salary','导演月薪总额');
+  h+=fc('service_period','服务周期(月)');
   h+='</div></div>';
 
-  // Cost breakdown
-  h+='<div class="panel" style="margin-bottom:16px"><div class="panel-title">💵 成本分解</div>';
-  h+='<div class="tw"><table class="dt"><thead><tr><th>项目</th><th>金额</th><th>占营收</th></tr></thead><tbody>';
-  const cr=(l,v)=>`<tr><td>${l}</td><td class="neg">${fC(v)}</td><td>${d.gmv>0?fP(v/d.gmv):'—'}</td></tr>`;
-  cr2=(l,v,cls)=>`<tr style="font-weight:700;background:var(--s3)"><td>${l}</td><td class="${cls}">${fC(v)}</td><td>${d.gmv>0?fP(v/d.gmv):'—'}</td></tr>`;
-  h+=cr(`上阶结算 (${fU(d.settleCount)}人×${fC(d.settlePrice)})`,d.settleCost);
-  h+=cr(`二讲 (${fU(d.taCount)}人×${fC(d.taSalary)}×${d.sp}月)`,d.taCost);
-  h+=cr(`主讲 (${fC(d.instrSalary)}/月×${d.sp}月)`,d.instrCost);
-  h+=cr(`导演 (${fC(d.dirSalary)}/月×${d.sp}月)`,d.dirCost);
-  h+=cr2('人力小计',d.totalHR,'neg');
-  h+=cr('课中退费',d.refAmt);
-  h+=cr('其他成本',d.otherCost);
-  h+=cr(`税费 (${fP(d.taxRate)})`,d.taxCost);
-  h+=cr2('总成本',d.totalCost,'neg');
-  h+=cr2('利润',d.profit,d.profit>=0?'pos':'neg');
-  h+='</tbody></table></div></div>';
+  // Selected track editor (only per-track fields)
+  if(selTrack!==null&&stage.tracks[selTrack]){
+    const t=stage.tracks[selTrack],mt=mergeTrack(sk,t),tc=calcTrack(mt);
+    const fi=(key,label)=>`<div class="f-row"><div class="f-lbl">${label}</div><input class="f-inp" value="${fI(t[key]||0)}" data-tkey="${key}"/></div>`;
 
-  // Monthly split
-  if(d.sp>0&&d.gmv>0){
-    h+='<div class="panel"><div class="panel-title">📅 月度拆分</div>';
-    h+='<div class="tw"><table class="dt"><thead><tr><th>月份</th><th>营收</th><th>成本</th><th>利润</th><th>利润率</th></tr></thead><tbody>';
-    const mRev=d.gmv/d.sp;
-    for(let mi=0;mi<d.sp;mi++){
-      const mHR=d.taSalary*d.taCount+d.instrSalary+d.dirSalary;
-      const mSettle=d.settleCost/d.sp;
-      const mOther=d.otherCost/d.sp;
-      const mTax=mRev*d.taxRate;
-      const mRef=d.refAmt/d.sp;
-      const mCost=mHR+mSettle+mOther+mTax+mRef;
-      const mProfit=mRev-mCost;
-      const mPR=mRev>0?mProfit/mRev:0;
-      h+=`<tr><td>第${mi+1}月</td><td>${fC(mRev)}</td><td class="neg">${fC(mCost)}</td><td class="${mProfit>=0?'pos':'neg'}">${fC(mProfit)}</td><td class="${mPR>=0?'pos':'neg'}">${fP(mPR)}</td></tr>`;
-    }
+    h+=`<div class="panel"><div class="panel-title"><span>✏️ ${t.start_month}轨 数据</span></div><div class="f-grid">`;
+    h+='<div class="section-label">👥 学员</div>';
+    h+=fi('paid','缴费人数')+fi('refund_count','退费人数')+fi('delay','延期人数');
+    h+=fr('开课人数',fU(tc.openCount),`${fU(tc.paid)}-${fU(tc.refC)}-${fU(tc.delayC)}`);
+    h+=fr('开课率',fP(tc.openRate));
+    h+=fi('renew','续费人数（第3月填）');
+    h+=fr('续费率',fP(tc.renewRate));
+    h+=fr('课程营收',fC(tc.gmvCourse),`${fU(tc.renewCount)}×${fC(cmn.next_tuition||0)}`);
+    h+=fi('gmv_other','其他营收');
+    h+='<div class="section-label">💸 退费与成本</div>';
+    h+=fr('结算费',fC(tc.settleCost),`${fU(tc.settleCount)}人×${fC(cmn.settle_price||0)}`);
+    h+=fi('refund_amt','课中退费金额');
+    h+=fi('ta_count','二讲人数');
+    h+=fi('other_cost','其他成本(金额)');
+    h+='</div></div>';
+  }
+
+  // Targets
+  h+='<div class="panel"><div class="panel-title"><span>🎯 目标设定</span></div><div class="f-grid">';
+  const tgt=stage.targets||{};
+  const ft=(key,label)=>`<div class="f-row" style="background:var(--ab);border-color:var(--abd)"><div class="f-lbl" style="color:var(--a)">${label}</div><input class="f-inp" value="${fN((tgt[key]||0)*100,1)}" data-tgt="${key}" style="color:var(--a)"/></div>`;
+  h+=ft('profit_rate','利润率目标')+ft('renew_rate','续费率目标')+ft('open_rate','开课率目标');
+  h+=ft('refund_rate','退费率上限')+ft('hr_ratio','人力费比上限');
+  h+='</div></div>';
+
+  // Note
+  h+=`<div class="panel"><div class="panel-title"><span>📝 备注</span></div><textarea class="f-note" id="noteArea">${stage.note||''}</textarea></div>`;
+
+  document.getElementById('leftPanel').innerHTML=h;
+}
+
+function renderRight(){
+  const sk=STAGES[stageTab],stage=DATA[sk];
+  const vm=viewMonth||curMonth();
+  const agg=calcMonthAggregate(sk,vm);
+  const tgt=stage.targets||{};
+  let h='';
+
+  // Month nav
+  h+='<div class="panel"><div class="month-nav">';
+  h+=`<button id="prevMonth">◀</button>`;
+  h+=`<div class="month-label">${vm}</div>`;
+  h+=`<button id="nextMonth">▶</button>`;
+  h+=`<span style="font-size:13px;color:var(--t3);margin-left:8px">${agg.details.length}轨运行中</span>`;
+  h+='</div>';
+
+  // Active tracks table
+  if(agg.details.length>0){
+    h+='<div class="tw"><table class="dt"><thead><tr><th>轨次</th><th>阶段</th><th>本月营收</th><th>本月成本</th><th>本月利润</th></tr></thead><tbody>';
+    agg.details.forEach(d=>{
+      h+=`<tr><td style="font-weight:700">${d.label}</td><td><span class="phase ${d.phase==='教学期'?'phase-teach':'phase-renew'}">${d.phaseLabel}</span></td><td>${fC(d.revenue)}</td><td class="neg">${fC(d.cost)}</td><td class="${d.profit>=0?'pos':'neg'}">${fC(d.profit)}</td></tr>`;
+    });
+    h+=`<tr style="font-weight:800;background:var(--s3)"><td>合计</td><td>${agg.details.length}轨</td><td>${fC(agg.totRev)}</td><td class="neg">${fC(agg.totCost)}</td><td class="${agg.profit>=0?'pos':'neg'}">${fC(agg.profit)}</td></tr>`;
+    h+='</tbody></table></div>';
+  }else{
+    h+='<p style="color:var(--t3);font-size:13px;padding:10px 0">当月无运行中的轨次</p>';
+  }
+  h+='</div>';
+
+  // KPI
+  if(agg.details.length>0){
+    h+='<div class="panel"><div class="panel-title"><span>📊 当月核心指标</span></div>';
+    h+='<div class="kpi-grid">';
+    const kpi=(l,v,t,f,tgtKey,val,inv)=>{
+      const tv=tgtKey?tgt[tgtKey]||0:0;
+      let tgtH='';
+      if(tv>0&&typeof val==='number'){
+        const gap=val-tv,ok=inv?(gap<=0):(gap>=0);
+        tgtH=`<div class="kpi-tgt" style="color:${ok?'var(--g)':'var(--r)'}">目标${fP(tv)} | ${ok?'✓达标':'✗差'+Math.abs(gap*100).toFixed(1)+'%'}</div>`;
+      }
+      return `<div class="kpi ${t}"><div class="kpi-l">${l}</div><div class="kpi-v">${v}</div><div class="kpi-f">${f||''}</div>${tgtH}</div>`;
+    };
+    h+=kpi('当月营收',fC(agg.totRev),'','含续费期轨次');
+    h+=kpi('当月利润',fC(agg.profit),agg.profit>=0?'good':'bad','营收-成本');
+    h+=kpi('当月利润率',fP(agg.profitRate),agg.profitRate>=.15?'good':agg.profitRate>=.05?'warn':'bad','','profit_rate',agg.profitRate);
+    // Renewal rate: only from tracks in renewal phase
+    const renewTracks=agg.details.filter(d=>d.phase==='续费期');
+    const rtOpen=renewTracks.reduce((s,d)=>s+d.openCount,0);
+    const rtRenew=renewTracks.reduce((s,d)=>s+d.renewCount,0);
+    const renewRate=rtOpen>0?rtRenew/rtOpen:0;
+    if(renewTracks.length>0) h+=kpi('续费率(续费期)',fP(renewRate),renewRate>=.5?'good':renewRate>=.3?'warn':'bad','续费÷开课','renew_rate',renewRate);
+    h+=kpi('人力费比',fP(agg.hrRatio),agg.hrRatio<=.3?'good':agg.hrRatio<=.5?'warn':'bad','人力÷营收','hr_ratio',agg.hrRatio,true);
+    h+=kpi('二讲人均产值',fC(agg.revPerTA),'','营收÷二讲总数');
+    h+=kpi('当月二讲总数',fU(agg.totTA)+'人','','所有活跃轨次');
+    h+=kpi('当月学员总数',fU(agg.totPaid)+'人','','所有活跃轨次缴费');
+    h+='</div></div>';
+
+    // Cost breakdown
+    h+='<div class="panel"><div class="panel-title"><span>💵 当月成本分解</span></div>';
+    h+='<div class="tw"><table class="dt"><thead><tr><th>轨次</th><th>结算费</th><th>人力</th><th>退费</th><th>其他</th><th>税费</th><th>小计</th></tr></thead><tbody>';
+    let sumSettle=0,sumHR=0,sumRef=0,sumOther=0,sumTax=0;
+    agg.details.forEach(d=>{
+      const t=d.track,sp=t.service_period||3,mi=d.monthIndex;
+      const settle=mi===0?Math.max(0,(t.paid||0)-(t.refund_count||0))*(t.settle_price||0):0;
+      const hr=(t.ta_count||0)*(t.ta_salary||0)+(t.instructor_salary||0)+(t.director_salary||0);
+      const ref=(t.refund_amt||0)/sp,oth=(t.other_cost||0)/sp;
+      const tax=d.revenue*TAX_RATE;
+      sumSettle+=settle;sumHR+=hr;sumRef+=ref;sumOther+=oth;sumTax+=tax;
+      h+=`<tr><td>${d.label} (${d.phaseLabel})</td><td>${fC(settle)}</td><td>${fC(hr)}</td><td>${fC(ref)}</td><td>${fC(oth)}</td><td>${fC(tax)}</td><td class="neg">${fC(d.cost)}</td></tr>`;
+    });
+    h+=`<tr style="font-weight:700;background:var(--s3)"><td>合计</td><td>${fC(sumSettle)}</td><td>${fC(sumHR)}</td><td>${fC(sumRef)}</td><td>${fC(sumOther)}</td><td>${fC(sumTax)}</td><td class="neg">${fC(agg.totCost)}</td></tr>`;
     h+='</tbody></table></div></div>';
-  }
 
-  // ===== AI Analysis: Sensitivity + Uplift =====
-  if(d.gmv>0){
-    const sk=STAGES[si],basePR=d.profitRate;
-    // Sensitivity: try adjusting each lever by a small step, measure profit rate change
-    const levers=[
-      {key:'renew',label:'续费人数',step:1,dir:1,unit:'人'},
-      {key:'next_tuition',label:'下阶学费',step:100,dir:1,unit:'元'},
-      {key:'paid',label:'缴费人数',step:1,dir:1,unit:'人'},
-      {key:'refund_count',label:'退费人数',step:-1,dir:-1,unit:'人'},
-      {key:'delay',label:'延期人数',step:-1,dir:-1,unit:'人'},
-      {key:'settle_price',label:'上阶结算单价',step:-50,dir:-1,unit:'元'},
-      {key:'refund_amt',label:'课中退费金额',step:-5000,dir:-1,unit:'元'},
-      {key:'ta_count',label:'二讲人数',step:-1,dir:-1,unit:'人'},
-      {key:'ta_salary',label:'二讲月薪',step:-1000,dir:-1,unit:'元'},
-      {key:'instructor_salary',label:'主讲月薪',step:-1000,dir:-1,unit:'元'},
-      {key:'director_salary',label:'导演月薪',step:-1000,dir:-1,unit:'元'},
-      {key:'other_cost',label:'其他成本',step:-5000,dir:-1,unit:'元'},
-      {key:'gmv_other',label:'其他营收',step:5000,dir:1,unit:'元'},
-    ];
-    const impacts=[];
-    for(const lev of levers){
-      const fullKey=sk+'_'+lev.key;
-      const orig=P[fullKey]||0;
-      const nv=orig+lev.step;
-      if(nv<0&&lev.key!=='refund_count'&&lev.key!=='delay')continue;
-      const oldP=JSON.parse(JSON.stringify(P));
-      P[fullKey]=Math.max(nv,0);
-      const newD=calc(si);
-      const delta=newD.profitRate-basePR;
-      P[fullKey]=orig; // restore
-      // restore P from oldP
-      for(const k in oldP)P[k]=oldP[k];
-      if(Math.abs(delta)<1e-9)continue;
-      const stepLabel=lev.step>0?`+${Math.abs(lev.step)}${lev.unit}`:`-${Math.abs(lev.step)}${lev.unit}`;
-      impacts.push({label:lev.label,step:stepLabel,delta,key:lev.key,levStep:lev.step,dir:lev.dir});
-    }
-    impacts.sort((a,b)=>Math.abs(b.delta)-Math.abs(a.delta));
-
-    if(impacts.length>0){
-      const maxD=Math.max(1e-9,...impacts.map(x=>Math.abs(x.delta)));
-      h+='<div class="panel" style="margin-bottom:16px"><div class="panel-title">🤖 AI 分析：参数敏感度排名</div>';
-      h+='<div style="font-size:13px;color:var(--t3);margin-bottom:10px">每个参数变动一小步对利润率的影响（从大到小）</div>';
-      h+='<div style="display:grid;gap:6px">';
-      impacts.slice(0,10).forEach((it,i)=>{
-        const barW=Math.max(4,Math.round(Math.abs(it.delta)/maxD*100));
-        const sign=it.delta>0?'+':'';
-        const color=it.delta>0?'var(--g)':'var(--r)';
-        h+=`<div style="display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;padding:8px 12px;border:1px solid var(--bd);background:var(--s2);border-radius:8px">`;
-        h+=`<div><div style="font-weight:700;font-size:13px">${i+1}. ${it.label}</div><div style="font-size:12px;color:var(--t3)">${it.step} → 利润率 ${sign}${fN(it.delta*100,2)}%</div></div>`;
-        h+=`<div style="display:flex;align-items:center;gap:8px"><div style="width:100px;height:6px;border-radius:3px;background:var(--bd);overflow:hidden"><div style="height:100%;border-radius:3px;width:${barW}%;background:${color}"></div></div><div style="font-size:13px;font-weight:900;min-width:60px;text-align:right;color:${color}">${sign}${fN(it.delta*100,2)}%</div></div>`;
-        h+=`</div>`;
+    // AI Sensitivity (on aggregate level)
+    if(agg.totRev>0){
+      const basePR=agg.profitRate;
+      const levers=[];
+      // Common-level levers (affect all tracks)
+      levers.push({type:'common',key:'next_tuition',label:'下阶学费(统一)',step:100,unit:'元'});
+      levers.push({type:'common',key:'ta_salary',label:'二讲月薪(统一)',step:-1000,unit:'元'});
+      levers.push({type:'common',key:'settle_price',label:'结算单价(统一)',step:-50,unit:'元'});
+      levers.push({type:'common',key:'instructor_salary',label:'主讲月薪(统一)',step:-1000,unit:'元'});
+      levers.push({type:'common',key:'director_salary',label:'导演月薪(统一)',step:-1000,unit:'元'});
+      // Track-level levers
+      renewTracks.forEach(d=>{
+        levers.push({type:'track',idx:d.trackIdx,key:'renew',label:d.label+' 续费人数',step:1,unit:'人'});
       });
-      h+='</div></div>';
-
-      // ===== Uplift Plan: how to reach +5% profit rate =====
-      const targetDelta=0.05;
-      const goalPR=basePR+targetDelta;
-      // Greedy: iteratively pick the best lever
-      let wp=JSON.parse(JSON.stringify(P));
-      let curPR=basePR;
-      const changes=[];
-      const maxIter=500;
-      for(let iter=0;iter<maxIter&&curPR<goalPR-1e-6;iter++){
-        let bestKey=null,bestVal=null,bestGain=-Infinity,bestLev=null;
-        for(const lev of levers){
-          const fullKey=sk+'_'+lev.key;
-          const cur=wp[fullKey]||0;
-          let nv=cur+lev.step;
-          if(nv<0)nv=0;
-          if(Math.abs(nv-cur)<1e-9)continue;
-          // Some bounds
-          if(lev.key==='renew'&&nv>(wp[sk+'_paid']||0))continue;
-          if(lev.key==='ta_count'&&nv<0)continue;
-          const savedP=JSON.parse(JSON.stringify(P));
-          for(const k in wp)P[k]=wp[k];
-          P[fullKey]=nv;
-          const gain=calc(si).profitRate-curPR;
-          for(const k in savedP)P[k]=savedP[k]; // restore global P
-          if(gain>bestGain+1e-9){bestGain=gain;bestKey=fullKey;bestVal=nv;bestLev=lev}
-        }
-        if(!bestKey||bestGain<=1e-9)break;
-        wp[bestKey]=bestVal;curPR+=bestGain;
-        // Track change
-        const existing=changes.find(c=>c.key===bestKey);
-        if(existing){existing.to=bestVal}else{changes.push({key:bestKey,label:bestLev.label,from:P[bestKey]||0,to:bestVal,unit:bestLev.unit})}
+      agg.details.forEach(d=>{
+        levers.push({type:'track',idx:d.trackIdx,key:'ta_count',label:d.label+' 二讲人数',step:-1,unit:'人'});
+      });
+      const impacts=[];
+      for(const lev of levers){
+        let orig,obj;
+        if(lev.type==='common'){obj=stage.common;orig=obj[lev.key]||0}
+        else{obj=stage.tracks[lev.idx];orig=obj[lev.key]||0}
+        const nv=Math.max(0,orig+lev.step);
+        if(Math.abs(nv-orig)<1e-9)continue;
+        obj[lev.key]=nv;const newAgg=calcMonthAggregate(sk,vm);obj[lev.key]=orig;
+        const delta=newAgg.totRev>0?(newAgg.profit/newAgg.totRev)-basePR:0;
+        if(Math.abs(delta)<1e-9)continue;
+        impacts.push({label:lev.label,step:(lev.step>0?'+':'')+lev.step+lev.unit,delta});
       }
-
-      h+='<div class="panel" style="margin-bottom:16px"><div class="panel-title">🎯 提升建议：利润率 +5%</div>';
-      const feasible=curPR>=goalPR-1e-4;
-      h+=`<div style="display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap">`;
-      h+=`<div style="padding:10px 14px;background:var(--s2);border:1px solid var(--bd);border-radius:8px;font-size:14px;flex:1;min-width:120px"><span>当前利润率</span><b style="display:block;font-size:18px;margin-top:2px">${fP(basePR)}</b></div>`;
-      h+=`<div style="padding:10px 14px;background:var(--pl);border:1px solid var(--pb);border-radius:8px;font-size:14px;flex:1;min-width:120px;color:var(--p)"><span>目标利润率</span><b style="display:block;font-size:18px;margin-top:2px">${fP(goalPR)}</b></div>`;
-      const achColor=feasible?'var(--gb)':'var(--rb)',achBd=feasible?'var(--gbd)':'var(--rbd)',achTxt=feasible?'var(--g)':'var(--r)';
-      h+=`<div style="padding:10px 14px;background:${achColor};border:1px solid ${achBd};border-radius:8px;font-size:14px;flex:1;min-width:120px;color:${achTxt}"><span>${feasible?'可达成 ✓':'最大可达 ⚠'}</span><b style="display:block;font-size:18px;margin-top:2px">${fP(curPR)}</b></div>`;
-      h+=`</div>`;
-
-      if(changes.length===0){
-        h+=`<div style="padding:12px;background:var(--s2);border:1px solid var(--bd);border-radius:8px;font-size:13px;color:var(--t2)">当前参数已在极限范围，无法通过单参数调整提升 5%。建议结构性优化（如提价、增加续费率等）。</div>`;
-      }else{
-        h+='<div class="tw"><table class="dt"><thead><tr><th>调整项</th><th>当前值</th><th></th><th>目标值</th><th>变化</th></tr></thead><tbody>';
-        changes.forEach(c=>{
-          const delta=c.to-c.from;
-          const ds=`${delta>0?'+':''}${fI(delta)}${c.unit}`;
-          h+=`<tr><td style="font-weight:700">${c.label}</td><td>${fI(c.from)}${c.unit}</td><td style="color:var(--p);font-weight:900">→</td><td style="font-weight:800;color:var(--p)">${fI(c.to)}${c.unit}</td><td style="font-weight:800;color:${delta>0?'var(--g)':'var(--r)'}">${ds}</td></tr>`;
+      impacts.sort((a,b)=>Math.abs(b.delta)-Math.abs(a.delta));
+      if(impacts.length>0){
+        const maxD=Math.max(1e-9,...impacts.map(x=>Math.abs(x.delta)));
+        h+='<div class="panel"><div class="panel-title"><span>🤖 AI 敏感度分析</span></div>';
+        h+='<div style="display:grid;gap:5px">';
+        impacts.slice(0,8).forEach((it,i)=>{
+          const bW=Math.max(4,Math.round(Math.abs(it.delta)/maxD*100)),s=it.delta>0?'+':'',c=it.delta>0?'var(--g)':'var(--r)';
+          h+=`<div style="display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;padding:7px 10px;border:1px solid var(--bd);background:var(--s2);border-radius:8px"><div><div style="font-weight:700;font-size:13px">${i+1}. ${it.label}</div><div style="font-size:12px;color:var(--t3)">${it.step} → ${s}${(it.delta*100).toFixed(2)}%</div></div><div style="display:flex;align-items:center;gap:6px"><div style="width:80px;height:5px;border-radius:3px;background:var(--bd);overflow:hidden"><div style="height:100%;border-radius:3px;width:${bW}%;background:${c}"></div></div><div style="font-size:12px;font-weight:900;min-width:55px;text-align:right;color:${c}">${s}${(it.delta*100).toFixed(2)}%</div></div></div>`;
         });
-        h+='</tbody></table></div>';
-        const topC=changes.slice(0,3).map(c=>c.label).join('、');
-        h+=`<div style="margin-top:10px;padding:12px;background:var(--s2);border:1px solid var(--bd);border-radius:8px;font-size:13px;color:var(--t2);line-height:1.6">`;
-        h+=`<b>关键洞察：</b>影响最大的杠杆是 <b>${topC}</b>。`;
-        if(feasible)h+=`通过 ${changes.length} 项参数调整，可将利润率从 <b>${fP(basePR)}</b> 提升至 <b>${fP(goalPR)}</b>。`;
-        else h+=`在合理范围内最多可提升至 <b>${fP(curPR)}</b>，距目标还差 <b>${fN((goalPR-curPR)*100,1)}%</b>。`;
-        h+=`</div>`;
+        h+='</div></div>';
       }
-      h+='</div>';
     }
   }
 
-  document.getElementById('resultPanel').innerHTML=h;
+  document.getElementById('rightPanel').innerHTML=h;
 }
 
-function render(){
-  renderTabs();
-  renderInput(stageTab);
-  renderResult(stageTab);
-}
+function render(){renderTabs();renderLeft();renderRight()}
 
-// Event: tab click
+// Events
 document.getElementById('tabs').addEventListener('click',e=>{
-  const t=e.target;
-  if(t.dataset.tab!==undefined){stageTab=+t.dataset.tab;render();save()}
+  if(e.target.dataset.tab!==undefined){stageTab=+e.target.dataset.tab;selTrack=null;render()}
 });
-
-// Event: input change
+document.addEventListener('click',e=>{
+  const t=e.target;
+  if(t.id==='addTrack'){
+    const m=prompt('开课月份（格式 YYYY-MM）：',curMonth());
+    if(!m||!/^\d{4}-\d{2}$/.test(m))return;
+    const sk=STAGES[stageTab];
+    DATA[sk].tracks.push({...EMPTY_TRACK,start_month:m});
+    selTrack=DATA[sk].tracks.length-1;render();save();return;
+  }
+  if(t.dataset.track!==undefined){selTrack=+t.dataset.track;renderLeft();return}
+  if(t.dataset.delTrack!==undefined){
+    e.stopPropagation();
+    if(!confirm('确认删除此轨次？'))return;
+    DATA[STAGES[stageTab]].tracks.splice(+t.dataset.delTrack,1);
+    selTrack=null;render();save();return;
+  }
+  if(t.id==='prevMonth'){viewMonth=monthAdd(viewMonth||curMonth(),-1);renderRight();return}
+  if(t.id==='nextMonth'){viewMonth=monthAdd(viewMonth||curMonth(),1);renderRight();return}
+});
 document.addEventListener('change',e=>{
   const t=e.target;
-  if(t.classList?.contains('f-inp')&&t.dataset.key){
+  if(t.id==='noteArea'){DATA[STAGES[stageTab]].note=t.value;save();return}
+  if(t.dataset.ckey){
     const raw=String(t.value).replace(/,/g,'').trim(),num=Number(raw);
     if(!Number.isFinite(num))return;
-    P[t.dataset.key]=Math.max(num,0);
-    render();save();
+    DATA[STAGES[stageTab]].common[t.dataset.ckey]=Math.max(num,0);render();save();
+    return;
+  }
+  if(t.dataset.tkey&&selTrack!==null){
+    const raw=String(t.value).replace(/,/g,'').trim(),num=Number(raw);
+    if(!Number.isFinite(num))return;
+    const track=DATA[STAGES[stageTab]].tracks[selTrack];
+    if(track){track[t.dataset.tkey]=Math.max(num,0);render();save()}
+    return;
+  }
+  if(t.dataset.tgt){
+    const raw=String(t.value).replace(/,/g,'').replace(/%/g,'').trim(),num=Number(raw);
+    if(!Number.isFinite(num))return;
+    DATA[STAGES[stageTab]].targets[t.dataset.tgt]=Math.max(num/100,0);render();save();
+    return;
   }
 });
-
-// Event: reset
-document.getElementById('resetBtn').addEventListener('click',async()=>{
-  if(!confirm('确认重置所有数据？'))return;
-  P=JSON.parse(JSON.stringify(STAGE_DP));render();await save();
+// Tab: save current input first, then jump to next
+document.addEventListener('keydown',e=>{
+  if(e.key==='Tab'&&e.target.classList?.contains('f-inp')){
+    e.preventDefault();
+    // Trigger change to save current value
+    e.target.dispatchEvent(new Event('change',{bubbles:true}));
+    // Wait for re-render, then find the same position and jump next
+    const key=e.target.dataset.tkey||e.target.dataset.ckey||e.target.dataset.tgt||'';
+    const allKeys=Array.from(document.querySelectorAll('.f-inp')).map(el=>el.dataset.tkey||el.dataset.ckey||el.dataset.tgt||'');
+    const curIdx=allKeys.indexOf(key);
+    requestAnimationFrame(()=>{
+      const inputs=Array.from(document.querySelectorAll('.f-inp'));
+      const next=e.shiftKey?curIdx-1:curIdx+1;
+      if(next>=0&&next<inputs.length){inputs[next].focus();inputs[next].select()}
+    });
+  }
 });
-
-// Event: theme
-document.getElementById('themeToggle').addEventListener('click',function(){
+document.getElementById('snapBtn').onclick=saveSnapshot;
+document.getElementById('histBtn').onclick=showHistory;
+document.getElementById('themeToggle').onclick=function(){
   const h=document.documentElement,n=h.dataset.theme==='dark'?'light':'dark';
   h.dataset.theme=n;this.textContent=n==='dark'?'☀️':'🌙';
-});
+};
 
-// Init: load from Supabase then render
+viewMonth=curMonth();
 (async()=>{await load();render()})();
 </script>
 </body>
