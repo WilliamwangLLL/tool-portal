@@ -1,0 +1,36 @@
+name: 部署工具箱到服务器 /my/
+
+# push main 改了 index.html → 自动同步到火山 ECS 的 https://www.haoyunlai.fun/my/
+# GitHub Pages 那份由 Pages 自己构建，这里只管服务器那份
+
+on:
+  push:
+    branches: [main]
+    paths: [index.html]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 配置 SSH
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          echo "115.190.164.162 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFqP49Ib7e9V0b5vN7F8taYSAG5pI473iCkUjJhTAMWz" >> ~/.ssh/known_hosts
+
+      - name: 备份并上传 index.html
+        run: |
+          ssh -i ~/.ssh/deploy_key root@115.190.164.162 \
+            'cp /www/wwwroot/default/my/index.html /www/wwwroot/default/my/index.html.bak'
+          scp -i ~/.ssh/deploy_key index.html \
+            root@115.190.164.162:/www/wwwroot/default/my/index.html
+
+      - name: 烟测
+        run: |
+          count=$(curl -s --max-time 20 https://www.haoyunlai.fun/my/ | grep -c 'Tool Portal')
+          echo "线上页面 Tool Portal 出现次数: $count"
+          test "$count" -ge 1
