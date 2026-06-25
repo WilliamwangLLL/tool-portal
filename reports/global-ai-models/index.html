@@ -1,0 +1,1863 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>全球大模型格局深度调研 2026</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23e2f2ff'/%3E%3Ctext x='32' y='39' font-size='24' text-anchor='middle' font-family='Arial,sans-serif' font-weight='800' fill='%2306111f'%3EAI%3C/text%3E%3C/svg%3E">
+  <style>
+    :root {
+      --ink: #17202a;
+      --muted: #657282;
+      --line: #d9e0e8;
+      --paper: #f6f8fb;
+      --white: #ffffff;
+      --blue: #2563eb;
+      --teal: #0f766e;
+      --green: #15803d;
+      --amber: #b45309;
+      --red: #b91c1c;
+      --violet: #6d28d9;
+      --slate: #334155;
+      --chip: #eef4ff;
+      --soft-green: #edf8f0;
+      --soft-amber: #fff6e7;
+      --soft-red: #fff0f0;
+      --shadow: 0 18px 50px rgba(15, 23, 42, 0.10);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.68;
+    }
+
+    a {
+      color: var(--blue);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .page {
+      min-height: 100vh;
+    }
+
+    .hero {
+      color: #f8fafc;
+      background:
+        linear-gradient(rgba(12, 20, 32, 0.78), rgba(12, 20, 32, 0.86)),
+        url("https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=2400&q=80") center / cover no-repeat;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .hero-inner {
+      width: min(1180px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 48px 0 38px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 74px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+    }
+
+    .brand-mark {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      color: #06111f;
+      background: #e2f2ff;
+      border-radius: 8px;
+      font-weight: 900;
+    }
+
+    .top-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .button {
+      appearance: none;
+      border: 1px solid rgba(255, 255, 255, 0.32);
+      background: rgba(255, 255, 255, 0.10);
+      color: #f8fafc;
+      min-height: 38px;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font: inherit;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .button:hover {
+      background: rgba(255, 255, 255, 0.18);
+    }
+
+    .hero h1 {
+      max-width: 920px;
+      margin: 0 0 18px;
+      font-size: 56px;
+      line-height: 1.05;
+      letter-spacing: 0;
+    }
+
+    .hero-subtitle {
+      max-width: 900px;
+      margin: 0 0 28px;
+      color: #d7e4f0;
+      font-size: 20px;
+    }
+
+    .meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 26px;
+    }
+
+    .meta-pill {
+      color: #eaf3ff;
+      border: 1px solid rgba(226, 242, 255, 0.34);
+      background: rgba(226, 242, 255, 0.10);
+      border-radius: 8px;
+      padding: 8px 10px;
+      font-size: 13px;
+    }
+
+    .signal-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      margin-top: 48px;
+      background: rgba(255, 255, 255, 0.16);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .signal {
+      min-height: 130px;
+      padding: 22px;
+      background: rgba(3, 10, 22, 0.38);
+    }
+
+    .signal b {
+      display: block;
+      margin-bottom: 8px;
+      color: #ffffff;
+      font-size: 16px;
+    }
+
+    .signal span {
+      color: #d7e4f0;
+      font-size: 14px;
+    }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(12px);
+    }
+
+    .nav-inner {
+      width: min(1180px, calc(100% - 40px));
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      overflow-x: auto;
+      padding: 10px 0;
+    }
+
+    .nav a {
+      color: var(--slate);
+      padding: 7px 9px;
+      border-radius: 8px;
+      font-size: 14px;
+      white-space: nowrap;
+    }
+
+    .nav a:hover {
+      background: #eef2f7;
+      text-decoration: none;
+    }
+
+    main {
+      width: min(1180px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 34px 0 70px;
+    }
+
+    section {
+      margin: 44px 0;
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(0, 0.86fr) minmax(260px, 0.42fr);
+      align-items: end;
+      gap: 28px;
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      margin: 0 0 8px;
+      font-size: 30px;
+      line-height: 1.18;
+      letter-spacing: 0;
+    }
+
+    h3 {
+      margin: 0 0 10px;
+      font-size: 20px;
+      line-height: 1.3;
+      letter-spacing: 0;
+    }
+
+    p {
+      margin: 0 0 12px;
+    }
+
+    .section-kicker {
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .note {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .grid-2,
+    .grid-3,
+    .grid-4 {
+      display: grid;
+      gap: 16px;
+    }
+
+    .grid-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .grid-3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .grid-4 {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .card,
+    .panel,
+    .company-card,
+    .source-card {
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.05);
+    }
+
+    .card,
+    .panel {
+      padding: 18px;
+    }
+
+    .thesis-card {
+      min-height: 185px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border-top: 4px solid var(--blue);
+    }
+
+    .thesis-card:nth-child(2) {
+      border-top-color: var(--teal);
+    }
+
+    .thesis-card:nth-child(3) {
+      border-top-color: var(--amber);
+    }
+
+    .thesis-number {
+      font-weight: 900;
+      color: var(--blue);
+      font-size: 13px;
+    }
+
+    .thesis-card:nth-child(2) .thesis-number {
+      color: var(--teal);
+    }
+
+    .thesis-card:nth-child(3) .thesis-number {
+      color: var(--amber);
+    }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      min-height: 26px;
+      padding: 4px 8px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: #f8fafc;
+      color: var(--slate);
+      font-size: 12px;
+      font-weight: 650;
+      white-space: nowrap;
+    }
+
+    .tag.official {
+      background: var(--soft-green);
+      color: var(--green);
+      border-color: #bee7ca;
+    }
+
+    .tag.estimate {
+      background: var(--soft-amber);
+      color: var(--amber);
+      border-color: #f0d6a6;
+    }
+
+    .tag.judgment {
+      background: var(--chip);
+      color: var(--blue);
+      border-color: #c9ddff;
+    }
+
+    .tag.warning {
+      background: var(--soft-red);
+      color: var(--red);
+      border-color: #f2b7b7;
+    }
+
+    .method-list {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .method-item {
+      border-left: 4px solid var(--blue);
+      padding-left: 12px;
+    }
+
+    .method-item:nth-child(2) {
+      border-left-color: var(--amber);
+    }
+
+    .method-item:nth-child(3) {
+      border-left-color: var(--teal);
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.05);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 1120px;
+    }
+
+    th,
+    td {
+      border-bottom: 1px solid #e6ecf3;
+      padding: 12px 13px;
+      vertical-align: top;
+      text-align: left;
+      font-size: 14px;
+    }
+
+    th {
+      position: sticky;
+      top: 49px;
+      z-index: 4;
+      color: #263445;
+      background: #f1f5f9;
+      font-size: 12px;
+      text-transform: uppercase;
+    }
+
+    tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .name-cell {
+      min-width: 150px;
+      font-weight: 800;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    .score {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: #ecfdf5;
+      color: var(--green);
+      font-weight: 850;
+      font-size: 13px;
+    }
+
+    .score.mid {
+      background: #eff6ff;
+      color: var(--blue);
+    }
+
+    .score.warn {
+      background: #fff7ed;
+      color: var(--amber);
+    }
+
+    .chart {
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 18px;
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.05);
+    }
+
+    .bar-row {
+      display: grid;
+      grid-template-columns: 180px minmax(180px, 1fr) 170px;
+      align-items: center;
+      gap: 12px;
+      margin: 11px 0;
+      font-size: 14px;
+    }
+
+    .bar-track {
+      height: 18px;
+      background: #edf2f7;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid #e2e8f0;
+    }
+
+    .bar {
+      height: 100%;
+      min-width: 3%;
+      border-radius: 8px;
+      background: var(--blue);
+    }
+
+    .bar.teal {
+      background: var(--teal);
+    }
+
+    .bar.green {
+      background: var(--green);
+    }
+
+    .bar.amber {
+      background: var(--amber);
+    }
+
+    .bar.red {
+      background: var(--red);
+    }
+
+    .bar.violet {
+      background: var(--violet);
+    }
+
+    .matrix {
+      display: grid;
+      grid-template-columns: 96px 1fr;
+      grid-template-rows: 1fr 42px;
+      gap: 10px;
+      min-height: 440px;
+    }
+
+    .axis-y {
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .axis-x {
+      grid-column: 2;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .matrix-plane {
+      position: relative;
+      min-height: 385px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background:
+        linear-gradient(90deg, transparent 49.8%, #dbe3ec 50%, transparent 50.2%),
+        linear-gradient(0deg, transparent 49.8%, #dbe3ec 50%, transparent 50.2%),
+        #ffffff;
+      overflow: hidden;
+    }
+
+    .quadrant {
+      position: absolute;
+      color: #94a3b8;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .q1 {
+      top: 12px;
+      right: 14px;
+    }
+
+    .q2 {
+      top: 12px;
+      left: 14px;
+    }
+
+    .q3 {
+      bottom: 12px;
+      left: 14px;
+    }
+
+    .q4 {
+      bottom: 12px;
+      right: 14px;
+    }
+
+    .dot {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      display: grid;
+      place-items: center;
+      width: 88px;
+      min-height: 34px;
+      padding: 5px 8px;
+      border-radius: 8px;
+      color: white;
+      font-size: 12px;
+      font-weight: 800;
+      text-align: center;
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.18);
+    }
+
+    .dot.openai { left: 87%; top: 22%; background: var(--blue); }
+    .dot.google { left: 92%; top: 19%; background: var(--green); }
+    .dot.meta { left: 84%; top: 34%; background: var(--slate); }
+    .dot.anthropic { left: 76%; top: 25%; background: var(--teal); }
+    .dot.xai { left: 78%; top: 50%; background: var(--red); }
+    .dot.bytedance { left: 72%; top: 39%; background: #0f5f8c; }
+    .dot.tencent { left: 68%; top: 45%; background: #1f7a5c; }
+    .dot.alibaba { left: 70%; top: 57%; background: #b45309; }
+    .dot.deepseek { left: 45%; top: 26%; background: #111827; }
+    .dot.zhipu { left: 48%; top: 48%; background: #475569; }
+    .dot.minimax { left: 43%; top: 62%; background: #be123c; }
+    .dot.mistral { left: 50%; top: 38%; background: #6d28d9; }
+
+    .company-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .company-card {
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .company-head {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      align-items: start;
+      padding: 18px 18px 12px;
+      border-bottom: 1px solid #edf2f7;
+      background: #fbfdff;
+    }
+
+    .company-name {
+      margin: 0;
+      font-size: 21px;
+      line-height: 1.25;
+    }
+
+    .company-type {
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 3px;
+    }
+
+    .status-badge {
+      border-radius: 8px;
+      padding: 5px 8px;
+      font-size: 12px;
+      font-weight: 800;
+      background: #f1f5f9;
+      color: var(--slate);
+      border: 1px solid #dbe3ec;
+      white-space: nowrap;
+    }
+
+    .company-body {
+      padding: 16px 18px 18px;
+    }
+
+    .fact-list {
+      display: grid;
+      gap: 8px;
+      margin: 12px 0 14px;
+    }
+
+    .fact {
+      display: grid;
+      grid-template-columns: 92px 1fr;
+      gap: 10px;
+      border-bottom: 1px solid #eef2f7;
+      padding-bottom: 8px;
+      font-size: 14px;
+    }
+
+    .fact:last-child {
+      border-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .fact b {
+      color: #344255;
+    }
+
+    .judgment-box {
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #c9ddff;
+      background: #f5f8ff;
+      font-size: 14px;
+    }
+
+    .timeline {
+      display: grid;
+      gap: 14px;
+    }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 130px 1fr;
+      gap: 18px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .timeline-item:last-child {
+      border-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .time-label {
+      font-weight: 900;
+      color: var(--blue);
+    }
+
+    .source-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .source-card {
+      padding: 14px;
+      min-height: 140px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .source-card b {
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .source-card span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .callout {
+      border-left: 5px solid var(--amber);
+      background: #fffaf0;
+      border-radius: 8px;
+      padding: 15px 16px;
+      margin: 18px 0;
+    }
+
+    .reader-track {
+      display: grid;
+      grid-template-columns: 0.82fr 1.18fr;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .track-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .track-item {
+      display: grid;
+      grid-template-columns: 32px 1fr;
+      gap: 10px;
+      align-items: start;
+    }
+
+    .track-index {
+      width: 28px;
+      height: 28px;
+      display: grid;
+      place-items: center;
+      border-radius: 8px;
+      background: #e7f0ff;
+      color: var(--blue);
+      font-weight: 900;
+      font-size: 13px;
+    }
+
+    .footer {
+      padding: 30px 0 54px;
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+      background: #ffffff;
+    }
+
+    .footer-inner {
+      width: min(1180px, calc(100% - 40px));
+      margin: 0 auto;
+      font-size: 13px;
+    }
+
+    @media (max-width: 980px) {
+      .hero h1 {
+        font-size: 42px;
+      }
+
+      .signal-strip,
+      .grid-3,
+      .grid-4,
+      .method-list,
+      .source-grid,
+      .company-grid,
+      .reader-track,
+      .section-head {
+        grid-template-columns: 1fr;
+      }
+
+      .grid-2 {
+        grid-template-columns: 1fr;
+      }
+
+      .bar-row {
+        grid-template-columns: 1fr;
+        gap: 5px;
+      }
+
+      .matrix {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr auto;
+      }
+
+      .axis-y {
+        writing-mode: horizontal-tb;
+        transform: none;
+        justify-content: flex-start;
+      }
+
+      .axis-x {
+        grid-column: 1;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .hero-inner,
+      main,
+      .nav-inner,
+      .footer-inner {
+        width: min(100% - 24px, 1180px);
+      }
+
+      .topbar {
+        align-items: flex-start;
+        flex-direction: column;
+        margin-bottom: 44px;
+      }
+
+      .hero h1 {
+        font-size: 34px;
+      }
+
+      .hero-subtitle {
+        font-size: 17px;
+      }
+
+      .company-head,
+      .fact,
+      .timeline-item {
+        grid-template-columns: 1fr;
+      }
+
+      .status-badge {
+        width: fit-content;
+      }
+
+      th {
+        top: 48px;
+      }
+
+      .dot {
+        width: 74px;
+        font-size: 11px;
+      }
+    }
+
+    @media print {
+      .nav,
+      .top-actions {
+        display: none;
+      }
+
+      body {
+        background: white;
+      }
+
+      .hero {
+        color: var(--ink);
+        background: white;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .hero-subtitle,
+      .signal span,
+      .meta-pill {
+        color: var(--slate);
+      }
+
+      .signal-strip,
+      .signal,
+      .meta-pill {
+        background: white;
+        border-color: var(--line);
+      }
+
+      .signal b {
+        color: var(--ink);
+      }
+
+      .card,
+      .panel,
+      .company-card,
+      .source-card,
+      .chart,
+      .table-wrap {
+        box-shadow: none;
+        break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="hero">
+      <div class="hero-inner">
+        <div class="topbar">
+          <div class="brand">
+            <div class="brand-mark">AI</div>
+            <div>全球大模型研究档案</div>
+          </div>
+          <div class="top-actions">
+            <button class="button" type="button" onclick="window.print()">打印 / 存为 PDF</button>
+            <button class="button" type="button" onclick="document.documentElement.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'})">查看来源</button>
+          </div>
+        </div>
+
+        <h1>全球大模型格局深度调研 2026</h1>
+        <p class="hero-subtitle">
+          从 ChatGPT、Claude、Gemini 到豆包、智谱、MiniMax、元宝、DeepSeek：用算力、人才密度、年度投入、产品分发和资本市场影响，重新理解大模型竞争的真实结构。
+        </p>
+        <div class="meta-row">
+          <span class="meta-pill">版本日期：2026-06-25</span>
+          <span class="meta-pill">覆盖：14 个主要模型阵营</span>
+          <span class="meta-pill">方法：公开披露 + 技术报告 + 媒体估算 + 本报告判断</span>
+          <span class="meta-pill">读者：从入门到投资、产品、战略、技术研究</span>
+        </div>
+
+        <div class="signal-strip" aria-label="核心结论">
+          <div class="signal">
+            <b>1. 竞争重心已经变了</b>
+            <span>排行榜只是表层。真正的护城河是算力供应链、数据闭环、产品入口和能把模型变成工作流的组织能力。</span>
+          </div>
+          <div class="signal">
+            <b>2. 美国买“上限”，中国压“成本”</b>
+            <span>OpenAI、Anthropic、Google、Meta 用千亿美元级资本换前沿上限；DeepSeek、Qwen、GLM、豆包把效率和分发推到极致。</span>
+          </div>
+          <div class="signal">
+            <b>3. 上市后看现金流入口</b>
+            <span>市场最终不会只给“模型智商”定价，而会给云、广告、企业席位、开发者生态、内容消费和终端入口定价。</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <nav class="nav" aria-label="页面导航">
+      <div class="nav-inner">
+        <a href="#method">阅读方法</a>
+        <a href="#map">格局总览</a>
+        <a href="#table">对比表</a>
+        <a href="#compute">算力与投入</a>
+        <a href="#talent">人才密度</a>
+        <a href="#companies">模型卡片</a>
+        <a href="#ipo">上市影响</a>
+        <a href="#playbook">读者路线</a>
+        <a href="#sources">来源</a>
+      </div>
+    </nav>
+
+    <main>
+      <section id="method">
+        <div class="section-head">
+          <div>
+            <h2>先把口径讲清楚</h2>
+            <p class="section-kicker">
+              “算力”“投入”“人才密度”经常被混用。本报告刻意把事实、估算和判断拆开，避免把 DeepSeek 单次训练成本和 Alphabet 年度资本开支放在同一个篮子里比较。
+            </p>
+          </div>
+          <div class="legend">
+            <span class="tag official">官方披露</span>
+            <span class="tag estimate">媒体 / 分析师估算</span>
+            <span class="tag judgment">本报告判断</span>
+            <span class="tag warning">需谨慎比较</span>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="method-list">
+            <div class="method-item">
+              <h3>算力密度</h3>
+              <p>不是只数 GPU，而是看单位组织能调度多少可用训练与推理算力，包括自建数据中心、云合同、芯片供应、网络、能耗和工程效率。</p>
+            </div>
+            <div class="method-item">
+              <h3>人才密度</h3>
+              <p>不是只看员工数，而是看顶尖研究、系统工程、数据工程、产品化、商业化是否在同一组织里高频协作。</p>
+            </div>
+            <div class="method-item">
+              <h3>年度投入</h3>
+              <p>公开公司常披露资本开支，私有公司常披露云合同或融资，创业公司有时只披露单次训练成本。它们代表不同层级的投入。</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout">
+          <b>关键提醒：</b>DeepSeek-V3 技术报告披露的约 557.6 万美元，是正式训练阶段的 GPU 成本估算，不包含前期研究、消融实验、数据、人员、推理服务和公司运营成本。它证明了效率突破，但不能等同于 DeepSeek 的全年投入。
+        </div>
+      </section>
+
+      <section id="map">
+        <div class="section-head">
+          <div>
+            <h2>一张图看懂全球阵营</h2>
+            <p class="section-kicker">大模型公司未来会越来越像不同类型的“智能基础设施”：有人做操作系统，有人做企业同事，有人做超级 App 入口，有人做开源价格锚。</p>
+          </div>
+        </div>
+
+        <div class="grid-3">
+          <article class="card thesis-card">
+            <div>
+              <div class="thesis-number">THESIS 01</div>
+              <h3>OpenAI 和 Anthropic 是“纯模型公司”的两端</h3>
+              <p>OpenAI 更像通用 AI 操作层，追求消费者、开发者和企业全面覆盖；Anthropic 更像可信赖的专业同事，强调长任务、代码、安全和企业工作流。</p>
+            </div>
+            <span class="tag judgment">风格判断</span>
+          </article>
+          <article class="card thesis-card">
+            <div>
+              <div class="thesis-number">THESIS 02</div>
+              <h3>Google、Meta、腾讯、阿里、百度不是只卖模型</h3>
+              <p>它们把模型嵌入搜索、广告、云、办公、社交、游戏、电商和终端。模型能力越强，越能改造原本已经很赚钱的主业务。</p>
+            </div>
+            <span class="tag official">财报逻辑</span>
+          </article>
+          <article class="card thesis-card">
+            <div>
+              <div class="thesis-number">THESIS 03</div>
+              <h3>中国模型的主战场是效率、价格和分发</h3>
+              <p>DeepSeek 改变价格预期，Qwen 和 GLM 推动开源部署，豆包和元宝走超级应用分发，MiniMax 切内容消费和陪伴场景。</p>
+            </div>
+            <span class="tag estimate">市场结构</span>
+          </article>
+        </div>
+      </section>
+
+      <section id="table">
+        <div class="section-head">
+          <div>
+            <h2>核心玩家对比表</h2>
+            <p class="section-kicker">评分为本报告综合判断，5 分代表全球第一梯队或极强确定性。它不是模型能力排行榜，而是“能持续赢下某一类 AI 市场”的综合概率。</p>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>模型 / 公司</th>
+                <th>未来风格</th>
+                <th>算力与投入信号</th>
+                <th>人才密度</th>
+                <th>商业化入口</th>
+                <th>综合判断</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="name-cell">ChatGPT / OpenAI</td>
+                <td>通用智能操作层，消费者 + 企业 + 开发者三线并进。</td>
+                <td>Stargate 计划四年 5000 亿美元；与微软新协议包含 2500 亿美元 Azure 采购。</td>
+                <td><span class="score">5</span> 顶尖研究、产品、平台化能力密集。</td>
+                <td>ChatGPT 订阅、API、企业、Agent、微软生态。</td>
+                <td>最像 AI 时代的独立平台公司，但资本开支和治理会成为上市焦点。</td>
+              </tr>
+              <tr>
+                <td class="name-cell">Claude / Anthropic</td>
+                <td>可靠、克制、长任务友好的专业同事。</td>
+                <td>AWS 10 年超 1000 亿美元技术支出，最高 5GW；Google/Broadcom 多 GW TPU 合作。</td>
+                <td><span class="score">5</span> 安全、代码、系统工程与企业产品高度集中。</td>
+                <td>Claude、API、Bedrock、企业席位、代码工具。</td>
+                <td>最可能成为“企业 AI 标准件”，上市会验证安全治理和高毛利推理能否共存。</td>
+              </tr>
+              <tr>
+                <td class="name-cell">Gemini / Google</td>
+                <td>无处不在的环境型 AI，嵌入搜索、Android、Workspace、Cloud。</td>
+                <td>Alphabet 2025 资本开支 914 亿美元；2026 指引 1800-1900 亿美元。</td>
+                <td><span class="score">5</span> DeepMind + Google Infra + TPU 长期积累。</td>
+                <td>搜索广告、Cloud、Workspace、Android、YouTube。</td>
+                <td>未必最像聊天机器人，但最可能成为“默认存在”的 AI 基础层。</td>
+              </tr>
+              <tr>
+                <td class="name-cell">豆包 / ByteDance Seed</td>
+                <td>低成本、高吞吐、内容创作与日常助手。</td>
+                <td>外部报道 2025 AI 相关资本开支约 1500 亿人民币；官方称日处理超 120 万亿 tokens。</td>
+                <td><span class="score mid">4</span> 推荐、内容、视频、语音与工程分发强。</td>
+                <td>豆包 App、火山引擎、Trae、剪映/内容生态。</td>
+                <td>中国最强消费级分发候选之一，若字节上市会放大 AI 消费入口估值。</td>
+              </tr>
+              <tr>
+                <td class="name-cell">智谱 / Z.ai GLM</td>
+                <td>中国企业、政务、私有化和开源部署底座。</td>
+                <td>GLM-4.5 开源 MoE；港交所上市，2025 收入约 7.24 亿元人民币。</td>
+                <td><span class="score mid">4</span> 清华系研究密度高，企业交付能力强。</td>
+                <td>私有化部署、云 API、开源生态、政企客户。</td>
+                <td>已经给中国大模型纯股提供定价参照，但亏损与交付成本是核心问题。</td>
+              </tr>
+              <tr>
+                <td class="name-cell">MiniMax</td>
+                <td>AI 陪伴、语音、音乐、视频与海外消费者娱乐。</td>
+                <td>2025 收入约 7904 万美元，AI 原生产品贡献 67.2%；已在港交所上市。</td>
+                <td><span class="score mid">4</span> 多模态产品与全球消费增长能力突出。</td>
+                <td>Talkie、Hailuo、开放平台、企业客户。</td>
+                <td>是“AI 娱乐与陪伴”上市样本，核心看内容成本、留存和监管。</td>
+              </tr>
+              <tr>
+                <td class="name-cell">元宝 / Tencent Hunyuan</td>
+                <td>微信生态里的行动层和内容检索助手。</td>
+                <td>腾讯披露 2025 新 AI 产品成本/费用约 180 亿元人民币，2026 预计翻倍以上。</td>
+                <td><span class="score mid">4</span> 工程、产品、社交与游戏生态强，基础模型追赶。</td>
+                <td>微信、QQ、腾讯云、广告、游戏、办公协同。</td>
+                <td>不会只靠元宝收费，而是改造腾讯所有高频场景的转化率和效率。</td>
+              </tr>
+              <tr>
+                <td class="name-cell">DeepSeek</td>
+                <td>效率优先、开源推理、价格破坏者。</td>
+                <td>V3 披露正式训练约 278.8 万 H800 GPU 小时；外部估算拥有更大 GPU 集群。</td>
+                <td><span class="score">5</span> 小团队高密度系统优化和算法效率。</td>
+                <td>API、开源生态、开发者心智、国内外集成。</td>
+                <td>最大影响不是收入规模，而是压低全行业能力价格曲线。</td>
+              </tr>
+              <tr>
+                <td class="name-cell">Qwen / Alibaba</td>
+                <td>开源模型 + 云 + 电商与企业智能体。</td>
+                <td>阿里称过去四个季度约 1200 亿元人民币资本开支用于 AI/云基础设施。</td>
+                <td><span class="score mid">4</span> 云工程、开源社区和商业场景结合强。</td>
+                <td>阿里云、通义千问 App、电商、钉钉、开发者生态。</td>
+                <td>最像中国企业级“AI Android”，通过云和开源扩散。</td>
+              </tr>
+              <tr>
+                <td class="name-cell">ERNIE / Baidu</td>
+                <td>搜索、知识、云和智能体开发平台。</td>
+                <td>百度 Q1 2026 AI 云基础设施收入 88 亿元人民币，同比增长 79%。</td>
+                <td><span class="score mid">4</span> 搜索、知识图谱、自动驾驶和云平台长期积累。</td>
+                <td>百度搜索、智能云、文心一言、秒哒、AgentBuilder。</td>
+                <td>如果搜索重构成功，百度会从“被 AI 冲击”变成“AI 搜索基础设施”。</td>
+              </tr>
+              <tr>
+                <td class="name-cell">Llama / Meta</td>
+                <td>开放权重生态、社交和终端智能。</td>
+                <td>Meta 2026 资本开支指引 1150-1350 亿美元；Llama 4 预训练使用 3.2 万 GPU。</td>
+                <td><span class="score">5</span> AI 研究、广告推荐、基础设施和硬件一体化。</td>
+                <td>Instagram、WhatsApp、Facebook、广告、Ray-Ban Meta、开发者。</td>
+                <td>用开源改变行业成本，用社交入口捕获用户场景。</td>
+              </tr>
+              <tr>
+                <td class="name-cell">Grok / xAI</td>
+                <td>实时、外放、强工具调用，与 X/Tesla 数据相连。</td>
+                <td>Colossus 已扩至 20 万 H100 GPU，路线图 100 万 GPU；2026 Series E 融资 200 亿美元。</td>
+                <td><span class="score mid">4</span> 极强系统速度和资本动员，产品信任波动较大。</td>
+                <td>X 订阅、API、企业、Tesla/机器人潜在场景。</td>
+                <td>像一台加速器，能迅速改变算力竞赛叙事，也会放大治理风险。</td>
+              </tr>
+              <tr>
+                <td class="name-cell">Mistral</td>
+                <td>欧洲主权 AI、开放可部署、企业合规。</td>
+                <td>2025 C 轮融资 17 亿欧元；计划 2027 年前欧洲 200MW 主权算力。</td>
+                <td><span class="score mid">4</span> 小而精的研究和欧洲政企渠道。</td>
+                <td>La Plateforme、企业部署、欧洲政府与产业。</td>
+                <td>IPO 会成为“非美非中主权 AI”的估值样本。</td>
+              </tr>
+              <tr>
+                <td class="name-cell">Kimi / Moonshot</td>
+                <td>长上下文、代码与开放智能体。</td>
+                <td>公开融资和算力口径不如头部透明，技术路线强调长上下文与开源 MoE。</td>
+                <td><span class="score mid">4</span> 产品增长和算法工程较强。</td>
+                <td>Kimi App、API、开发者、办公与研究场景。</td>
+                <td>若能把长上下文优势转成工作流入口，会成为中国模型第二梯队中的强变量。</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="compute">
+        <div class="section-head">
+          <div>
+            <h2>算力与年度投入：谁在花钱，谁在省钱</h2>
+            <p class="section-kicker">
+              下面不是严格同口径财务表，而是“投入强度信号”。公开公司多披露资本开支，私有公司多披露云合同或融资，中国公司有些数据来自媒体报道。
+            </p>
+          </div>
+          <div class="note">长度仅表示数量级感知，不代表会计口径可直接相加。</div>
+        </div>
+
+        <div class="chart" role="img" aria-label="主要模型公司算力与投入信号">
+          <div class="bar-row">
+            <b>OpenAI</b>
+            <div class="bar-track"><div class="bar" style="width: 100%"></div></div>
+            <span>Stargate 5000 亿美元 / 4 年</span>
+          </div>
+          <div class="bar-row">
+            <b>Microsoft-OpenAI</b>
+            <div class="bar-track"><div class="bar teal" style="width: 70%"></div></div>
+            <span>Azure 采购 2500 亿美元</span>
+          </div>
+          <div class="bar-row">
+            <b>Alphabet</b>
+            <div class="bar-track"><div class="bar green" style="width: 64%"></div></div>
+            <span>2026 CapEx 1800-1900 亿美元</span>
+          </div>
+          <div class="bar-row">
+            <b>Meta</b>
+            <div class="bar-track"><div class="bar violet" style="width: 45%"></div></div>
+            <span>2026 CapEx 1150-1350 亿美元</span>
+          </div>
+          <div class="bar-row">
+            <b>Anthropic</b>
+            <div class="bar-track"><div class="bar teal" style="width: 40%"></div></div>
+            <span>AWS 技术支出超 1000 亿美元 / 10 年</span>
+          </div>
+          <div class="bar-row">
+            <b>Alibaba</b>
+            <div class="bar-track"><div class="bar amber" style="width: 19%"></div></div>
+            <span>四季度约 1200 亿人民币 CapEx</span>
+          </div>
+          <div class="bar-row">
+            <b>ByteDance</b>
+            <div class="bar-track"><div class="bar red" style="width: 17%"></div></div>
+            <span>外部报道约 1500-1600 亿人民币 / 年</span>
+          </div>
+          <div class="bar-row">
+            <b>Tencent</b>
+            <div class="bar-track"><div class="bar green" style="width: 9%"></div></div>
+            <span>新 AI 产品 2025 约 180 亿人民币，2026 翻倍以上</span>
+          </div>
+          <div class="bar-row">
+            <b>xAI</b>
+            <div class="bar-track"><div class="bar red" style="width: 32%"></div></div>
+            <span>20 万 H100，目标 100 万 GPU</span>
+          </div>
+          <div class="bar-row">
+            <b>DeepSeek</b>
+            <div class="bar-track"><div class="bar" style="width: 6%"></div></div>
+            <span>V3 正式训练约 557.6 万美元</span>
+          </div>
+        </div>
+
+        <div class="grid-3" style="margin-top: 16px;">
+          <div class="card">
+            <h3>第一类：千亿美元级“买上限”</h3>
+            <p>OpenAI、Anthropic、Google、Meta、xAI 正在把 AI 变成电力、数据中心、芯片和云合同的竞赛。这会抬高进入前沿模型的门槛。</p>
+          </div>
+          <div class="card">
+            <h3>第二类：平台型“摊成本”</h3>
+            <p>Google、Meta、腾讯、阿里、百度可以把模型投入摊到广告、云、搜索、社交、办公、游戏、电商中，因此它们不需要每个 AI 产品单独盈利。</p>
+          </div>
+          <div class="card">
+            <h3>第三类：效率型“改价格”</h3>
+            <p>DeepSeek、Qwen、GLM、Mistral 通过 MoE、开源、蒸馏、系统优化和部署友好性，把能力价格打下来，迫使闭源模型降价。</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="talent">
+        <div class="section-head">
+          <div>
+            <h2>人才密度：人多不等于强，人少也不等于省</h2>
+            <p class="section-kicker">
+              人才密度最容易被误读。Google、Meta 的优势是长期基础设施和海量研究工程组织；DeepSeek、Mistral 的优势是小团队的算法和系统效率；OpenAI、Anthropic 的优势是研究、产品、平台和资本叙事都在同一张桌上。
+            </p>
+          </div>
+        </div>
+
+        <div class="matrix">
+          <div class="axis-y">纵轴：人才密度和前沿研究强度</div>
+          <div class="matrix-plane">
+            <div class="quadrant q1">高算力 + 高密度</div>
+            <div class="quadrant q2">低算力 + 高密度</div>
+            <div class="quadrant q3">低算力 + 产品型</div>
+            <div class="quadrant q4">高算力 + 生态型</div>
+            <div class="dot openai">OpenAI</div>
+            <div class="dot google">Gemini</div>
+            <div class="dot meta">Llama</div>
+            <div class="dot anthropic">Claude</div>
+            <div class="dot xai">Grok</div>
+            <div class="dot bytedance">豆包</div>
+            <div class="dot tencent">元宝</div>
+            <div class="dot alibaba">Qwen</div>
+            <div class="dot deepseek">DeepSeek</div>
+            <div class="dot zhipu">智谱</div>
+            <div class="dot minimax">MiniMax</div>
+            <div class="dot mistral">Mistral</div>
+          </div>
+          <div></div>
+          <div class="axis-x">横轴：可持续调度的算力与商业分发强度</div>
+        </div>
+
+        <div class="callout">
+          <b>怎么判断人才密度？</b>看三个结果：第一，模型是否能持续出现在前沿能力曲线上；第二，是否能把训练、推理、产品、销售打通；第三，遇到算力限制时，是否能用算法、数据和系统工程补回来。
+        </div>
+      </section>
+
+      <section id="companies">
+        <div class="section-head">
+          <div>
+            <h2>主要模型卡片</h2>
+            <p class="section-kicker">每张卡片都把“已知事实”和“未来风格判断”分开。读者可以先看蓝色判断框，再回到事实栏核对依据。</p>
+          </div>
+        </div>
+
+        <div class="company-grid">
+          <article class="company-card">
+            <div class="company-head">
+              <div>
+                <h3 class="company-name">ChatGPT / OpenAI</h3>
+                <div class="company-type">纯模型平台公司，消费者和开发者心智最强</div>
+              </div>
+              <span class="status-badge">私有，潜在超级 IPO</span>
+            </div>
+            <div class="company-body">
+              <div class="legend">
+                <span class="tag official">Stargate</span>
+                <span class="tag official">Azure</span>
+                <span class="tag judgment">AI OS</span>
+              </div>
+              <div class="fact-list">
+                <div class="fact"><b>算力</b><span>Stargate 宣布四年最高 5000 亿美元，初期 1000 亿美元；微软协议包含 OpenAI 额外采购 2500 亿美元 Azure 服务。</span></div>
+                <div class="fact"><b>人才</b><span>研究、产品、平台、生态能力非常集中；外部估算员工数已达数千人，但真实密度来自前沿模型、ChatGPT 产品和 API 平台同步迭代。</span></div>
+                <div class="fact"><b>投入</b><span>公开口径不是单年利润表，而是长期算力合同与基础设施承诺。</span></div>
+              </div>
+              <div class="judgment-box">
+                <b>未来风格：</b>OpenAI 会继续把 ChatGPT 做成“个人和组织的智能操作层”：聊天只是入口，真正重要的是 Agent、记忆、工具调用、企业流程和开发者平台。若上市，它会成为最重要的 AI 纯股定价锚，资本市场会同时奖励增长和质疑烧钱速度。
+              </div>
+            </div>
+          </article>
+
+          <article class="company-card">
+            <div class="company-head">
+              <div>
+                <h3 class="company-name">Claude / Anthropic</h3>
+                <div class="company-type">安全、长文本、代码和企业场景强势</div>
+              </div>
+              <span class="status-badge">私有，PBC 架构</span>
+            </div>
+            <div class="company-body">
+              <div class="legend">
+                <span class="tag official">5GW AWS</span>
+                <span class="tag official">TPU 合作</span>
+                <span class="tag judgment">企业同事</span>
+              </div>
+              <div class="fact-list">
+                <div class="fact"><b>算力</b><span>AWS 合作最高 5GW，十年 AWS 技术支出超 1000 亿美元；同时与 Google/Broadcom 签署多 GW TPU 合作，形成多云硬件策略。</span></div>
+                <div class="fact"><b>人才</b><span>安全研究、代码、上下文工程和企业销售密度高。官方称年化收入已超过 300 亿美元，并有大量百万美元级企业客户。</span></div>
+                <div class="fact"><b>投入</b><span>Amazon 现追加 50 亿美元并可能再追加 200 亿美元，建立在此前 80 亿美元投资之上。</span></div>
+              </div>
+              <div class="judgment-box">
+                <b>未来风格：</b>Claude 会更像“可信赖的专业同事”，不是最喧闹的消费者产品，而是企业知识工作、代码、分析、合规写作和长任务代理的默认选择。上市后，市场会重点看企业留存、推理成本和安全治理是否能成为溢价。
+              </div>
+            </div>
+          </article>
+
+          <article class="company-card">
+            <div class="company-head">
+              <div>
+                <h3 class="company-name">Gemini / Google DeepMind</h3>
+                <div class="company-type">嵌入搜索、Android、Workspace 和 Cloud 的环境型 AI</div>
+              </div>
+              <span class="status-badge">Alphabet 已上市</span>
+            </div>
+            <div class="company-body">
+              <div class="legend">
+                <span class="tag official">TPU</span>
+                <span class="tag official">CapEx</span>
+                <span class="tag judgment">环境智能</span>
+              </div>
+              <div class="fact-list">
+                <div class="fact"><b>算力</b><span>Alphabet 2025 资本开支 914 亿美元，2026 指引升至 1800-1900 亿美元，核心驱动是内外部 AI 算力需求。</span></div>
+                <div class="fact"><b>人才</b><span>DeepMind、Google Brain 历史积累、TPU、搜索、YouTube、Android、Cloud 基础设施形成纵深。</span></div>
+                <div class="fact"><b>投入</b><span>Google 的投入不是单一模型预算，而是服务器、数据中心、网络、TPU 和云服务能力的整体扩张。</span></div>
+              </div>
+              <div class="judgment-box">
+                <b>未来风格：</b>Gemini 最终未必表现为一个独立聊天 App，而会像电力一样进入 Google 的每个入口。它的上市影响已经体现在 Alphabet 市值、广告搜索重构和资本开支预期上。
+              </div>
+            </div>
+          </article>
+
+          <article class="company-card">
+            <div class="company-head">
+              <div>
+                <h3 class="company-name">豆包 / ByteDance Seed</h3>
+                <div class="company-type">大规模消费分发、内容创作和低价 API</div>
+              </div>
+              <span class="status-badge">字节未整体上市</span>
+            </div>
+            <div class="company-body">
+              <div class="legend">
+                <span class="tag official">Seed2.0</span>
+                <span class="tag estimate">CapEx 估算</span>
+                <span class="tag judgment">内容智能</span>
+              </div>
+              <div class="fact-list">
+                <div class="fact"><b>算力</b><span>官方称豆包底层模型 2026 年 3 月日处理超过 120 万亿 tokens；外部报道字节 2025/2026 AI 资本开支在 1500-1600 亿人民币数量级。</span></div>
+                <div class="fact"><b>人才</b><span>Seed 团队覆盖 LLM、基础设施、视觉、语音、多模态交互、世界模型、AI for Science、机器人和 Responsible AI。</span></div>
+                <div class="fact"><b>投入</b><span>低价策略明显，Seed2.0 发布时强调 API 价格较上一代约降一个数量级。</span></div>
+              </div>
+              <div class="judgment-box">
+                <b>未来风格：</b>豆包会走“海量日常使用 + 内容生产 + 办公编程工具”的路线。它的优势不是单点最强，而是用字节的推荐、视频、语音和增长能力把 AI 变成高频消费入口。若字节上市，AI 会成为估值叙事的核心部分。
+              </div>
+            </div>
+          </article>
+
+          <article class="company-card">
+            <div class="company-head">
+              <div>
+                <h3 class="company-name">智谱 / Z.ai GLM</h3>
+                <div class="company-type">中国大模型纯股和政企部署代表</div>
+              </div>
+              <span class="status-badge">港股上市</span>
+            </div>
+            <div class="company-body">
+              <div class="legend">
+                <span class="tag official">GLM-4.5</span>
+                <span class="tag official">HKEX</span>
+                <span class="tag judgment">政企底座</span>
+              </div>
+              <div class="fact-list">
+                <div class="fact"><b>模型</b><span>GLM-4.5 为 355B 总参数、32B 激活参数的 MoE；GLM-4.5-Air 为 106B 总参数、12B 激活参数，强调推理、代码和智能体。</span></div>
+                <div class="fact"><b>财务</b><span>2025 收入约 7.24 亿元人民币，其中本地部署约 5.34 亿元，云服务约 1.90 亿元。</span></div>
+                <div class="fact"><b>资本</b><span>2026 年 1 月港交所上市，成为大模型纯股的重要定价样本。</span></div>
+              </div>
+              <div class="judgment-box">
+                <b>未来风格：</b>智谱会更偏“企业和政务 AI 基础设施”，强调私有化、可控部署和开源生态。它的上市价值在于给行业提供透明财务样本，也暴露了大模型交付、销售和亏损压力。
+              </div>
+            </div>
+          </article>
+
+          <article class="company-card">
+            <div class="company-head">
+              <div>
+                <h3 class="company-name">MiniMax</h3>
+                <div class="company-type">AI 伙伴、视频、语音和海外消费应用</div>
+              </div>
+              <span class="status-badge">港股上市</span>
+            </div>
+            <div class="company-body">
+              <div class="legend">
+                <span class="tag official">Hailuo</span>
+                <span class="tag official">Talkie</span>
+                <span class="tag judgment">情感与内容</span>
+              </div>
+              <div class="fact-list">
+                <div class="fact"><b>产品</b><span>旗舰产品包括 Talkie、星野、Hailuo 视频、Speech、Music 等，覆盖陪伴、角色互动、视频与音频生成。</span></div>
+                <div class="fact"><b>财务</b><span>2025 收入约 7904 万美元，AI 原生产品约 5308 万美元，占 67.2%；开放平台和企业约 2596 万美元。</span></div>
+                <div class="fact"><b>市场</b><span>外部报道显示国际收入占比较高，上市后成为 AI 消费娱乐商业化样本。</span></div>
+              </div>
+              <div class="judgment-box">
+                <b>未来风格：</b>MiniMax 不会和 OpenAI 正面抢“通用操作层”，而会把多模态模型做成可消费的陪伴、视频、音乐和角色经济。核心变量是留存、内容安全、版权和海外合规。
+              </div>
+            </div>
+          </article>
+
+          <article class="company-card">
+            <div class="company-head">
+              <div>
+                <h3 class="company-name">元宝 / Tencent Hunyuan</h3>
+                <div class="company-type">微信生态里的 AI 搜索、写作和行动层</div>
+              </div>
+              <span class="status-badge">腾讯已上市</span>
+            </div>
+            <div class="company-body">
+              <div class="legend">
+                <span class="tag official">混元</span>
+                <span class="tag official">微信入口</span>
+                <span class="tag judgment">超级 App 助手</span>
+              </div>
+              <div class="fact-list">
+                <div class="fact"><b>投入</b><span>腾讯披露 2025 年新 AI 产品成本和费用约 180 亿元人民币，Q4 约 70 亿元；2026 年预计翻倍以上。</span></div>
+                <div class="fact"><b>算力</b><span>2026 Q1 资本开支 319 亿元人民币，GPU 容量计划在 2026-2027 继续提升。</span></div>
+                <div class="fact"><b>入口</b><span>微信及 WeChat 合计月活约 14.32 亿，元宝可连接微信内容、搜索、文档、写作和腾讯产品生态。</span></div>
+              </div>
+              <div class="judgment-box">
+                <b>未来风格：</b>元宝会越来越不像独立聊天机器人，而像微信生态的“行动入口”：帮用户找内容、读文档、写东西、办事。腾讯的上市影响不是元宝收入本身，而是 AI 对广告、游戏、云和办公协同的提效。
+              </div>
+            </div>
+          </article>
+
+          <article class="company-card">
+            <div class="company-head">
+              <div>
+                <h3 class="company-name">DeepSeek</h3>
+                <div class="company-type">开源推理和极致效率的价格破坏者</div>
+              </div>
+              <span class="status-badge">未上市</span>
+            </div>
+            <div class="company-body">
+              <div class="legend">
+                <span class="tag official">V3</span>
+                <span class="tag official">R1</span>
+                <span class="tag warning">成本口径需谨慎</span>
+              </div>
+              <div class="fact-list">
+                <div class="fact"><b>模型</b><span>DeepSeek-V3 为 671B 总参数、37B 激活参数 MoE，14.8T tokens 预训练；R1 强调通过强化学习涌现推理能力。</span></div>
+                <div class="fact"><b>成本</b><span>V3 报告披露正式训练约 278.8 万 H800 GPU 小时，按 2 美元/GPU 小时估算约 557.6 万美元。</span></div>
+                <div class="fact"><b>外部估算</b><span>CSIS 和 SemiAnalysis 转述估算其拥有更大 Hopper GPU 集群，服务器资本开支可能远高于单次训练成本。</span></div>
+              </div>
+              <div class="judgment-box">
+                <b>未来风格：</b>DeepSeek 的最大影响是重新设定“强模型应该多少钱”。它会继续迫使全球模型降价、开源化和系统优化。若未来资本化，它的估值核心不是收入规模，而是效率路线对整个 AI 成本曲线的重定价能力。
+              </div>
+            </div>
+          </article>
+
+          <article class="company-card">
+            <div class="company-head">
+              <div>
+                <h3 class="company-name">Qwen / Alibaba</h3>
+                <div class="company-type">开源模型、云平台和商业智能体</div>
+              </div>
+              <span class="status-badge">阿里巴巴已上市</span>
+            </div>
+            <div class="company-body">
+              <div class="legend">
+                <span class="tag official">Qwen</span>
+                <span class="tag official">阿里云</span>
+                <span class="tag judgment">开发者生态</span>
+              </div>
+              <div class="fact-list">
+                <div class="fact"><b>投入</b><span>阿里披露过去四个季度约 1200 亿元人民币资本开支用于推进 AI 和云基础设施。</span></div>
+                <div class="fact"><b>生态</b><span>截至 2025 年 10 月 31 日，Hugging Face 上基于 Qwen 家族开发的衍生模型超过 18 万个。</span></div>
+                <div class="fact"><b>商业</b><span>阿里云 AI 相关产品收入连续九个季度三位数增长，Qwen App 公测首周下载超过 1000 万。</span></div>
+              </div>
+              <div class="judgment-box">
+                <b>未来风格：</b>Qwen 会同时扮演开源标准、云算力入口和电商/企业智能体底座。它的优势是“模型能力 + 云交付 + 商业场景”，未来可能成为中国企业开发者最常用的基础模型之一。
+              </div>
+            </div>
+          </article>
+
+          <article class="company-card">
+            <div class="company-head">
+              <div>
+                <h3 class="company-name">ERNIE / Baidu</h3>
+                <div class="company-type">搜索、知识、AI 云和智能体开发平台</div>
+              </div>
+              <span class="status-badge">百度已上市</span>
+            </div>
+            <div class="company-body">
+              <div class="legend">
+                <span class="tag official">文心</span>
+                <span class="tag official">AI Cloud</span>
+                <span class="tag judgment">搜索重构</span>
+              </div>
+              <div class="fact-list">
+                <div class="fact"><b>模型</b><span>ERNIE 4.5 开源家族包含 10 个变体，最大 MoE 模型 424B 总参数、47B 激活参数，并覆盖多模态。</span></div>
+                <div class="fact"><b>收入</b><span>百度 Q1 2026 AI 云基础设施收入 88 亿元人民币，同比增长 79%；GPU 云同比增长 184%。</span></div>
+                <div class="fact"><b>产品</b><span>DuMate、秒哒 3.0、AgentBuilder 等围绕智能体开发和企业应用。</span></div>
+              </div>
+              <div class="judgment-box">
+                <b>未来风格：</b>百度的 AI 关键不在“文心一言是否成为最大聊天 App”，而在搜索答案化、AI 云和开发平台能否让百度的旧入口重新增长。它是“被 AI 冲击者”转向“AI 搜索基础设施”的典型样本。
+              </div>
+            </div>
+          </article>
+
+          <article class="company-card">
+            <div class="company-head">
+              <div>
+                <h3 class="company-name">Llama / Meta</h3>
+                <div class="company-type">开放权重生态、社交网络和终端智能</div>
+              </div>
+              <span class="status-badge">Meta 已上市</span>
+            </div>
+            <div class="company-body">
+              <div class="legend">
+                <span class="tag official">Llama 4</span>
+                <span class="tag official">CapEx</span>
+                <span class="tag judgment">开放生态</span>
+              </div>
+              <div class="fact-list">
+                <div class="fact"><b>投入</b><span>Meta 2026 资本开支指引 1150-1350 亿美元，核心驱动包括 AI 基础设施和 Meta Superintelligence Labs。</span></div>
+                <div class="fact"><b>模型</b><span>Llama 4 包含 Scout、Maverick、Behemoth，采用 MoE，多模态和超长上下文路线。</span></div>
+                <div class="fact"><b>入口</b><span>Instagram、WhatsApp、Facebook、广告系统、AI 眼镜和开发者生态共同承接模型能力。</span></div>
+              </div>
+              <div class="judgment-box">
+                <b>未来风格：</b>Meta 会继续用开放权重降低行业模型成本，同时把真正的商业价值留在广告、社交和硬件入口。它像一个用开源换生态势能的巨型分发平台。
+              </div>
+            </div>
+          </article>
+
+          <article class="company-card">
+            <div class="company-head">
+              <div>
+                <h3 class="company-name">Grok / xAI</h3>
+                <div class="company-type">实时数据、强算力和高速执行</div>
+              </div>
+              <span class="status-badge">私有</span>
+            </div>
+            <div class="company-body">
+              <div class="legend">
+                <span class="tag official">Colossus</span>
+                <span class="tag official">Series E</span>
+                <span class="tag judgment">速度叙事</span>
+              </div>
+              <div class="fact-list">
+                <div class="fact"><b>算力</b><span>xAI 称 Colossus 在 122 天建成，92 天扩容至 20 万 H100 GPU，并规划到 100 万 GPU。</span></div>
+                <div class="fact"><b>资本</b><span>2026 年宣布 200 亿美元 Series E，投资方包括 NVIDIA、Cisco 等战略投资者。</span></div>
+                <div class="fact"><b>产品</b><span>Grok 强调实时搜索、工具调用、X 平台数据和更外放的产品个性。</span></div>
+              </div>
+              <div class="judgment-box">
+                <b>未来风格：</b>Grok 会继续走“实时、锋利、强工具调用”的路线，并可能与 X、Tesla、机器人和企业场景发生耦合。它的资本市场故事很强，但治理、品牌信任和产品边界会放大波动。
+              </div>
+            </div>
+          </article>
+
+          <article class="company-card">
+            <div class="company-head">
+              <div>
+                <h3 class="company-name">Mistral</h3>
+                <div class="company-type">欧洲主权 AI 和可部署开放模型</div>
+              </div>
+              <span class="status-badge">私有</span>
+            </div>
+            <div class="company-body">
+              <div class="legend">
+                <span class="tag official">Series C</span>
+                <span class="tag official">200MW</span>
+                <span class="tag judgment">主权 AI</span>
+              </div>
+              <div class="fact-list">
+                <div class="fact"><b>资本</b><span>2025 年 C 轮融资 17 亿欧元，投后估值 117 亿欧元。</span></div>
+                <div class="fact"><b>算力</b><span>计划到 2027 年前在欧洲建设 200MW 主权算力，面向企业和政府。</span></div>
+                <div class="fact"><b>模型</b><span>Mistral 3 强调多语言、图像理解、开放权重和企业部署。</span></div>
+              </div>
+              <div class="judgment-box">
+                <b>未来风格：</b>Mistral 不会以全球最大消费者入口取胜，而会成为欧洲政府和企业的“可控、可部署、可合规”的 AI 供应商。它的上市会测试主权 AI 的估值溢价。
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="ipo">
+        <div class="section-head">
+          <div>
+            <h2>它们上市后会带来什么影响力</h2>
+            <p class="section-kicker">AI 公司上市不是单纯“多一个科技股”，而是把模型能力、算力合同、推理成本、监管、安全和数据中心建设全部推到公开市场面前。</p>
+          </div>
+        </div>
+
+        <div class="timeline panel">
+          <div class="timeline-item">
+            <div class="time-label">已在公开市场</div>
+            <div>
+              <h3>Google、Meta、腾讯、阿里、百度</h3>
+              <p>这些公司不是“等 AI 上市”，而是已经用 AI 改写资本开支、广告效率、云增长和产品叙事。市场看的是 AI 能否让旧业务增长更快、利润率更稳，或者打开新入口。</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="time-label">已出现纯股样本</div>
+            <div>
+              <h3>智谱、MiniMax</h3>
+              <p>它们让投资者第一次更清楚地看到中国大模型公司的收入结构、亏损、客户类型和增长故事。短期会带来估值想象，长期会要求证明“模型调用量能否变成利润”。</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="time-label">若未来 IPO</div>
+            <div>
+              <h3>OpenAI、Anthropic、xAI、Mistral</h3>
+              <p>OpenAI 会成为全球 AI 纯股估值锚；Anthropic 会检验企业 AI 和安全治理溢价；xAI 会把算力速度和实时数据定价推到极致；Mistral 会检验欧洲主权 AI 是否有独立估值体系。</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="time-label">特殊变量</div>
+            <div>
+              <h3>DeepSeek、ByteDance、Moonshot</h3>
+              <p>DeepSeek 即便不上市，也已经影响全球模型价格；ByteDance 若上市，豆包和 Seed 会成为中国消费 AI 入口叙事的核心；Moonshot/Kimi 若资本化，关键是长上下文和智能体能否形成高频付费。</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid-4" style="margin-top: 16px;">
+          <div class="card">
+            <h3>对芯片</h3>
+            <p>前沿模型上市会强化 GPU、网络、电力、液冷、数据中心 REITs 的资本叙事，也会放大对供应链瓶颈的敏感度。</p>
+          </div>
+          <div class="card">
+            <h3>对云</h3>
+            <p>云不只是出租算力，而会变成模型训练、推理、企业部署和安全合规的一体化平台。</p>
+          </div>
+          <div class="card">
+            <h3>对软件</h3>
+            <p>传统 SaaS 会被重新估值：谁拥有 workflow，谁就能把 AI 变成席位收入和自动化收入。</p>
+          </div>
+          <div class="card">
+            <h3>对监管</h3>
+            <p>公开市场会要求披露安全、版权、数据、能耗、芯片来源和模型事故，AI 治理会从论文议题变成财务议题。</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="playbook">
+        <div class="section-head">
+          <div>
+            <h2>从小白到专业人士的阅读路线</h2>
+            <p class="section-kicker">如果只想获得认知升级，不必从每个参数读起。先理解竞争维度，再回头看模型名字。</p>
+          </div>
+        </div>
+
+        <div class="reader-track">
+          <div class="panel">
+            <h3>五分钟版本</h3>
+            <div class="track-list">
+              <div class="track-item"><div class="track-index">1</div><div>把大模型想成“会思考的软件基础设施”，不是单个聊天机器人。</div></div>
+              <div class="track-item"><div class="track-index">2</div><div>美国头部公司在买上限，中国头部公司在压成本和抢分发。</div></div>
+              <div class="track-item"><div class="track-index">3</div><div>最终胜负不只看谁回答更聪明，而看谁能进入你的工作、搜索、社交、代码、创作和企业流程。</div></div>
+            </div>
+          </div>
+          <div class="panel">
+            <h3>专业人士版本</h3>
+            <div class="track-list">
+              <div class="track-item"><div class="track-index">1</div><div>拆口径：资本开支、云采购、单次训练成本、推理成本、研发费用、营销费用是六种不同信号。</div></div>
+              <div class="track-item"><div class="track-index">2</div><div>看约束：前沿模型受限于电力、芯片、互联、数据、人才、产品分发和监管，而不是单一算法。</div></div>
+              <div class="track-item"><div class="track-index">3</div><div>看商业模型：消费者订阅、API、企业席位、云消费、广告提效、电商转化、内容付费和私有化部署会形成不同估值体系。</div></div>
+              <div class="track-item"><div class="track-index">4</div><div>看风格分化：OpenAI 通用平台，Claude 企业同事，Gemini 环境智能，豆包内容分发，元宝超级 App，DeepSeek 成本锚，MiniMax 情感与内容，智谱政企底座。</div></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="sources">
+        <div class="section-head">
+          <div>
+            <h2>主要来源与可核验链接</h2>
+            <p class="section-kicker">以下列出本报告依赖的核心公开来源。媒体和分析师估算在正文中已标注为外部估算，建议定期复核。</p>
+          </div>
+        </div>
+
+        <div class="source-grid">
+          <div class="source-card">
+            <div><b>OpenAI Stargate</b><span>Stargate 四年 5000 亿美元、初期 1000 亿美元、参与方和技术伙伴。</span></div>
+            <a href="https://openai.com/index/announcing-the-stargate-project/" target="_blank" rel="noopener">openai.com</a>
+          </div>
+          <div class="source-card">
+            <div><b>Microsoft-OpenAI Partnership</b><span>微软持股、Azure 采购和合作结构更新。</span></div>
+            <a href="https://blogs.microsoft.com/blog/2025/10/28/the-next-chapter-of-the-microsoft-openai-partnership/" target="_blank" rel="noopener">microsoft.com</a>
+          </div>
+          <div class="source-card">
+            <div><b>Anthropic-AWS Compute</b><span>最高 5GW、1000 亿美元 AWS 技术支出、Trainium2 和收入口径。</span></div>
+            <a href="https://www.anthropic.com/news/anthropic-amazon-compute" target="_blank" rel="noopener">anthropic.com</a>
+          </div>
+          <div class="source-card">
+            <div><b>Anthropic Google/Broadcom</b><span>多 GW TPU 容量、硬件多元化和企业客户口径。</span></div>
+            <a href="https://www.anthropic.com/news/google-broadcom-partnership-compute" target="_blank" rel="noopener">anthropic.com</a>
+          </div>
+          <div class="source-card">
+            <div><b>Gemini 2.5</b><span>Google 对 Gemini 2.5 Pro “thinking”能力与模型定位的说明。</span></div>
+            <a href="https://blog.google/innovation-and-ai/models-and-research/google-deepmind/gemini-model-thinking-updates-march-2025/" target="_blank" rel="noopener">blog.google</a>
+          </div>
+          <div class="source-card">
+            <div><b>Alphabet 2025 10-K</b><span>2024/2025 资本开支和 2026 技术基础设施扩张预期。</span></div>
+            <a href="https://www.sec.gov/Archives/edgar/data/1652044/000165204426000018/goog-20251231.htm" target="_blank" rel="noopener">sec.gov</a>
+          </div>
+          <div class="source-card">
+            <div><b>Alphabet Q1 2026 Call</b><span>2026 年资本开支 1800-1900 亿美元指引。</span></div>
+            <a href="https://abc.xyz/investor/events/event-details/2026/2026-Q1-Earnings-Call-2026-nW8kCrBAKS/default.aspx" target="_blank" rel="noopener">abc.xyz</a>
+          </div>
+          <div class="source-card">
+            <div><b>Meta 2025 Results</b><span>2025 收入、资本开支、2026 资本开支指引和 AI 投入说明。</span></div>
+            <a href="https://investor.atmeta.com/investor-news/press-release-details/2026/Meta-Reports-Fourth-Quarter-and-Full-Year-2025-Results/default.aspx" target="_blank" rel="noopener">investor.atmeta.com</a>
+          </div>
+          <div class="source-card">
+            <div><b>Llama 4</b><span>Llama 4 MoE、多模态、上下文和训练 GPU 说明。</span></div>
+            <a href="https://ai.meta.com/blog/llama-4-multimodal-intelligence/" target="_blank" rel="noopener">ai.meta.com</a>
+          </div>
+          <div class="source-card">
+            <div><b>xAI Colossus</b><span>20 万 H100 GPU、建设速度和 100 万 GPU 路线图。</span></div>
+            <a href="https://x.ai/colossus" target="_blank" rel="noopener">x.ai</a>
+          </div>
+          <div class="source-card">
+            <div><b>xAI Series E</b><span>2026 年 200 亿美元融资和战略投资者。</span></div>
+            <a href="https://x.ai/news/series-e" target="_blank" rel="noopener">x.ai</a>
+          </div>
+          <div class="source-card">
+            <div><b>ByteDance Seed Models</b><span>Seed 模型谱系、团队方向和官方模型页面。</span></div>
+            <a href="https://seed.bytedance.com/en/models" target="_blank" rel="noopener">seed.bytedance.com</a>
+          </div>
+          <div class="source-card">
+            <div><b>Seed2.0 Launch</b><span>Seed2.0 能力、豆包/Trae/API 分发和降价说明。</span></div>
+            <a href="https://seed.bytedance.com/en/blog/seed-2-0-official-launch" target="_blank" rel="noopener">seed.bytedance.com</a>
+          </div>
+          <div class="source-card">
+            <div><b>Doubao Paid Tiers</b><span>豆包付费层级、日处理 tokens 和企业客户用量口径。</span></div>
+            <a href="https://global.chinadaily.com.cn/a/202605/06/WS69fa79bea310d6866eb46f3e.html" target="_blank" rel="noopener">China Daily</a>
+          </div>
+          <div class="source-card">
+            <div><b>GLM-4.5</b><span>GLM-4.5 参数、开源许可、推理和代码能力说明。</span></div>
+            <a href="https://github.com/zai-org/GLM-4.5" target="_blank" rel="noopener">github.com/zai-org</a>
+          </div>
+          <div class="source-card">
+            <div><b>Z.ai Annual Results</b><span>智谱 2025 收入、云服务和本地部署收入结构。</span></div>
+            <a href="https://www.hkexnews.hk/listedco/listconews/sehk/2026/0331/2026033101549.pdf" target="_blank" rel="noopener">hkexnews.hk</a>
+          </div>
+          <div class="source-card">
+            <div><b>MiniMax 2025 Report</b><span>MiniMax 2025 收入、AI 原生产品和开放平台收入。</span></div>
+            <a href="https://file.cdn.minimax.io/public/ba6ecddc-7a0f-434a-b340-96576f676b3c.pdf" target="_blank" rel="noopener">minimax.io PDF</a>
+          </div>
+          <div class="source-card">
+            <div><b>Tencent 2025 Annual Presentation</b><span>腾讯新 AI 产品成本费用、2026 投入和 GPU 容量计划。</span></div>
+            <a href="https://static.www.tencent.com/uploads/2026/03/18/2804dbdae364ca25b82d21bc8304f1d3.pdf" target="_blank" rel="noopener">tencent.com</a>
+          </div>
+          <div class="source-card">
+            <div><b>Tencent Q1 2026</b><span>腾讯收入、资本开支、元宝、WorkBuddy、Hunyuan 进展。</span></div>
+            <a href="https://static.www.tencent.com/uploads/2026/05/13/47382ae415a209fd161bc19a1f9b3704.pdf" target="_blank" rel="noopener">tencent.com</a>
+          </div>
+          <div class="source-card">
+            <div><b>Hunyuan-Large Paper</b><span>混元大模型 MoE 参数、上下文和训练 token 技术信息。</span></div>
+            <a href="https://arxiv.org/html/2411.02265v3" target="_blank" rel="noopener">arxiv.org</a>
+          </div>
+          <div class="source-card">
+            <div><b>DeepSeek-V3 Paper</b><span>DeepSeek-V3 参数、训练 tokens、GPU 小时和训练成本口径。</span></div>
+            <a href="https://arxiv.org/html/2412.19437v1" target="_blank" rel="noopener">arxiv.org</a>
+          </div>
+          <div class="source-card">
+            <div><b>DeepSeek-R1 Release</b><span>R1 开源、API 价格和推理模型说明。</span></div>
+            <a href="https://api-docs.deepseek.com/news/news250120" target="_blank" rel="noopener">deepseek.com</a>
+          </div>
+          <div class="source-card">
+            <div><b>CSIS DeepSeek Deep Dive</b><span>DeepSeek 公开影响、外部 GPU 集群和成本估算讨论。</span></div>
+            <a href="https://www.csis.org/analysis/deepseek-deep-dive" target="_blank" rel="noopener">csis.org</a>
+          </div>
+          <div class="source-card">
+            <div><b>SemiAnalysis DeepSeek Debates</b><span>DeepSeek GPU 集群和服务器资本开支外部估算。</span></div>
+            <a href="https://newsletter.semianalysis.com/p/deepseek-debates" target="_blank" rel="noopener">semianalysis.com</a>
+          </div>
+          <div class="source-card">
+            <div><b>Alibaba Results</b><span>阿里 AI/云资本开支、Qwen 衍生模型和 AI 云增长。</span></div>
+            <a href="https://www.alibabagroup.com/document-1930116148192346112" target="_blank" rel="noopener">alibabagroup.com</a>
+          </div>
+          <div class="source-card">
+            <div><b>Baidu Q1 2026</b><span>百度 AI 云基础设施收入、GPU 云增长和智能体产品。</span></div>
+            <a href="https://ir.baidu.com/news-releases/news-release-details/baidu-announces-first-quarter-2026-results" target="_blank" rel="noopener">ir.baidu.com</a>
+          </div>
+          <div class="source-card">
+            <div><b>ERNIE 4.5</b><span>文心 4.5 开源模型家族、参数和多模态信息。</span></div>
+            <a href="https://ernie.baidu.com/blog/posts/ernie4.5/" target="_blank" rel="noopener">ernie.baidu.com</a>
+          </div>
+          <div class="source-card">
+            <div><b>Mistral Series C</b><span>Mistral 17 亿欧元融资和 117 亿欧元投后估值。</span></div>
+            <a href="https://mistral.ai/news/mistral-ai-raises-1-7-b-to-accelerate-technological-progress-with-ai/" target="_blank" rel="noopener">mistral.ai</a>
+          </div>
+          <div class="source-card">
+            <div><b>Mistral Compute</b><span>欧洲 200MW 主权 AI 算力计划。</span></div>
+            <a href="https://mistral.ai/products/compute/" target="_blank" rel="noopener">mistral.ai</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        <p>本报告生成于 2026-06-25。大模型行业变化极快，价格、融资、资本开支和模型能力可能在数周内变化。用于投资或重大商业决策前，应复核最新财报、招股书、官方公告和独立基准测试。</p>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
