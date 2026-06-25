@@ -36,6 +36,8 @@
         .tag-history { background: rgba(139,92,246,0.15); color: var(--purple); border: 1px solid rgba(139,92,246,0.3); }
         .tag-tool { background: rgba(59,130,246,0.15); color: var(--blue); border: 1px solid rgba(59,130,246,0.3); }
         .tag-creative { background: rgba(16,185,129,0.15); color: var(--green); border: 1px solid rgba(16,185,129,0.3); }
+        .tag-growth { background: rgba(16,185,129,0.15); color: var(--green); border: 1px solid rgba(16,185,129,0.3); }
+        .tag-research { background: rgba(139,92,246,0.15); color: var(--purple); border: 1px solid rgba(139,92,246,0.3); }
         .card-link { display: inline-flex; align-items: center; gap: 6px; color: var(--accent); text-decoration: none; font-size: 0.9rem; font-weight: 600; margin-top: 12px; transition: gap 0.3s ease; }
         .card-link:hover { gap: 10px; }
         footer { text-align: center; padding: 40px 20px; color: var(--text-dim); font-size: 0.9rem; border-top: 1px solid var(--border); margin-top: 60px; }
@@ -148,6 +150,30 @@
                     <p class="card-desc">深度长文风格排版工具。输入 Markdown 实时预览微信公众号效果，一键复制富文本直接粘贴到微信编辑器。字号、行高、段距均已适配。</p>
                     <div class="card-meta"><span class="tag tag-creative">内容创作</span><span class="tag tag-business">公众号</span></div>
                     <a href="/wechat-editor/" target="_blank" class="card-link">打开工具 →</a>
+                </div>
+            </div>
+        </div>
+        <div class="section">
+            <h2 class="section-title">🌱 个人成长</h2>
+            <div class="grid">
+                <div class="card" onclick="window.open('reports/dan-koe/', '_blank')">
+                    <div class="card-icon">🧭</div>
+                    <h3 class="card-title">Dan Koe《一天修复人生》深度研究</h3>
+                    <p class="card-desc">把 Dan Koe 的一日重设协议拆成研究报告和行动手册：反面愿景、身份重写、打断惯性、30 天执行系统。</p>
+                    <div class="card-meta"><span class="tag tag-growth">个人成长</span><span class="tag tag-tool">行动建议</span></div>
+                    <a href="reports/dan-koe/" target="_blank" class="card-link">阅读报告 →</a>
+                </div>
+            </div>
+        </div>
+        <div class="section">
+            <h2 class="section-title">🏢 公司调研</h2>
+            <div class="grid">
+                <div class="card" onclick="window.open('reports/micron/', '_blank')">
+                    <div class="card-icon">💾</div>
+                    <h3 class="card-title">美光 Micron 全景研究</h3>
+                    <p class="card-desc">围绕 AI 记忆体基础设施展开的公司调研：HBM、NAND、财务冲击、产业链位置、未来变量和关键风险。</p>
+                    <div class="card-meta"><span class="tag tag-research">公司调研</span><span class="tag tag-business">半导体</span></div>
+                    <a href="reports/micron/" target="_blank" class="card-link">阅读报告 →</a>
                 </div>
             </div>
         </div>

@@ -1,0 +1,1224 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>美光 Micron 全景研究 | AI 记忆体基础设施</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23007a87'/%3E%3Cpath d='M13 42V22h7l6 9 6-9h7v20h-7V32l-6 8-6-8v10h-7Zm31 0V22h7v20h-7Z' fill='white'/%3E%3C/svg%3E">
+  <style>
+    :root {
+      --ink: #16201d;
+      --muted: #5b6764;
+      --paper: #f7f9f6;
+      --panel: #ffffff;
+      --line: #dce4df;
+      --teal: #007a87;
+      --teal-soft: #d8f0ef;
+      --green: #1f8a59;
+      --amber: #d77a13;
+      --coral: #c9543f;
+      --blue: #245aa8;
+      --charcoal: #111716;
+      --shadow: 0 18px 48px rgba(22, 32, 29, 0.12);
+      --radius: 8px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      color: var(--ink);
+      background: var(--paper);
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .page {
+      overflow: hidden;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      border-bottom: 1px solid rgba(22, 32, 29, 0.08);
+      background: rgba(247, 249, 246, 0.86);
+      backdrop-filter: blur(18px);
+    }
+
+    .topbar-inner {
+      width: min(1180px, calc(100vw - 32px));
+      margin: 0 auto;
+      min-height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      letter-spacing: 0;
+      white-space: nowrap;
+    }
+
+    .brand-mark {
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      background: linear-gradient(135deg, var(--teal), var(--green));
+      font-weight: 900;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .nav a {
+      padding: 8px 10px;
+      border-radius: 8px;
+    }
+
+    .nav a:hover {
+      background: #edf3ef;
+      color: var(--ink);
+    }
+
+    .hero {
+      width: min(1180px, calc(100vw - 32px));
+      margin: 34px auto 24px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(330px, 0.9fr);
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .hero-copy {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: clamp(24px, 4vw, 46px);
+      min-height: 520px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .eyebrow {
+      margin: 0 0 18px;
+      display: inline-flex;
+      align-items: center;
+      width: fit-content;
+      gap: 8px;
+      color: var(--teal);
+      font-size: 13px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 99px;
+      background: var(--teal);
+      box-shadow: 0 0 0 5px var(--teal-soft);
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 760px;
+      font-size: clamp(42px, 7vw, 84px);
+      line-height: 0.95;
+      letter-spacing: 0;
+    }
+
+    .hero-lede {
+      margin: 24px 0 0;
+      max-width: 760px;
+      color: var(--muted);
+      font-size: clamp(17px, 2.1vw, 22px);
+      line-height: 1.55;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 30px;
+    }
+
+    .button {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 11px 14px;
+      font-weight: 800;
+      background: #fff;
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      min-height: 44px;
+    }
+
+    .button.primary {
+      background: var(--charcoal);
+      border-color: var(--charcoal);
+      color: #fff;
+    }
+
+    .hero-visual {
+      min-height: 520px;
+      border-radius: var(--radius);
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--charcoal);
+      background: #050707;
+      box-shadow: var(--shadow);
+    }
+
+    .hero-visual img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      opacity: 0.88;
+    }
+
+    .visual-overlay {
+      position: absolute;
+      inset: auto 16px 16px 16px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .overlay-card {
+      background: rgba(255, 255, 255, 0.92);
+      color: var(--ink);
+      border-radius: 8px;
+      padding: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.5);
+    }
+
+    .overlay-card b {
+      display: block;
+      font-size: 22px;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .overlay-card span {
+      color: var(--muted);
+      font-size: 12px;
+      display: block;
+      line-height: 1.35;
+    }
+
+    .section {
+      width: min(1180px, calc(100vw - 32px));
+      margin: 0 auto;
+      padding: 38px 0;
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(0, 0.9fr) minmax(280px, 0.55fr);
+      gap: 24px;
+      align-items: end;
+      margin-bottom: 18px;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: clamp(30px, 4vw, 48px);
+      line-height: 1.05;
+      letter-spacing: 0;
+    }
+
+    .section-note {
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .grid {
+      display: grid;
+      gap: 14px;
+    }
+
+    .grid.cols-4 {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .grid.cols-3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .grid.cols-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: 0 10px 26px rgba(22, 32, 29, 0.06);
+    }
+
+    .metric {
+      min-height: 168px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .metric small {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .metric strong {
+      display: block;
+      font-size: clamp(30px, 4vw, 48px);
+      line-height: 0.95;
+      letter-spacing: 0;
+      margin: 12px 0 8px;
+    }
+
+    .metric .delta {
+      width: fit-content;
+      color: var(--green);
+      background: #e5f4eb;
+      border-radius: 8px;
+      padding: 4px 8px;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .tag {
+      display: inline-flex;
+      width: fit-content;
+      border-radius: 8px;
+      padding: 4px 8px;
+      background: #eef3f0;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .thesis {
+      background: var(--charcoal);
+      color: #f6fbf8;
+      border: 0;
+    }
+
+    .thesis p {
+      color: #cad5d1;
+      margin: 10px 0 0;
+    }
+
+    .thesis .tag {
+      background: rgba(255, 255, 255, 0.12);
+      color: #d9f6ef;
+    }
+
+    .callout {
+      background: linear-gradient(135deg, #e8f4f1, #fff6e7);
+      border-color: #cfddd5;
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+      gap: 14px;
+      align-items: stretch;
+    }
+
+    .image-card {
+      overflow: hidden;
+      padding: 0;
+      min-height: 340px;
+      position: relative;
+      background: #0c1110;
+      color: #fff;
+    }
+
+    .image-card img {
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+      opacity: 0.84;
+    }
+
+    .image-caption {
+      position: absolute;
+      left: 16px;
+      bottom: 16px;
+      right: 16px;
+      padding: 14px;
+      border-radius: 8px;
+      background: rgba(10, 15, 14, 0.72);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+    }
+
+    .image-caption b {
+      display: block;
+      font-size: 18px;
+      margin-bottom: 4px;
+    }
+
+    .image-caption span {
+      color: #d2ddd9;
+      font-size: 13px;
+    }
+
+    .bar-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    .bar-row {
+      display: grid;
+      grid-template-columns: 150px minmax(0, 1fr) 100px;
+      gap: 12px;
+      align-items: center;
+      font-size: 14px;
+    }
+
+    .track {
+      height: 12px;
+      border-radius: 999px;
+      background: #ecf1ee;
+      overflow: hidden;
+      border: 1px solid #dfe7e2;
+    }
+
+    .fill {
+      height: 100%;
+      border-radius: 999px;
+      background: var(--teal);
+    }
+
+    .fill.green {
+      background: var(--green);
+    }
+
+    .fill.amber {
+      background: var(--amber);
+    }
+
+    .fill.coral {
+      background: var(--coral);
+    }
+
+    .fill.blue {
+      background: var(--blue);
+    }
+
+    .timeline {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .time-item {
+      border-left: 3px solid var(--teal);
+      padding: 12px 12px 12px 14px;
+      background: #fff;
+      border-radius: 0 8px 8px 0;
+      min-height: 150px;
+    }
+
+    .time-item b {
+      display: block;
+      font-size: 22px;
+      line-height: 1;
+      margin-bottom: 10px;
+    }
+
+    .time-item span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .ai-map {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 22px;
+      overflow: hidden;
+    }
+
+    .map-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 10px;
+      align-items: stretch;
+      margin-top: 18px;
+    }
+
+    .map-node {
+      position: relative;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      padding: 16px;
+      min-height: 155px;
+      background: #fbfdfb;
+    }
+
+    .map-node::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      right: -10px;
+      width: 10px;
+      height: 2px;
+      background: var(--line);
+    }
+
+    .map-node:last-child::after {
+      display: none;
+    }
+
+    .map-node b {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 17px;
+    }
+
+    .map-node span {
+      color: var(--muted);
+      font-size: 13px;
+      display: block;
+    }
+
+    .map-node.hot {
+      background: #101817;
+      color: #fff;
+      border-color: #101817;
+    }
+
+    .map-node.hot span {
+      color: #c7d4d0;
+    }
+
+    .chip-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .chip {
+      border-radius: 8px;
+      background: #f0f5f2;
+      padding: 6px 9px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .product-card {
+      min-height: 280px;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .product-card img {
+      width: 100%;
+      height: 170px;
+      object-fit: cover;
+      background: #050707;
+    }
+
+    .product-card div {
+      padding: 18px;
+    }
+
+    .product-card p {
+      color: var(--muted);
+      margin: 8px 0 0;
+      font-size: 14px;
+    }
+
+    .quote {
+      border-left: 4px solid var(--teal);
+      padding: 12px 0 12px 18px;
+      color: var(--muted);
+      margin: 18px 0 0;
+      font-size: 16px;
+    }
+
+    .risk-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .risk-card {
+      border-top: 4px solid var(--coral);
+    }
+
+    .risk-card.good {
+      border-top-color: var(--green);
+    }
+
+    .risk-card.watch {
+      border-top-color: var(--amber);
+    }
+
+    .source-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .source {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 14px;
+      background: #fff;
+      display: grid;
+      gap: 4px;
+    }
+
+    .source b {
+      font-size: 14px;
+    }
+
+    .source span {
+      color: var(--muted);
+      font-size: 12px;
+      overflow-wrap: anywhere;
+    }
+
+    .footer {
+      width: min(1180px, calc(100vw - 32px));
+      margin: 30px auto 52px;
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+      padding-top: 18px;
+      font-size: 13px;
+    }
+
+    .mini-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+      font-size: 14px;
+      overflow: hidden;
+      border-radius: 8px;
+    }
+
+    .mini-table th,
+    .mini-table td {
+      text-align: left;
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .mini-table th {
+      background: #eef3f0;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .mini-table tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .footnote {
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 12px;
+    }
+
+    .source-pill {
+      vertical-align: super;
+      font-size: 10px;
+      color: var(--teal);
+      font-weight: 900;
+    }
+
+    @media (max-width: 980px) {
+      .hero,
+      .section-head,
+      .split {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-copy,
+      .hero-visual {
+        min-height: auto;
+      }
+
+      .hero-visual {
+        min-height: 390px;
+      }
+
+      .grid.cols-4,
+      .grid.cols-3,
+      .grid.cols-2,
+      .risk-grid,
+      .source-list,
+      .product-grid,
+      .timeline,
+      .map-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .map-node::after {
+        display: none;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .topbar-inner {
+        align-items: flex-start;
+        padding: 12px 0;
+        flex-direction: column;
+      }
+
+      .nav {
+        justify-content: flex-start;
+      }
+
+      .hero,
+      .section,
+      .footer,
+      .topbar-inner {
+        width: min(100vw - 20px, 1180px);
+      }
+
+      .hero {
+        margin-top: 16px;
+      }
+
+      .hero-copy {
+        padding: 22px;
+      }
+
+      .grid.cols-4,
+      .grid.cols-3,
+      .grid.cols-2,
+      .risk-grid,
+      .source-list,
+      .product-grid,
+      .timeline,
+      .map-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .bar-row {
+        grid-template-columns: 1fr;
+        gap: 6px;
+      }
+
+      .visual-overlay {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="topbar">
+      <div class="topbar-inner">
+        <a class="brand" href="#top" aria-label="返回顶部">
+          <span class="brand-mark">M</span>
+          <span>Micron 全景研究</span>
+        </a>
+        <nav class="nav" aria-label="页面导航">
+          <a href="#shock">财报震撼点</a>
+          <a href="#business">业务结构</a>
+          <a href="#ai">AI链条</a>
+          <a href="#future">未来变量</a>
+          <a href="#risks">风险</a>
+          <a href="#sources">来源</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="top">
+      <section class="hero" aria-label="首页概览">
+        <div class="hero-copy">
+          <div>
+            <p class="eyebrow"><span class="dot"></span>基于 2026-06-24 FY2026 Q3 财报</p>
+            <h1>美光不只是卖内存，它正在成为 AI 基础设施的“带宽与容量阀门”。</h1>
+            <p class="hero-lede">
+              这份报告把 Micron Technology 从经营业务、财务爆发、产品路线、AI产业链位置、战略客户协议、竞争格局到风险框架系统拆开。结论很直接：AI 训练、推理、上下文存储和边缘智能同时把 DRAM、HBM、NAND、SSD 推到战略层，而美光正站在这个瓶颈的中心。
+            </p>
+          </div>
+          <div class="hero-actions">
+            <a class="button primary" href="#shock">先看财报冲击</a>
+            <a class="button" href="#ai">理解AI链条角色</a>
+            <a class="button" href="#sources">查看资料来源</a>
+          </div>
+        </div>
+        <figure class="hero-visual">
+          <img src="micron_report_assets/hbm4.jpg" alt="Micron HBM4 产品图">
+          <figcaption class="visual-overlay">
+            <div class="overlay-card">
+              <b>&gt;2.8 TB/s</b>
+              <span>Micron HBM4 12H 带宽，面向 NVIDIA Vera Rubin 平台<span class="source-pill">[7]</span></span>
+            </div>
+            <div class="overlay-card">
+              <b>+20%</b>
+              <span>较 HBM3E 的功耗效率改善，公司口径<span class="source-pill">[7]</span></span>
+            </div>
+          </figcaption>
+        </figure>
+      </section>
+
+      <section id="shock" class="section">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow"><span class="dot"></span>1. 昨天的财报为什么震撼</p>
+            <h2>从周期性复苏，跳成了结构性供给短缺。</h2>
+          </div>
+          <p class="section-note">
+            FY2026 Q3 截至 2026-05-28。美光发布收入 414.56 亿美元、非 GAAP EPS 25.11 美元，并给出下一季 500 亿美元收入中值指引。更关键的是，管理层称 DRAM 与 NAND 供需紧张将持续到 2027 年之后。
+          </p>
+        </div>
+
+        <div class="grid cols-4">
+          <article class="card metric">
+            <small>FY2026 Q3 收入</small>
+            <strong>$41.46B</strong>
+            <span class="delta">+74% QoQ / +346% YoY</span>
+          </article>
+          <article class="card metric">
+            <small>非 GAAP 毛利率</small>
+            <strong>84.9%</strong>
+            <span class="delta">Q2 为 74.9%</span>
+          </article>
+          <article class="card metric">
+            <small>非 GAAP 摊薄 EPS</small>
+            <strong>$25.11</strong>
+            <span class="delta">去年同期 $1.91</span>
+          </article>
+          <article class="card metric">
+            <small>经营现金流</small>
+            <strong>$25.39B</strong>
+            <span class="delta">调整后FCF $18.3B</span>
+          </article>
+        </div>
+
+        <div class="grid cols-3" style="margin-top:14px;">
+          <article class="card thesis">
+            <span class="tag">核心判断</span>
+            <h3>美光的定价权来自“稀缺位置”</h3>
+            <p>AI 服务器不是只缺 GPU。HBM、DDR5、LPDRAM、企业级 SSD 都被拉进同一个供给瓶颈，先进制程、封装和洁净室产能扩张又很慢。</p>
+          </article>
+          <article class="card callout">
+            <span class="tag">下一季指引</span>
+            <h3>FY2026 Q4 继续抬高台阶</h3>
+            <p>公司指引收入 500 亿美元上下 10 亿美元，毛利率约 86%，非 GAAP EPS 为 31 美元上下 1 美元。<span class="source-pill">[1]</span></p>
+          </article>
+          <article class="card">
+            <span class="tag">商业模式变化</span>
+            <h3>16 份战略客户协议</h3>
+            <p>约覆盖 20% DRAM 量、三分之一 NAND 量；14 份协议的最低合同收入约 1000 亿美元，并预计获得 220 亿美元客户押金及相关财务承诺。<span class="source-pill">[2]</span></p>
+          </article>
+        </div>
+      </section>
+
+      <section id="business" class="section">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow"><span class="dot"></span>2. 美光到底做什么</p>
+            <h2>它是美国最核心的内存与存储制造商。</h2>
+          </div>
+          <p class="section-note">
+            美光的产品覆盖 DRAM、HBM、DDR、LPDDR、GDDR、NAND、SSD、UFS、e.MMC、NOR 等。2025 年公司重组为四个市场导向业务单元，以更贴近 AI 从云到边缘的需求。
+          </p>
+        </div>
+
+        <div class="split">
+          <article class="card">
+            <span class="tag">按技术划分：FY2026 Q3</span>
+            <h3>DRAM 是主体，NAND 正在被 AI 存储拉动</h3>
+            <div class="bar-list">
+              <div class="bar-row">
+                <span>DRAM</span>
+                <div class="track"><div class="fill" style="width:76%"></div></div>
+                <b>$31.33B / 76%</b>
+              </div>
+              <div class="bar-row">
+                <span>NAND</span>
+                <div class="track"><div class="fill green" style="width:24%"></div></div>
+                <b>$9.94B / 24%</b>
+              </div>
+              <div class="bar-row">
+                <span>Other / NOR</span>
+                <div class="track"><div class="fill amber" style="width:1%"></div></div>
+                <b>$0.19B</b>
+              </div>
+            </div>
+            <p class="footnote">DRAM 收入同比 +343%，NAND 收入同比 +361%。<span class="source-pill">[2]</span></p>
+          </article>
+
+          <article class="card">
+            <span class="tag">按业务单元划分：FY2026 Q3</span>
+            <h3>数据中心已经成为收入重心</h3>
+            <div class="bar-list">
+              <div class="bar-row">
+                <span>Cloud Memory</span>
+                <div class="track"><div class="fill blue" style="width:33.2%"></div></div>
+                <b>$13.77B</b>
+              </div>
+              <div class="bar-row">
+                <span>Core Data Center</span>
+                <div class="track"><div class="fill" style="width:27.8%"></div></div>
+                <b>$11.52B</b>
+              </div>
+              <div class="bar-row">
+                <span>Mobile & Client</span>
+                <div class="track"><div class="fill green" style="width:27.8%"></div></div>
+                <b>$11.52B</b>
+              </div>
+              <div class="bar-row">
+                <span>Auto & Embedded</span>
+                <div class="track"><div class="fill amber" style="width:11.2%"></div></div>
+                <b>$4.63B</b>
+              </div>
+            </div>
+            <p class="footnote">四个业务单元分别覆盖 hyperscale、OEM/企业数据中心、移动/PC、汽车/工业/消费嵌入式。<span class="source-pill">[1][4]</span></p>
+          </article>
+        </div>
+
+        <div class="grid cols-3" style="margin-top:14px;">
+          <article class="card">
+            <span class="tag">DRAM 家族</span>
+            <h3>算力旁边的“工作记忆”</h3>
+            <p>包括 HBM、DDR、LPDDR、GDDR。HBM 使用 TSV 3D 堆叠，在高带宽和能效上更适合 AI 与 HPC。DDR5 提供服务器主存扩展，LPDDR/SOCAMM 面向低功耗高容量系统。<span class="source-pill">[4]</span></p>
+          </article>
+          <article class="card">
+            <span class="tag">NAND / SSD</span>
+            <h3>上下文和数据湖的“长期记忆”</h3>
+            <p>NAND 是非易失存储。企业级 SSD 通过更高容量、低功耗和高吞吐，替代部分 HDD 并承接 AI context store、训练数据、推理检索等工作负载。<span class="source-pill">[4][8]</span></p>
+          </article>
+          <article class="card">
+            <span class="tag">品牌与渠道</span>
+            <h3>从消费品转向战略客户</h3>
+            <p>美光 2025-12-03 宣布退出 Crucial 消费者业务，继续保留保修支持，把供给优先给数据中心、AI 和更大客户。<span class="source-pill">[10]</span></p>
+          </article>
+        </div>
+      </section>
+
+      <section id="ai" class="section">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow"><span class="dot"></span>3. 它在 AI 链条里扮演什么角色</p>
+            <h2>GPU 决定峰值算力，内存决定算力能不能被喂饱。</h2>
+          </div>
+          <p class="section-note">
+            AI 训练和推理越来越受制于数据移动：模型权重、KV cache、长上下文、检索数据、agent 执行状态、日志和样本都要在不同层级的内存与存储中快速流动。
+          </p>
+        </div>
+
+        <div class="ai-map">
+          <h3>AI 基础设施中的 Micron 位置图</h3>
+          <div class="map-grid">
+            <div class="map-node">
+              <b>前沿模型 / 应用</b>
+              <span>Claude、云厂商、搜索、agent、机器人、车载智能。</span>
+              <div class="chip-list"><span class="chip">训练</span><span class="chip">推理</span><span class="chip">长上下文</span></div>
+            </div>
+            <div class="map-node">
+              <b>加速器 / CPU</b>
+              <span>NVIDIA GPU、ASIC、CPU rack 形成异构算力池。</span>
+              <div class="chip-list"><span class="chip">Vera Rubin</span><span class="chip">ASIC</span></div>
+            </div>
+            <div class="map-node hot">
+              <b>HBM4</b>
+              <span>紧贴加速器，解决带宽和能效瓶颈，是 AI 训练和高端推理最稀缺层。</span>
+              <div class="chip-list"><span class="chip">36GB 12H</span><span class="chip">48GB 16H</span></div>
+            </div>
+            <div class="map-node">
+              <b>DDR5 / LPDRAM</b>
+              <span>服务器主存和 CPU 侧 agent 控制平面，支持更高容量与低功耗。</span>
+              <div class="chip-list"><span class="chip">RDIMM</span><span class="chip">SOCAMM2</span></div>
+            </div>
+            <div class="map-node">
+              <b>NAND / SSD</b>
+              <span>承载 context store、训练数据、高速检索和 HDD 替代。</span>
+              <div class="chip-list"><span class="chip">PCIe Gen6</span><span class="chip">245TB QLC</span></div>
+            </div>
+          </div>
+          <p class="quote">
+            美光自己的表述是：AI 系统性能在架构上依赖内存子系统的性能和容量；这让内存在 AI 世界中升级为战略资产。<span class="source-pill">[2]</span>
+          </p>
+        </div>
+
+        <div class="product-grid" style="margin-top:14px;">
+          <article class="card product-card">
+            <img src="micron_report_assets/g9-nand.jpg" alt="Micron G9 NAND 产品图">
+            <div>
+              <span class="tag">G9 NAND / 企业SSD</span>
+              <h3>AI 的存储瓶颈</h3>
+              <p>TrendForce 指出，AI 服务器基础设施对高速传输和大容量存储需求激增，推动企业 SSD 和高容量 QLC SSD。<span class="source-pill">[8]</span></p>
+            </div>
+          </article>
+          <article class="card product-card">
+            <img src="micron_report_assets/wafer.jpg" alt="Micron 晶圆图">
+            <div>
+              <span class="tag">先进制程 / EUV</span>
+              <h3>扩产不是拧开水龙头</h3>
+              <p>管理层强调绿地晶圆厂建设复杂、耗时，受工人、监管、能源基础设施和技术迁移影响；HBM 代际提升还会挤压非 HBM 供给。<span class="source-pill">[2]</span></p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="future" class="section">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow"><span class="dot"></span>4. 未来发展：三条主线</p>
+            <h2>客户锁量、产品升级、全球扩产，会决定这轮周期能走多远。</h2>
+          </div>
+          <p class="section-note">
+            这部分要同时看机会和约束：长期协议提升收入可见度，但资本开支、良率、客户认证和新产能爬坡会决定利润质量。
+          </p>
+        </div>
+
+        <div class="grid cols-3">
+          <article class="card">
+            <span class="tag">主线一：战略客户协议</span>
+            <h3>从现货周期转向长期配给</h3>
+            <p>协议通常为 2026 至 2030 年五年期，汽车协议多为三年；带有 take-or-pay 约束和价格地板，使美光的下行毛利率保护显著强于历史周期。<span class="source-pill">[2]</span></p>
+          </article>
+          <article class="card">
+            <span class="tag">主线二：产品升级</span>
+            <h3>HBM4 已出货，HBM4E 看 2027</h3>
+            <p>FY2026 Q3 财报称 HBM4 已为主要客户平台高量出货，HBM4E 基于 1-gamma DRAM，预计 2027 年量产。<span class="source-pill">[1]</span></p>
+          </article>
+          <article class="card">
+            <span class="tag">主线三：产能与封装</span>
+            <h3>美国与亚洲同时扩张</h3>
+            <p>ID1 预计 2027 年中首片晶圆，ID2 预计 2028 年末；台湾 Tongluo 站点 2027 年中贡献出货，新加坡将成为 HBM 先进封装中心之一。<span class="source-pill">[2]</span></p>
+          </article>
+        </div>
+
+        <div class="split" style="margin-top:14px;">
+          <article class="card image-card">
+            <img src="micron_report_assets/new-york-fab.jpg" alt="Micron New York fab rendering">
+            <div class="image-caption">
+              <b>美国扩产：约 2000 亿美元长期愿景</b>
+              <span>两座 Idaho fab、最多四座 New York fab、Virginia 现代化、HBM 先进封装和研发。<span class="source-pill">[5]</span></span>
+            </div>
+          </article>
+
+          <article class="card">
+            <span class="tag">路线图速览</span>
+            <h3>关键节点</h3>
+            <div class="timeline">
+              <div class="time-item"><b>1978</b><span>Boise 牙科诊所地下室，四人半导体设计公司成立。<span class="source-pill">[9]</span></span></div>
+              <div class="time-item"><b>1984</b><span>推出世界最小 256K DRAM，并在 NASDAQ 上市。<span class="source-pill">[9]</span></span></div>
+              <div class="time-item"><b>2022</b><span>232 层 NAND，宣布纽约与 Idaho 大型投资。<span class="source-pill">[9]</span></span></div>
+              <div class="time-item"><b>2025</b><span>1-gamma DRAM、HBM4 早期出货、退出 Crucial 消费渠道。<span class="source-pill">[9][10]</span></span></div>
+              <div class="time-item"><b>2026</b><span>Q3 收入 414.56 亿美元，16 份 SCA。<span class="source-pill">[1][2]</span></span></div>
+              <div class="time-item"><b>2027+</b><span>HBM4E、ID1、Tongluo、新加坡 HBM 封装陆续贡献。</span></div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow"><span class="dot"></span>5. 竞争格局</p>
+            <h2>三巨头仍主导高端内存，但中国与 NAND 同盟在边缘挤压。</h2>
+          </div>
+          <p class="section-note">
+            美光最直接的对手是 Samsung 与 SK hynix；NAND 里还要看 Kioxia、SanDisk；成熟 DRAM 与部分消费链条则受到 CXMT、YMTC 的长期影响。
+          </p>
+        </div>
+
+        <div class="grid cols-2">
+          <article class="card">
+            <span class="tag">DRAM 收入份额：TrendForce 4Q25</span>
+            <h3>Micron 第三，但正在受益于价格重估</h3>
+            <div class="bar-list">
+              <div class="bar-row"><span>Samsung</span><div class="track"><div class="fill blue" style="width:36%"></div></div><b>36.0%</b></div>
+              <div class="bar-row"><span>SK hynix</span><div class="track"><div class="fill green" style="width:32.1%"></div></div><b>32.1%</b></div>
+              <div class="bar-row"><span>Micron</span><div class="track"><div class="fill" style="width:22.4%"></div></div><b>22.4%</b></div>
+            </div>
+            <p class="footnote">TrendForce 同时指出 4Q25 常规 DRAM 合约价大幅上涨，供应商定价权增强。<span class="source-pill">[6]</span></p>
+          </article>
+          <article class="card">
+            <span class="tag">NAND 收入份额：TrendForce 1Q26</span>
+            <h3>AI 服务器把企业 SSD 拉进紧缺区</h3>
+            <div class="bar-list">
+              <div class="bar-row"><span>Samsung</span><div class="track"><div class="fill blue" style="width:31.6%"></div></div><b>31.6%</b></div>
+              <div class="bar-row"><span>SK hynix Group</span><div class="track"><div class="fill green" style="width:17.6%"></div></div><b>17.6%</b></div>
+              <div class="bar-row"><span>Kioxia</span><div class="track"><div class="fill amber" style="width:13.9%"></div></div><b>13.9%</b></div>
+              <div class="bar-row"><span>Micron</span><div class="track"><div class="fill" style="width:13.9%"></div></div><b>13.9%</b></div>
+              <div class="bar-row"><span>SanDisk</span><div class="track"><div class="fill coral" style="width:13.9%"></div></div><b>13.9%</b></div>
+            </div>
+            <p class="footnote">TrendForce 称 2026 年 NAND 新增产能几乎没有，AI 需求强劲使短缺可能持续全年。<span class="source-pill">[8]</span></p>
+          </article>
+        </div>
+      </section>
+
+      <section id="risks" class="section">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow"><span class="dot"></span>6. 投资与经营风险框架</p>
+            <h2>最强的周期，也可能在错误扩产和需求反转时变脸。</h2>
+          </div>
+          <p class="section-note">
+            这不是投资建议，而是理解公司质量时要盯的变量。美光的好处很明确，风险同样不能轻描淡写。
+          </p>
+        </div>
+
+        <div class="risk-grid">
+          <article class="card risk-card good">
+            <span class="tag">上行变量</span>
+            <h3>AI 推理比训练更“吃内存”</h3>
+            <p>如果 agent、长上下文、企业检索、机器人和车载智能持续扩张，HBM、服务器 DRAM 和企业 SSD 的单位需求可能继续上修。</p>
+          </article>
+          <article class="card risk-card good">
+            <span class="tag">上行变量</span>
+            <h3>SCA 改写周期底部</h3>
+            <p>take-or-pay 和价格地板让美光获得历史少见的收入和毛利率可见度。若客户继续签约，估值框架会从周期股向基础设施供应商迁移。</p>
+          </article>
+          <article class="card risk-card watch">
+            <span class="tag">观察点</span>
+            <h3>HBM 良率与客户认证</h3>
+            <p>HBM4/HBM4E 的性能、良率、封装产能和主要客户平台认证，是能否把订单变成高质量利润的关键。</p>
+          </article>
+          <article class="card risk-card">
+            <span class="tag">下行风险</span>
+            <h3>历史周期仍在</h3>
+            <p>内存行业过去多次因扩产、库存和价格下行发生利润坍塌。SCA 能缓冲，但不能完全消灭周期。</p>
+          </article>
+          <article class="card risk-card">
+            <span class="tag">下行风险</span>
+            <h3>资本开支与建设延迟</h3>
+            <p>绿地 fab 耗资巨大、周期长，受劳动力、能源、许可、设备交付和政策影响；若需求放缓，投资回报会承压。</p>
+          </article>
+          <article class="card risk-card">
+            <span class="tag">下行风险</span>
+            <h3>地缘与客户集中</h3>
+            <p>美光面向全球生产和销售，竞争对手、出口管制、中国供应链、客户议价和单一平台依赖都可能影响利润与估值。</p>
+          </article>
+        </div>
+
+        <article class="card" style="margin-top:14px;">
+          <span class="tag">一页结论</span>
+          <h3>如何理解美光</h3>
+          <table class="mini-table" aria-label="美光判断表">
+            <thead>
+              <tr><th>问题</th><th>答案</th><th>应盯指标</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>它还是周期股吗？</td><td>是，但 AI 和 SCA 正在抬高周期底部。</td><td>价格、库存、SCA 执行、毛利率。</td></tr>
+              <tr><td>它在 AI 里不可替代吗？</td><td>不是唯一供应商，但在 HBM、DRAM、SSD 的组合位置很稀缺。</td><td>HBM 份额、客户平台、良率、封装。</td></tr>
+              <tr><td>最大机会是什么？</td><td>AI 把内存从成本项变成系统性能项。</td><td>数据中心收入、企业 SSD、HBM4E。</td></tr>
+              <tr><td>最大风险是什么？</td><td>需求预期过热叠加扩产，导致价格和利润率回落。</td><td>合约价、供需、客户 capex、竞争扩产。</td></tr>
+            </tbody>
+          </table>
+        </article>
+      </section>
+
+      <section id="sources" class="section">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow"><span class="dot"></span>资料来源</p>
+            <h2>关键数字以官方披露和行业机构为主。</h2>
+          </div>
+          <p class="section-note">
+            页面制作时间：2026-06-25 America/Los_Angeles。财务数据单位默认美元；百分比和增速来自公司披露或来源文章，未自行重估。
+          </p>
+        </div>
+
+        <div class="source-list">
+          <a class="source" href="https://investors.micron.com/node/50681/html" target="_blank" rel="noreferrer">
+            <b>[1] Micron FY2026 Q3 8-K / Press Release</b>
+            <span>财报亮点、业务单元数据、Q4 指引、产品亮点。</span>
+          </a>
+          <a class="source" href="https://investors.micron.com/static-files/2354ecda-77a0-4ddd-8462-a631eb491356" target="_blank" rel="noreferrer">
+            <b>[2] Micron FY2026 Q3 Earnings Deck</b>
+            <span>AI趋势、SCA 条款、供应约束、产品路线和扩产节点。</span>
+          </a>
+          <a class="source" href="https://investors.micron.com/" target="_blank" rel="noreferrer">
+            <b>[3] Micron Investor Relations</b>
+            <span>最新新闻、季度材料、管理层表述。</span>
+          </a>
+          <a class="source" href="https://www.sec.gov/Archives/edgar/data/723125/000072312525000028/mu-20250828.htm" target="_blank" rel="noreferrer">
+            <b>[4] FY2025 Form 10-K</b>
+            <span>产品定义、业务单元、竞争对手和历史收入。</span>
+          </a>
+          <a class="source" href="https://www.micron.com/us-expansion" target="_blank" rel="noreferrer">
+            <b>[5] Micron U.S. Expansion</b>
+            <span>约 2000 亿美元美国制造与研发投资愿景。</span>
+          </a>
+          <a class="source" href="https://www.trendforce.com/presscenter/news/20260226-12937.html" target="_blank" rel="noreferrer">
+            <b>[6] TrendForce DRAM 4Q25</b>
+            <span>DRAM 收入份额和合约价格上涨数据。</span>
+          </a>
+          <a class="source" href="https://investors.micron.com/news-releases/news-release-details/micron-high-volume-production-hbm4-designed-nvidia-vera-rubin" target="_blank" rel="noreferrer">
+            <b>[7] Micron HBM4 / NVIDIA Vera Rubin Release</b>
+            <span>HBM4、PCIe Gen6 SSD、SOCAMM2 产品数据。</span>
+          </a>
+          <a class="source" href="https://www.trendforce.com/presscenter/news/20260525-13058.html" target="_blank" rel="noreferrer">
+            <b>[8] TrendForce NAND 1Q26</b>
+            <span>NAND 供应商收入份额、AI 企业 SSD 需求与供给判断。</span>
+          </a>
+          <a class="source" href="https://www.micron.com/about/company/company-timeline" target="_blank" rel="noreferrer">
+            <b>[9] Micron Company Timeline</b>
+            <span>成立、上市、产品里程碑、技术路线历史。</span>
+          </a>
+          <a class="source" href="https://investors.micron.com/news-releases/news-release-details/micron-announces-exit-crucial-consumer-business" target="_blank" rel="noreferrer">
+            <b>[10] Exit from Crucial Consumer Business</b>
+            <span>退出消费渠道、转向数据中心与战略客户。</span>
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <b>说明：</b>本网页用于公司研究和产业理解，不构成证券买卖建议。所有预测性内容均应与公司后续 10-Q、10-K、电话会和行业价格数据交叉验证。
+    </footer>
+  </div>
+</body>
+</html>

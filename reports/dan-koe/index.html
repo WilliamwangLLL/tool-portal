@@ -1,0 +1,1467 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dan Koe《一天修复人生》深度研究</title>
+  <meta name="description" content="对 Dan Koe《How to fix your entire life in 1 day》的深度研究、行为科学校准与可执行行动手册。">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23141712'/%3E%3Cpath d='M15 44 31 11l18 42h-9l-3-8H25l-3 8h-7Zm14-17-6 14h12l-6-14Z' fill='%23d7ff63'/%3E%3C/svg%3E">
+  <style>
+    :root {
+      --ink: #151713;
+      --muted: #60645b;
+      --paper: #f7f7f2;
+      --panel: #ffffff;
+      --line: #dddeda;
+      --coal: #20231d;
+      --acid: #d7ff63;
+      --blue: #346dff;
+      --green: #1b8a63;
+      --coral: #ff6b4a;
+      --amber: #d9901e;
+      --violet: #7d66ff;
+      --soft-blue: #e9efff;
+      --soft-green: #e7f5ee;
+      --soft-coral: #fff0ea;
+      --soft-amber: #fff6df;
+      --shadow: 0 22px 70px rgba(21, 23, 19, 0.14);
+      --radius: 8px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        linear-gradient(180deg, rgba(215, 255, 99, 0.2), rgba(247, 247, 242, 0) 420px),
+        var(--paper);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      line-height: 1.68;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    .page {
+      overflow: hidden;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      border-bottom: 1px solid rgba(21, 23, 19, 0.08);
+      background: rgba(247, 247, 242, 0.86);
+      backdrop-filter: blur(18px);
+    }
+
+    .topbar-inner {
+      width: min(1180px, calc(100vw - 32px));
+      min-height: 64px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .brand-mark {
+      width: 34px;
+      height: 34px;
+      border-radius: var(--radius);
+      display: grid;
+      place-items: center;
+      color: var(--coal);
+      background: var(--acid);
+      box-shadow: inset 0 0 0 1px rgba(21, 23, 19, 0.08);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 4px;
+      flex-wrap: wrap;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .nav a {
+      padding: 8px 10px;
+      border-radius: var(--radius);
+    }
+
+    .nav a:hover {
+      color: var(--ink);
+      background: #eceee7;
+    }
+
+    .shell {
+      width: min(1180px, calc(100vw - 32px));
+      margin: 0 auto;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(360px, 0.95fr);
+      gap: 24px;
+      margin-top: 34px;
+      align-items: stretch;
+    }
+
+    .hero-copy {
+      min-height: 620px;
+      padding: clamp(26px, 4.5vw, 54px);
+      background: var(--coal);
+      color: #f8f8f0;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-copy::after {
+      content: "";
+      position: absolute;
+      inset: auto -16% -30% 18%;
+      height: 330px;
+      background: radial-gradient(circle, rgba(215, 255, 99, 0.28), rgba(215, 255, 99, 0));
+      pointer-events: none;
+    }
+
+    .eyebrow {
+      margin: 0 0 18px;
+      display: inline-flex;
+      width: fit-content;
+      align-items: center;
+      gap: 9px;
+      color: var(--acid);
+      font-size: 13px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      position: relative;
+      z-index: 2;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 99px;
+      background: var(--acid);
+      box-shadow: 0 0 0 5px rgba(215, 255, 99, 0.18);
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h1 {
+      margin-bottom: 24px;
+      max-width: 780px;
+      font-size: clamp(42px, 7.2vw, 86px);
+      line-height: 0.95;
+      letter-spacing: 0;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-lede {
+      margin: 0;
+      max-width: 720px;
+      color: rgba(248, 248, 240, 0.78);
+      font-size: clamp(17px, 2.1vw, 22px);
+      line-height: 1.6;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 32px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 11px 15px;
+      border-radius: var(--radius);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      color: #f8f8f0;
+      background: rgba(255, 255, 255, 0.08);
+      font-weight: 800;
+      cursor: pointer;
+      transition: transform 160ms ease, background 160ms ease;
+    }
+
+    .button:hover {
+      transform: translateY(-1px);
+      background: rgba(255, 255, 255, 0.14);
+    }
+
+    .button.primary {
+      color: var(--coal);
+      background: var(--acid);
+      border-color: var(--acid);
+    }
+
+    .hero-meta {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 44px;
+    }
+
+    .meta-card {
+      padding: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .meta-card strong {
+      display: block;
+      color: #fff;
+      font-size: 18px;
+      line-height: 1.1;
+    }
+
+    .meta-card span {
+      display: block;
+      margin-top: 5px;
+      color: rgba(248, 248, 240, 0.66);
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+    .hero-visual {
+      display: grid;
+      grid-template-rows: minmax(360px, 1fr) auto;
+      gap: 16px;
+    }
+
+    .visual-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      min-height: 440px;
+    }
+
+    .visual-card img {
+      width: 100%;
+      height: 100%;
+      min-height: 440px;
+      object-fit: cover;
+    }
+
+    .visual-caption {
+      position: absolute;
+      left: 16px;
+      right: 16px;
+      bottom: 16px;
+      padding: 14px 15px;
+      border-radius: var(--radius);
+      color: #fff;
+      background: rgba(21, 23, 19, 0.78);
+      backdrop-filter: blur(14px);
+      font-size: 13px;
+    }
+
+    .author-card {
+      display: grid;
+      grid-template-columns: 72px minmax(0, 1fr);
+      gap: 15px;
+      align-items: center;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+    }
+
+    .author-card img {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .author-card strong {
+      display: block;
+      font-size: 18px;
+      line-height: 1.2;
+    }
+
+    .author-card p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .section {
+      padding: 76px 0 0;
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(0, 0.92fr) minmax(280px, 0.58fr);
+      gap: 24px;
+      align-items: end;
+      margin-bottom: 24px;
+    }
+
+    .kicker {
+      margin: 0 0 10px;
+      color: var(--green);
+      font-size: 13px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    h2 {
+      margin-bottom: 0;
+      font-size: clamp(30px, 4.6vw, 56px);
+      line-height: 1.02;
+      letter-spacing: 0;
+    }
+
+    .section-head p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    .insight-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .insight-card {
+      padding: 20px;
+      min-height: 240px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .insight-card:nth-child(1) {
+      background: var(--soft-blue);
+    }
+
+    .insight-card:nth-child(2) {
+      background: var(--soft-coral);
+    }
+
+    .insight-card:nth-child(3) {
+      background: var(--soft-green);
+    }
+
+    .insight-card:nth-child(4) {
+      background: var(--soft-amber);
+    }
+
+    .tag {
+      display: inline-flex;
+      width: fit-content;
+      align-items: center;
+      min-height: 26px;
+      padding: 3px 9px;
+      border-radius: 999px;
+      color: var(--coal);
+      background: rgba(255, 255, 255, 0.72);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .insight-card h3 {
+      margin: 22px 0 10px;
+      font-size: 22px;
+      line-height: 1.18;
+    }
+
+    .insight-card p {
+      margin: 0;
+      color: #42463f;
+      font-size: 14px;
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: minmax(0, 0.98fr) minmax(340px, 0.72fr);
+      gap: 24px;
+      align-items: start;
+    }
+
+    .prose-card {
+      padding: clamp(22px, 3vw, 34px);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+    }
+
+    .prose-card h3 {
+      margin: 0 0 12px;
+      font-size: 28px;
+      line-height: 1.15;
+    }
+
+    .prose-card p,
+    .prose-card li {
+      color: var(--muted);
+    }
+
+    .prose-card strong {
+      color: var(--ink);
+    }
+
+    .quote-panel {
+      margin-top: 22px;
+      padding: 18px;
+      border-left: 4px solid var(--acid);
+      background: #f3f6e8;
+      border-radius: 0 var(--radius) var(--radius) 0;
+      color: #41463b;
+      font-weight: 700;
+    }
+
+    .figure {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+      box-shadow: 0 12px 36px rgba(21, 23, 19, 0.09);
+    }
+
+    .figure img {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      background: #eceee7;
+    }
+
+    .figure figcaption {
+      margin: 0;
+      padding: 13px 14px 15px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .map-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 0.72fr) minmax(0, 1fr);
+      gap: 24px;
+      align-items: start;
+    }
+
+    .sticky-note {
+      position: sticky;
+      top: 90px;
+    }
+
+    .timeline {
+      display: grid;
+      gap: 12px;
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: 58px minmax(0, 1fr);
+      gap: 14px;
+      padding: 17px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+    }
+
+    .step-num {
+      width: 44px;
+      height: 44px;
+      border-radius: var(--radius);
+      display: grid;
+      place-items: center;
+      background: var(--coal);
+      color: var(--acid);
+      font-weight: 900;
+    }
+
+    .step h3 {
+      margin: 0 0 6px;
+      font-size: 19px;
+      line-height: 1.25;
+    }
+
+    .step p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .image-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 24px;
+    }
+
+    .image-row .figure img {
+      aspect-ratio: 1.2 / 1;
+    }
+
+    .evidence-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .evidence-card {
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+    }
+
+    .evidence-card h3 {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 10px;
+      font-size: 22px;
+    }
+
+    .marker {
+      width: 14px;
+      height: 14px;
+      border-radius: 4px;
+      background: var(--blue);
+      flex: 0 0 auto;
+    }
+
+    .evidence-card:nth-child(2) .marker {
+      background: var(--coral);
+    }
+
+    .evidence-card:nth-child(3) .marker {
+      background: var(--green);
+    }
+
+    .evidence-card:nth-child(4) .marker {
+      background: var(--violet);
+    }
+
+    .evidence-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .protocol {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .phase {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+      overflow: hidden;
+    }
+
+    .phase img {
+      width: 100%;
+      height: 210px;
+      object-fit: cover;
+    }
+
+    .phase-body {
+      padding: 20px;
+    }
+
+    .phase h3 {
+      margin: 0 0 8px;
+      font-size: 25px;
+    }
+
+    .phase p {
+      margin: 0 0 14px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .prompt-list {
+      display: grid;
+      gap: 8px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .prompt-list li {
+      padding: 10px 11px;
+      border-radius: var(--radius);
+      background: #f4f5ef;
+      color: #3d413a;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .system-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 0.92fr) minmax(360px, 0.68fr);
+      gap: 24px;
+      align-items: start;
+    }
+
+    .schedule {
+      display: grid;
+      gap: 12px;
+    }
+
+    .slot {
+      display: grid;
+      grid-template-columns: 110px minmax(0, 1fr);
+      gap: 14px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+    }
+
+    .slot-time {
+      color: var(--coal);
+      font-weight: 900;
+    }
+
+    .slot strong {
+      display: block;
+      margin-bottom: 3px;
+    }
+
+    .slot p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .game-card {
+      padding: 24px;
+      border-radius: var(--radius);
+      background: var(--coal);
+      color: #f8f8f0;
+      position: sticky;
+      top: 90px;
+    }
+
+    .game-card h3 {
+      margin: 0 0 12px;
+      font-size: 27px;
+      line-height: 1.15;
+    }
+
+    .game-card p {
+      color: rgba(248, 248, 240, 0.7);
+    }
+
+    .game-list {
+      display: grid;
+      gap: 9px;
+      margin: 18px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .game-list li {
+      display: grid;
+      grid-template-columns: 82px minmax(0, 1fr);
+      gap: 10px;
+      padding: 11px;
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.07);
+      font-size: 13px;
+    }
+
+    .game-list span {
+      color: var(--acid);
+      font-weight: 900;
+    }
+
+    .action-board {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .action-card {
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+    }
+
+    .action-card h3 {
+      margin: 0 0 14px;
+      font-size: 22px;
+    }
+
+    .check-item {
+      display: grid;
+      grid-template-columns: 24px minmax(0, 1fr);
+      gap: 10px;
+      align-items: start;
+      padding: 10px 0;
+      border-top: 1px solid #eceee7;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .check-item:first-of-type {
+      border-top: 0;
+    }
+
+    .check-item input {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--green);
+      margin-top: 3px;
+    }
+
+    .check-item span {
+      display: block;
+    }
+
+    .toolbar {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 18px;
+    }
+
+    .tool-button {
+      min-height: 42px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--coal);
+      color: #fff;
+      padding: 9px 13px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .tool-button.secondary {
+      color: var(--ink);
+      background: #fff;
+    }
+
+    .warning {
+      margin-top: 14px;
+      padding: 16px;
+      border: 1px solid #f2c7bd;
+      border-radius: var(--radius);
+      background: var(--soft-coral);
+      color: #653225;
+      font-size: 14px;
+    }
+
+    .source-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .source-list a {
+      display: block;
+      min-height: 100%;
+      padding: 15px 16px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+    }
+
+    .source-list strong {
+      display: block;
+      color: var(--ink);
+      font-size: 14px;
+      line-height: 1.35;
+    }
+
+    .source-list span {
+      display: block;
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+      overflow-wrap: anywhere;
+    }
+
+    .footer {
+      margin-top: 76px;
+      padding: 34px 0 44px;
+      color: #d8dbd2;
+      background: var(--coal);
+    }
+
+    .footer-inner {
+      width: min(1180px, calc(100vw - 32px));
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+      font-size: 13px;
+    }
+
+    .footer a {
+      color: var(--acid);
+    }
+
+    @media (max-width: 980px) {
+      .hero,
+      .section-head,
+      .split,
+      .map-grid,
+      .system-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-copy {
+        min-height: auto;
+      }
+
+      .hero-meta,
+      .insight-grid,
+      .protocol,
+      .image-row,
+      .evidence-grid,
+      .action-board,
+      .source-list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .sticky-note,
+      .game-card {
+        position: static;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .topbar-inner {
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 12px 0;
+      }
+
+      .nav {
+        justify-content: flex-start;
+      }
+
+      .hero {
+        margin-top: 18px;
+      }
+
+      .hero-meta,
+      .insight-grid,
+      .protocol,
+      .image-row,
+      .evidence-grid,
+      .action-board,
+      .source-list {
+        grid-template-columns: 1fr;
+      }
+
+      .visual-card,
+      .visual-card img {
+        min-height: 300px;
+      }
+
+      .step,
+      .slot {
+        grid-template-columns: 1fr;
+      }
+
+      .game-list li {
+        grid-template-columns: 1fr;
+      }
+
+      .section {
+        padding-top: 54px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="topbar">
+      <div class="topbar-inner">
+        <a class="brand" href="#top" aria-label="回到顶部">
+          <span class="brand-mark">DK</span>
+          <span>One Day Reset</span>
+        </a>
+        <nav class="nav" aria-label="页面导航">
+          <a href="#conclusion">结论</a>
+          <a href="#map">原文结构</a>
+          <a href="#evidence">研究校准</a>
+          <a href="#protocol">一天协议</a>
+          <a href="#actions">行动建议</a>
+          <a href="#sources">来源</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="top">
+      <section class="hero shell" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <div>
+            <p class="eyebrow"><span class="dot"></span>Dan Koe 文章深度研究</p>
+            <h1 id="hero-title">一天并不会改变人生，但一天可以改写方向。</h1>
+            <p class="hero-lede">
+              这份网页把 Dan Koe《How to fix your entire life in 1 day》拆成一套可执行系统：用反面愿景制造清醒，用身份语言重设方向，用一天的提醒打断惯性，再用 30 天行动杠杆把洞察变成现实。
+            </p>
+            <div class="hero-actions">
+              <a class="button primary" href="#protocol">进入一天协议</a>
+              <a class="button" href="#actions">查看行动清单</a>
+            </div>
+          </div>
+          <div class="hero-meta" aria-label="研究摘要">
+            <div class="meta-card">
+              <strong>1 篇主文</strong>
+              <span>Dan Koe 2025 年 12 月文章与视频</span>
+            </div>
+            <div class="meta-card">
+              <strong>7 个模块</strong>
+              <span>身份、目标、恐惧、心智、反馈、协议、游戏化</span>
+            </div>
+            <div class="meta-card">
+              <strong>30 天落地</strong>
+              <span>从一天复盘延伸到每日杠杆</span>
+            </div>
+          </div>
+        </div>
+
+        <aside class="hero-visual" aria-label="主视觉与作者信息">
+          <figure class="visual-card">
+            <img src="https://i.ytimg.com/vi/K8K09g9XR4s/maxresdefault.jpg" alt="Dan Koe How to fix your entire life in 1 day 视频缩略图">
+            <figcaption class="visual-caption">主文配套视频：Dan Koe 把文章里的“一天协议”讲成 40 分钟长视频。</figcaption>
+          </figure>
+          <div class="author-card">
+            <img src="https://substackcdn.com/image/fetch/$s_!KH3R!,w_180,h_180,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F7591b09e-6d83-4960-a71c-e2060766c42a_728x728.jpeg" alt="Dan Koe 头像">
+            <div>
+              <strong>DAN KOE</strong>
+              <p>写作主题集中在个人品牌、心智模型、创造者经济、专注和一人公司。本文是他对“新年决心为什么失效”的一次系统化回答。</p>
+            </div>
+          </div>
+        </aside>
+      </section>
+
+      <section id="conclusion" class="section shell">
+        <div class="section-head">
+          <div>
+            <p class="kicker">01 / 研究结论</p>
+            <h2>Dan Koe 的核心不是“更自律”，而是“换一个会自然行动的自己”。</h2>
+          </div>
+          <p>
+            原文的强处在于把行为改变放到身份、目标和反馈循环里，而不是停在习惯技巧。需要校准的是：强烈的反面愿景能启动行动，但长期改变还需要具体环境、if-then 计划、可见反馈和低摩擦重复。
+          </p>
+        </div>
+
+        <div class="insight-grid">
+          <article class="insight-card">
+            <span class="tag">核心判断</span>
+            <div>
+              <h3>目标不是清单，是看世界的镜头。</h3>
+              <p>Dan Koe 反复强调，真正的目标会改变你注意到什么、忽略什么、把什么视为机会。行动建议因此要从“我该做什么”前移到“我正在为什么而看”。</p>
+            </div>
+          </article>
+          <article class="insight-card">
+            <span class="tag">实践杠杆</span>
+            <div>
+              <h3>反面愿景比空泛愿景更能让人醒。</h3>
+              <p>把 5 年、10 年后不想要的普通一天写清楚，会制造真实代价感。但它只能用来启动，不能变成自我羞辱。</p>
+            </div>
+          </article>
+          <article class="insight-card">
+            <span class="tag">科学校准</span>
+            <div>
+              <h3>一天负责“选择方向”，不是负责“形成习惯”。</h3>
+              <p>习惯自动化通常要经历多次重复。一天协议更像一次战略重启，后续要用固定时间、触发条件和反馈记录把方向做实。</p>
+            </div>
+          </article>
+          <article class="insight-card">
+            <span class="tag">风险提醒</span>
+            <div>
+              <h3>不要把所有停滞都解释成“不够想要”。</h3>
+              <p>现实约束、健康状态、关系压力和资源差距都可能影响行动。更好的表达是：找出你实际在保护什么，再设计更聪明的前进方式。</p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section shell">
+        <div class="split">
+          <article class="prose-card">
+            <p class="kicker">02 / 原文拆解</p>
+            <h3>这篇文章真正讨论的是“身份循环”。</h3>
+            <p>
+              Dan Koe 认为，很多人失败不是因为目标不好，而是因为他们仍在用旧身份追求新结果。旧身份会保护旧行为，旧行为继续制造旧生活。文章中的一天协议，就是让人短时间内看见这个循环：我嘴上说要改变，但我的行为证明我还在追求安全、熟悉、被认可或不被评判。
+            </p>
+            <p>
+              因此，文章不是传统时间管理，而是一套心理挖掘流程。它先让你诚实面对已经习惯忍受的不满，再把这种不满转成反面愿景，然后在一天里不断打断自动驾驶，最后压缩成可以明天开始执行的目标层级。
+            </p>
+            <div class="quote-panel">
+              研究版翻译：不是“我想要一个结果”，而是“我愿不愿意成为那个结果需要的人，并接受这个身份带来的社交、生活和心理代价”。
+            </div>
+          </article>
+
+          <figure class="figure">
+            <img src="https://images.unsplash.com/photo-1513128034602-7814ccaddd4e?auto=format&fit=crop&w=1200&q=80" alt="桌面上的日程本、笔和计划工具">
+            <figcaption>行动设计从写下真实日程开始：不是理想的一天，而是你现在实际重复的一天。</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section id="map" class="section shell">
+        <div class="section-head">
+          <div>
+            <p class="kicker">03 / 原文结构地图</p>
+            <h2>七段论：从“我为什么没变”到“明天怎么开始”。</h2>
+          </div>
+          <p>下面不是逐字摘要，而是把原文转成可复用的研究框架。你可以把它当成一次个人战略复盘的导航图。</p>
+        </div>
+
+        <div class="map-grid">
+          <figure class="figure sticky-note">
+            <img src="https://substackcdn.com/image/fetch/$s_!PKbP!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fbefe4764-cb9d-4415-a39e-4ddfe4164106_1000x672.jpeg" alt="Dan Koe 原文中的心智阶段示意图">
+            <figcaption>Dan Koe 在原文里用心智发展阶段解释身份升级：你不只是多做几件事，而是在更高视角下重新组织生活。</figcaption>
+          </figure>
+
+          <div class="timeline">
+            <article class="step">
+              <div class="step-num">I</div>
+              <div>
+                <h3>你还没到那里，因为你还不是那里的人。</h3>
+                <p>结果来自生活方式。想要一个结果，先要接受它背后的日常标准。</p>
+              </div>
+            </article>
+            <article class="step">
+              <div class="step-num">II</div>
+              <div>
+                <h3>你说想改变，但行为在追求另一个目标。</h3>
+                <p>拖延可能是在保护自己不被评价，稳定可能是在保护自己不丢脸。先识别隐性目标。</p>
+              </div>
+            </article>
+            <article class="step">
+              <div class="step-num">III</div>
+              <div>
+                <h3>你害怕真正抵达。</h3>
+                <p>身份一旦被挑战，人会像身体受威胁一样防御。改变常常意味着放弃一部分“我是谁”。</p>
+              </div>
+            </article>
+            <article class="step">
+              <div class="step-num">IV</div>
+              <div>
+                <h3>更好的生活需要更高的心智层级。</h3>
+                <p>从服从外部脚本，到建立原则，再到看见原则背后的情境，视角越高，可选动作越多。</p>
+              </div>
+            </article>
+            <article class="step">
+              <div class="step-num">V</div>
+              <div>
+                <h3>智能是持续反馈和修正。</h3>
+                <p>目标、行动、感知、比较、再行动。人生改变不是意志力比赛，而是反馈系统的质量。</p>
+              </div>
+            </article>
+            <article class="step">
+              <div class="step-num">VI</div>
+              <div>
+                <h3>一天协议：挖掘、打断、整合。</h3>
+                <p>早上写出反面愿景，白天用提醒打断惯性，晚上合成愿景、年度目标、月项目和每日杠杆。</p>
+              </div>
+            </article>
+            <article class="step">
+              <div class="step-num">VII</div>
+              <div>
+                <h3>把人生变成游戏。</h3>
+                <p>愿景是胜利条件，反面愿景是赌注，年度目标是主线任务，月项目是关卡，每日杠杆是任务。</p>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <div class="image-row" aria-label="辅助图片">
+          <figure class="figure">
+            <img src="https://thedankoe.com/wp-content/uploads/2025/01/44-1024x1024.png" alt="Dan Koe 60 分钟晨间 routine 文章配图">
+            <figcaption>Dan Koe 另一篇文章强调：清晨 60 分钟是改变轨迹的最小可用时间块。</figcaption>
+          </figure>
+          <figure class="figure">
+            <img src="https://images.unsplash.com/photo-1474859569645-e0def92b02bc?auto=format&fit=crop&w=1200&q=80" alt="笔记本和咖啡构成的清晨工作场景">
+            <figcaption>对多数人来说，早晨的高能量窗口比晚间的补偿性娱乐更可靠。</figcaption>
+          </figure>
+          <figure class="figure">
+            <img src="https://images.unsplash.com/photo-1539920951450-2b2d59cff66d?auto=format&fit=crop&w=1200&q=80" alt="人在自然中散步">
+            <figcaption>散步、日光和低刺激环境适合把思维从焦虑中拉回现实。</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section id="evidence" class="section shell">
+        <div class="section-head">
+          <div>
+            <p class="kicker">04 / 研究校准</p>
+            <h2>Dan Koe 的模型有启发性，但要和行为科学接上。</h2>
+          </div>
+          <p>下面四个校准点，可以把文章里的强烈表达变成更稳的行动设计。</p>
+        </div>
+
+        <div class="split">
+          <div class="evidence-grid">
+            <article class="evidence-card">
+              <h3><span class="marker"></span>身份改变</h3>
+              <p>身份能降低每次行动所需的意志力，因为行为开始和“我是谁”一致。但身份也会防御自己，所以要保持身份可迭代：我是正在训练的人，而不是必须完美的人。</p>
+            </article>
+            <article class="evidence-card">
+              <h3><span class="marker"></span>执行意图</h3>
+              <p>if-then planning 的研究表明，把“如果 X 出现，我就做 Y”提前绑定，可以帮助目标转化为行动。Dan 的白天提醒最好配成具体动作，而不只是提问。</p>
+            </article>
+            <article class="evidence-card">
+              <h3><span class="marker"></span>习惯形成</h3>
+              <p>Lally 等人的习惯研究提示：自动化需要重复，并且速度因人和行为而异。所以一天协议是启动器，后续 30 天才是行为固化的现场。</p>
+            </article>
+            <article class="evidence-card">
+              <h3><span class="marker"></span>自我决定</h3>
+              <p>Ryan 与 Deci 的自我决定理论强调自主、胜任、联结。反面愿景能推动你离开痛苦，但长期坚持更依赖“我选择它、我做得越来越好、有人和我同频”。</p>
+            </article>
+          </div>
+
+          <figure class="figure">
+            <img src="https://substackcdn.com/image/fetch/$s_!_2Vx!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F6d235caf-992b-46be-b190-2507005ad52d_1150x364.jpeg" alt="Dan Koe 原文中的控制论反馈循环图">
+            <figcaption>原文用控制论解释目标追踪：目标、行动、感知、比较、调整。行动建议部分会把它变成每日记录模板。</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section id="protocol" class="section shell">
+        <div class="section-head">
+          <div>
+            <p class="kicker">05 / 一天改变人生协议</p>
+            <h2>把一整天当作“身份重设实验室”。</h2>
+          </div>
+          <p>建议找一个相对完整的休息日执行。手机保留提醒和计时功能，其他高刺激应用全部退出。</p>
+        </div>
+
+        <div class="protocol">
+          <article class="phase">
+            <img src="https://images.unsplash.com/photo-1532072918578-b5583b5b585e?auto=format&fit=crop&w=1200&q=80" alt="打开的笔记本">
+            <div class="phase-body">
+              <h3>早上：心理挖掘</h3>
+              <p>目标是看清旧生活的真实代价，并写出一个足够具体的反面愿景。</p>
+              <ul class="prompt-list">
+                <li>我已经学会忍受的长期不满是什么？</li>
+                <li>我最常抱怨却从未改变的三件事是什么？</li>
+                <li>如果别人只看我的行为，会认为我真正想要什么？</li>
+                <li>如果 5 年不变，一个普通周二会是什么样？10 年呢？</li>
+                <li>为了改变，我必须放弃哪句“我是这种人”？</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="phase">
+            <img src="https://plus.unsplash.com/premium_photo-1781667547625-3938f1d3524a?auto=format&fit=crop&w=1200&q=80" alt="人在阳光下写笔记">
+            <div class="phase-body">
+              <h3>白天：打断惯性</h3>
+              <p>目标是在真实生活里抓住自动驾驶，而不是只在纸面上感动自己。</p>
+              <ul class="prompt-list">
+                <li>11:00 我现在通过这个动作在逃避什么？</li>
+                <li>13:30 如果过去两小时被拍下来，别人会判断我想要什么？</li>
+                <li>15:15 我在走向讨厌的生活，还是想要的生活？</li>
+                <li>17:00 我假装不重要的最重要事情是什么？</li>
+                <li>21:00 今天什么时候最有生命力，什么时候最麻木？</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="phase">
+            <img src="https://images.unsplash.com/photo-1711030239027-4ee82270f3f8?auto=format&fit=crop&w=1200&q=80" alt="夜晚桌面上的计划本">
+            <div class="phase-body">
+              <h3>晚上：整合洞察</h3>
+              <p>目标是把情绪变成方向，把方向变成明天可以执行的时间块。</p>
+              <ul class="prompt-list">
+                <li>今天之后，我被困住的真正原因是什么？</li>
+                <li>真正的敌人是哪种内部模式或信念？</li>
+                <li>一句话写出我拒绝让人生变成什么。</li>
+                <li>一句话写出我正在建设什么。</li>
+                <li>明天安排 2 到 3 个“新身份会自然做”的动作。</li>
+              </ul>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section shell">
+        <div class="system-grid">
+          <div>
+            <div class="section-head" style="grid-template-columns:1fr;margin-bottom:20px">
+              <div>
+                <p class="kicker">06 / 从一天到 30 天</p>
+                <h2>把顿悟做成反馈循环。</h2>
+              </div>
+            </div>
+
+            <div class="schedule">
+              <article class="slot">
+                <div class="slot-time">第 1 天</div>
+                <div>
+                  <strong>完成一天协议，只选择一个主线。</strong>
+                  <p>不要同时改变事业、身体、社交、财务。选一个最能带动其他领域的主线，通常是收入能力、健康能量或作品输出。</p>
+                </div>
+              </article>
+              <article class="slot">
+                <div class="slot-time">第 2-7 天</div>
+                <div>
+                  <strong>每天固定 60 分钟，只做“主线任务”。</strong>
+                  <p>早起不是道德优越，而是降低冲突。你的任务要小到不会被生活挤掉，比如写 500 字、做 45 分钟训练、投递 3 个机会。</p>
+                </div>
+              </article>
+              <article class="slot">
+                <div class="slot-time">第 8-14 天</div>
+                <div>
+                  <strong>把提醒改成 if-then。</strong>
+                  <p>例：如果 15:15 提醒响起，而我在刷手机，我就立刻站起来走 3 分钟，并写下下一步动作。</p>
+                </div>
+              </article>
+              <article class="slot">
+                <div class="slot-time">第 15-21 天</div>
+                <div>
+                  <strong>公开一个微成果。</strong>
+                  <p>文章、作品、训练记录、项目截图都可以。公开反馈会让你的新身份获得现实证据。</p>
+                </div>
+              </article>
+              <article class="slot">
+                <div class="slot-time">第 22-30 天</div>
+                <div>
+                  <strong>复盘三件事：有效动作、阻力模式、下月关卡。</strong>
+                  <p>把注意力放在系统迭代，不要用情绪评价自己。你是在训练一个会自我修正的系统。</p>
+                </div>
+              </article>
+            </div>
+          </div>
+
+          <aside class="game-card">
+            <h3>Dan Koe 的“人生游戏化”可以这样落地。</h3>
+            <p>把抽象愿望转换成游戏结构，重点不是玩得轻松，而是让目标、反馈、风险和规则同时可见。</p>
+            <ul class="game-list">
+              <li><span>胜利条件</span><strong>愿景：我想建设的三年普通周二。</strong></li>
+              <li><span>失败代价</span><strong>反面愿景：我拒绝继续重复的生活。</strong></li>
+              <li><span>主线任务</span><strong>一年目标：一个能证明旧模式已断开的结果。</strong></li>
+              <li><span>当前关卡</span><strong>一月项目：本月必须完成的作品或能力。</strong></li>
+              <li><span>每日任务</span><strong>2 到 3 个可打勾的时间块。</strong></li>
+              <li><span>游戏规则</span><strong>不可牺牲的边界：睡眠、健康、关系、诚信。</strong></li>
+            </ul>
+          </aside>
+        </div>
+      </section>
+
+      <section id="actions" class="section shell">
+        <div class="section-head">
+          <div>
+            <p class="kicker">07 / 行动建议</p>
+            <h2>今天就能开始的清单。</h2>
+          </div>
+          <p>这些建议已经把 Dan Koe 的问题、执行意图、习惯形成和反馈循环合在一起。勾选会保存在当前浏览器里。</p>
+        </div>
+
+        <div class="action-board" id="checklist">
+          <article class="action-card">
+            <h3>准备环境</h3>
+            <label class="check-item"><input type="checkbox" data-key="env-1"><span>选定一个完整半天或一天，提前告诉别人自己要离线复盘。</span></label>
+            <label class="check-item"><input type="checkbox" data-key="env-2"><span>准备纸笔、计时器和水，把社交媒体应用移出第一屏。</span></label>
+            <label class="check-item"><input type="checkbox" data-key="env-3"><span>在日历里放入 6 个白天提醒，每个提醒附带一个具体动作。</span></label>
+          </article>
+
+          <article class="action-card">
+            <h3>写出方向</h3>
+            <label class="check-item"><input type="checkbox" data-key="dir-1"><span>写出 5 年不变的普通一天，具体到起床、身体、工作、关系和睡前感受。</span></label>
+            <label class="check-item"><input type="checkbox" data-key="dir-2"><span>写出 3 年后想要的普通一天，不写宏大口号，只写可观察生活。</span></label>
+            <label class="check-item"><input type="checkbox" data-key="dir-3"><span>各压缩成一句话：我拒绝什么，我正在建设什么。</span></label>
+          </article>
+
+          <article class="action-card">
+            <h3>设计明天</h3>
+            <label class="check-item"><input type="checkbox" data-key="tom-1"><span>只选一个主线：收入能力、健康能量、作品输出或关系修复。</span></label>
+            <label class="check-item"><input type="checkbox" data-key="tom-2"><span>给明天安排 60 分钟主线任务，并写清开始条件：几点、哪里、先打开什么。</span></label>
+            <label class="check-item"><input type="checkbox" data-key="tom-3"><span>写一个 if-then 句式：如果我想逃避，就先做 5 分钟最低版本。</span></label>
+          </article>
+
+          <article class="action-card">
+            <h3>建立反馈</h3>
+            <label class="check-item"><input type="checkbox" data-key="feed-1"><span>每天睡前记录：今天的主线任务是否完成，阻力是什么，明天如何降低阻力。</span></label>
+            <label class="check-item"><input type="checkbox" data-key="feed-2"><span>每周公开一个微成果，给新身份增加现实证据。</span></label>
+            <label class="check-item"><input type="checkbox" data-key="feed-3"><span>30 天后只问三个问题：继续什么，停止什么，下月升级什么。</span></label>
+          </article>
+        </div>
+
+        <div class="toolbar">
+          <button class="tool-button" type="button" id="copyPlan">复制 30 天行动模板</button>
+          <button class="tool-button secondary" type="button" id="resetChecks">清空勾选</button>
+        </div>
+        <p class="warning">
+          边界提醒：如果你的停滞与抑郁、焦虑、创伤、成瘾或严重睡眠问题相关，不要只靠自我规训解决。本文适合做方向复盘，不替代专业支持。
+        </p>
+      </section>
+
+      <section class="section shell">
+        <div class="section-head">
+          <div>
+            <p class="kicker">08 / 图片式速记</p>
+            <h2>把三种状态放进一天。</h2>
+          </div>
+          <p>Dan Koe 在另一篇 routine 文章里提到：下午输入、晚上清空、早晨输出。这个节奏可以作为一天协议之后的日常操作系统。</p>
+        </div>
+
+        <div class="image-row">
+          <figure class="figure">
+            <img src="https://images.unsplash.com/photo-1612529377791-b3de2b201f0e?auto=format&fit=crop&w=1200&q=80" alt="早晨室内生活场景">
+            <figcaption><strong>早晨 Use：</strong>用脑输出，做主线任务，先创造后消费。</figcaption>
+          </figure>
+          <figure class="figure">
+            <img src="https://images.unsplash.com/photo-1762183994063-b164870fb023?auto=format&fit=crop&w=1200&q=80" alt="阳光下行走的人">
+            <figcaption><strong>下午 Fill：</strong>散步、阅读、学习、观察世界，让素材进入系统。</figcaption>
+          </figure>
+          <figure class="figure">
+            <img src="https://images.unsplash.com/photo-1569230919100-d3fd5e1132f4?auto=format&fit=crop&w=1200&q=80" alt="夜晚桌面和手写计划">
+            <figcaption><strong>晚上 Empty：</strong>脑暴、复盘、计划，让未完成的念头离开大脑。</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section id="sources" class="section shell">
+        <div class="section-head">
+          <div>
+            <p class="kicker">09 / 来源与延伸阅读</p>
+            <h2>本页使用的主要来源。</h2>
+          </div>
+          <p>检索日期：2026-06-25。图片来自 Dan Koe 原文、YouTube 缩略图、Dan Koe 官网与 Unsplash 搜索结果。</p>
+        </div>
+
+        <ul class="source-list">
+          <li><a href="https://letters.thedankoe.com/p/how-to-fix-your-entire-life-in-1" target="_blank" rel="noreferrer"><strong>Dan Koe: How to fix your entire life in 1 day</strong><span>主文，发布于 2025-12-23。</span></a></li>
+          <li><a href="https://www.youtube.com/watch?v=K8K09g9XR4s" target="_blank" rel="noreferrer"><strong>Dan Koe: How to fix your entire life in 1 day</strong><span>配套 YouTube 视频，约 40 分钟。</span></a></li>
+          <li><a href="https://thedankoe.com/letters/how-60-minutes-a-day-can-change-your-life/" target="_blank" rel="noreferrer"><strong>How 60 Minutes A Day Can Change Your Life</strong><span>Dan Koe 对晨间 60 分钟 routine 的展开。</span></a></li>
+          <li><a href="https://thedankoe.com/letters/the-3-part-daily-routine-for-maximum-productivity/" target="_blank" rel="noreferrer"><strong>The 3-Part Daily Routine For Maximum Productivity</strong><span>Fill, Empty, Use 的日常节奏。</span></a></li>
+          <li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC4500900/" target="_blank" rel="noreferrer"><strong>Implementation intentions review</strong><span>关于 if-then planning 如何帮助目标转行动。</span></a></li>
+          <li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3505409/" target="_blank" rel="noreferrer"><strong>Making health habitual</strong><span>习惯形成与自动化的研究综述。</span></a></li>
+          <li><a href="https://selfdeterminationtheory.org/SDT/documents/2000_RyanDeci_SDT.pdf" target="_blank" rel="noreferrer"><strong>Ryan & Deci: Self-Determination Theory</strong><span>自主、胜任、联结与内在动机。</span></a></li>
+          <li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC7033418/" target="_blank" rel="noreferrer"><strong>Investigating the Flow Experience</strong><span>关于 flow 经验的概念和方法综述。</span></a></li>
+        </ul>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        <span>Dan Koe《一天修复人生》深度研究网页</span>
+        <span>本地文件：dan_koe_one_day_life_reset.html</span>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    const storagePrefix = "dan-koe-reset:";
+    const checks = document.querySelectorAll('#checklist input[type="checkbox"]');
+
+    checks.forEach((checkbox) => {
+      const key = storagePrefix + checkbox.dataset.key;
+      checkbox.checked = localStorage.getItem(key) === "1";
+      checkbox.addEventListener("change", () => {
+        localStorage.setItem(key, checkbox.checked ? "1" : "0");
+      });
+    });
+
+    document.getElementById("resetChecks").addEventListener("click", () => {
+      checks.forEach((checkbox) => {
+        checkbox.checked = false;
+        localStorage.removeItem(storagePrefix + checkbox.dataset.key);
+      });
+    });
+
+    const planText = `Dan Koe 一天协议后的 30 天行动模板
+
+第 1 天：完成反面愿景、愿景 MVP、明天 2-3 个行动。
+第 2-7 天：每天固定 60 分钟主线任务，记录完成/阻力/调整。
+第 8-14 天：把提醒改成 if-then 计划，降低逃避时的启动成本。
+第 15-21 天：公开一个微成果，用现实反馈强化新身份。
+第 22-30 天：复盘有效动作、阻力模式、下月关卡。
+
+每日睡前三问：
+1. 今天我是否完成主线任务？
+2. 最大阻力是什么？
+3. 明天怎样让正确行动更容易？`;
+
+    document.getElementById("copyPlan").addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(planText);
+      } catch (error) {
+        const area = document.createElement("textarea");
+        area.value = planText;
+        document.body.appendChild(area);
+        area.select();
+        document.execCommand("copy");
+        area.remove();
+      }
+    });
+  </script>
+</body>
+</html>
