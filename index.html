@@ -6,55 +6,163 @@
     <title>磊哥的工具箱 | Tool Portal</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        @property --ang { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
         :root {
-            --bg: #0a0e1a; --card: #1a1f35; --card-hover: #252b45; --border: #2a3444;
-            --text: #e2e8f0; --text-dim: #8892a4; --accent: #f59e0b; --accent-soft: #fbbf24;
-            --blue: #3b82f6; --green: #10b981; --purple: #8b5cf6; --red: #ef4444;
+            --bg: #05060d; --bg2: #0a0e1f;
+            --card-rgb: 18, 24, 48;
+            --border: rgba(255,255,255,0.08);
+            --text: #eef2ff; --text-dim: #97a3c4;
+            --accent: #fbbf24; --gold: #38e8ff; --amber: #4f8cff;
+            --blue: #4f8cff; --cyan: #38e8ff;
+            --purple: #a78bfa; --green: #34d399; --red: #fb7185;
         }
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; padding: 20px; }
-        .container { max-width: 1400px; margin: 0 auto; }
-        header { text-align: center; padding: 40px 20px 60px; background: linear-gradient(135deg, rgba(245,158,11,0.1), rgba(59,130,246,0.1)); border-radius: 20px; margin-bottom: 40px; border: 1px solid var(--border); }
-        h1 { font-size: 3rem; font-weight: 900; margin-bottom: 12px; background: linear-gradient(135deg, var(--accent-soft), var(--blue)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-        .subtitle { font-size: 1.1rem; color: var(--text-dim); margin-bottom: 20px; }
-        .stats { display: flex; gap: 30px; justify-content: center; margin-top: 20px; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+            background: radial-gradient(1200px 800px at 50% -10%, #11183a 0%, var(--bg2) 40%, var(--bg) 100%);
+            color: var(--text); min-height: 100vh; overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+        /* 背景画布 —— 固定铺满，置于内容之下 */
+        #aurora, #starfield {
+            position: fixed; inset: 0; width: 100%; height: 100%;
+            z-index: 0; pointer-events: none;
+        }
+        #aurora { opacity: 0.55; }           /* WebGL 流体极光打底 */
+        #starfield { z-index: 0; }           /* 粒子星空 + 光标拖尾 叠上面 */
+        .container { max-width: 1400px; margin: 0 auto; padding: 20px; position: relative; z-index: 1; }
+
+        /* ===== Hero ===== */
+        header {
+            text-align: center; padding: 80px 20px 64px; margin-bottom: 48px;
+            position: relative;
+        }
+        .badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 6px 16px; border-radius: 999px; margin-bottom: 28px;
+            background: rgba(79,140,255,0.08); border: 1px solid rgba(79,140,255,0.25);
+            font-size: 0.82rem; color: #b9ccff; letter-spacing: 0.5px;
+            backdrop-filter: blur(8px);
+        }
+        .badge .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); box-shadow: 0 0 10px var(--green); animation: pulse 1.8s ease-in-out infinite; }
+        @keyframes pulse { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: .4; transform: scale(.7); } }
+        h1 {
+            font-size: clamp(2.4rem, 6vw, 4.4rem); font-weight: 900; letter-spacing: -0.02em;
+            margin-bottom: 18px; line-height: 1.05;
+            background: linear-gradient(110deg, #fff 10%, var(--cyan) 35%, var(--blue) 55%, var(--accent) 80%, #fff 100%);
+            background-size: 220% auto;
+            -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+            animation: shine 7s linear infinite;
+            filter: drop-shadow(0 4px 30px rgba(79,140,255,0.25));
+        }
+        @keyframes shine { to { background-position: 220% center; } }
+        .subtitle { font-size: clamp(1rem, 2.5vw, 1.2rem); color: var(--text-dim); margin-bottom: 36px; font-weight: 400; }
+        .stats { display: flex; gap: 48px; justify-content: center; flex-wrap: wrap; }
         .stat { text-align: center; }
-        .stat-value { font-size: 2rem; font-weight: 800; color: var(--accent); font-family: 'Courier New', monospace; }
-        .stat-label { font-size: 0.9rem; color: var(--text-dim); margin-top: 4px; }
-        .section { margin-bottom: 50px; }
-        .section-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 20px; padding-left: 15px; border-left: 4px solid var(--accent); color: var(--text); }
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 20px; }
-        .card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 24px; transition: all 0.3s ease; cursor: pointer; position: relative; overflow: hidden; }
-        .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--accent), var(--blue)); transform: scaleX(0); transition: transform 0.3s ease; }
-        .card:hover { background: var(--card-hover); transform: translateY(-4px); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
-        .card:hover::before { transform: scaleX(1); }
-        .card-icon { font-size: 2.5rem; margin-bottom: 12px; }
-        .card-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 8px; color: var(--text); }
-        .card-desc { font-size: 0.95rem; color: var(--text-dim); line-height: 1.6; margin-bottom: 16px; }
-        .card-meta { display: flex; gap: 10px; flex-wrap: wrap; }
-        .tag { display: inline-block; padding: 4px 10px; border-radius: 6px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
-        .tag-business { background: rgba(245,158,11,0.15); color: var(--accent-soft); border: 1px solid rgba(245,158,11,0.3); }
-        .tag-history { background: rgba(139,92,246,0.15); color: var(--purple); border: 1px solid rgba(139,92,246,0.3); }
-        .tag-tool { background: rgba(59,130,246,0.15); color: var(--blue); border: 1px solid rgba(59,130,246,0.3); }
-        .tag-creative { background: rgba(16,185,129,0.15); color: var(--green); border: 1px solid rgba(16,185,129,0.3); }
-        .tag-growth { background: rgba(16,185,129,0.15); color: var(--green); border: 1px solid rgba(16,185,129,0.3); }
-        .tag-research { background: rgba(139,92,246,0.15); color: var(--purple); border: 1px solid rgba(139,92,246,0.3); }
-        .card-link { display: inline-flex; align-items: center; gap: 6px; color: var(--accent); text-decoration: none; font-size: 0.9rem; font-weight: 600; margin-top: 12px; transition: gap 0.3s ease; }
-        .card-link:hover { gap: 10px; }
-        footer { text-align: center; padding: 40px 20px; color: var(--text-dim); font-size: 0.9rem; border-top: 1px solid var(--border); margin-top: 60px; }
-        .footer-links { display: flex; gap: 20px; justify-content: center; margin-top: 15px; }
-        .footer-links a { color: var(--text-dim); text-decoration: none; transition: color 0.3s; }
-        .footer-links a:hover { color: var(--accent); }
-        @media (max-width: 768px) { h1 { font-size: 2rem; } .grid { grid-template-columns: 1fr; } .stats { flex-direction: column; gap: 15px; } }
+        .stat-value {
+            font-size: 2.4rem; font-weight: 800; font-variant-numeric: tabular-nums;
+            background: linear-gradient(180deg, #fff, var(--gold));
+            -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .stat-label { font-size: 0.85rem; color: var(--text-dim); margin-top: 6px; letter-spacing: 1px; }
+
+        /* ===== Sections ===== */
+        .section { margin-bottom: 64px; }
+        .section-title {
+            font-size: 1.4rem; font-weight: 800; margin-bottom: 28px; display: flex; align-items: center; gap: 14px;
+            color: #fff;
+        }
+        .section-title::before { content: ''; width: 4px; height: 22px; border-radius: 4px; background: linear-gradient(180deg, var(--cyan), var(--blue)); box-shadow: 0 0 14px rgba(56,232,255,0.5); }
+        .section-title::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, var(--border), transparent); }
+
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 22px; }
+
+        /* ===== 3D 倾斜卡 ===== */
+        .card {
+            position: relative; border-radius: 18px; padding: 26px; cursor: pointer;
+            background: linear-gradient(155deg, rgba(var(--card-rgb), 0.85), rgba(var(--card-rgb), 0.55));
+            border: 1px solid var(--border);
+            backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+            transform-style: preserve-3d; transform: perspective(900px);
+            transition: transform .25s cubic-bezier(.2,.8,.2,1), box-shadow .25s, border-color .25s;
+            overflow: hidden;
+            opacity: 0; translate: 0 28px;
+        }
+        .card.in { opacity: 1; translate: 0 0; transition: transform .25s cubic-bezier(.2,.8,.2,1), box-shadow .25s, border-color .25s, opacity .6s ease, translate .6s cubic-bezier(.2,.8,.2,1); }
+        /* 跟随光标的高光 */
+        .card::before {
+            content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+            background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 0%), rgba(56,232,255,0.16), transparent 42%);
+            opacity: 0; transition: opacity .3s;
+        }
+        /* 顶部发光描边 */
+        .card::after {
+            content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+            padding: 1px; background: linear-gradient(140deg, rgba(56,232,255,.55), transparent 40%, transparent 60%, rgba(167,139,250,.45));
+            -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            -webkit-mask-composite: xor; mask-composite: exclude;
+            opacity: 0; transition: opacity .3s;
+        }
+        .card:hover { border-color: rgba(56,232,255,0.25); box-shadow: 0 24px 55px rgba(0,0,0,0.55), 0 0 28px rgba(56,232,255,0.1); z-index: 5; }
+        .card:hover::before, .card:hover::after { opacity: 1; }
+        /* hover 时沿边框跑一圈的流光 */
+        .card .runner {
+            content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; padding: 1.6px;
+            background: conic-gradient(from var(--ang), transparent 0 68%, rgba(56,232,255,.55) 80%, #fff 88%, rgba(167,139,250,.6) 96%, transparent 100%);
+            -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            -webkit-mask-composite: xor; mask-composite: exclude;
+            opacity: 0; transition: opacity .3s; transform: none;
+        }
+        .card:hover .runner { opacity: 1; animation: runner 1.5s linear infinite; }
+        @keyframes runner { to { --ang: 360deg; } }
+        .card > *:not(.runner) { position: relative; transform: translateZ(28px); }
+        .card-icon {
+            font-size: 2.4rem; margin-bottom: 14px; display: inline-block;
+            filter: drop-shadow(0 6px 18px rgba(56,232,255,0.25));
+            transform: translateZ(60px);
+        }
+        .card-title { font-size: 1.22rem; font-weight: 700; margin-bottom: 9px; color: #fff; transform: translateZ(36px); }
+        .card-desc { font-size: 0.92rem; color: var(--text-dim); line-height: 1.65; margin-bottom: 16px; }
+        .card-meta { display: flex; gap: 8px; flex-wrap: wrap; }
+        .tag { display: inline-block; padding: 4px 11px; border-radius: 7px; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.3px; }
+        .tag-business { background: rgba(251,191,36,0.12); color: var(--accent); border: 1px solid rgba(251,191,36,0.25); }
+        .tag-history { background: rgba(167,139,250,0.12); color: var(--purple); border: 1px solid rgba(167,139,250,0.25); }
+        .tag-tool { background: rgba(79,140,255,0.12); color: #7aa6ff; border: 1px solid rgba(79,140,255,0.25); }
+        .tag-creative { background: rgba(52,211,153,0.12); color: var(--green); border: 1px solid rgba(52,211,153,0.25); }
+        .tag-growth { background: rgba(52,211,153,0.12); color: var(--green); border: 1px solid rgba(52,211,153,0.25); }
+        .tag-research { background: rgba(167,139,250,0.12); color: var(--purple); border: 1px solid rgba(167,139,250,0.25); }
+        .card-link { display: inline-flex; align-items: center; gap: 6px; color: var(--gold); text-decoration: none; font-size: 0.9rem; font-weight: 600; margin-top: 16px; transition: gap .3s; }
+        .card-link:hover { gap: 11px; }
+
+        /* ===== Footer ===== */
+        footer { text-align: center; padding: 56px 20px 40px; color: var(--text-dim); font-size: 0.9rem; border-top: 1px solid var(--border); margin-top: 40px; }
+        .footer-links { display: flex; gap: 24px; justify-content: center; margin-top: 16px; }
+        .footer-links a { color: var(--text-dim); text-decoration: none; transition: color .3s; }
+        .footer-links a:hover { color: var(--gold); }
+
+        @media (max-width: 768px) {
+            header { padding: 56px 16px 40px; }
+            .grid { grid-template-columns: 1fr; }
+            .stats { gap: 28px; }
+            .card { backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            h1 { animation: none; }
+            .card, .card.in { transition: none; opacity: 1; translate: 0 0; }
+        }
     </style>
 </head>
 <body>
+    <canvas id="aurora"></canvas>
+    <canvas id="starfield"></canvas>
     <div class="container">
         <header>
-            <h1>🚀 磊哥的工具箱</h1>
+            <div class="badge"><span class="dot"></span>SYSTEM ONLINE · 持续更新中</div>
+            <h1>磊哥的工具箱</h1>
             <p class="subtitle">一站式访问所有工具和项目</p>
             <div class="stats">
-                <div class="stat"><div class="stat-value" id="toolCount">0</div><div class="stat-label">工具数量</div></div>
-                <div class="stat"><div class="stat-value" id="categoryCount">0</div><div class="stat-label">分类</div></div>
+                <div class="stat"><div class="stat-value" id="toolCount" data-target="0">0</div><div class="stat-label">工具数量</div></div>
+                <div class="stat"><div class="stat-value" id="categoryCount" data-target="0">0</div><div class="stat-label">分类</div></div>
                 <div class="stat"><div class="stat-value">100%</div><div class="stat-label">在线率</div></div>
             </div>
         </header>
@@ -185,6 +293,25 @@
             </div>
         </div>
         <div class="section">
+            <h2 class="section-title">👥 社群调研</h2>
+            <div class="grid">
+                <div class="card" onclick="window.open('reports/china-women-45-70-activity/', '_blank')">
+                    <div class="card-icon">💃</div>
+                    <h3 class="card-title">中国45-70岁女性活动偏好深度调研</h3>
+                    <p class="card-desc">覆盖大陆城市层级与年龄段，判断广场舞/健步走、周边游、老年大学、文艺兴趣等活动偏好，并给社群主理人提供调研方法、90天执行SOP和活动升级方案。</p>
+                    <div class="card-meta"><span class="tag tag-research">社群调研</span><span class="tag tag-tool">活动设计</span></div>
+                    <a href="reports/china-women-45-70-activity/" target="_blank" class="card-link">阅读报告 →</a>
+                </div>
+                <div class="card" onclick="window.open('reports/middle-senior-life-tools-acquisition/', '_blank')">
+                    <div class="card-icon">🧰</div>
+                    <h3 class="card-title">45-65岁中老年生活工具获客方案</h3>
+                    <p class="card-desc">围绕健康、财务、照护、防骗、数字生活和退休规划，设计短视频获客入口、免费工具、社群承接、家庭方案包和90天落地计划。</p>
+                    <div class="card-meta"><span class="tag tag-research">获客方案</span><span class="tag tag-tool">短视频转化</span></div>
+                    <a href="reports/middle-senior-life-tools-acquisition/" target="_blank" class="card-link">阅读报告 →</a>
+                </div>
+            </div>
+        </div>
+        <div class="section">
             <h2 class="section-title">📚 知识项目</h2>
             <div class="grid">
                 <div class="card" onclick="window.open('/mao-legacy/', '_blank')">
@@ -208,17 +335,277 @@
             <p>© 2026 磊哥的工具箱 | 持续更新中</p>
             <div class="footer-links">
                 <a href="https://github.com/WilliamwangLLL" target="_blank">GitHub</a>
-                <a href="#" onclick="alert('更多工具即将上线！')">关于</a>
+                <a href="#" onclick="alert('更多工具即将上线！'); return false;">关于</a>
             </div>
         </footer>
     </div>
+
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const cards = document.querySelectorAll('.card');
-            document.getElementById('toolCount').textContent = cards.length;
-            const sections = document.querySelectorAll('.section');
-            document.getElementById('categoryCount').textContent = sections.length;
-        });
+    (function () {
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const isTouch = window.matchMedia('(hover: none)').matches;
+
+        /* ===== 0. WebGL 流体极光背景 ===== */
+        (function aurora() {
+            const cv = document.getElementById('aurora');
+            if (reduceMotion) { cv.style.display = 'none'; return; }
+            const gl = cv.getContext('webgl') || cv.getContext('experimental-webgl');
+            if (!gl) { cv.style.display = 'none'; return; }   // 不支持就退回纯粒子
+            const vsrc = 'attribute vec2 p;void main(){gl_Position=vec4(p,0.0,1.0);}';
+            const fsrc = [
+                'precision highp float;',
+                'uniform vec2 u_res; uniform float u_t;',
+                'float hash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}',
+                'float noise(vec2 p){vec2 i=floor(p),f=fract(p);float a=hash(i),b=hash(i+vec2(1.,0.)),c=hash(i+vec2(0.,1.)),d=hash(i+vec2(1.,1.));vec2 u=f*f*(3.-2.*f);return mix(a,b,u.x)+(c-a)*u.y*(1.-u.x)+(d-b)*u.x*u.y;}',
+                'float fbm(vec2 p){float v=0.,a=.5;for(int i=0;i<5;i++){v+=a*noise(p);p*=2.02;a*=.5;}return v;}',
+                'void main(){',
+                ' vec2 uv=gl_FragCoord.xy/u_res.xy;',
+                ' vec2 p=uv*vec2(u_res.x/u_res.y,1.)*2.2;',
+                ' float t=u_t*0.045;',
+                ' float f=fbm(p*1.4+vec2(t,t*0.6));',
+                ' f+=0.5*fbm(p*2.8-vec2(t*0.8,t*0.5));',
+                ' float band=smoothstep(0.25,0.95,f);',
+                ' vec3 cBlue=vec3(0.04,0.18,0.42);',
+                ' vec3 cCyan=vec3(0.07,0.52,0.62);',
+                ' vec3 cPurp=vec3(0.24,0.10,0.46);',
+                ' vec3 col=mix(cBlue,cCyan,band);',
+                ' col=mix(col,cPurp,smoothstep(0.5,1.0,f)*0.6);',
+                ' float vfade=smoothstep(1.05,0.0,uv.y)*0.85+0.15;',
+                ' col*=band*vfade;',
+                ' gl_FragColor=vec4(col,1.0);',
+                '}'
+            ].join('\n');
+            function sh(type, src) { const s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s); return s; }
+            const prog = gl.createProgram();
+            gl.attachShader(prog, sh(gl.VERTEX_SHADER, vsrc));
+            gl.attachShader(prog, sh(gl.FRAGMENT_SHADER, fsrc));
+            gl.linkProgram(prog);
+            if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) { cv.style.display = 'none'; return; }
+            gl.useProgram(prog);
+            const buf = gl.createBuffer();
+            gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, -1,1, 1,-1, 1,1]), gl.STATIC_DRAW);
+            const loc = gl.getAttribLocation(prog, 'p');
+            gl.enableVertexAttribArray(loc);
+            gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+            const uRes = gl.getUniformLocation(prog, 'u_res');
+            const uT = gl.getUniformLocation(prog, 'u_t');
+            const SCALE = isTouch ? 0.5 : 0.65;   // 降分辨率渲染，省电
+            function resize() {
+                cv.width = Math.max(2, innerWidth * SCALE);
+                cv.height = Math.max(2, innerHeight * SCALE);
+                gl.viewport(0, 0, cv.width, cv.height);
+            }
+            resize();
+            addEventListener('resize', resize);
+            const t0 = performance.now();
+            (function loop() {
+                gl.uniform2f(uRes, cv.width, cv.height);
+                gl.uniform1f(uT, (performance.now() - t0) / 1000);
+                gl.drawArrays(gl.TRIANGLES, 0, 6);
+                requestAnimationFrame(loop);
+            })();
+        })();
+
+        /* ===== 标题乱码解码登场 ===== */
+        (function decode() {
+            const el = document.querySelector('h1');
+            if (!el || reduceMotion) return;
+            const finalText = el.textContent;
+            const arr = Array.from(finalText);
+            const glyphs = '日月山水火工木金土天王口田由甲申电之乎者也%#&@*▦▣◈73015AΣΔΞΩ';
+            let frame = 0;
+            const PER = 5; // 每 5 帧锁定一个字
+            (function tick() {
+                const reveal = Math.floor(frame / PER);
+                let out = '';
+                for (let i = 0; i < arr.length; i++) {
+                    out += i < reveal ? arr[i] : glyphs[(Math.random() * glyphs.length) | 0];
+                }
+                el.textContent = out;
+                frame++;
+                if (reveal < arr.length) requestAnimationFrame(tick);
+                else el.textContent = finalText;
+            })();
+        })();
+
+        /* ===== 1. 粒子星空背景 ===== */
+        const canvas = document.getElementById('starfield');
+        const ctx = canvas.getContext('2d');
+        let w, h, dpr, particles = [], raf;
+        const mouse = { x: -9999, y: -9999 };
+        const trail = [];   // 光标拖尾点
+        const burst = [];   // 点击迸发粒子
+
+        function size() {
+            dpr = Math.min(window.devicePixelRatio || 1, 2);
+            w = canvas.width = innerWidth * dpr;
+            h = canvas.height = innerHeight * dpr;
+            canvas.style.width = innerWidth + 'px';
+            canvas.style.height = innerHeight + 'px';
+            const area = innerWidth * innerHeight;
+            const count = Math.min(isTouch ? 45 : 110, Math.floor(area / 14000));
+            particles = [];
+            for (let i = 0; i < count; i++) {
+                particles.push({
+                    x: Math.random() * w, y: Math.random() * h,
+                    vx: (Math.random() - 0.5) * 0.25 * dpr,
+                    vy: (Math.random() - 0.5) * 0.25 * dpr,
+                    r: (Math.random() * 1.4 + 0.5) * dpr
+                });
+            }
+        }
+
+        const LINK = 130;
+        function draw() {
+            ctx.clearRect(0, 0, w, h);
+            const link = LINK * dpr, mr = 170 * dpr;
+            for (let i = 0; i < particles.length; i++) {
+                const p = particles[i];
+                p.x += p.vx; p.y += p.vy;
+                if (p.x < 0 || p.x > w) p.vx *= -1;
+                if (p.y < 0 || p.y > h) p.vy *= -1;
+
+                // 鼠标附近的粒子被轻轻推开 + 提亮
+                const dxm = p.x - mouse.x, dym = p.y - mouse.y;
+                const dm = Math.hypot(dxm, dym);
+                let glow = 0;
+                if (dm < mr) {
+                    glow = 1 - dm / mr;
+                    p.x += (dxm / dm) * glow * 0.6 * dpr;
+                    p.y += (dym / dm) * glow * 0.6 * dpr;
+                }
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.r + glow * dpr, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(' + (150 + glow * 90) + ',' + (200 + glow * 55) + ',255,' + (0.45 + glow * 0.45) + ')';
+                ctx.fill();
+
+                // 连线
+                for (let j = i + 1; j < particles.length; j++) {
+                    const q = particles[j];
+                    const dx = p.x - q.x, dy = p.y - q.y;
+                    const d = Math.hypot(dx, dy);
+                    if (d < link) {
+                        const near = Math.max(glow, 1 - Math.hypot(q.x - mouse.x, q.y - mouse.y) / mr);
+                        const a = (1 - d / link) * (0.12 + Math.max(0, near) * 0.35);
+                        ctx.beginPath();
+                        ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y);
+                        ctx.strokeStyle = 'rgba(90,170,255,' + a + ')';
+                        ctx.lineWidth = dpr * 0.7;
+                        ctx.stroke();
+                    }
+                }
+            }
+            // 光标拖尾
+            ctx.globalCompositeOperation = 'lighter';
+            for (let i = trail.length - 1; i >= 0; i--) {
+                const tp = trail[i];
+                tp.life -= 0.045;
+                if (tp.life <= 0) { trail.splice(i, 1); continue; }
+                const r = tp.life * 9 * dpr;
+                const g = ctx.createRadialGradient(tp.x, tp.y, 0, tp.x, tp.y, r);
+                g.addColorStop(0, 'rgba(120,225,255,' + (tp.life * 0.6) + ')');
+                g.addColorStop(1, 'rgba(120,225,255,0)');
+                ctx.fillStyle = g;
+                ctx.beginPath(); ctx.arc(tp.x, tp.y, r, 0, Math.PI * 2); ctx.fill();
+            }
+            // 点击迸发
+            for (let i = burst.length - 1; i >= 0; i--) {
+                const b = burst[i];
+                b.x += b.vx; b.y += b.vy; b.vx *= 0.97; b.vy *= 0.97; b.life -= 0.02;
+                if (b.life <= 0) { burst.splice(i, 1); continue; }
+                ctx.beginPath();
+                ctx.arc(b.x, b.y, b.r * b.life, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(' + b.c + ',' + b.life + ')';
+                ctx.fill();
+            }
+            ctx.globalCompositeOperation = 'source-over';
+            raf = requestAnimationFrame(draw);
+        }
+
+        if (!reduceMotion) {
+            size();
+            draw();
+            addEventListener('resize', () => { cancelAnimationFrame(raf); size(); draw(); });
+            addEventListener('mousemove', e => {
+                mouse.x = e.clientX * dpr; mouse.y = e.clientY * dpr;
+                if (!isTouch) {
+                    trail.push({ x: mouse.x, y: mouse.y, life: 1 });
+                    if (trail.length > 26) trail.shift();
+                }
+            });
+            addEventListener('mouseout', () => { mouse.x = -9999; mouse.y = -9999; });
+            // 点击迸发一圈青蓝粒子
+            addEventListener('click', e => {
+                const cx = e.clientX * dpr, cy = e.clientY * dpr;
+                const cols = ['56,232,255', '79,140,255', '167,139,250', '255,255,255'];
+                const n = 22;
+                for (let i = 0; i < n; i++) {
+                    const a = (Math.PI * 2 * i) / n + Math.random() * 0.3;
+                    const sp = (1.5 + Math.random() * 3) * dpr;
+                    burst.push({
+                        x: cx, y: cy,
+                        vx: Math.cos(a) * sp, vy: Math.sin(a) * sp,
+                        r: (1.5 + Math.random() * 2) * dpr, life: 1,
+                        c: cols[(Math.random() * cols.length) | 0]
+                    });
+                }
+            });
+        } else {
+            canvas.style.display = 'none';
+        }
+
+        /* ===== 2. 3D 倾斜卡 + 跟随高光 + 边框流光 ===== */
+        const cards = document.querySelectorAll('.card');
+        if (!reduceMotion) {
+            cards.forEach(c => c.insertAdjacentHTML('afterbegin', '<i class="runner"></i>'));
+        }
+        if (!isTouch && !reduceMotion) {
+            cards.forEach(card => {
+                let rect;
+                card.addEventListener('mouseenter', () => { rect = card.getBoundingClientRect(); });
+                card.addEventListener('mousemove', e => {
+                    if (!rect) rect = card.getBoundingClientRect();
+                    const px = (e.clientX - rect.left) / rect.width;
+                    const py = (e.clientY - rect.top) / rect.height;
+                    const rx = (0.5 - py) * 20;   // 上下倾斜（加大）
+                    const ry = (px - 0.5) * 24;   // 左右倾斜（加大）
+                    card.style.transform =
+                        'perspective(800px) rotateX(' + rx + 'deg) rotateY(' + ry + 'deg) translateZ(18px) scale(1.03)';
+                    card.style.setProperty('--mx', (px * 100) + '%');
+                    card.style.setProperty('--my', (py * 100) + '%');
+                });
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = 'perspective(900px)';
+                });
+            });
+        }
+
+        /* ===== 3. 滚动入场 + 数字滚动 ===== */
+        const io = new IntersectionObserver((entries) => {
+            entries.forEach(en => {
+                if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
+            });
+        }, { threshold: 0.12 });
+        cards.forEach((c, i) => { c.style.transitionDelay = (Math.min(i, 8) * 35) + 'ms'; io.observe(c); });
+
+        document.getElementById('toolCount').dataset.target = cards.length;
+        document.getElementById('categoryCount').dataset.target = document.querySelectorAll('.section').length;
+
+        function countUp(el) {
+            const target = +el.dataset.target;
+            if (!target) { el.textContent = target; return; }
+            const dur = 900, t0 = performance.now();
+            function step(t) {
+                const k = Math.min(1, (t - t0) / dur);
+                el.textContent = Math.round(target * (1 - Math.pow(1 - k, 3)));
+                if (k < 1) requestAnimationFrame(step);
+            }
+            requestAnimationFrame(step);
+        }
+        countUp(document.getElementById('toolCount'));
+        countUp(document.getElementById('categoryCount'));
+    })();
     </script>
 </body>
 </html>
