@@ -1,0 +1,1875 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>中国大陆45-70岁女性活动偏好深度调研</title>
+  <meta name="description" content="面向社群主理人的中国大陆45-70岁女性活动偏好深度调研、活动产品设计和90天执行方案。">
+  <style>
+    :root {
+      --ink: #17201b;
+      --muted: #647067;
+      --paper: #f6f4ee;
+      --panel: #ffffff;
+      --line: #ddd8cc;
+      --coal: #1f2924;
+      --green: #176b5b;
+      --leaf: #2f8a48;
+      --coral: #c9523b;
+      --gold: #b78322;
+      --blue: #2c6f9f;
+      --violet: #6651a7;
+      --rose: #b7446a;
+      --soft-green: #e9f4ed;
+      --soft-coral: #fff0eb;
+      --soft-gold: #fff7df;
+      --soft-blue: #e8f3fb;
+      --soft-violet: #efedfb;
+      --soft-rose: #fbeaf0;
+      --shadow: 0 18px 48px rgba(31, 41, 36, 0.12);
+      --radius: 8px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+      line-height: 1.72;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    img {
+      display: block;
+      width: 100%;
+      max-width: 100%;
+      object-fit: cover;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      border-bottom: 1px solid rgba(221, 216, 204, 0.86);
+      background: rgba(246, 244, 238, 0.9);
+      backdrop-filter: blur(16px);
+    }
+
+    .topbar-inner {
+      width: min(1200px, calc(100vw - 32px));
+      min-height: 62px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .brand-mark {
+      width: 34px;
+      height: 34px;
+      border-radius: var(--radius);
+      display: grid;
+      place-items: center;
+      color: #fff;
+      background: var(--green);
+      letter-spacing: 0;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.16);
+    }
+
+    .nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 4px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .nav a {
+      padding: 7px 9px;
+      border-radius: var(--radius);
+    }
+
+    .nav a:hover {
+      color: var(--ink);
+      background: #ece7da;
+      text-decoration: none;
+    }
+
+    .hero {
+      color: #fffdf7;
+      background:
+        linear-gradient(90deg, rgba(20, 27, 22, 0.9), rgba(20, 27, 22, 0.70) 48%, rgba(20, 27, 22, 0.48)),
+        url("https://commons.wikimedia.org/wiki/Special:Redirect/file/Older%20women%20practicing%20dance%20at%20Temple%20of%20Heaven%20Park,%20Beijing.jpg?width=1800") center / cover no-repeat;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+    }
+
+    .hero-inner {
+      width: min(1200px, calc(100vw - 32px));
+      min-height: 720px;
+      margin: 0 auto;
+      padding: 72px 0 42px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .eyebrow {
+      margin: 0 0 18px;
+      color: #ffe5be;
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3 {
+      letter-spacing: 0;
+      line-height: 1.18;
+    }
+
+    .hero h1 {
+      max-width: 940px;
+      margin: 0;
+      font-size: clamp(42px, 6.4vw, 76px);
+      text-wrap: balance;
+    }
+
+    .hero-subtitle {
+      max-width: 880px;
+      margin: 22px 0 0;
+      color: #f2eadb;
+      font-size: clamp(18px, 2.2vw, 24px);
+    }
+
+    .hero-note {
+      max-width: 780px;
+      margin-top: 22px;
+      color: #e8dcc8;
+      font-size: 14px;
+    }
+
+    .hero-signals {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      margin-top: 46px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.18);
+    }
+
+    .hero-signal {
+      min-height: 138px;
+      padding: 20px;
+      background: rgba(14, 19, 16, 0.58);
+    }
+
+    .hero-signal strong {
+      display: block;
+      color: #fff;
+      font-size: 24px;
+      line-height: 1.1;
+      margin-bottom: 10px;
+    }
+
+    .hero-signal span {
+      color: #e9dfcf;
+      font-size: 13px;
+    }
+
+    .container {
+      width: min(1200px, calc(100vw - 32px));
+      margin: 0 auto;
+    }
+
+    section {
+      padding: 72px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(0, 0.8fr) minmax(320px, 0.55fr);
+      gap: 42px;
+      align-items: end;
+      margin-bottom: 32px;
+    }
+
+    .section-kicker {
+      margin: 0 0 10px;
+      color: var(--green);
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: clamp(30px, 4.2vw, 48px);
+    }
+
+    h3 {
+      margin: 0 0 12px;
+      font-size: 21px;
+    }
+
+    p {
+      margin: 0 0 14px;
+    }
+
+    .lead {
+      color: var(--muted);
+      font-size: 17px;
+    }
+
+    .small {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .grid {
+      display: grid;
+      gap: 18px;
+    }
+
+    .grid-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .grid-3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .grid-4 {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+      box-shadow: 0 8px 28px rgba(31, 41, 36, 0.06);
+      overflow: hidden;
+    }
+
+    .card-body {
+      padding: 22px;
+    }
+
+    .metric {
+      padding: 22px;
+      border-top: 5px solid var(--green);
+    }
+
+    .metric:nth-child(2) {
+      border-top-color: var(--coral);
+    }
+
+    .metric:nth-child(3) {
+      border-top-color: var(--blue);
+    }
+
+    .metric:nth-child(4) {
+      border-top-color: var(--gold);
+    }
+
+    .metric strong {
+      display: block;
+      font-size: 31px;
+      line-height: 1.08;
+      margin-bottom: 10px;
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 5px 9px;
+      border-radius: 999px;
+      background: #eee9dc;
+      color: #4c554e;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .tag.green {
+      color: #0d5f4b;
+      background: var(--soft-green);
+    }
+
+    .tag.coral {
+      color: #9d3b29;
+      background: var(--soft-coral);
+    }
+
+    .tag.blue {
+      color: #255f84;
+      background: var(--soft-blue);
+    }
+
+    .tag.gold {
+      color: #7a570f;
+      background: var(--soft-gold);
+    }
+
+    .tag.violet {
+      color: #55418e;
+      background: var(--soft-violet);
+    }
+
+    .rank-list {
+      display: grid;
+      gap: 14px;
+    }
+
+    .rank-item {
+      display: grid;
+      grid-template-columns: 62px minmax(0, 1fr) minmax(240px, 0.48fr);
+      gap: 18px;
+      align-items: stretch;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+      overflow: hidden;
+    }
+
+    .rank-num {
+      display: grid;
+      place-items: center;
+      color: #fff;
+      background: var(--coal);
+      font-size: 24px;
+      font-weight: 900;
+    }
+
+    .rank-main {
+      padding: 20px 0;
+    }
+
+    .rank-main h3 {
+      margin-bottom: 6px;
+    }
+
+    .rank-proof {
+      padding: 20px;
+      background: #f1ede3;
+      color: #485249;
+      font-size: 13px;
+    }
+
+    .bar-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .bar-row {
+      display: grid;
+      grid-template-columns: 170px minmax(0, 1fr) 56px;
+      gap: 12px;
+      align-items: center;
+      font-size: 14px;
+    }
+
+    .bar-track {
+      height: 13px;
+      border-radius: 999px;
+      background: #e7e0d2;
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      border-radius: inherit;
+      background: var(--green);
+    }
+
+    .bar-fill.coral {
+      background: var(--coral);
+    }
+
+    .bar-fill.blue {
+      background: var(--blue);
+    }
+
+    .bar-fill.gold {
+      background: var(--gold);
+    }
+
+    .bar-fill.violet {
+      background: var(--violet);
+    }
+
+    .bar-fill.rose {
+      background: var(--rose);
+    }
+
+    .photo-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr 0.9fr;
+      gap: 14px;
+    }
+
+    .photo {
+      position: relative;
+      min-height: 260px;
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: #ddd2c1;
+    }
+
+    .photo.tall {
+      min-height: 534px;
+      grid-row: span 2;
+    }
+
+    .photo img {
+      height: 100%;
+      min-height: inherit;
+    }
+
+    .photo-caption {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      padding: 22px;
+      color: #fff;
+      background: linear-gradient(transparent, rgba(0, 0, 0, 0.74));
+      font-weight: 800;
+    }
+
+    .image-card img {
+      height: 210px;
+    }
+
+    .image-card .card-body {
+      min-height: 202px;
+    }
+
+    .matrix {
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+      border-radius: var(--radius);
+      background: var(--panel);
+      box-shadow: 0 8px 28px rgba(31, 41, 36, 0.06);
+    }
+
+    .matrix th,
+    .matrix td {
+      vertical-align: top;
+      padding: 15px 16px;
+      border: 1px solid var(--line);
+      text-align: left;
+      font-size: 14px;
+    }
+
+    .matrix th {
+      color: #fff;
+      background: var(--coal);
+      font-weight: 800;
+    }
+
+    .matrix td:first-child {
+      width: 18%;
+      font-weight: 800;
+      color: var(--green);
+      background: #f2eee4;
+    }
+
+    .callout {
+      padding: 26px;
+      border-left: 6px solid var(--coral);
+      border-radius: var(--radius);
+      background: var(--panel);
+      box-shadow: 0 8px 28px rgba(31, 41, 36, 0.06);
+    }
+
+    .callout h3 {
+      color: var(--coral);
+    }
+
+    .formula {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 26px;
+    }
+
+    .formula-step {
+      min-height: 136px;
+      padding: 16px 12px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+
+    .formula-step b {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--green);
+      font-size: 13px;
+    }
+
+    .formula-step span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .timeline {
+      display: grid;
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 130px minmax(0, 1fr);
+      gap: 18px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+      overflow: hidden;
+    }
+
+    .timeline-date {
+      padding: 20px;
+      color: #fff;
+      background: var(--green);
+      font-weight: 900;
+    }
+
+    .timeline-body {
+      padding: 20px;
+    }
+
+    .checklist {
+      display: grid;
+      gap: 10px;
+      margin: 12px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .checklist li {
+      padding-left: 22px;
+      position: relative;
+    }
+
+    .checklist li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.72em;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--green);
+    }
+
+    .script {
+      margin: 14px 0 0;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fbf8f0;
+      font-size: 14px;
+      white-space: pre-wrap;
+    }
+
+    .split-band {
+      color: #fff;
+      background: var(--coal);
+    }
+
+    .split-band .section-kicker,
+    .split-band .lead,
+    .split-band .small {
+      color: #e7dccc;
+    }
+
+    .split-band .card,
+    .split-band .callout {
+      color: var(--ink);
+    }
+
+    .source-list {
+      display: grid;
+      gap: 10px;
+      padding-left: 0;
+      list-style: none;
+    }
+
+    .source-list li {
+      padding: 14px 16px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+      font-size: 14px;
+    }
+
+    .source-list a {
+      color: var(--blue);
+      font-weight: 800;
+    }
+
+    .footer {
+      padding: 28px 0 54px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    @media (max-width: 980px) {
+      .hero-inner {
+        min-height: 680px;
+      }
+
+      .hero-signals,
+      .grid-4,
+      .grid-3,
+      .formula {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .section-head,
+      .grid-2,
+      .photo-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .photo.tall {
+        min-height: 360px;
+        grid-row: auto;
+      }
+
+      .rank-item {
+        grid-template-columns: 56px minmax(0, 1fr);
+      }
+
+      .rank-proof {
+        grid-column: 1 / -1;
+      }
+
+      .nav {
+        display: none;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .hero {
+        background-position: 58% center;
+      }
+
+      .hero-inner {
+        min-height: 760px;
+        padding-top: 48px;
+      }
+
+      .hero-signals,
+      .grid-4,
+      .grid-3,
+      .formula {
+        grid-template-columns: 1fr;
+      }
+
+      section {
+        padding: 52px 0;
+      }
+
+      .bar-row {
+        grid-template-columns: 1fr 58px;
+      }
+
+      .bar-track {
+        grid-column: 1 / -1;
+      }
+
+      .timeline-item {
+        grid-template-columns: 1fr;
+      }
+
+      .matrix {
+        display: block;
+        overflow-x: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="#top" aria-label="回到顶部">
+        <span class="brand-mark">她</span>
+        <span>45-70岁女性活动调研</span>
+      </a>
+      <nav class="nav" aria-label="页面导航">
+        <a href="#answer">核心答案</a>
+        <a href="#ranking">活动排行</a>
+        <a href="#segments">分层差异</a>
+        <a href="#design">爆款设计</a>
+        <a href="#plan">90天方案</a>
+        <a href="#toolkit">调研模板</a>
+        <a href="#sources">来源</a>
+      </nav>
+    </div>
+  </div>
+
+  <main id="top">
+    <header class="hero">
+      <div class="hero-inner">
+        <div>
+          <p class="eyebrow">China mainland research · 2026</p>
+          <h1>中国大陆45-70岁女性，最喜欢参加什么活动？为什么？主理人怎么做？</h1>
+          <p class="hero-subtitle">结论不是“阿姨都爱跳舞”这么简单。真正的答案是：她们在寻找健康、同伴、舞台、掌控感和一个能让自己继续发光的生活结构。</p>
+          <p class="hero-note">研究范围：中国大陆，不含港澳台和海外华人。对象：45-70岁女性，覆盖在职后半程、退休前后、低龄活力老人和初老家庭照护者。用途：给社群主理人学习调研方法，并直接转成活动执行。</p>
+        </div>
+        <div class="hero-signals">
+          <div class="hero-signal">
+            <strong>第一答案</strong>
+            <span>最广谱、最高频的是家门口的集体运动文艺：广场舞、健身操、合唱、形体、太极、健步走。</span>
+          </div>
+          <div class="hero-signal">
+            <strong>付费增长</strong>
+            <span>最值得商业化设计的是周边短途游、摄影采风、游学康养和主题旅拍。</span>
+          </div>
+          <div class="hero-signal">
+            <strong>情绪核心</strong>
+            <span>不是单纯消遣，而是“有人一起”“被看见”“身体变好”“生活有盼头”。</span>
+          </div>
+          <div class="hero-signal">
+            <strong>主理人机会</strong>
+            <span>把广场舞升级为“运动+学习+舞台+旅拍+社群”的复合型活动产品。</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section id="answer">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="section-kicker">Executive answer</p>
+            <h2>如果只能给一个答案：她们最喜欢的是“可持续参与的集体运动文艺”。</h2>
+          </div>
+          <p class="lead">公开数据里，广场舞/健身操、短视频/直播、摄影旅游采风、演出、书画音乐、社区棋牌、老年大学课程反复出现。把这些活动放在同一个框架里看，最底层的需求不是“娱乐”，而是重新组织生活。</p>
+        </div>
+
+        <div class="grid grid-4">
+          <article class="card metric">
+            <strong>54.4%</strong>
+            <p>中国青年报社社会调查中心调查中，受访者家中长辈常参与“跳广场舞、健身操”。</p>
+          </article>
+          <article class="card metric">
+            <strong>51.5%</strong>
+            <p>同一调查中，“看短视频、直播”紧随其后，是线上触达和内容运营的重要入口。</p>
+          </article>
+          <article class="card metric">
+            <strong>205.6%</strong>
+            <p>携程女性旅行消费洞察显示，2023年以来50岁以上老年女性出行订单增速最快。</p>
+          </article>
+          <article class="card metric">
+            <strong>2000万+</strong>
+            <p>中国老年大学协会数据显示，截至2023年4月，全国老年大学注册学员超过2000万。</p>
+          </article>
+        </div>
+
+        <div class="callout" style="margin-top: 24px;">
+          <h3>一句话判断</h3>
+          <p><strong>最普遍的爱好：</strong>广场舞/健身操/集体舞类，因为低门槛、低成本、家门口、高频、强社交、能展示。</p>
+          <p><strong>最强付费机会：</strong>周边短途游/摄影采风/游学康养，因为女性银发旅游增长快，愿意为安全、品质、同伴和“留下好照片”付费。</p>
+          <p><strong>最适合社群主理人的组合：</strong>用“每日/每周集体运动”做入口，用“兴趣学习”做粘性，用“月度周边游/旅拍”做变现，用“季度展演/比赛”做荣誉和传播。</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="section-kicker">Evidence map</p>
+            <h2>公开资料告诉我们：她们的活动偏好不是孤立的，而是三层结构。</h2>
+          </div>
+          <p class="lead">第一层是每天都能做的低成本活动，第二层是每周形成身份的学习/文艺活动，第三层是每月或每季度的高情绪价值活动。主理人要做的不是只办一次活动，而是搭一套生活节奏。</p>
+        </div>
+
+        <div class="photo-grid" aria-label="活动场景图">
+          <figure class="photo tall">
+            <img src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Haikou%20People%27s%20Park%20-%20Chinese%20fitness%20dancing%20-%2001.jpg?width=1200" alt="公园里的集体健身舞">
+            <figcaption class="photo-caption">高频入口：公园、广场、社区空地里的集体运动</figcaption>
+          </figure>
+          <figure class="photo">
+            <img src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Elderly%20Shanghai%20woman%20practices%20tai%20chi.jpg?width=900" alt="上海公园中练太极的老年女性">
+            <figcaption class="photo-caption">健康入口：太极、八段锦、健步走</figcaption>
+          </figure>
+          <figure class="photo">
+            <img src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Lijiang-danzas-mujeres-naxi-w01.jpg?width=900" alt="丽江纳西女性在广场跳舞">
+            <figcaption class="photo-caption">文化入口：民族舞、地方文艺、非遗体验</figcaption>
+          </figure>
+          <figure class="photo">
+            <img src="https://images.unsplash.com/photo-1702648158754-484755fadf79?auto=format&amp;fit=crop&amp;w=1200&amp;q=80" alt="年长女性在室内参加舞蹈课">
+            <figcaption class="photo-caption">学习入口：课程、小班、陪伴式练习</figcaption>
+          </figure>
+          <figure class="photo">
+            <img src="https://images.unsplash.com/photo-1757138100328-c246b5795aa3?auto=format&amp;fit=crop&amp;w=1200&amp;q=80" alt="南京灵谷寺附近的人们练习太极">
+            <figcaption class="photo-caption">轻旅行入口：自然风景+慢运动+拍照</figcaption>
+          </figure>
+        </div>
+
+        <div class="grid grid-3" style="margin-top: 22px;">
+          <article class="card">
+            <div class="card-body">
+              <h3>第一层：日常活动</h3>
+              <p>广场舞、健身操、健步走、太极、八段锦、棋牌、短视频。特点是频率高、成本低、离家近、进入门槛低。</p>
+              <div class="tag-row">
+                <span class="tag green">3公里生活圈</span>
+                <span class="tag green">低成本</span>
+                <span class="tag green">强复购</span>
+              </div>
+            </div>
+          </article>
+          <article class="card">
+            <div class="card-body">
+              <h3>第二层：身份活动</h3>
+              <p>老年大学、声乐、舞蹈、书法、摄影、形体、旗袍走秀、乐器、AI/短视频学习。特点是“我在进步”。</p>
+              <div class="tag-row">
+                <span class="tag blue">学习感</span>
+                <span class="tag blue">作品感</span>
+                <span class="tag blue">同伴圈</span>
+              </div>
+            </div>
+          </article>
+          <article class="card">
+            <div class="card-body">
+              <h3>第三层：高光活动</h3>
+              <p>周边游、摄影采风、康养旅居、舞台展演、比赛、演唱会/戏曲/话剧、节庆出游。特点是“值得晒”。</p>
+              <div class="tag-row">
+                <span class="tag coral">情绪峰值</span>
+                <span class="tag coral">愿意付费</span>
+                <span class="tag coral">传播强</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="ranking">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="section-kicker">Activity ranking</p>
+            <h2>全国45-70岁女性活动偏好排行榜：按“覆盖面、频率、付费潜力、社群可操作性”综合排序。</h2>
+          </div>
+          <p class="lead">没有一个公开调查能完整回答“全国45-70岁女性最喜欢什么活动”。所以本报告采用三角测量：官方统计、行业报告、问卷调查、新闻观察、学术研究和活动可运营性，合成主理人可用的优先级。</p>
+        </div>
+
+        <div class="rank-list">
+          <article class="rank-item">
+            <div class="rank-num">1</div>
+            <div class="rank-main">
+              <h3>广场舞 / 健身操 / 集体舞 / 健步走</h3>
+              <p>这是最稳的“国民级入口”。它不要求昂贵场地，不需要复杂装备，靠领队和音乐就能启动。对女性而言，它同时解决运动、社交、情绪释放、被看见、生活规律五件事。</p>
+              <div class="tag-row">
+                <span class="tag green">最高频</span>
+                <span class="tag green">低门槛</span>
+                <span class="tag green">领队驱动</span>
+                <span class="tag green">适合做会员入口</span>
+              </div>
+            </div>
+            <div class="rank-proof">证据：中青报调查中“跳广场舞、健身操”为长辈常参与娱乐活动第一位；文旅部统计公报也把全国广场舞展演、群众文艺团队展演纳入公共文化供给。</div>
+          </article>
+
+          <article class="rank-item">
+            <div class="rank-num">2</div>
+            <div class="rank-main">
+              <h3>周边短途游 / 摄影采风 / 旅拍 / 康养旅居</h3>
+              <p>这是最值得主理人做成产品的活动。45-70岁女性既有“趁身体好去看看”的紧迫感，也有同伴出游和展示照片的需求。真正打动她们的不是景点清单，而是安全、舒适、有人照顾、能拍美、能一起玩。</p>
+              <div class="tag-row">
+                <span class="tag coral">付费潜力高</span>
+                <span class="tag coral">适合月度活动</span>
+                <span class="tag coral">照片传播强</span>
+                <span class="tag coral">低线城市增量</span>
+              </div>
+            </div>
+            <div class="rank-proof">证据：携程数据显示50岁以上老年女性旅行订单增长显著；银发旅游资料显示“游+学”“游+学+养”在中老年群体中受欢迎。</div>
+          </article>
+
+          <article class="rank-item">
+            <div class="rank-num">3</div>
+            <div class="rank-main">
+              <h3>兴趣学习 / 老年大学 / 线上线下课程</h3>
+              <p>书法、声乐、舞蹈、摄影、手机剪辑、AI应用、八段锦、营养健康、形象美学，都能满足“我还在成长”的心理。它比一次性娱乐更容易形成社群粘性。</p>
+              <div class="tag-row">
+                <span class="tag blue">粘性高</span>
+                <span class="tag blue">可分级</span>
+                <span class="tag blue">适合小班</span>
+                <span class="tag blue">可转游学</span>
+              </div>
+            </div>
+            <div class="rank-proof">证据：2024中老年兴趣学习报告显示超八成中老年人已参与或正在进行兴趣学习；老年大学热门课程“一课难求”。</div>
+          </article>
+
+          <article class="rank-item">
+            <div class="rank-num">4</div>
+            <div class="rank-main">
+              <h3>合唱 / 声乐 / 旗袍走秀 / 形体 / 舞台展演</h3>
+              <p>这类活动最强的不是技能本身，而是“上台”的荣誉感。只要设计出排练、服装、照片、证书、演出机会，就能从兴趣变成身份。</p>
+              <div class="tag-row">
+                <span class="tag violet">舞台感</span>
+                <span class="tag violet">荣誉感</span>
+                <span class="tag violet">内容素材多</span>
+              </div>
+            </div>
+            <div class="rank-proof">证据：老年大学报告显示舞蹈、书法、声乐等传统课程仍占主流；中国日报等报道也反复提到老年合唱对陪伴、情绪和归属的价值。</div>
+          </article>
+
+          <article class="rank-item">
+            <div class="rank-num">5</div>
+            <div class="rank-main">
+              <h3>社区棋牌 / 茶话会 / 饭搭子 / 邻里聚会</h3>
+              <p>这类活动看起来不“高级”，但非常真实。它解决的是退休后“去哪儿坐坐、跟谁说话、今天有没有人惦记我”的问题。适合县城、社区、街道、熟人社会。</p>
+              <div class="tag-row">
+                <span class="tag gold">组织成本低</span>
+                <span class="tag gold">熟人转介绍</span>
+                <span class="tag gold">适合低线城市</span>
+              </div>
+            </div>
+            <div class="rank-proof">证据：中青报调查中社区棋牌活动占35.4%；受访者也提到长辈缺少同伴、社区资源不足。</div>
+          </article>
+
+          <article class="rank-item">
+            <div class="rank-num">6</div>
+            <div class="rank-main">
+              <h3>太极 / 八段锦 / 柔力球 / 健身球操 / 低强度户外运动</h3>
+              <p>健康型活动适合长期留存，但要避免“保健课化”。最好的方式是科学运动、可观察进步、轻社交、轻仪式感。</p>
+              <div class="tag-row">
+                <span class="tag green">健康诉求</span>
+                <span class="tag green">风险可控</span>
+                <span class="tag green">可标准化</span>
+              </div>
+            </div>
+            <div class="rank-proof">证据：新华网“银龄行动”报道引用全民健身调查，低龄老年人每周参加体育锻炼比例较高，老年体育社团和品牌项目快速发展。</div>
+          </article>
+
+          <article class="rank-item">
+            <div class="rank-num">7</div>
+            <div class="rank-main">
+              <h3>短视频 / 直播 / 手机摄影 / 数字技能</h3>
+              <p>这不是传统意义上的“线下活动”，但它是主理人获客、传播和留存的关键入口。女性长辈愿意看，也越来越愿意拍、剪、发。</p>
+              <div class="tag-row">
+                <span class="tag rose">线上触点</span>
+                <span class="tag rose">内容传播</span>
+                <span class="tag rose">反哺线下</span>
+              </div>
+            </div>
+            <div class="rank-proof">证据：中青报调查中看短视频、直播为长辈常参与活动第二位；兴趣学习报告也显示信息技术、短视频等课程正在增长。</div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="section-kicker">Observed participation</p>
+            <h2>横向比例：长辈常参与的活动给了我们一个“现实入口表”。</h2>
+          </div>
+          <p class="lead">这组数据不是只针对45-70岁女性，但能反映中老年家庭场景里的高频活动。主理人可以把它当作调研前的假设清单，然后去本地验证。</p>
+        </div>
+
+        <div class="card">
+          <div class="card-body">
+            <h3>受访者家中长辈常参与的娱乐活动</h3>
+            <p class="small">来源：中国青年报社社会调查中心联合问卷网，2025年5月，1336名受访者。</p>
+            <div class="bar-list" aria-label="长辈常参与娱乐活动比例">
+              <div class="bar-row">
+                <span>广场舞/健身操</span>
+                <div class="bar-track"><div class="bar-fill" style="width: 54.4%;"></div></div>
+                <strong>54.4%</strong>
+              </div>
+              <div class="bar-row">
+                <span>短视频/直播</span>
+                <div class="bar-track"><div class="bar-fill coral" style="width: 51.5%;"></div></div>
+                <strong>51.5%</strong>
+              </div>
+              <div class="bar-row">
+                <span>看电视</span>
+                <div class="bar-track"><div class="bar-fill blue" style="width: 50.4%;"></div></div>
+                <strong>50.4%</strong>
+              </div>
+              <div class="bar-row">
+                <span>摄影/旅游采风</span>
+                <div class="bar-track"><div class="bar-fill gold" style="width: 39.9%;"></div></div>
+                <strong>39.9%</strong>
+              </div>
+              <div class="bar-row">
+                <span>演出/戏曲/演唱会</span>
+                <div class="bar-track"><div class="bar-fill violet" style="width: 39.7%;"></div></div>
+                <strong>39.7%</strong>
+              </div>
+              <div class="bar-row">
+                <span>书画/音乐/文艺</span>
+                <div class="bar-track"><div class="bar-fill rose" style="width: 36.2%;"></div></div>
+                <strong>36.2%</strong>
+              </div>
+              <div class="bar-row">
+                <span>社区棋牌</span>
+                <div class="bar-track"><div class="bar-fill" style="width: 35.4%;"></div></div>
+                <strong>35.4%</strong>
+              </div>
+              <div class="bar-row">
+                <span>老年大学课程</span>
+                <div class="bar-track"><div class="bar-fill coral" style="width: 34.7%;"></div></div>
+                <strong>34.7%</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="why" class="split-band">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="section-kicker">Why they love it</p>
+            <h2>为什么这些活动受欢迎？核心不是“活动好玩”，而是“生活问题被解决了”。</h2>
+          </div>
+          <p class="lead">对45-70岁女性，活动常常承担心理、家庭、健康和社会关系的复合功能。主理人只卖“课程”或“旅游线路”，很容易做轻；真正要卖的是一种更好的生活组织方式。</p>
+        </div>
+
+        <div class="grid grid-3">
+          <article class="card">
+            <div class="card-body">
+              <h3>1. 健康焦虑需要出口</h3>
+              <p>45岁后，睡眠、体重、关节、血糖、血压、情绪波动、体力下降都会变成现实议题。她们喜欢“看得见、坚持得住、不会太危险”的运动。</p>
+              <p class="small">活动设计启发：每次活动都要有热身、强度分层、休息点、饮水提醒和安全边界。</p>
+            </div>
+          </article>
+          <article class="card">
+            <div class="card-body">
+              <h3>2. 退休前后角色断层</h3>
+              <p>从职场、单位、家庭中心退出来后，很多女性会突然失去被需要的感觉。队长、老师、领舞、摄影委员、后勤委员这些角色能重新给她们位置。</p>
+              <p class="small">活动设计启发：不要只有主理人一个中心，要设计成员角色，让她们“有事可负责”。</p>
+            </div>
+          </article>
+          <article class="card">
+            <div class="card-body">
+              <h3>3. 同伴比内容更重要</h3>
+              <p>她们常常不是一个人来参加活动，而是和老姐妹、邻居、同学、舞队一起。活动能不能让熟人一起参与，决定报名速度和留存。</p>
+              <p class="small">活动设计启发：所有报名机制都要支持“拉姐妹同行”“两人成团”“老带新”。</p>
+            </div>
+          </article>
+          <article class="card">
+            <div class="card-body">
+              <h3>4. “被看见”是强动机</h3>
+              <p>很多女性不是怕展示，而是渴望体面展示。漂亮的服装、整齐的队形、好看的照片、舞台证书，都能把普通活动变成高光时刻。</p>
+              <p class="small">活动设计启发：每个活动都要产出照片、视频、荣誉、作品或可分享成果。</p>
+            </div>
+          </article>
+          <article class="card">
+            <div class="card-body">
+              <h3>5. 需要安全和可信任</h3>
+              <p>中老年女性愿意付费，但非常怕被坑、怕健康风险、怕家人反对。主理人的可信度、透明度、退费规则、保险和风险预案很关键。</p>
+              <p class="small">活动设计启发：价格、包含项、不包含项、身体要求、应急联系人都要写清楚。</p>
+            </div>
+          </article>
+          <article class="card">
+            <div class="card-body">
+              <h3>6. 想要新鲜，但不能太陌生</h3>
+              <p>她们对AI、短视频、旅拍、咖啡、香氛、非遗都可能感兴趣，但活动要从熟悉入口切入，不能一上来就太潮、太难、太贵。</p>
+              <p class="small">活动设计启发：用“广场舞+旅拍”“八段锦+茶园游”“手机摄影+花海”降低新活动门槛。</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="segments">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="section-kicker">Segmentation</p>
+            <h2>不同年龄、城市级别和家庭状态，喜欢的活动不一样。</h2>
+          </div>
+          <p class="lead">社群主理人不能只说“中老年女性”。45岁和68岁、上海退休教师和县城带孙奶奶、刚退休和长期退休，活动需求完全不同。</p>
+        </div>
+
+        <table class="matrix" aria-label="年龄分层活动偏好">
+          <thead>
+            <tr>
+              <th>分层</th>
+              <th>典型状态</th>
+              <th>最容易喜欢的活动</th>
+              <th>主理人打法</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>45-54岁</td>
+              <td>仍在工作或半工作；家庭责任重；开始关注健康、形象、情绪和自我提升。</td>
+              <td>瑜伽/普拉提替代型轻运动、形体、舞蹈、手机摄影、短视频、周末微旅行、亲友聚会。</td>
+              <td>时间要短，安排在晚上/周末；强调“自己也要有生活”；不要用“老年”标签。</td>
+            </tr>
+            <tr>
+              <td>55-60岁</td>
+              <td>临近退休或刚退休；时间突然变多；有钱有闲人群开始旅行和兴趣学习。</td>
+              <td>周边游、摄影采风、老年大学、舞蹈/声乐、八段锦、同学会式活动、旅拍。</td>
+              <td>设计“退休后第一套生活计划”；用课程+活动+旅行组合，帮助她们重建节奏。</td>
+            </tr>
+            <tr>
+              <td>61-65岁</td>
+              <td>低龄活力老人主力；身体和时间条件较好；有强社交和展示需求。</td>
+              <td>广场舞、合唱、旗袍秀、游学康养、邮轮/专列/小团游、志愿服务。</td>
+              <td>打造队伍、舞台、证书、比赛、旅行打卡；适合做社群骨干和分队队长。</td>
+            </tr>
+            <tr>
+              <td>66-70岁</td>
+              <td>健康差异开始拉大；更重视安全、熟人陪伴、离家近和节奏慢。</td>
+              <td>太极、八段锦、健步走、棋牌茶话、社区文艺、短途慢游、健康讲座。</td>
+              <td>强安全、低强度、短半径；活动中多休息、多照顾、多陪伴，减少长距离奔波。</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div style="height: 26px;"></div>
+
+        <table class="matrix" aria-label="城市分层活动偏好">
+          <thead>
+            <tr>
+              <th>城市层级</th>
+              <th>活动偏好</th>
+              <th>付费特点</th>
+              <th>主理人机会</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>一线/新一线</td>
+              <td>老年大学、精品小班、博物馆/剧场、城市漫游、摄影课、康养旅居、出境/邮轮。</td>
+              <td>愿意为品质、安全、专业老师、舒适交通和省心服务付费。</td>
+              <td>做高品质小团、主题游学、名师课、展演资源；价格可高但必须精细。</td>
+            </tr>
+            <tr>
+              <td>二线/三线</td>
+              <td>广场舞、合唱、旗袍秀、周边一日游、采摘、温泉、古镇、地方文艺。</td>
+              <td>性价比敏感，但对“姐妹一起”“拍得好看”“有组织”愿意付费。</td>
+              <td>做区域社群矩阵：社区队伍+月度短途游+季度展演。</td>
+            </tr>
+            <tr>
+              <td>县城/县级市</td>
+              <td>广场舞、棋牌、赶集式活动、庙会节庆、近郊采摘、亲友聚餐、广场演出。</td>
+              <td>强熟人信任，价格不能复杂；更看重领队口碑和安全。</td>
+              <td>找本地强领队；从免费广场活动切入，再卖低价一日游和节庆活动。</td>
+            </tr>
+            <tr>
+              <td>乡镇/农村</td>
+              <td>村晚、广场舞、棋牌、赶集、庙会、农忙间隙聚会、公益演出、健康义诊。</td>
+              <td>付费能力和交通半径更受限，但村社组织动员力强。</td>
+              <td>联合村委、文化站、卫生院；把活动设计成“家门口热闹+实用服务”。</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="section-kicker">Personas</p>
+            <h2>主理人要先识别“她是谁”，再决定卖什么活动。</h2>
+          </div>
+          <p class="lead">同样是60岁女性，可能是活力旅行者、照护型奶奶、文艺型退休教师、县城熟人圈核心，也可能是刚开始学习智能手机的新用户。</p>
+        </div>
+
+        <div class="grid grid-4">
+          <article class="card image-card">
+            <img src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Chinese%20fitness%20dancing%20in%20Yiheyuan.JPG?width=900" alt="颐和园中的集体健身舞">
+            <div class="card-body">
+              <h3>活力队长型</h3>
+              <p>喜欢组织、喜欢上台、愿意带人。她可能就是你最重要的分销和留存节点。</p>
+              <p class="small">给她：队长身份、专属群、带队补贴、展示机会、荣誉证书。</p>
+            </div>
+          </article>
+          <article class="card image-card">
+            <img src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Mass%20dancing%20at%20Haidian%20Northern%20Cultural%20Center%20(20170624194716).jpg?width=900" alt="北京文化中心集体舞">
+            <div class="card-body">
+              <h3>文艺展示型</h3>
+              <p>喜欢声乐、舞蹈、旗袍、朗诵、摄影，希望自己“状态好、气质好”。</p>
+              <p class="small">给她：成片、舞台、服装、排练计划、主题展演。</p>
+            </div>
+          </article>
+          <article class="card image-card">
+            <img src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Square%20dancing%20in%20fuding%20fujian%20china.jpg?width=900" alt="福建福鼎广场舞">
+            <div class="card-body">
+              <h3>熟人陪伴型</h3>
+              <p>不一定追求新潮，关键是邻居姐妹在不在、是不是放心、会不会尴尬。</p>
+              <p class="small">给她：两人成团、社区集合点、老带新礼、熟人桌。</p>
+            </div>
+          </article>
+          <article class="card image-card">
+            <img src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Wikiwyprawa%202015%20IGP5049.jpg?width=900" alt="公园集体舞">
+            <div class="card-body">
+              <h3>谨慎尝鲜型</h3>
+              <p>想学短视频、AI、旅拍、游学，但怕学不会、怕被骗、怕花冤枉钱。</p>
+              <p class="small">给她：免费体验、手把手、可退改、子女可旁听、成果可见。</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="design" class="split-band">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="section-kicker">Design the winner</p>
+            <h2>如何把最受欢迎的活动做得更受欢迎：把“广场舞”升级为“姐妹活力社”。</h2>
+          </div>
+          <p class="lead">不要只办一个广场舞队。要把它设计成一个能持续运转、能学习、能旅行、能出作品、能培养队长、能产生收入的活动系统。</p>
+        </div>
+
+        <div class="callout">
+          <h3>爆款活动公式</h3>
+          <p><strong>低门槛入口 + 高频陪伴 + 明确进阶 + 漂亮成果 + 线下高光 + 安全可信 + 领队裂变</strong></p>
+          <p>广场舞本来就强在免费、开放、熟人、展示。主理人要做的不是把它硬塞进昂贵课程，而是在不破坏人情味的前提下，增加“专业、安全、好看、可持续、可付费”的部分。</p>
+        </div>
+
+        <div class="formula" aria-label="爆款公式步骤">
+          <div class="formula-step">
+            <b>1 低门槛</b>
+            <span>第一节免费，动作简单，不要求基础，不羞辱新手。</span>
+          </div>
+          <div class="formula-step">
+            <b>2 高频</b>
+            <span>固定每周2-3次，时间地点稳定，形成生活习惯。</span>
+          </div>
+          <div class="formula-step">
+            <b>3 角色</b>
+            <span>领队、拍照、签到、音乐、服装、后勤都有成员负责。</span>
+          </div>
+          <div class="formula-step">
+            <b>4 作品</b>
+            <span>每月一支成片、一本相册、一次小展示。</span>
+          </div>
+          <div class="formula-step">
+            <b>5 舞台</b>
+            <span>季度展演、社区联欢、姐妹队交流赛。</span>
+          </div>
+          <div class="formula-step">
+            <b>6 旅行</b>
+            <span>每月周边游学旅拍，把队伍从广场带到景区。</span>
+          </div>
+          <div class="formula-step">
+            <b>7 裂变</b>
+            <span>队长培训、老带新、分队复制，形成城市网络。</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="section-kicker">Product architecture</p>
+            <h2>把活动做成一个产品组合，而不是一次热闹。</h2>
+          </div>
+          <p class="lead">主理人的商业模型应该像“日常社群+月度付费+季度品牌活动”。高频活动负责关系，付费活动负责收入，舞台活动负责传播。</p>
+        </div>
+
+        <div class="grid grid-3">
+          <article class="card">
+            <div class="card-body">
+              <h3>A. 免费/低价入口：活力晨晚练</h3>
+              <p><strong>形式：</strong>每周2-3次，45-60分钟，广场舞、健身操、八段锦、健步走轮换。</p>
+              <p><strong>目标：</strong>建立稳定出勤和微信群关系。</p>
+              <p><strong>收费：</strong>免费体验；会员19-99元/月用于音乐、拍摄、饮水、场地协调和队长补贴。</p>
+              <ul class="checklist">
+                <li>每次签到，连续7次给“活力星”贴纸或电子证书。</li>
+                <li>新成员安排一位“姐妹搭子”，避免第一次尴尬。</li>
+                <li>动作分A/B/C强度，膝盖不好的人也能参加。</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-body">
+              <h3>B. 核心付费：28天姐妹活力营</h3>
+              <p><strong>形式：</strong>4周小营，每周2课+1次线上复习，结营拍摄一支集体视频。</p>
+              <p><strong>目标：</strong>从“来玩玩”变成“我加入了一个队”。</p>
+              <p><strong>收费：</strong>参考99-399元/期，按城市和师资调整。</p>
+              <ul class="checklist">
+                <li>第1周：基础动作和身体评估。</li>
+                <li>第2周：队形和节奏。</li>
+                <li>第3周：服装、表情、镜头感。</li>
+                <li>第4周：小舞台/外景拍摄/结营证书。</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-body">
+              <h3>C. 月度变现：周边游学旅拍</h3>
+              <p><strong>形式：</strong>一日或两日小团，主题为花海、古镇、温泉、茶园、非遗、博物馆、山水慢游。</p>
+              <p><strong>目标：</strong>把社群关系转化为高情绪价值消费。</p>
+              <p><strong>收费：</strong>一日游参考168-398元；两日游参考499-1299元，视交通和住宿而定。</p>
+              <ul class="checklist">
+                <li>必须有保险、座位、厕所、休息点、应急联系人。</li>
+                <li>必须产出个人美照、集体照、短视频、纪念卡。</li>
+                <li>不要赶景点，宁可少走也要体验好。</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-body">
+              <h3>D. 粘性课程：手机摄影/短视频</h3>
+              <p><strong>形式：</strong>每周一次，教拍照、修图、剪辑、发朋友圈/视频号、防骗识别。</p>
+              <p><strong>目标：</strong>让成员自己记录活动，降低主理人的内容成本。</p>
+              <ul class="checklist">
+                <li>每堂课只解决一个任务，如“拍一张显瘦合影”。</li>
+                <li>课后必须交作业，优秀作品在群里展示。</li>
+                <li>加入反诈提醒，建立家人信任。</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-body">
+              <h3>E. 荣誉品牌：季度展演节</h3>
+              <p><strong>形式：</strong>社区礼堂/文化馆/商场中庭/景区广场展演，含舞蹈、合唱、旗袍、朗诵、摄影展。</p>
+              <p><strong>目标：</strong>提高主理人品牌势能，吸引新成员和合作方。</p>
+              <ul class="checklist">
+                <li>设置“最佳精神风貌”“最佳姐妹团”“最佳新人”。</li>
+                <li>邀请家属观看，增加家庭支持。</li>
+                <li>统一拍摄素材，用于下一轮招募。</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-body">
+              <h3>F. 队长体系：主理人复制器</h3>
+              <p><strong>形式：</strong>培养5-10名骨干队长，给她们领队手册、音乐包、动作视频、招募海报。</p>
+              <p><strong>目标：</strong>从一个群变成多个社区分队。</p>
+              <ul class="checklist">
+                <li>队长不是销售员，而是“被尊重的组织者”。</li>
+                <li>每月队长会复盘出勤、问题和下月主题。</li>
+                <li>给队长清晰收益：补贴、免费课、旅行优惠、荣誉。</li>
+              </ul>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="plan">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="section-kicker">90-day operating plan</p>
+            <h2>90天落地方案：从0到一个可复制的女性活力社群。</h2>
+          </div>
+          <p class="lead">这套方案适合社区主理人、文旅主理人、老年兴趣班主理人、地方生活服务主理人。第一阶段不要急着卖大课，先把本地真实需求摸清楚。</p>
+        </div>
+
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-date">第1-7天<br>本地调研</div>
+            <div class="timeline-body">
+              <h3>目标：确认“本地女性真实在哪里活动、谁有组织力、她们愿意为什么付费”。</h3>
+              <ul class="checklist">
+                <li>地图标注：3公里内公园、广场、社区活动室、文化馆、老年大学、舞蹈房、旅行社、茶馆。</li>
+                <li>实地观察：早晨6:30-8:30、晚上18:30-20:30各观察3次，记录队伍人数、年龄、领队、音乐、服装、互动。</li>
+                <li>访谈30人：10名广场舞/健身参与者，5名不参加但有兴趣者，5名子女，5名社区工作人员，5名旅行/课程供给方。</li>
+                <li>竞品表：本地旅行社、舞蹈课、老年大学、社区活动的价格、报名方式、口碑、缺口。</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-date">第8-21天<br>种子活动</div>
+            <div class="timeline-body">
+              <h3>目标：办3场低门槛活动，拿到第一批种子用户。</h3>
+              <ul class="checklist">
+                <li>活动1：免费活力体验课，主题“膝盖友好的燃脂健身操”。</li>
+                <li>活动2：手机摄影小课，主题“给姐妹拍一张好看的公园照”。</li>
+                <li>活动3：茶话会，主题“退休后想做的10件事”。</li>
+                <li>每场活动结束立刻建群，群名带本地地名，如“滨河姐妹活力社”。</li>
+                <li>现场收集：姓名、年龄段、居住小区、最想参加活动、可接受价格、紧急联系人。</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-date">第22-45天<br>28天活力营</div>
+            <div class="timeline-body">
+              <h3>目标：把松散用户变成稳定社群。</h3>
+              <ul class="checklist">
+                <li>开一期28天活力营，20-40人即可，不追求大。</li>
+                <li>每周固定2次线下课，1次群内复习视频。</li>
+                <li>建立小组制：每5-7人一组，选一名小组长。</li>
+                <li>第14天做一次中期拍摄，给大家看到进步。</li>
+                <li>第28天做结营小展演，邀请家属和朋友观看。</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-date">第46-60天<br>首个付费游</div>
+            <div class="timeline-body">
+              <h3>目标：验证旅游/旅拍付费能力。</h3>
+              <ul class="checklist">
+                <li>选择1日轻路线：车程单程不超过90分钟，厕所和休息点明确。</li>
+                <li>主题不要泛泛地叫“一日游”，要叫“姐妹花海旅拍+八段锦晨练+下午茶”。</li>
+                <li>价格分层：基础团含交通/保险/午餐；升级包含个人精修照/妆造/小视频。</li>
+                <li>出发前48小时发身体提醒、天气提醒、穿搭建议、集合定位。</li>
+                <li>回来后24小时内发相册，48小时内发下月活动预告。</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-date">第61-75天<br>队长复制</div>
+            <div class="timeline-body">
+              <h3>目标：从主理人单点组织变成多点组织。</h3>
+              <ul class="checklist">
+                <li>选出3-5名队长候选：出勤高、愿意帮忙、微信活跃、口碑好。</li>
+                <li>给队长一套工具：签到表、群公告模板、动作视频、招募海报、风险提醒。</li>
+                <li>每名队长负责一个小区或一个活动方向，如舞蹈、摄影、旅行、茶话会。</li>
+                <li>队长有明确权益：免费参加队长课、旅行折扣、带新奖励、年度荣誉。</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-date">第76-90天<br>季度展演</div>
+            <div class="timeline-body">
+              <h3>目标：做一次可传播的品牌事件。</h3>
+              <ul class="checklist">
+                <li>找社区、商场、文化馆、景区、养老机构合作一个小舞台。</li>
+                <li>内容包含：集体舞、合唱、旗袍走秀、摄影作品展、成员故事分享。</li>
+                <li>每位成员至少获得一张舞台照、一张合影、一张电子证书。</li>
+                <li>设置老带新机制：带一位新朋友来看展演，下期课程立减或送摄影课。</li>
+                <li>展演后发布年度计划：春季花海、夏季避暑、秋季丰收、冬季温泉。</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="section-kicker">Event SOP</p>
+            <h2>一场活动怎么做：以“姐妹花海旅拍一日游”为例。</h2>
+          </div>
+          <p class="lead">中老年女性活动最怕两件事：现场混乱和安全失控。越是看起来温柔的活动，越需要硬核SOP。</p>
+        </div>
+
+        <div class="grid grid-3">
+          <article class="card">
+            <div class="card-body">
+              <h3>活动前7天</h3>
+              <ul class="checklist">
+                <li>确认路线：车程、厕所、餐厅、休息点、阴凉处、医疗点。</li>
+                <li>确认供应商：车、司机、导游/领队、摄影、保险、餐厅。</li>
+                <li>发布招募：主题、日期、价格、包含项、不包含项、身体要求、退款规则。</li>
+                <li>收集信息：身份证用于保险、紧急联系人、基础疾病提醒、饮食禁忌。</li>
+                <li>建立活动群：每天发一个轻内容，不要刷屏硬卖。</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-body">
+              <h3>活动当天</h3>
+              <ul class="checklist">
+                <li>签到发手环或胸贴，方便识别成员。</li>
+                <li>车上讲清楚：安全、厕所、集合时间、不要单独行动。</li>
+                <li>每90分钟安排一次休息，不为多打卡牺牲体验。</li>
+                <li>拍摄流程：集体照、分组照、个人照、自然互动照。</li>
+                <li>午饭安排同伴桌，避免新成员落单。</li>
+                <li>返程前预告下一次活动，趁情绪高点转化。</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-body">
+              <h3>活动后48小时</h3>
+              <ul class="checklist">
+                <li>24小时内发精选照片和感谢文案。</li>
+                <li>48小时内发满意度小问卷，问3个问题即可。</li>
+                <li>整理成员好评，做下一次招募素材。</li>
+                <li>私聊高活跃成员，邀请成为小组长或推荐朋友。</li>
+                <li>复盘成本、报名来源、到场率、转介绍、投诉和安全问题。</li>
+              </ul>
+            </div>
+          </article>
+        </div>
+
+        <div class="grid grid-2" style="margin-top: 18px;">
+          <div class="card">
+            <div class="card-body">
+              <h3>样例日程</h3>
+              <div class="script">07:50 社区门口集合，签到，发水和胸贴
+08:10 出发，车上破冰：今天最想拍的一张照片
+09:30 到达花海，集体热身和轻步行
+10:00 分组旅拍：个人照、姐妹照、队伍照
+11:30 午餐，安排熟人+新人混桌
+13:00 手机摄影小课：如何拍显气质的半身照
+14:00 花海小舞台：跳一支结营舞/合唱一首歌
+15:00 下午茶和自由交流
+16:00 返程，车上公布下月温泉/古镇活动
+17:30 到达，提醒查看相册和填写反馈</div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body">
+              <h3>招募文案模板</h3>
+              <div class="script">姐妹们，这次不赶路、不爬山、不拼体力。
+我们去花海慢慢走，拍一组属于自己的春日照片，
+还会教大家用手机拍出更显气质的合影。
+
+适合45-70岁女性，欢迎带姐妹同行。
+包含：往返交通、午餐、保险、领队、集体照、手机摄影小课。
+集合点：XX社区门口。
+名额：35人，老成员可优先报名。
+
+报名请回复：姓名 + 年龄段 + 是否带朋友 + 是否需要清淡餐。</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="toolkit" class="split-band">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="section-kicker">Research toolkit</p>
+            <h2>给社群主理人的调研方法：不要猜，去现场问、看、测、复盘。</h2>
+          </div>
+          <p class="lead">这部分是给主理人“学会怎么做调研报告”的训练模板。照着做，任何城市都可以复刻一次本地版调研。</p>
+        </div>
+
+        <div class="grid grid-2">
+          <article class="card">
+            <div class="card-body">
+              <h3>五格调研法</h3>
+              <ul class="checklist">
+                <li><strong>人群：</strong>年龄、退休状态、家庭角色、健康状态、收入/付费能力、智能手机能力。</li>
+                <li><strong>场景：</strong>她们在哪活动？几点活动？谁组织？附近有什么公共空间？</li>
+                <li><strong>动机：</strong>健康、社交、学习、展示、旅行、逃离家务、带孙间隙、情绪疗愈。</li>
+                <li><strong>支付：</strong>愿意为老师、交通、拍照、保险、场地、服装、演出、旅行付多少钱？</li>
+                <li><strong>风险：</strong>身体风险、家人反对、被骗担忧、天气、交通、噪音扰民、肖像隐私。</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-body">
+              <h3>现场观察清单</h3>
+              <ul class="checklist">
+                <li>人数：高峰多少人？是否稳定？男女比例如何？</li>
+                <li>组织：谁放音乐？谁喊口令？谁协调位置？</li>
+                <li>互动：新人是否容易加入？有没有排斥？活动后是否聊天？</li>
+                <li>装备：服装、鞋、音响、手机支架、拍摄设备。</li>
+                <li>冲突：音量、场地、居民投诉、天气、摔倒风险。</li>
+                <li>转化点：她们是否聊旅游、课程、服装、拍照、演出？</li>
+              </ul>
+            </div>
+          </article>
+        </div>
+
+        <div class="grid grid-2" style="margin-top: 18px;">
+          <article class="card">
+            <div class="card-body">
+              <h3>15题问卷模板</h3>
+              <div class="script">1. 您的年龄段：45-54 / 55-60 / 61-65 / 66-70
+2. 您现在的状态：在职 / 半退休 / 已退休 / 主要照顾家庭
+3. 您每周参加几次线下活动？
+4. 您最常参加的活动是什么？可多选。
+5. 您最想尝试但还没参加的活动是什么？
+6. 您参加活动最看重什么？健康/同伴/学习/好玩/拍照/便宜/离家近/安全
+7. 您通常和谁一起参加活动？自己/朋友/邻居/家人/舞队
+8. 您能接受的活动半径：1公里内 / 3公里内 / 同城 / 周边1日 / 2日以上
+9. 您能接受的一次活动价格区间？
+10. 您愿意为哪些项目额外付费？老师/摄影/交通/服装/保险/餐饮/证书
+11. 您报名活动最信任的信息来源是什么？朋友/微信群/社区/抖音/小红书/子女推荐
+12. 您最担心什么？身体吃不消/被骗/没人陪/不好意思/价格高/家人反对
+13. 您是否愿意出镜拍照或视频？可以/只限群内/不愿意
+14. 您希望活动安排在什么时间？
+15. 如果下个月有一个活动，您最希望是什么主题？</div>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-body">
+              <h3>深访提纲</h3>
+              <div class="script">开场：您平时一天怎么安排？什么时候最空？
+活动：最近一次让您特别开心的活动是什么？为什么？
+同伴：您一般跟谁一起去？如果没人陪，会不会去？
+障碍：什么情况下您会放弃报名？
+付费：您觉得什么活动值得花钱？什么钱花得冤？
+家庭：子女/老伴支持您参加活动吗？他们担心什么？
+展示：您喜欢拍照、发朋友圈、上台表演吗？
+旅行：如果周边一日游，您最看重吃、住、车、景、拍照、老师中的哪一个？
+信任：什么样的主理人或机构您会放心？
+结尾：如果让您设计一个最想参加的活动，会是什么样？</div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="section-kicker">Marketing playbook</p>
+            <h2>获客和转化：别用“老年活动”，要用“姐妹、活力、好看、放心”。</h2>
+          </div>
+          <p class="lead">45-70岁女性并不愿意被粗暴归类为“老年人”。活动命名、海报、文案和现场话术要尊重她们的自我感受。</p>
+        </div>
+
+        <div class="grid grid-3">
+          <article class="card">
+            <div class="card-body">
+              <h3>命名建议</h3>
+              <ul class="checklist">
+                <li>少用：老年、夕阳、养老、银发奶奶团。</li>
+                <li>多用：姐妹、活力、优雅、气质、花样年华、轻旅行、慢生活。</li>
+                <li>活动名要具体：不要“周边游”，要“姐妹茶园旅拍一日”。</li>
+                <li>课程名要有成果：不要“摄影课”，要“3小时拍出气质头像”。</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-body">
+              <h3>渠道优先级</h3>
+              <ul class="checklist">
+                <li>第一优先：老成员转介绍、舞队队长、社区骨干。</li>
+                <li>第二优先：微信群、朋友圈、视频号、抖音同城。</li>
+                <li>第三优先：社区公告栏、文化馆、舞蹈房、旅行社合作。</li>
+                <li>子女触点：强调安全、正规、保险、反诈、开心健康。</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-body">
+              <h3>内容素材</h3>
+              <ul class="checklist">
+                <li>活动前：穿搭建议、路线亮点、成员期待。</li>
+                <li>活动中：笑脸、队形、手部特写、老师指导、集体照。</li>
+                <li>活动后：前后变化、成员故事、姐妹合影、下次预告。</li>
+                <li>隐私：提前征得肖像同意，不愿出镜的人只拍背影或手部。</li>
+              </ul>
+            </div>
+          </article>
+        </div>
+
+        <div class="grid grid-2" style="margin-top: 18px;">
+          <div class="card">
+            <div class="card-body">
+              <h3>微信群欢迎语</h3>
+              <div class="script">欢迎来到「滨河姐妹活力社」。
+这里不是卖课群，是大家一起把生活过得更有劲儿的地方。
+
+群里每周会有：
+1. 两次线下活力练习
+2. 一次手机摄影/健康小分享
+3. 每月一次姐妹周边游
+
+请大家修改群昵称：姓名 + 小区，如“王姐-滨河花园”。
+新朋友可以先旁听、先体验，不着急报名。</div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body">
+              <h3>转介绍话术</h3>
+              <div class="script">这个活动最适合带一个姐妹来。
+两个人一起来，不尴尬，也能互相拍照。
+
+本周老带新福利：
+带一位新朋友参加体验课，两人都送一次手机摄影小课。
+如果朋友报名28天活力营，老成员可获得下月一日游抵扣券。</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="section-kicker">Risk control</p>
+            <h2>底线：中老年女性活动必须把安全、尊重和透明放在前面。</h2>
+          </div>
+          <p class="lead">这个群体不是不能消费，而是特别需要信任。任何夸大健康效果、诱导保健品、强行拍摄、价格不透明，都会摧毁主理人的长期口碑。</p>
+        </div>
+
+        <div class="grid grid-4">
+          <article class="card">
+            <div class="card-body">
+              <h3>健康安全</h3>
+              <p>活动前提示身体要求；高血压、心脏病、膝关节问题要主动提醒；不承诺治疗效果；高温、雨雪、大风及时调整。</p>
+            </div>
+          </article>
+          <article class="card">
+            <div class="card-body">
+              <h3>金融和保健品边界</h3>
+              <p>不要把活动变成保健品、理财、收藏品销售场。若有商业合作，必须明示，不做恐吓式营销。</p>
+            </div>
+          </article>
+          <article class="card">
+            <div class="card-body">
+              <h3>肖像和隐私</h3>
+              <p>拍照前征得同意；不愿出镜的人尊重；公开视频不暴露住址、电话、身份证、具体集合规律。</p>
+            </div>
+          </article>
+          <article class="card">
+            <div class="card-body">
+              <h3>价格透明</h3>
+              <p>写清包含项、不包含项、退款规则、保险范围、是否有购物点、是否有二次消费。越透明，越容易获得子女支持。</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="section-kicker">Measurement</p>
+            <h2>主理人应该看哪些指标？不要只看报名人数。</h2>
+          </div>
+          <p class="lead">中老年女性社群的核心资产是信任和复购。一次爆满但没有复购，不如30个人每周稳定出现。</p>
+        </div>
+
+        <div class="grid grid-3">
+          <article class="card">
+            <div class="card-body">
+              <h3>活动指标</h3>
+              <ul class="checklist">
+                <li>报名人数、到场率、迟到率、退费率。</li>
+                <li>新成员占比、老成员复购率、老带新比例。</li>
+                <li>现场安全事件、投诉、身体不适次数。</li>
+              </ul>
+            </div>
+          </article>
+          <article class="card">
+            <div class="card-body">
+              <h3>社群指标</h3>
+              <ul class="checklist">
+                <li>微信群日活、发言人数、成员互相回复次数。</li>
+                <li>活动后48小时内照片保存/转发/点赞。</li>
+                <li>队长数量、小组数量、成员自发组织次数。</li>
+              </ul>
+            </div>
+          </article>
+          <article class="card">
+            <div class="card-body">
+              <h3>商业指标</h3>
+              <ul class="checklist">
+                <li>会员转化率、课程客单价、旅行客单价。</li>
+                <li>单场毛利、供应商成本、获客成本。</li>
+                <li>季度展演后新增线索和合作资源。</li>
+              </ul>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="sources">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="section-kicker">Sources</p>
+            <h2>主要数据来源与图片来源</h2>
+          </div>
+          <p class="lead">本报告采用公开资料综合判断。部分行业数据来自平台报告或媒体转述，适合作为商业判断线索；最终落地前，建议主理人按上方模板做本地验证。</p>
+        </div>
+
+        <ul class="source-list">
+          <li><a href="https://www.stats.gov.cn/zt_18555/zthd/lhfw/2025/2025_hgjj/202502/t20250228_1958824.html" target="_blank" rel="noopener">国家统计局：《中华人民共和国2024年国民经济和社会发展统计公报》</a>。用于人口、老龄化、女性人口和城乡结构背景。</li>
+          <li><a href="https://www.ctaweb.org.cn/xsjl/10018.html" target="_blank" rel="noopener">中国旅游研究院：《中国休闲发展年度报告（2024）》发布信息</a>。用于休闲重要性、休闲半径、退休居民休闲时间、文化休闲和体育健身趋势。</li>
+          <li><a href="https://zwgk.mct.gov.cn/zfxxgkml/tjxx/202505/t20250530_960335.html" target="_blank" rel="noopener">文化和旅游部：《2024年文化和旅游发展统计公报》</a>。用于公共文化机构、群众文化活动、图书馆活动和群众文艺供给。</li>
+          <li><a href="https://www.news.cn/ci/20250102/d8adb18a1cad478db177bcc401b94c4b/c.html" target="_blank" rel="noopener">新华网：年轻群体、银发族、“她”旅游成为营销三大客群热点</a>。用于银发旅游、女性旅游和50岁以上女性出行增长数据。</li>
+          <li><a href="http://travel.china.com.cn/txt/2024-03/08/content_117049339.shtml" target="_blank" rel="noopener">中国网/澎湃新闻：报告显示中国女性撑起旅游市场“半边天”</a>。用于女性旅游决策、50岁以上老年女性订单增速、女性带父母旅行等数据。</li>
+          <li><a href="https://www.ageclub.net/article-detail/4801" target="_blank" rel="noopener">AgeClub：一文读懂2024银发旅游市场新趋势</a>。用于银发旅游订单、淡季出行、周边游、自驾游、游学康养等行业趋势。</li>
+          <li><a href="https://pdf.dfcfw.com/pdf/H3_AP202410151640309389_1.pdf" target="_blank" rel="noopener">灼识咨询/量子之歌：《2024年中国银龄旅游专题报告》</a>。用于中老年旅游偏好、游+学、游+学+养、旅游频率和组团偏好。</li>
+          <li><a href="https://www.news.cn/fortune/20250627/d2c853c093e643ce9d156f8a9ac72a6c/c.html" target="_blank" rel="noopener">新华网：“一课难求”的老年大学</a>。用于老年大学规模、课程结构、需求动因和供需缺口。</li>
+          <li><a href="http://www.crca.cn/index.php/13-agednews/1171-2025-03-04-01-30-58.html" target="_blank" rel="noopener">中国老龄科学研究中心：从数据看老年大学发展变化</a>。用于老年大学课程、设施、师资和适老化建设数据。</li>
+          <li><a href="http://m.10jqka.com.cn/20241011/c662336135.shtml" target="_blank" rel="noopener">新京报新京智库：《2024中老年兴趣学习行业发展报告》发布报道</a>。用于兴趣学习参与、付费意愿、课程价格和渠道偏好。</li>
+          <li><a href="http://m.cyol.com/gb/articles/2025-05/15/content_0zN5yaFvQg.html" target="_blank" rel="noopener">中国青年报：银发族文化消费渐热，年轻人能做点啥</a>。用于长辈常参与活动比例和文化消费障碍。</li>
+          <li><a href="http://www.news.cn/sports/20250310/59884e0d632342a1bcc3c5ddf93a463f/c.html" target="_blank" rel="noopener">新华网：“银龄行动”何以燃动体育</a>。用于低龄老年体育锻炼和老年体育活动供给。</li>
+          <li><a href="https://m.bjnews.com.cn/detail/1649245999168107.html" target="_blank" rel="noopener">新京报：《广场舞文化发展报告（2022）》编辑出版工作启动</a>。用于广场舞参与人群、女性占比和公共文化治理问题。</li>
+          <li><a href="https://www.ageclub.net/article-detail/7335" target="_blank" rel="noopener">AgeClub/长青研究社：老年广场舞，为何中国独有？</a>。用于广场舞的社会心理解释、集体归属和展示动机分析。</li>
+          <li><a href="https://www.chinadaily.com.cn/a/202406/13/WS666a2a10a31082fc043cc2c8_2.html" target="_blank" rel="noopener">China Daily：Seniors' choirs in harmony on hope, happiness</a>。用于老年合唱、陪伴、情绪支持和“第二家庭”案例理解。</li>
+        </ul>
+
+        <div class="callout" style="margin-top: 22px;">
+          <h3>图片说明</h3>
+          <p>报告配图主要使用 Wikimedia Commons 可复用图片和 Unsplash 免费图片，均作为场景示意，不作为数据证据。主要图片包括：Daniel Case 拍摄的北京天坛公园女性舞蹈、Tom Thai 拍摄的上海公园太极女性、Colegota 拍摄的丽江纳西女性舞蹈、Wikimedia Commons 广场舞分类图片、Centre for Ageing Better 的 Unsplash 室内舞蹈课图片、Cheng Shi Song 的 Unsplash 南京太极场景图片。</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>本报告生成日期：2026年6月25日。建议主理人将本报告作为“全国趋势+本地调研模板”，不要跳过本地访谈和试运营。</p>
+    </div>
+  </footer>
+</body>
+</html>

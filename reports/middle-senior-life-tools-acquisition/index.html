@@ -1,0 +1,1640 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>45-65岁中老年生活问题与获客工具系统深度调研</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23146b5b'/%3E%3Ctext x='32' y='39' font-size='21' text-anchor='middle' font-family='Arial,sans-serif' font-weight='800' fill='white'%3E45%2B%3C/text%3E%3C/svg%3E">
+  <meta name="description" content="面向短视频获客的45-65岁中老年生活服务工具系统深度调研、机会矩阵和90天执行方案。">
+  <style>
+    :root {
+      --ink: #16211f;
+      --muted: #65716e;
+      --paper: #f6f4ee;
+      --panel: #ffffff;
+      --line: #ded8ca;
+      --green: #146b5b;
+      --blue: #276f9c;
+      --coral: #c7563e;
+      --gold: #b47b22;
+      --violet: #6551a6;
+      --red: #af2e2e;
+      --soft-green: #e8f4ee;
+      --soft-blue: #e8f2fa;
+      --soft-coral: #fff0eb;
+      --soft-gold: #fff7df;
+      --soft-violet: #efedfb;
+      --soft-red: #fff1f1;
+      --shadow: 0 18px 50px rgba(22, 33, 31, 0.12);
+      --radius: 8px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+      line-height: 1.72;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    img {
+      display: block;
+      width: 100%;
+      max-width: 100%;
+      object-fit: cover;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4 {
+      margin: 0;
+      line-height: 1.18;
+      letter-spacing: 0;
+    }
+
+    p {
+      margin: 0;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      border-bottom: 1px solid rgba(222, 216, 202, 0.9);
+      background: rgba(246, 244, 238, 0.9);
+      backdrop-filter: blur(18px);
+    }
+
+    .topbar-inner {
+      width: min(1200px, calc(100vw - 32px));
+      min-height: 62px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .brand-mark {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      background: var(--green);
+      border-radius: var(--radius);
+      font-size: 15px;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.18);
+    }
+
+    .nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 4px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .nav a {
+      padding: 7px 9px;
+      border-radius: var(--radius);
+    }
+
+    .nav a:hover {
+      color: var(--ink);
+      background: #ece7da;
+      text-decoration: none;
+    }
+
+    .hero {
+      color: #fffdf6;
+      background:
+        linear-gradient(90deg, rgba(14, 23, 21, 0.94), rgba(14, 23, 21, 0.78) 44%, rgba(14, 23, 21, 0.30)),
+        url("senior_life_acquisition_assets/hero-community-planning.png") center / cover no-repeat;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+    }
+
+    .hero-inner {
+      width: min(1200px, calc(100vw - 32px));
+      min-height: 720px;
+      margin: 0 auto;
+      padding: 74px 0 42px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .eyebrow {
+      margin-bottom: 18px;
+      color: #ffe7bd;
+      font-size: 14px;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .hero h1 {
+      max-width: 920px;
+      font-size: clamp(40px, 6vw, 72px);
+      text-wrap: balance;
+    }
+
+    .hero-subtitle {
+      max-width: 840px;
+      margin-top: 22px;
+      color: #f2eadc;
+      font-size: clamp(18px, 2.1vw, 23px);
+    }
+
+    .hero-note {
+      max-width: 780px;
+      margin-top: 20px;
+      color: #e5dccb;
+      font-size: 14px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 28px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      padding: 10px 14px;
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.12);
+      color: #fffdf6;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .button.primary {
+      border-color: #ffe7bd;
+      background: #ffe7bd;
+      color: #16211f;
+    }
+
+    .button:hover {
+      text-decoration: none;
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .button.primary:hover {
+      background: #fff0cf;
+    }
+
+    .hero-signals {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      margin-top: 48px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.18);
+    }
+
+    .hero-signal {
+      min-height: 142px;
+      padding: 20px;
+      background: rgba(14, 23, 21, 0.58);
+    }
+
+    .hero-signal strong {
+      display: block;
+      margin-bottom: 10px;
+      color: #fff;
+      font-size: 26px;
+      line-height: 1.1;
+    }
+
+    .hero-signal span {
+      color: #e9dfd0;
+      font-size: 13px;
+    }
+
+    .container {
+      width: min(1200px, calc(100vw - 32px));
+      margin: 0 auto;
+    }
+
+    section {
+      padding: 74px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(0, 0.95fr) minmax(280px, 0.55fr);
+      gap: 34px;
+      align-items: end;
+      margin-bottom: 30px;
+    }
+
+    .kicker {
+      margin-bottom: 12px;
+      color: var(--coral);
+      font-size: 13px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .section-head h2 {
+      font-size: clamp(30px, 4vw, 48px);
+      text-wrap: balance;
+    }
+
+    .section-head p {
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .card,
+    .metric,
+    .source-card,
+    .tool-card,
+    .persona,
+    .calendar-card,
+    .step-card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+      box-shadow: 0 12px 32px rgba(22, 33, 31, 0.06);
+    }
+
+    .card {
+      padding: 22px;
+    }
+
+    .metric {
+      padding: 18px;
+    }
+
+    .metric b {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--green);
+      font-size: clamp(24px, 3vw, 34px);
+      line-height: 1.05;
+    }
+
+    .metric span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .metric.coral b {
+      color: var(--coral);
+    }
+
+    .metric.blue b {
+      color: var(--blue);
+    }
+
+    .metric.gold b {
+      color: var(--gold);
+    }
+
+    .caption {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .visual-frame {
+      overflow: hidden;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background: #fff;
+      box-shadow: var(--shadow);
+    }
+
+    .visual-frame img {
+      aspect-ratio: 4 / 3;
+    }
+
+    .visual-body {
+      padding: 18px;
+    }
+
+    .visual-body h3 {
+      margin-bottom: 8px;
+      font-size: 20px;
+    }
+
+    .visual-body p {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .insight-band {
+      background: #17211f;
+      color: #fffdf6;
+    }
+
+    .insight-band .section-head p,
+    .insight-band .caption {
+      color: #d7ded8;
+    }
+
+    .priority-map {
+      display: grid;
+      grid-template-columns: 1.1fr repeat(3, 0.9fr);
+      gap: 1px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.18);
+    }
+
+    .map-cell {
+      min-height: 120px;
+      padding: 16px;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .map-cell.head {
+      background: rgba(255, 255, 255, 0.16);
+      font-weight: 900;
+    }
+
+    .map-cell strong {
+      display: block;
+      margin-bottom: 8px;
+      color: #fff;
+    }
+
+    .map-cell span,
+    .map-cell li {
+      color: #d7ded8;
+      font-size: 13px;
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 5px 9px;
+      border-radius: 999px;
+      background: var(--soft-green);
+      color: #23594d;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .tag.blue {
+      background: var(--soft-blue);
+      color: #275d80;
+    }
+
+    .tag.coral {
+      background: var(--soft-coral);
+      color: #99432e;
+    }
+
+    .tag.gold {
+      background: var(--soft-gold);
+      color: #7a551d;
+    }
+
+    .tag.violet {
+      background: var(--soft-violet);
+      color: #5a4a92;
+    }
+
+    .persona {
+      overflow: hidden;
+    }
+
+    .persona-top {
+      min-height: 150px;
+      padding: 22px;
+      color: #fff;
+      background: var(--green);
+    }
+
+    .persona:nth-child(2) .persona-top {
+      background: var(--blue);
+    }
+
+    .persona:nth-child(3) .persona-top {
+      background: var(--coral);
+    }
+
+    .persona-top strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 24px;
+      line-height: 1.1;
+    }
+
+    .persona-body {
+      padding: 20px;
+    }
+
+    .persona-body ul,
+    .card ul,
+    .tool-card ul,
+    .step-card ul {
+      margin: 10px 0 0;
+      padding-left: 18px;
+    }
+
+    .persona-body li,
+    .card li,
+    .tool-card li,
+    .step-card li {
+      margin: 7px 0;
+      color: var(--muted);
+    }
+
+    .rank-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .rank-item {
+      display: grid;
+      grid-template-columns: 36px minmax(0, 1fr) 120px;
+      gap: 12px;
+      align-items: center;
+      padding: 13px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+
+    .rank-num {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: #fff;
+      background: var(--green);
+      font-weight: 900;
+    }
+
+    .rank-item:nth-child(2) .rank-num {
+      background: var(--blue);
+    }
+
+    .rank-item:nth-child(3) .rank-num {
+      background: var(--coral);
+    }
+
+    .rank-item:nth-child(4) .rank-num {
+      background: var(--gold);
+    }
+
+    .rank-item:nth-child(5) .rank-num {
+      background: var(--violet);
+    }
+
+    .rank-item h3 {
+      margin-bottom: 4px;
+      font-size: 17px;
+    }
+
+    .rank-item p {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .score {
+      min-height: 34px;
+      display: grid;
+      place-items: center;
+      border-radius: 999px;
+      background: var(--soft-gold);
+      color: #7b551d;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .journey {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .journey-step {
+      position: relative;
+      min-height: 180px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+
+    .journey-step::after {
+      content: "→";
+      position: absolute;
+      top: 50%;
+      right: -14px;
+      transform: translateY(-50%);
+      color: var(--muted);
+      font-weight: 900;
+    }
+
+    .journey-step:last-child::after {
+      content: "";
+    }
+
+    .journey-step b {
+      display: block;
+      margin-bottom: 10px;
+      color: var(--coral);
+      font-size: 13px;
+    }
+
+    .journey-step h3 {
+      margin-bottom: 8px;
+      font-size: 18px;
+    }
+
+    .journey-step p {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .tool-card {
+      overflow: hidden;
+      padding: 0;
+    }
+
+    .tool-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      min-height: 90px;
+      padding: 18px;
+      background: var(--soft-green);
+    }
+
+    .tool-card:nth-child(2n) .tool-head {
+      background: var(--soft-blue);
+    }
+
+    .tool-card:nth-child(3n) .tool-head {
+      background: var(--soft-coral);
+    }
+
+    .tool-card:nth-child(4n) .tool-head {
+      background: var(--soft-gold);
+    }
+
+    .tool-head h3 {
+      font-size: 20px;
+    }
+
+    .icon-box {
+      width: 44px;
+      height: 44px;
+      flex: 0 0 auto;
+      display: grid;
+      place-items: center;
+      border-radius: var(--radius);
+      color: #fff;
+      background: var(--green);
+      font-weight: 900;
+    }
+
+    .tool-card:nth-child(2n) .icon-box {
+      background: var(--blue);
+    }
+
+    .tool-card:nth-child(3n) .icon-box {
+      background: var(--coral);
+    }
+
+    .tool-card:nth-child(4n) .icon-box {
+      background: var(--gold);
+    }
+
+    .tool-body {
+      padding: 18px;
+    }
+
+    .tool-body p {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .mini-table {
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+
+    .mini-table th,
+    .mini-table td {
+      padding: 13px 14px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .mini-table th {
+      color: #fff;
+      background: #17211f;
+      font-size: 13px;
+    }
+
+    .mini-table td {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .mini-table tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .calendar-card {
+      min-height: 170px;
+      padding: 16px;
+    }
+
+    .calendar-card b {
+      display: block;
+      margin-bottom: 9px;
+      color: var(--green);
+    }
+
+    .calendar-card p {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .calendar-card .cta {
+      margin-top: 10px;
+      color: var(--coral);
+      font-weight: 900;
+      font-size: 13px;
+    }
+
+    .timeline {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .step-card {
+      min-height: 290px;
+      padding: 20px;
+    }
+
+    .step-card b {
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      margin-bottom: 16px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: var(--soft-blue);
+      color: var(--blue);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .step-card h3 {
+      margin-bottom: 10px;
+      font-size: 20px;
+    }
+
+    .quote-panel {
+      padding: 28px;
+      border-radius: var(--radius);
+      color: #fffdf6;
+      background: #17211f;
+      box-shadow: var(--shadow);
+    }
+
+    .quote-panel strong {
+      display: block;
+      margin-bottom: 10px;
+      color: #ffe7bd;
+      font-size: 14px;
+    }
+
+    .quote-panel p {
+      font-size: clamp(22px, 3vw, 34px);
+      line-height: 1.25;
+      text-wrap: balance;
+    }
+
+    .bar-list {
+      display: grid;
+      gap: 14px;
+    }
+
+    .bar-row {
+      display: grid;
+      grid-template-columns: 120px minmax(0, 1fr) 72px;
+      gap: 12px;
+      align-items: center;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .bar-track {
+      height: 14px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #e8e3d7;
+    }
+
+    .bar {
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--green), var(--blue));
+    }
+
+    .bar.coral {
+      background: linear-gradient(90deg, var(--coral), var(--gold));
+    }
+
+    .bar.violet {
+      background: linear-gradient(90deg, var(--violet), var(--blue));
+    }
+
+    .source-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .source-card {
+      padding: 16px;
+    }
+
+    .source-card b {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 14px;
+    }
+
+    .source-card p {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .source-card a {
+      color: var(--blue);
+      font-weight: 800;
+    }
+
+    .risk-note {
+      padding: 18px;
+      border: 1px solid #f0b5ae;
+      border-radius: var(--radius);
+      background: var(--soft-red);
+      color: #813030;
+      font-size: 14px;
+    }
+
+    .print-footer {
+      padding: 28px 0 46px;
+      color: var(--muted);
+      text-align: center;
+      font-size: 13px;
+    }
+
+    @media (max-width: 980px) {
+      .nav {
+        display: none;
+      }
+
+      .hero-inner {
+        min-height: 680px;
+      }
+
+      .hero-signals,
+      .grid-4,
+      .calendar-grid,
+      .timeline {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .section-head,
+      .grid-2,
+      .grid-3,
+      .source-grid,
+      .journey {
+        grid-template-columns: 1fr;
+      }
+
+      .journey-step::after {
+        content: "";
+      }
+
+      .priority-map {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .topbar-inner,
+      .container,
+      .hero-inner {
+        width: min(100% - 24px, 1200px);
+      }
+
+      .hero {
+        background:
+          linear-gradient(90deg, rgba(14, 23, 21, 0.94), rgba(14, 23, 21, 0.76)),
+          url("senior_life_acquisition_assets/hero-community-planning.png") center / cover no-repeat;
+      }
+
+      .hero-inner {
+        min-height: 640px;
+        padding-top: 52px;
+      }
+
+      section {
+        padding: 56px 0;
+      }
+
+      .hero-signals,
+      .grid-4,
+      .calendar-grid,
+      .timeline {
+        grid-template-columns: 1fr;
+      }
+
+      .rank-item {
+        grid-template-columns: 34px minmax(0, 1fr);
+      }
+
+      .rank-item .score {
+        grid-column: 2;
+        justify-self: start;
+        padding: 0 12px;
+      }
+
+      .bar-row {
+        grid-template-columns: 1fr;
+        gap: 6px;
+      }
+    }
+
+    @media print {
+      .topbar,
+      .hero-actions {
+        display: none;
+      }
+
+      body {
+        background: #fff;
+      }
+
+      section {
+        break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="#top" aria-label="回到顶部">
+        <span class="brand-mark">45+</span>
+        <span>中老年生活工具获客报告</span>
+      </a>
+      <nav class="nav" aria-label="章节导航">
+        <a href="#summary">结论</a>
+        <a href="#people">人群</a>
+        <a href="#needs">需求</a>
+        <a href="#tools">工具</a>
+        <a href="#funnel">获客</a>
+        <a href="#content">内容</a>
+        <a href="#plan">行动</a>
+        <a href="#sources">来源</a>
+      </nav>
+    </div>
+  </div>
+
+  <header class="hero" id="top">
+    <div class="hero-inner">
+      <div>
+        <div class="eyebrow">Deep Research · Service Design · Lead Generation</div>
+        <h1>45-65岁中老年人最关心什么？我们如何用“有用的工具”把服务变成获客入口</h1>
+        <p class="hero-subtitle">结论很直接：他们不是只关心“养老”，而是在关心健康、钱、家人、手机安全、退休后的价值感。短视频里最容易成交的不是空泛课程，而是能马上帮他少走弯路的清单、测评、计算器和陪跑系统。</p>
+        <p class="hero-note">报告日期：2026-06-25。目标市场默认按中国大陆短视频/微信生态推演；若你要做本地社区服务，可把地域、客单价和履约资源替换成当地版本。</p>
+        <div class="hero-actions">
+          <a class="button primary" href="#plan">看90天执行方案</a>
+          <a class="button" href="#content">看短视频选题库</a>
+        </div>
+      </div>
+
+      <div class="hero-signals" aria-label="关键市场信号">
+        <div class="hero-signal">
+          <strong>3.23亿</strong>
+          <span>2025年末中国60岁及以上人口，已占总人口23.0%。这是一个正在扩大的生活服务市场。</span>
+        </div>
+        <div class="hero-signal">
+          <strong>53.7%</strong>
+          <span>CNNIC第57次报告口径：60岁及以上群体互联网普及率仍在提升，数字触达不再是小众。</span>
+        </div>
+        <div class="hero-signal">
+          <strong>10.74亿</strong>
+          <span>短视频用户规模已接近全民级入口，适合用“问题解释+工具领取”承接线索。</span>
+        </div>
+        <div class="hero-signal">
+          <strong>45岁+</strong>
+          <span>CHARLS以45岁及以上为中老年研究口径，45-65正好是“提前规划”和“立即行动”的黄金窗口。</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="summary">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="kicker">Executive Summary</div>
+            <h2>最值得做的不是“卖养老”，而是提供五类生活确定性</h2>
+          </div>
+          <p>45-65岁人群仍有决策力、付费力和社交传播力。他们讨厌被贴“老年人”标签，但愿意为“帮我弄明白、帮我少踩坑、帮我和家人沟通清楚”的服务付费。</p>
+        </div>
+
+        <div class="grid-4">
+          <div class="metric">
+            <b>健康可控</b>
+            <span>三高、体检、用药、饮食、睡眠、运动。获客入口：体检报告清单、三高记录表、家庭健康档案。</span>
+          </div>
+          <div class="metric blue">
+            <b>钱够不够</b>
+            <span>退休收入、养老金、保险、存款配置、医疗支出。获客入口：退休现金流测算、保单整理表。</span>
+          </div>
+          <div class="metric coral">
+            <b>家人少操心</b>
+            <span>父母照护、子女沟通、居家安全、应急联系人。获客入口：照护任务板、适老化改造自查。</span>
+          </div>
+          <div class="metric gold">
+            <b>不被骗</b>
+            <span>手机支付、链接、保健品、投资理财、冒充熟人。获客入口：防骗雷达、手机安全设置课。</span>
+          </div>
+        </div>
+
+        <div class="grid-2" style="margin-top:20px;">
+          <div class="quote-panel">
+            <strong>一句话策略</strong>
+            <p>把短视频从“讲道理”改成“给工具”：评论关键词领取测评，测评生成诊断，再进入私域服务。</p>
+          </div>
+          <div class="card">
+            <h3>优先做的商业组合</h3>
+            <ul>
+              <li>低门槛获客品：免费测评、电子清单、7天打卡、直播答疑。</li>
+              <li>初阶付费品：99-399元一次性诊断，例如退休现金流、保单整理、体检指标说明、防骗手机体检。</li>
+              <li>中阶服务品：999-3999元家庭方案包，例如健康档案搭建、照护计划、家庭资产文件整理、数字生活陪跑。</li>
+              <li>高阶转介绍：和持牌医生、律师、保险经纪、家政/养老服务机构合作，但必须明确资质和边界。</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="insight-band" id="people">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="kicker">Audience Segmentation</div>
+            <h2>45-65不是一个人群，要按“人生阶段”拆</h2>
+          </div>
+          <p>同样是中老年，45岁和64岁的焦虑完全不同。短视频脚本、领取工具和后端服务都要按阶段设计。</p>
+        </div>
+
+        <div class="priority-map">
+          <div class="map-cell head">维度</div>
+          <div class="map-cell head">45-52岁：压力夹心层</div>
+          <div class="map-cell head">53-59岁：退休倒计时</div>
+          <div class="map-cell head">60-65岁：退休重建期</div>
+
+          <div class="map-cell"><strong>核心心事</strong><span>收入不能断、身体别出问题、父母和孩子都要顾。</span></div>
+          <div class="map-cell"><strong>上有老下有小</strong><span>职业风险、房贷、子女教育/婚育、父母照护开始集中出现。</span></div>
+          <div class="map-cell"><strong>养老金和退休身份</strong><span>延迟退休、现金流、医疗险、家庭资产文件、退休后做什么。</span></div>
+          <div class="map-cell"><strong>健康、社交和尊严</strong><span>慢病管理、手机安全、社区活动、旅行兴趣、少给子女添麻烦。</span></div>
+
+          <div class="map-cell"><strong>最敏感触发</strong><span>体检异常、单位调整、父母住院、孩子要钱、亲友被骗。</span></div>
+          <div class="map-cell"><span>“我现在不准备，5年后是不是来不及？”</span></div>
+          <div class="map-cell"><span>“退休后每月到底够不够？医保、商保、存款怎么安排？”</span></div>
+          <div class="map-cell"><span>“我想自己过得好，也不想被孩子嫌麻烦。”</span></div>
+
+          <div class="map-cell"><strong>短视频钩子</strong><span>少谈衰老，多谈掌控、准备、避坑。</span></div>
+          <div class="map-cell"><span>“45岁后，体检报告这5个数要做成家庭档案。”</span></div>
+          <div class="map-cell"><span>“退休前5年，把这张现金流表填完。”</span></div>
+          <div class="map-cell"><span>“60岁后手机里这7个设置先检查。”</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="needs">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="kicker">Need Map</div>
+            <h2>他们最关心的10件事：从强痛点到强转介绍</h2>
+          </div>
+          <p>排序按“痛感强度、可工具化程度、短视频传播性、后端服务空间”综合判断。越靠前越适合作为账号前30天主线。</p>
+        </div>
+
+        <div class="grid-2">
+          <div class="rank-list">
+            <div class="rank-item">
+              <div class="rank-num">1</div>
+              <div>
+                <h3>慢病与体检异常</h3>
+                <p>血压、血糖、血脂、肝肾功能、结节、睡眠。工具化最强，也最容易形成持续服务。</p>
+              </div>
+              <div class="score">高痛点</div>
+            </div>
+            <div class="rank-item">
+              <div class="rank-num">2</div>
+              <div>
+                <h3>退休后钱够不够</h3>
+                <p>收入替代、医疗支出、存款收益下降、个人养老金、保险是否重复或缺口。</p>
+              </div>
+              <div class="score">高付费</div>
+            </div>
+            <div class="rank-item">
+              <div class="rank-num">3</div>
+              <div>
+                <h3>养老防骗与手机安全</h3>
+                <p>高收益、保健品、假客服、假熟人、陌生链接、直播间冲动购买。</p>
+              </div>
+              <div class="score">高传播</div>
+            </div>
+            <div class="rank-item">
+              <div class="rank-num">4</div>
+              <div>
+                <h3>父母照护与家庭分工</h3>
+                <p>看病陪诊、药品管理、照护排班、费用分摊、兄弟姐妹沟通。</p>
+              </div>
+              <div class="score">高复购</div>
+            </div>
+            <div class="rank-item">
+              <div class="rank-num">5</div>
+              <div>
+                <h3>退休后的意义感</h3>
+                <p>兴趣班、旅行、运动、社群、再就业/轻创业。情绪驱动力强，适合内容种草。</p>
+              </div>
+              <div class="score">高留存</div>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>证据与判断</h3>
+            <div class="bar-list" style="margin-top:18px;">
+              <div class="bar-row">
+                <span>健康养生</span>
+                <div class="bar-track"><div class="bar" style="width:92%;"></div></div>
+                <span>强刚需</span>
+              </div>
+              <div class="bar-row">
+                <span>养老财务</span>
+                <div class="bar-track"><div class="bar coral" style="width:88%;"></div></div>
+                <span>强焦虑</span>
+              </div>
+              <div class="bar-row">
+                <span>手机防骗</span>
+                <div class="bar-track"><div class="bar violet" style="width:84%;"></div></div>
+                <span>强信任</span>
+              </div>
+              <div class="bar-row">
+                <span>照护协同</span>
+                <div class="bar-track"><div class="bar" style="width:76%;"></div></div>
+                <span>强转介</span>
+              </div>
+              <div class="bar-row">
+                <span>兴趣旅行</span>
+                <div class="bar-track"><div class="bar coral" style="width:70%;"></div></div>
+                <span>强内容</span>
+              </div>
+            </div>
+            <p class="caption">注：这是商业机会优先级，不是疾病/风险的医学排序。医疗、法律、金融建议必须由具备资质的专业人士提供。</p>
+          </div>
+        </div>
+
+        <div class="grid-4" style="margin-top:22px;">
+          <div class="visual-frame">
+            <img src="senior_life_acquisition_assets/scene-health.png" alt="中老年夫妻在家记录血压和健康数据">
+            <div class="visual-body">
+              <h3>健康管理</h3>
+              <p>从“讲养生”改为“建档案、做记录、会复查”。</p>
+            </div>
+          </div>
+          <div class="visual-frame">
+            <img src="senior_life_acquisition_assets/scene-finance.png" alt="中老年夫妻做退休财务规划">
+            <div class="visual-body">
+              <h3>退休财务</h3>
+              <p>从“推荐产品”改为“先算现金流、再看缺口”。</p>
+            </div>
+          </div>
+          <div class="visual-frame">
+            <img src="senior_life_acquisition_assets/scene-anti-fraud.png" alt="社区手机安全和防骗培训">
+            <div class="visual-body">
+              <h3>数字防骗</h3>
+              <p>从“提醒小心”改为“现场检查手机设置”。</p>
+            </div>
+          </div>
+          <div class="visual-frame">
+            <img src="senior_life_acquisition_assets/scene-social.png" alt="中老年人规划兴趣活动和旅行">
+            <div class="visual-body">
+              <h3>兴趣社交</h3>
+              <p>从“退休无聊”改为“有组织、有同伴、有计划”。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="tools">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="kicker">Lead Magnet Tools</div>
+            <h2>把服务产品化：10个既能解决问题、又能拿到线索的工具</h2>
+          </div>
+          <p>工具必须满足三个条件：用户看完短视频会想要、填写时能沉淀需求数据、交付后自然引出下一步服务。</p>
+        </div>
+
+        <div class="grid-3">
+          <div class="tool-card">
+            <div class="tool-head"><h3>退休现金流体检</h3><span class="icon-box">钱</span></div>
+            <div class="tool-body">
+              <p>输入年龄、城市、预计退休时间、收入、社保、存款、保费、医疗预算，输出“月现金流缺口”和行动建议。</p>
+              <div class="tag-row"><span class="tag gold">关键词：退休</span><span class="tag blue">后端：规划咨询</span></div>
+            </div>
+          </div>
+
+          <div class="tool-card">
+            <div class="tool-head"><h3>家庭健康档案</h3><span class="icon-box">康</span></div>
+            <div class="tool-body">
+              <p>记录血压、血糖、血脂、体检异常、用药和复查日期。输出“下次就诊要问医生的10个问题”。</p>
+              <div class="tag-row"><span class="tag">关键词：体检</span><span class="tag coral">后端：健康陪跑</span></div>
+            </div>
+          </div>
+
+          <div class="tool-card">
+            <div class="tool-head"><h3>防骗雷达评分</h3><span class="icon-box">盾</span></div>
+            <div class="tool-body">
+              <p>根据投资承诺、付款方式、陌生链接、保健品话术、亲友借钱场景打分，给出风险红黄绿灯。</p>
+              <div class="tag-row"><span class="tag coral">关键词：防骗</span><span class="tag blue">后端：手机体检</span></div>
+            </div>
+          </div>
+
+          <div class="tool-card">
+            <div class="tool-head"><h3>保单与保障整理表</h3><span class="icon-box">保</span></div>
+            <div class="tool-body">
+              <p>把医保、重疾、医疗、意外、寿险、年金等信息做成一页纸，发现重复、缺口、缴费压力。</p>
+              <div class="tag-row"><span class="tag gold">关键词：保单</span><span class="tag violet">需合规资质</span></div>
+            </div>
+          </div>
+
+          <div class="tool-card">
+            <div class="tool-head"><h3>照护任务协同板</h3><span class="icon-box">家</span></div>
+            <div class="tool-body">
+              <p>为父母或伴侣照护建立任务、费用、用药、陪诊、资料夹，减少家庭成员之间的扯皮。</p>
+              <div class="tag-row"><span class="tag">关键词：照护</span><span class="tag blue">后端：家庭方案</span></div>
+            </div>
+          </div>
+
+          <div class="tool-card">
+            <div class="tool-head"><h3>居家安全自查</h3><span class="icon-box">屋</span></div>
+            <div class="tool-body">
+              <p>厨房、卫生间、卧室、楼梯、灯光、药箱、应急卡逐项检查，输出适老化改造优先级。</p>
+              <div class="tag-row"><span class="tag coral">关键词：家里</span><span class="tag gold">后端：改造对接</span></div>
+            </div>
+          </div>
+
+          <div class="tool-card">
+            <div class="tool-head"><h3>手机安全设置课</h3><span class="icon-box">机</span></div>
+            <div class="tool-body">
+              <p>一步步检查支付限额、陌生电话、App权限、云备份、家人紧急联系人、验证码保护。</p>
+              <div class="tag-row"><span class="tag blue">关键词：手机</span><span class="tag">后端：陪跑课</span></div>
+            </div>
+          </div>
+
+          <div class="tool-card">
+            <div class="tool-head"><h3>兴趣生活计划器</h3><span class="icon-box">趣</span></div>
+            <div class="tool-body">
+              <p>根据时间、预算、身体情况、兴趣，生成运动、学习、旅行、社群活动的月计划。</p>
+              <div class="tag-row"><span class="tag coral">关键词：退休生活</span><span class="tag violet">后端：社群会员</span></div>
+            </div>
+          </div>
+
+          <div class="tool-card">
+            <div class="tool-head"><h3>家庭资料收纳盒</h3><span class="icon-box">档</span></div>
+            <div class="tool-body">
+              <p>身份证件、病历、保单、银行卡、房产、遗嘱意向、联系人清单，形成“家人找得到”的资料结构。</p>
+              <div class="tag-row"><span class="tag gold">关键词：资料</span><span class="tag blue">后端：整理服务</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="risk-note" style="margin-top:22px;">
+          合规底线：健康工具只做记录、提醒和就医沟通辅助，不做诊断和处方；财务工具只做教育和测算，不承诺收益；法律/遗嘱/保险类内容必须由有资质人员审核或服务承接。
+        </div>
+      </div>
+    </section>
+
+    <section id="funnel">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="kicker">Acquisition System</div>
+            <h2>获客系统：短视频不是终点，评论只是入口</h2>
+          </div>
+          <p>关键是把每条视频都连到一个具体工具，再把工具表单连到CRM和后续服务。不要只收“感兴趣”的人，要收“问题已被分类”的人。</p>
+        </div>
+
+        <div class="journey">
+          <div class="journey-step">
+            <b>STEP 1</b>
+            <h3>痛点短视频</h3>
+            <p>用真实场景开头：体检报告、退休金、手机诈骗、父母照护。视频只解决一个小问题。</p>
+          </div>
+          <div class="journey-step">
+            <b>STEP 2</b>
+            <h3>评论关键词</h3>
+            <p>引导评论“体检”“退休”“防骗”“照护”。人工回复或自动私信，引导到领取入口。</p>
+          </div>
+          <div class="journey-step">
+            <b>STEP 3</b>
+            <h3>表单测评</h3>
+            <p>5-12题即可，收集年龄段、城市、最困扰问题、联系方式、授权同意和服务意向。</p>
+          </div>
+          <div class="journey-step">
+            <b>STEP 4</b>
+            <h3>诊断交付</h3>
+            <p>发送PDF/图片版结果，告诉用户“你属于哪一类、下一步做什么”。</p>
+          </div>
+          <div class="journey-step">
+            <b>STEP 5</b>
+            <h3>咨询转化</h3>
+            <p>邀请进群、直播答疑或预约15分钟初筛。成交前先给清晰边界和服务菜单。</p>
+          </div>
+        </div>
+
+        <div class="grid-2" style="margin-top:24px;">
+          <div class="card">
+            <h3>CRM字段建议</h3>
+            <table class="mini-table" style="margin-top:14px;">
+              <thead>
+                <tr><th>字段</th><th>用途</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>source_video_id</td><td>知道哪条视频带来线索，回头复盘选题。</td></tr>
+                <tr><td>keyword</td><td>体检/退休/防骗/照护/手机/保单。</td></tr>
+                <tr><td>age_band</td><td>45-52、53-59、60-65，决定话术。</td></tr>
+                <tr><td>pain_score</td><td>用户自评痛感1-5，用于优先跟进。</td></tr>
+                <tr><td>family_role</td><td>给自己、给父母、给配偶、给子女。</td></tr>
+                <tr><td>status</td><td>新线索、已发工具、已诊断、已预约、已成交、沉默。</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="card">
+            <h3>最小可行系统</h3>
+            <ul>
+              <li>内容平台：抖音、视频号、小红书至少选2个，视频号适合承接微信生态。</li>
+              <li>领取工具：问卷表单、企微/微信二维码、飞书/腾讯文档资料库。</li>
+              <li>线索库：飞书多维表格、企业微信SCRM或简化版Notion/Excel都可以先跑。</li>
+              <li>交付物：每个工具都要有一页PDF结果或图片版清单，方便用户转发家人。</li>
+              <li>复盘节奏：每天看评论关键词，每周看线索转化，每月淘汰低转化工具。</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="content">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="kicker">Content Plan</div>
+            <h2>30天短视频选题库：每条都绑定一个领取动作</h2>
+          </div>
+          <p>中老年内容不要靠制造恐惧取流量。更稳的方式是：真实场景、明确步骤、温和提醒、给工具。</p>
+        </div>
+
+        <div class="calendar-grid">
+          <div class="calendar-card"><b>01 体检报告</b><p>“45岁后，体检报告别只看有没有箭头，这5项要做成趋势表。”</p><p class="cta">评论：体检</p></div>
+          <div class="calendar-card"><b>02 血压记录</b><p>“血压一次高不等于有病，但你要这样记录，医生才看得懂。”</p><p class="cta">评论：血压</p></div>
+          <div class="calendar-card"><b>03 退休现金流</b><p>“退休前5年，先算这张表：每月固定收入、固定支出、医疗预算。”</p><p class="cta">评论：退休</p></div>
+          <div class="calendar-card"><b>04 保单整理</b><p>“家里买过保险的人，先把这6个信息写在一张纸上。”</p><p class="cta">评论：保单</p></div>
+          <div class="calendar-card"><b>05 防骗话术</b><p>“凡是说‘稳赚不赔’‘名额有限’‘子女别知道’，先停下来。”</p><p class="cta">评论：防骗</p></div>
+          <div class="calendar-card"><b>06 手机支付</b><p>“爸妈手机里，这3个支付设置建议一起检查。”</p><p class="cta">评论：手机</p></div>
+          <div class="calendar-card"><b>07 父母陪诊</b><p>“陪爸妈去医院前，资料袋里必须有这8样东西。”</p><p class="cta">评论：陪诊</p></div>
+          <div class="calendar-card"><b>08 药箱整理</b><p>“家里药箱不是越多越安全，过期药和重复药先这样清。”</p><p class="cta">评论：药箱</p></div>
+          <div class="calendar-card"><b>09 居家防摔</b><p>“卫生间摔倒最常见，这5个地方花小钱能先改。”</p><p class="cta">评论：家里</p></div>
+          <div class="calendar-card"><b>10 子女沟通</b><p>“不要等出事才开家庭会，父母养老这4件事要提前说。”</p><p class="cta">评论：家庭</p></div>
+          <div class="calendar-card"><b>11 退休生活</b><p>“刚退休最容易空下来，建议先安排一张‘三圈生活表’。”</p><p class="cta">评论：生活</p></div>
+          <div class="calendar-card"><b>12 旅行避坑</b><p>“中老年跟团游先问这7个问题，别只看价格。”</p><p class="cta">评论：旅行</p></div>
+          <div class="calendar-card"><b>13 慢病复查</b><p>“复查不是随便去一次，三高人群建议把这张日历放手机里。”</p><p class="cta">评论：复查</p></div>
+          <div class="calendar-card"><b>14 个人养老金</b><p>“个人养老金先别急着买产品，先弄懂账户、锁定期和适合谁。”</p><p class="cta">评论：养老金</p></div>
+          <div class="calendar-card"><b>15 直播购物</b><p>“直播间给爸妈买东西前，先看这4个信号。”</p><p class="cta">评论：购物</p></div>
+          <div class="calendar-card"><b>16 应急卡</b><p>“60岁后，手机和钱包里都建议放一张应急卡。”</p><p class="cta">评论：应急</p></div>
+        </div>
+
+        <div class="grid-2" style="margin-top:24px;">
+          <div class="card">
+            <h3>短视频脚本公式</h3>
+            <ul>
+              <li>开头3秒：一句具体场景，“体检报告出现箭头，先别慌”。</li>
+              <li>中间20秒：给3个步骤，不展开太多理论。</li>
+              <li>信任点：说明边界，“这个不能替代医生/律师/理财师”。</li>
+              <li>行动口令：评论关键词领取表格或清单。</li>
+              <li>结尾：提醒可以转发给家人一起填。</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>直播/社群承接主题</h3>
+            <ul>
+              <li>每周一：体检报告共读，讲如何整理就医问题。</li>
+              <li>每周三：退休现金流小课，讲一个真实匿名案例。</li>
+              <li>每周五：手机防骗实操，带大家检查设置。</li>
+              <li>每周日：家庭照护答疑，演示资料袋和任务板。</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="plan">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="kicker">90-Day Action Plan</div>
+            <h2>立刻执行：从0到可复盘的获客系统</h2>
+          </div>
+          <p>先跑一个窄场景，不要一开始做“中老年综合服务平台”。建议从健康档案、防骗手机体检、退休现金流三条线里选两条。</p>
+        </div>
+
+        <div class="timeline">
+          <div class="step-card">
+            <b>第1-7天</b>
+            <h3>搭最小闭环</h3>
+            <ul>
+              <li>确定2个主工具：例如体检报告清单、防骗雷达。</li>
+              <li>制作2个表单、2份PDF交付物、1张服务菜单。</li>
+              <li>搭线索表：来源视频、关键词、年龄段、痛点评分、跟进状态。</li>
+              <li>发布8条短视频，全部绑定评论关键词。</li>
+            </ul>
+          </div>
+          <div class="step-card">
+            <b>第8-30天</b>
+            <h3>验证选题和工具</h3>
+            <ul>
+              <li>每天发布1-2条，至少30条短视频。</li>
+              <li>每周1场直播答疑，直播间只推一个领取动作。</li>
+              <li>对每个领取用户做一次标签分类，找出最高意向问题。</li>
+              <li>沉淀10个匿名案例，做成后续内容素材。</li>
+            </ul>
+          </div>
+          <div class="step-card">
+            <b>第31-60天</b>
+            <h3>形成付费服务</h3>
+            <ul>
+              <li>推出99-399元轻诊断：健康档案整理、防骗手机检查、退休现金流初筛。</li>
+              <li>建立交付SOP：预约、资料收集、诊断、报告、复盘。</li>
+              <li>开始做转介绍：让用户把一页报告发给家人。</li>
+              <li>筛选合规合作方：医生、律师、保险/家政/养老机构。</li>
+            </ul>
+          </div>
+          <div class="step-card">
+            <b>第61-90天</b>
+            <h3>规模化复盘</h3>
+            <ul>
+              <li>保留转化率最高的3个工具，淘汰低意向工具。</li>
+              <li>做主题训练营：7天手机安全、14天健康档案、退休前5年准备营。</li>
+              <li>建立KPI看板：线索成本、预约率、成交率、复购率、转介绍率。</li>
+              <li>把典型案例做成系列栏目，形成账号资产。</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="grid-2" style="margin-top:24px;">
+          <div class="card">
+            <h3>第一周每日清单</h3>
+            <table class="mini-table" style="margin-top:14px;">
+              <thead><tr><th>天数</th><th>要完成的动作</th></tr></thead>
+              <tbody>
+                <tr><td>D1</td><td>确定人群：先做45-65城市用户，还是先做子女为父母咨询。不要两边话术混用。</td></tr>
+                <tr><td>D2</td><td>做第一个工具：体检报告/退休现金流/防骗雷达三选一。</td></tr>
+                <tr><td>D3</td><td>录5条视频，每条只解决一个小问题，并设置评论关键词。</td></tr>
+                <tr><td>D4</td><td>搭线索表和自动标签，开始人工回复评论。</td></tr>
+                <tr><td>D5</td><td>做第一次直播或视频号长图，集中答疑并引导领取工具。</td></tr>
+                <tr><td>D6</td><td>回访前20个领取用户，问“哪里没看懂、还想要什么”。</td></tr>
+                <tr><td>D7</td><td>复盘播放、评论、领取、预约四个数字，决定下周继续或换工具。</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="card">
+            <h3>KPI看板</h3>
+            <div class="bar-list" style="margin-top:18px;">
+              <div class="bar-row"><span>评论率</span><div class="bar-track"><div class="bar" style="width:42%;"></div></div><span>目标1%-3%</span></div>
+              <div class="bar-row"><span>领取率</span><div class="bar-track"><div class="bar coral" style="width:58%;"></div></div><span>目标20%+</span></div>
+              <div class="bar-row"><span>预约率</span><div class="bar-track"><div class="bar violet" style="width:36%;"></div></div><span>目标5%-12%</span></div>
+              <div class="bar-row"><span>成交率</span><div class="bar-track"><div class="bar" style="width:28%;"></div></div><span>目标2%-6%</span></div>
+              <div class="bar-row"><span>转介绍</span><div class="bar-track"><div class="bar coral" style="width:34%;"></div></div><span>目标10%+</span></div>
+            </div>
+            <p class="caption">这些目标不是行业标准，是冷启动期的管理参考。核心是同一口径连续追踪，不要只看播放量。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="business">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="kicker">Business Model</div>
+            <h2>服务菜单：从免费工具到高信任家庭服务</h2>
+          </div>
+          <p>中老年市场的成交依赖信任和边界。越是涉及健康、钱、法律，越要把“我们能做什么、不能做什么、谁来做专业判断”写清楚。</p>
+        </div>
+
+        <table class="mini-table">
+          <thead>
+            <tr>
+              <th>产品层级</th>
+              <th>交付内容</th>
+              <th>建议价格</th>
+              <th>获客/转化逻辑</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>免费工具</td>
+              <td>测评、清单、表格、打卡模板、直播答疑。</td>
+              <td>0元</td>
+              <td>换取评论、表单、标签和私域连接。</td>
+            </tr>
+            <tr>
+              <td>轻诊断</td>
+              <td>资料整理、初筛报告、15-30分钟说明，不做专业结论替代。</td>
+              <td>99-399元</td>
+              <td>筛选愿意行动的人，降低首次付费门槛。</td>
+            </tr>
+            <tr>
+              <td>家庭方案包</td>
+              <td>健康档案、照护任务板、退休现金流表、手机安全设置、家庭资料盒。</td>
+              <td>999-3999元</td>
+              <td>把多个工具串成一次完整交付，提升客单价。</td>
+            </tr>
+            <tr>
+              <td>陪跑/会员</td>
+              <td>每月复查提醒、家庭会议、工具更新、社群课程、合作方资源对接。</td>
+              <td>99-499元/月</td>
+              <td>让“长期生活管理”成为复购，而不是一次性咨询。</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="grid-3" style="margin-top:22px;">
+          <div class="card">
+            <h3>最容易先成交</h3>
+            <p style="color:var(--muted); margin-top:10px;">手机安全检查、体检资料整理、家庭资料收纳。原因是交付清楚、风险低、用户马上看得到结果。</p>
+          </div>
+          <div class="card">
+            <h3>最需要专业合作</h3>
+            <p style="color:var(--muted); margin-top:10px;">疾病诊疗、处方用药、保险销售、投资建议、遗嘱和法律文件。你可以做前置整理和转介，但不能越界。</p>
+          </div>
+          <div class="card">
+            <h3>最适合做社群</h3>
+            <p style="color:var(--muted); margin-top:10px;">健康记录打卡、防骗案例学习、退休生活兴趣营。它们有持续内容和同伴激励。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="sources">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="kicker">Sources & Caveats</div>
+            <h2>主要资料来源与使用边界</h2>
+          </div>
+          <p>本报告综合了官方统计、学术调查、行业报告和政策资料。行业报告用于判断内容/消费趋势，官方统计用于判断人口和互联网规模。</p>
+        </div>
+
+        <div class="source-grid">
+          <div class="source-card">
+            <b>国家统计局：《中华人民共和国2025年国民经济和社会发展统计公报》</b>
+            <p>用于人口规模、年龄结构、互联网普及等宏观底座。<a href="https://www.stats.gov.cn/sj/zxfb/202602/t20260228_1962662.html" target="_blank" rel="noopener">查看来源</a></p>
+          </div>
+          <div class="source-card">
+            <b>CNNIC：《第57次中国互联网络发展状况统计报告》</b>
+            <p>用于网民规模、60岁以上互联网普及率、短视频用户规模、数字技能等信息；链接为可访问PDF镜像。<a href="https://pdf.dfcfw.com/pdf/H3_AP202603101820433901_1.pdf?1773128536000.pdf=" target="_blank" rel="noopener">查看来源</a></p>
+          </div>
+          <div class="source-card">
+            <b>北京大学CHARLS：中国健康与养老追踪调查</b>
+            <p>用于确认45岁及以上中老年研究口径，以及健康/养老跨学科问题范围。<a href="https://charls.pku.edu.cn/" target="_blank" rel="noopener">查看来源</a></p>
+          </div>
+          <div class="source-card">
+            <b>友望数据：《视频号中老年用户消费洞察报告》</b>
+            <p>用于视频号中老年内容偏好、消费品类和微信生态承接判断；作为行业样本，不当作全市场统计。<a href="https://pdf.dfcfw.com/pdf/H3_AP202501141641912499_1.pdf" target="_blank" rel="noopener">查看来源</a></p>
+          </div>
+          <div class="source-card">
+            <b>埃森哲：《新银发的活力人生》</b>
+            <p>用于55-65岁“新银发”生活方式、数字化和消费态度判断；样本偏城市和移动端。<a href="https://www.accenture.com/content/dam/accenture/final/accenture-com/document-4/China-Savvy-Silvers-Chinese-Consumer-Insights-CN.pdf" target="_blank" rel="noopener">查看来源</a></p>
+          </div>
+          <div class="source-card">
+            <b>Ipsos：“银发健康养生趋势洞察”</b>
+            <p>用于健康养生关注方向、知识获取困难、三高和免疫力等需求判断。<a href="https://www.ipsos.com/zh-cn/laoyouji-yinfajiankangyangshengqushidongcha" target="_blank" rel="noopener">查看来源</a></p>
+          </div>
+          <div class="source-card">
+            <b>贝莱德建信理财/建行：《2025中国养老金金融白皮书》</b>
+            <p>用于养老焦虑、退休准备、资金不足和养老金融产品需求判断。<a href="https://www.blackrockccbwealth.com/uploads/files/31b73e026d8a758d2044c848bb1044b9.pdf" target="_blank" rel="noopener">查看来源</a></p>
+          </div>
+          <div class="source-card">
+            <b>最高人民检察院：打击整治养老诈骗专题</b>
+            <p>用于防骗工具的常见风险场景设计，例如“高收益低风险”、虚假养老服务、保健品营销等。<a href="https://www.spp.gov.cn/spp/djzzylzp/index.shtml" target="_blank" rel="noopener">查看来源</a></p>
+          </div>
+        </div>
+
+        <div class="risk-note" style="margin-top:22px;">
+          重要说明：本报告是商业调研与产品设计建议，不构成医疗诊断、投资建议、保险销售建议或法律意见。实际落地时，应按当地监管要求取得资质、保留用户授权、保护个人敏感信息，并避免夸大承诺。
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="print-footer">
+    45-65岁中老年生活工具获客报告 · HTML版本 · 2026-06-25
+  </footer>
+</body>
+</html>
