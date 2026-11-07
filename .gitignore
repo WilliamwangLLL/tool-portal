@@ -10,3 +10,7 @@ node_modules/
 ._*
 
 **/.DS_Store
+
+# 项目卡片在 iCloud 入口里，这里是链接
+/PROJECT.md
+/_ai
