@@ -1,0 +1,898 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>苹果涨价后的 AAPL 投资影响研究</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%231d2635'/%3E%3Cpath d='M32 13c4 0 7 3 7 7-4 0-7-3-7-7Zm-8 12c3 0 5 2 8 2s5-2 8-2c5 0 9 5 9 12 0 10-7 18-11 18-2 0-4-2-6-2s-4 2-6 2c-4 0-11-8-11-18 0-7 4-12 9-12Z' fill='%23f7f3e8'/%3E%3C/svg%3E">
+  <style>
+    :root {
+      --ink: #1d2635;
+      --muted: #697386;
+      --paper: #f7f3e8;
+      --panel: #fffdf8;
+      --panel-2: #f0efe8;
+      --line: #ded8c7;
+      --blue: #5477c4;
+      --blue-soft: #eaf1fe;
+      --green: #71a83f;
+      --green-soft: #e8f2dc;
+      --orange: #cc6f47;
+      --orange-soft: #ffeddf;
+      --gold: #b8a037;
+      --gold-soft: #fff4c2;
+      --pink: #bd569b;
+      --dark: #121823;
+      --shadow: 0 22px 56px rgba(29, 38, 53, 0.12);
+      --radius: 8px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", Arial, sans-serif;
+      line-height: 1.72;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+    button { font: inherit; }
+    .page { min-height: 100vh; overflow: hidden; }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      border-bottom: 1px solid rgba(29, 38, 53, 0.10);
+      background: rgba(247, 243, 232, 0.92);
+      backdrop-filter: blur(16px);
+    }
+    .topbar-inner {
+      width: min(1220px, calc(100vw - 36px));
+      margin: 0 auto;
+      min-height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+    .brand-mark {
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      background: var(--dark);
+      color: var(--paper);
+      display: grid;
+      place-items: center;
+      font-size: 18px;
+      font-weight: 900;
+    }
+    .nav {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      justify-content: flex-end;
+      overflow-x: auto;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .nav a, .nav button {
+      border: 0;
+      border-radius: var(--radius);
+      padding: 7px 9px;
+      color: var(--muted);
+      background: transparent;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+    .nav a:hover, .nav button:hover {
+      background: rgba(29, 38, 53, 0.07);
+      color: var(--ink);
+    }
+
+    .hero {
+      background:
+        linear-gradient(90deg, rgba(18, 24, 35, 0.92), rgba(18, 24, 35, 0.70)),
+        radial-gradient(circle at 88% 30%, rgba(255, 225, 91, 0.28), transparent 34%),
+        linear-gradient(135deg, #121823, #263245 58%, #5f4736);
+      color: #fffaf0;
+      border-bottom: 1px solid rgba(255, 250, 240, 0.12);
+    }
+    .hero-inner {
+      width: min(1220px, calc(100vw - 36px));
+      margin: 0 auto;
+      padding: clamp(44px, 7vw, 86px) 0 32px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(340px, 0.9fr);
+      gap: clamp(24px, 4vw, 54px);
+      align-items: end;
+    }
+    .eyebrow {
+      display: inline-flex;
+      width: fit-content;
+      align-items: center;
+      gap: 9px;
+      margin: 0 0 18px;
+      color: #ffe15b;
+      font-size: 13px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+    .eyebrow::before {
+      content: "";
+      width: 9px;
+      height: 9px;
+      border-radius: 99px;
+      background: #ffe15b;
+      box-shadow: 0 0 0 5px rgba(255, 225, 91, 0.18);
+    }
+    h1 {
+      margin: 0;
+      max-width: 920px;
+      font-size: clamp(42px, 7vw, 86px);
+      line-height: 0.98;
+      letter-spacing: 0;
+    }
+    .hero-lede {
+      margin: 22px 0 0;
+      max-width: 860px;
+      color: #e8e1cf;
+      font-size: clamp(18px, 2vw, 23px);
+    }
+    .hero-metadata {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin-top: 26px;
+    }
+    .meta-pill {
+      border: 1px solid rgba(255, 250, 240, 0.22);
+      background: rgba(255, 250, 240, 0.08);
+      border-radius: var(--radius);
+      padding: 7px 10px;
+      color: #f7f3e8;
+      font-size: 13px;
+    }
+    .hero-board {
+      border: 1px solid rgba(255, 250, 240, 0.18);
+      background: rgba(255, 250, 240, 0.08);
+      box-shadow: 0 22px 60px rgba(0, 0, 0, 0.22);
+      border-radius: var(--radius);
+      padding: 18px;
+    }
+    .hero-board h2 {
+      margin: 0 0 14px;
+      font-size: 18px;
+      color: #fffdf8;
+    }
+    .signal-stack {
+      display: grid;
+      gap: 10px;
+    }
+    .signal {
+      border: 1px solid rgba(255, 250, 240, 0.16);
+      background: rgba(18, 24, 35, 0.42);
+      border-radius: var(--radius);
+      padding: 14px;
+    }
+    .signal b {
+      display: block;
+      margin-bottom: 3px;
+      color: #fffdf8;
+      font-size: 15px;
+    }
+    .signal span {
+      color: #d8d1c1;
+      font-size: 13px;
+    }
+
+    main {
+      width: min(1220px, calc(100vw - 36px));
+      margin: 0 auto;
+      padding: 34px 0 76px;
+    }
+    section {
+      margin: 0 0 28px;
+      scroll-margin-top: 90px;
+    }
+    .section-shell {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: clamp(22px, 4vw, 38px);
+    }
+    .section-kicker {
+      color: var(--orange);
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+      margin: 0 0 8px;
+    }
+    h2 {
+      margin: 0 0 14px;
+      font-size: clamp(26px, 3.2vw, 42px);
+      line-height: 1.16;
+      letter-spacing: 0;
+    }
+    h3 {
+      margin: 0 0 10px;
+      font-size: 20px;
+      line-height: 1.3;
+    }
+    p { margin: 0 0 14px; }
+    .lead {
+      max-width: 930px;
+      color: var(--muted);
+      font-size: 17px;
+    }
+    .source-line {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 14px;
+    }
+    .source-line a, .tag {
+      border: 1px solid var(--line);
+      background: #faf8f0;
+      border-radius: var(--radius);
+      padding: 5px 8px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .source-line a:hover {
+      border-color: var(--blue);
+      color: var(--blue);
+    }
+
+    .summary {
+      background: #fffdf8;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: clamp(20px, 3vw, 32px);
+    }
+    .summary h2 {
+      font-size: clamp(24px, 3vw, 36px);
+    }
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+    .summary-item {
+      border-left: 4px solid var(--blue);
+      background: var(--blue-soft);
+      padding: 15px 16px;
+      border-radius: var(--radius);
+    }
+    .summary-item:nth-child(2) { border-left-color: var(--orange); background: var(--orange-soft); }
+    .summary-item:nth-child(3) { border-left-color: var(--green); background: var(--green-soft); }
+    .summary-item:nth-child(4) { border-left-color: var(--gold); background: var(--gold-soft); }
+    .summary-item b {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 16px;
+    }
+    .summary-item p {
+      color: #4f5868;
+      font-size: 14px;
+      margin: 0;
+    }
+
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1px;
+      margin: 18px 0 0;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: var(--line);
+    }
+    .metric {
+      background: #fffdf8;
+      min-height: 118px;
+      padding: 17px;
+    }
+    .metric .label {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+    .metric .value {
+      margin-top: 10px;
+      font-size: clamp(26px, 3.4vw, 42px);
+      line-height: 1;
+      font-weight: 900;
+      font-variant-numeric: tabular-nums;
+    }
+    .metric .note {
+      margin-top: 9px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: minmax(0, 0.98fr) minmax(0, 1.02fr);
+      gap: 22px;
+      align-items: start;
+    }
+    .chart-frame {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: #fff;
+    }
+    .chart-frame img {
+      width: 100%;
+      height: auto;
+    }
+    .caption {
+      padding: 11px 13px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .insight-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 16px;
+    }
+    .insight {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 14px;
+      background: #faf8f0;
+    }
+    .insight b {
+      display: block;
+      margin-bottom: 5px;
+    }
+    .insight span {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fffdf8;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 760px;
+      font-size: 14px;
+    }
+    th, td {
+      padding: 13px 14px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+    th {
+      background: #f0efe8;
+      color: #3b4350;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0;
+    }
+    tr:last-child td { border-bottom: 0; }
+    .num { font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .good { color: #4f7f24; font-weight: 800; }
+    .watch { color: #9a7623; font-weight: 800; }
+    .risk { color: #a34a2d; font-weight: 800; }
+
+    .scenario-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+    .scenario {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fffdf8;
+      padding: 18px;
+    }
+    .scenario .scenario-label {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+    .scenario .scenario-value {
+      margin: 8px 0 8px;
+      font-size: 30px;
+      font-weight: 900;
+      font-variant-numeric: tabular-nums;
+    }
+    .scenario p {
+      color: var(--muted);
+      font-size: 14px;
+      margin: 0;
+    }
+    .scenario.bear { border-top: 5px solid var(--orange); }
+    .scenario.base { border-top: 5px solid var(--blue); }
+    .scenario.bull { border-top: 5px solid var(--green); }
+
+    .decision-band {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1px;
+      border: 1px solid var(--line);
+      background: var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-top: 18px;
+    }
+    .decision {
+      background: #fffdf8;
+      padding: 20px;
+      min-height: 210px;
+    }
+    .decision h3 {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .decision small {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .decision ul {
+      margin: 10px 0 0;
+      padding-left: 18px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .decision li + li { margin-top: 8px; }
+
+    .timeline {
+      display: grid;
+      gap: 10px;
+      margin-top: 18px;
+    }
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 170px minmax(0, 1fr);
+      gap: 14px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #faf8f0;
+      padding: 14px;
+    }
+    .timeline-date {
+      color: var(--orange);
+      font-weight: 900;
+      font-variant-numeric: tabular-nums;
+    }
+    .timeline-copy b {
+      display: block;
+      margin-bottom: 3px;
+    }
+    .timeline-copy span {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .footer-note {
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 16px;
+    }
+    .print-only { display: none; }
+
+    @media (max-width: 920px) {
+      .hero-inner, .two-col {
+        grid-template-columns: 1fr;
+      }
+      .hero-board { align-self: stretch; }
+      .summary-grid, .metric-grid, .scenario-grid, .decision-band {
+        grid-template-columns: 1fr;
+      }
+      .nav { max-width: 62vw; }
+      .timeline-item {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media print {
+      body { background: #fff; }
+      .topbar { display: none; }
+      .hero { color: #111; background: #fff; border-bottom: 1px solid #ddd; }
+      .hero-board, .section-shell, .summary { box-shadow: none; }
+      .print-only { display: block; }
+      section { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <nav class="topbar" aria-label="报告导航">
+      <div class="topbar-inner">
+        <a class="brand" href="#top" aria-label="回到顶部">
+          <span class="brand-mark">A</span>
+          <span>AAPL Impact Study</span>
+        </a>
+        <div class="nav">
+          <a href="#summary">结论</a>
+          <a href="#price">涨价事实</a>
+          <a href="#business">业务影响</a>
+          <a href="#iphone">iPhone 变量</a>
+          <a href="#valuation">估值情景</a>
+          <a href="#action">行动框架</a>
+          <button type="button" onclick="window.print()">打印/导出 PDF</button>
+        </div>
+      </div>
+    </nav>
+
+    <header class="hero" id="top" data-contract-section="title">
+      <div class="hero-inner">
+        <div>
+          <p class="eyebrow">Investor research memo · June 2026</p>
+          <h1>苹果涨价后的 AAPL 投资影响研究</h1>
+          <p class="hero-lede">Mac/iPad 涨价本身不是决定股价的最大变量；真正影响未来 1-3 年收益率的是 iPhone 是否跟涨、需求弹性是否恶化，以及市场愿意给苹果多少估值溢价。</p>
+          <div class="hero-metadata">
+            <span class="meta-pill">研究对象：Apple Inc. / AAPL</span>
+            <span class="meta-pill">范围：全球市场，1-3 年</span>
+            <span class="meta-pill">视角：股票持有人决策</span>
+            <span class="meta-pill">最新股价：约 $283.78</span>
+          </div>
+        </div>
+        <aside class="hero-board" aria-label="核心信号">
+          <h2>一句话结论</h2>
+          <div class="signal-stack">
+            <div class="signal">
+              <b>核心仓位偏持有，暂不适合盲目加仓。</b>
+              <span>当前价格位于基本情景区间内，仍有护城河和回购支撑，但估值容错率下降。</span>
+            </div>
+            <div class="signal">
+              <b>Mac/iPad 直接冲击有限。</b>
+              <span>两项合计约 13.8% 的季度收入，真正的股价弹性仍在 iPhone 与 Services。</span>
+            </div>
+            <div class="signal">
+              <b>后续最大风险是 iPhone 跟涨后的销量弹性。</b>
+              <span>若价格上涨伴随换机周期延长，市场会同时下修 EPS 和估值倍数。</span>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </header>
+
+    <main data-report-audience="product stakeholders">
+      <section id="summary" class="summary" data-contract-section="executive-summary">
+        <p class="section-kicker">Executive Summary</p>
+        <h2>Executive Summary</h2>
+        <div class="summary-grid">
+          <div class="summary-item">
+            <b>投资结论：偏“持有 + 严格跟踪”，不是“涨价即卖出”。</b>
+            <p>涨价保护毛利，但也暴露成本周期压力。当前股价约 $283.78，落在基本情景 $270-$315 区间内，风险收益比不算便宜，也没有到必须退出。</p>
+          </div>
+          <div class="summary-item">
+            <b>直接业务暴露小于市场情绪冲击。</b>
+            <p>Mac + iPad 约占 Q2 FY26 收入 13.8%；即便这些品类销量受压，对总收入的穿透有限。市场更担心的是这是不是 iPhone 涨价的前哨。</p>
+          </div>
+          <div class="summary-item">
+            <b>成本端是真问题，但苹果具备部分转嫁能力。</b>
+            <p>Gartner 预计 2026 年 DRAM+SSD 价格到年底上涨 130%，PC/手机平均价格分别受推升 17%/13%。苹果的高端用户和生态黏性提高了转嫁能力，但不能消除换机延迟。</p>
+          </div>
+          <div class="summary-item">
+            <b>决定未来 1-3 年走势的三件事：iPhone、Services、估值倍数。</b>
+            <p>如果 iPhone 跟涨但销量稳、Services 继续双位数增长、产品毛利率守住，AAPL 仍可维持高估值；反之会出现 EPS 与 PE 双杀。</p>
+          </div>
+        </div>
+        <div class="metric-grid" aria-label="关键指标">
+          <div class="metric">
+            <div class="label">AAPL 最新价</div>
+            <div class="value">$283.78</div>
+            <div class="note">约 $4.18T 市值，P/E 约 34.4x</div>
+          </div>
+          <div class="metric">
+            <div class="label">FY27 EPS 共识</div>
+            <div class="value">$9.65</div>
+            <div class="note">MarketWatch/WSJ 共识口径</div>
+          </div>
+          <div class="metric">
+            <div class="label">Mac + iPad 收入占比</div>
+            <div class="value">13.8%</div>
+            <div class="note">Q2 FY26，合计 $15.3B</div>
+          </div>
+          <div class="metric">
+            <div class="label">Services 毛利率</div>
+            <div class="value">76.7%</div>
+            <div class="note">服务是估值稳定器</div>
+          </div>
+        </div>
+        <div class="source-line">
+          <a href="https://www.marketwatch.com/investing/stock/aapl" target="_blank" rel="noreferrer">MarketWatch quote</a>
+          <a href="https://www.marketwatch.com/investing/stock/aapl/analystestimates" target="_blank" rel="noreferrer">EPS estimates</a>
+          <a href="https://s2.q4cdn.com/470004039/files/doc_earnings/2026/q2/filing/10Q-Q2-2026-as-filed.pdf" target="_blank" rel="noreferrer">Apple Q2 FY26 10-Q</a>
+        </div>
+      </section>
+
+      <section id="price" class="section-shell" data-contract-section="key-findings">
+        <p class="section-kicker">Finding 1 · Price Action</p>
+        <h2>这不是一次小修小补，而是苹果把硬件通胀正式转嫁给消费者</h2>
+        <div class="two-col">
+          <div>
+            <p class="lead">2026 年 6 月 25 日，苹果上调了所有 Mac 和 iPad，并同步上调 Apple TV、HomePod、Vision Pro 等产品。涨幅从 HomePod mini 的 +$30 到 Mac Studio M3 Ultra 的 +$1,300 不等，MacBook Air 从 $1,099 到 $1,299，iPad Air 从 $599 到 $749。</p>
+            <div class="insight-list">
+              <div class="insight">
+                <b>这次涨价的性质：供应链成本转嫁，而非单纯提价套利。</b>
+                <span>苹果将原因指向 AI 数据中心扩张造成的内存和 SSD 供需失衡；这意味着压力可能持续到下一个产品周期，而不是一季就结束。</span>
+              </div>
+              <div class="insight">
+                <b>最重要的留白：iPhone 暂未涨价。</b>
+                <span>iPhone、Apple Watch、AirPods 当下未受影响。对股价来说，这个“未涨价”比 Mac/iPad 已涨价更关键。</span>
+              </div>
+              <div class="insight">
+                <b>投资含义：先看消费者是否延迟换机，再看苹果是否能稳住毛利。</b>
+                <span>涨价短期可能支撑 ASP 和毛利，但若单位需求明显回落，市场会把它重新定价为增长放缓。</span>
+              </div>
+            </div>
+          </div>
+          <figure class="chart-frame">
+            <img src="apple_price_report_assets/price_hikes.png" alt="苹果 2026 年 6 月产品涨价幅度图">
+            <figcaption class="caption">来源：MacRumors 对苹果线上商店价格变化的整理；图中为美国起售价变化。</figcaption>
+          </figure>
+        </div>
+        <div class="source-line">
+          <a href="https://www.macrumors.com/2026/06/25/apple-just-increased-prices/" target="_blank" rel="noreferrer">MacRumors price list</a>
+          <a href="https://www.macrumors.com/2026/06/25/apple-explains-why-it-raised-prices/" target="_blank" rel="noreferrer">Apple explanation via MacRumors</a>
+          <a href="https://www.gartner.com/en/newsroom/press-releases/2026-02-26-gartner-says-surging-memory-costs-will-reduce-global-pc-and-smartphone-shipments-in-2026" target="_blank" rel="noreferrer">Gartner memory-cost forecast</a>
+        </div>
+      </section>
+
+      <section id="business" class="section-shell">
+        <p class="section-kicker">Finding 2 · Business Exposure</p>
+        <h2>Mac/iPad 涨价本身不会决定 AAPL 命运，收入结构决定了它只是“中等变量”</h2>
+        <div class="two-col">
+          <figure class="chart-frame">
+            <img src="apple_price_report_assets/revenue_mix.png" alt="苹果 Q2 FY26 收入结构图">
+            <figcaption class="caption">Apple Q2 FY26：iPhone $57.0B，Services $31.0B，Mac + iPad $15.3B，Wearables/Home $7.9B。</figcaption>
+          </figure>
+          <div>
+            <p class="lead">Q2 FY26 中，iPhone 占收入约 51.3%，Services 占 27.9%，两者合计接近 79.2%。Mac + iPad 合计约 13.8%。因此，“Mac/iPad 涨价”对总收入和 EPS 的直接弹性有限，但它会改变市场对后续产品线涨价的预期。</p>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>业务线</th>
+                    <th>Q2 FY26 收入</th>
+                    <th>同比</th>
+                    <th>对这次涨价的含义</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>iPhone</td>
+                    <td class="num">$56.994B</td>
+                    <td class="num good">+22%</td>
+                    <td>最大收入池。若后续 iPhone 跟涨，投资结论会明显变化。</td>
+                  </tr>
+                  <tr>
+                    <td>Services</td>
+                    <td class="num">$30.976B</td>
+                    <td class="num good">+16%</td>
+                    <td>高毛利防线。只要服务增长强，硬件压力可被部分吸收。</td>
+                  </tr>
+                  <tr>
+                    <td>Mac</td>
+                    <td class="num">$8.399B</td>
+                    <td class="num watch">+6%</td>
+                    <td>涨价保护 ASP，但企业/教育换机可能延迟。</td>
+                  </tr>
+                  <tr>
+                    <td>iPad</td>
+                    <td class="num">$6.914B</td>
+                    <td class="num watch">+8%</td>
+                    <td>教育、家庭、创作者需求更可能被价格抑制。</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <p class="footer-note">苹果 Q2 FY26 产品毛利率为 38.7%，Services 毛利率为 76.7%，总毛利率为 49.3%。这说明服务业务仍是估值稳定器，但苹果也在 10-Q 中提示未来毛利率会受到多种因素带来的波动和下行压力。</p>
+      </section>
+
+      <section id="iphone" class="section-shell">
+        <p class="section-kicker">Finding 3 · Decisive Variable</p>
+        <h2>真正要盯的不是 iPad，而是 iPhone 跟涨后用户还换不换机</h2>
+        <p class="lead">对 AAPL 持有人来说，问题应当从“苹果涨价是不是利空”改成“涨价能否在不破坏 iPhone 换机周期的前提下保护毛利”。如果能，涨价是利润保护；如果不能，它会变成收入增长和估值倍数的双重压力。</p>
+        <div class="scenario-grid">
+          <article class="scenario bear">
+            <div class="scenario-label">Bear case</div>
+            <div class="scenario-value">$210-$240</div>
+            <p>iPhone 涨价引发换机延迟，Mac/iPad 需求下滑，Services 增速回落；市场把 AAPL 从高质量成长重新定价为低增长消费电子。</p>
+          </article>
+          <article class="scenario base">
+            <div class="scenario-label">Base case</div>
+            <div class="scenario-value">$270-$315</div>
+            <p>Mac/iPad 涨价保护毛利，iPhone 若跟涨幅度温和，单位需求维持可控；Services 和回购继续托住 EPS。</p>
+          </article>
+          <article class="scenario bull">
+            <div class="scenario-label">Bull case</div>
+            <div class="scenario-value">$345-$395</div>
+            <p>AI 功能拉动升级周期，内存成本见顶，iPhone 高端机型 ASP 上升且销量韧性强；市场愿意维持 33-36x 的高倍数。</p>
+          </article>
+        </div>
+        <div class="two-col" style="margin-top: 22px;">
+          <figure class="chart-frame">
+            <img src="apple_price_report_assets/trigger_heatmap.png" alt="AAPL 投资触发因素热力图">
+            <figcaption class="caption">热力图为定性敏感度评分，1 为低、5 为高。单位需求和 iPhone 定价同时影响 EPS 与估值倍数。</figcaption>
+          </figure>
+          <div>
+            <h3>判断逻辑</h3>
+            <p><b>第一层是销量。</b> 如果涨价后 Mac/iPad 订单只是轻微软化，说明苹果品牌仍有价格权；如果 iPhone 也涨价且预购疲软，股价会先反应估值风险。</p>
+            <p><b>第二层是毛利。</b> 成本上涨若被价格覆盖，产品毛利率可能守住；若价格不够或促销增加，毛利率会比收入更早暴露压力。</p>
+            <p><b>第三层是叙事。</b> AAPL 的高估值不只来自硬件销量，还来自服务、生态、AI 升级和资本回报。涨价事件会考验这些叙事是否还能成立。</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="valuation" class="section-shell">
+        <p class="section-kicker">Finding 4 · Valuation</p>
+        <h2>当前价格已经不便宜，后续收益取决于 EPS 能否守住以及 PE 是否继续溢价</h2>
+        <div class="two-col">
+          <div>
+            <p class="lead">按最新报价约 $283.78、FY27 EPS 共识 $9.65 计算，AAPL 的 FY27 forward P/E 约 29.4x。这个倍数要求市场相信三件事：iPhone 需求不崩、Services 继续增长、AI 与生态叙事仍能支撑长期溢价。</p>
+            <div class="insight-list">
+              <div class="insight">
+                <b>基本情景不是大幅上涨故事，而是“高质量公司守住估值”。</b>
+                <span>若 FY27 EPS 在 $9.40-$9.90、forward P/E 在 29-32x，合理区间大致落在 $270-$315。</span>
+              </div>
+              <div class="insight">
+                <b>下行情景的杀伤力来自 PE 下修。</b>
+                <span>EPS 小幅下修并不可怕，可怕的是市场把苹果从 30x 附近重新定价到 24-27x。</span>
+              </div>
+              <div class="insight">
+                <b>上行情景需要 AI 换机周期兑现。</b>
+                <span>仅靠涨价保护毛利，很难支撑 $350 以上；需要销量韧性、服务强增长和 AI 新功能共同验证。</span>
+              </div>
+            </div>
+          </div>
+          <figure class="chart-frame">
+            <img src="apple_price_report_assets/valuation_scenarios.png" alt="AAPL 估值情景区间图">
+            <figcaption class="caption">估值情景为本报告推演，不是目标价或投资建议。EPS 共识参考 MarketWatch/WSJ，股价参考最新公开报价。</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section id="action" class="section-shell" data-contract-section="recommended-next-steps">
+        <p class="section-kicker">Recommended Next Steps</p>
+        <h2>给 AAPL 持有人的行动框架：不是猜涨跌，而是设触发条件</h2>
+        <p class="lead">我的建议是：如果你已经持有，核心仓位可以继续拿，但不要把“苹果品牌强”当成无限估值保护。未来 1-2 个季度用明确指标做复盘，而不是凭新闻情绪操作。</p>
+        <div class="decision-band">
+          <article class="decision">
+            <h3>继续持有 <small>Base path</small></h3>
+            <ul>
+              <li>Q3/Q4 产品毛利率不明显跌破 38%。</li>
+              <li>Services 增速仍保持约 14%-16% 区间。</li>
+              <li>iPhone 若涨价，预购、交付周期、渠道库存没有明显恶化。</li>
+              <li>FY27 EPS 共识维持在 $9.50 以上。</li>
+            </ul>
+          </article>
+          <article class="decision">
+            <h3>考虑减仓 <small>Risk path</small></h3>
+            <ul>
+              <li>iPhone 涨价后，渠道数据显示单位需求显著走弱。</li>
+              <li>产品毛利率跌破 37.5%，且管理层无法给出成本见顶信号。</li>
+              <li>Services 增速跌向 10%-12%，生态防线变弱。</li>
+              <li>FY27 EPS 共识下修到 $9.00 附近，同时股价仍在高估值区。</li>
+            </ul>
+          </article>
+          <article class="decision">
+            <h3>考虑加仓 <small>Opportunity path</small></h3>
+            <ul>
+              <li>股价回落到 $250-$260，但 EPS 共识和 Services 增速未受损。</li>
+              <li>内存成本出现见顶迹象，苹果毛利率预期改善。</li>
+              <li>iPhone AI 功能引发明确换机需求，预购强于预期。</li>
+              <li>市场短期过度惩罚 Mac/iPad，但核心 iPhone/Services 数据稳。</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="section-shell" data-contract-section="further-questions">
+        <p class="section-kicker">Further Questions</p>
+        <h2>接下来 90 天，最值得跟踪的四个问题</h2>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-date">2026-07-30</div>
+            <div class="timeline-copy">
+              <b>Q3 FY26 财报与管理层指引</b>
+              <span>关注产品毛利率、Services 增速、iPhone 需求措辞、是否谈到内存/SSD 成本持续时间。</span>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-date">2026 秋季发布季</div>
+            <div class="timeline-copy">
+              <b>iPhone 是否跟涨，以及涨价幅度</b>
+              <span>如果高端型号先涨、基础型号保持，风险较低；如果全线涨价且幅度大，需求弹性风险上升。</span>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-date">2026 下半年</div>
+            <div class="timeline-copy">
+              <b>DRAM/SSD 价格是否见顶</b>
+              <span>若成本曲线不再恶化，苹果的涨价会变成毛利修复；若继续上行，iPhone 涨价概率提高。</span>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-date">未来 2 个季度</div>
+            <div class="timeline-copy">
+              <b>FY27 EPS 共识是否下修</b>
+              <span>最直接的投资信号：如果 EPS 不下修而股价回落，是机会；如果 EPS 与 PE 同时下修，是风险。</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-shell" data-contract-section="caveats-and-assumptions">
+        <p class="section-kicker">Caveats and Assumptions</p>
+        <h2>关键假设与风险提示</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>假设/风险</th>
+                <th>为什么重要</th>
+                <th>如果变化，结论如何调整</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>本报告使用公开资料和情景推演</td>
+                <td>没有使用苹果内部订单、渠道库存、供应链实时合同价。</td>
+                <td>若出现更精确的渠道数据，应优先更新销量弹性判断。</td>
+              </tr>
+              <tr>
+                <td>估值区间不是目标价</td>
+                <td>区间用于判断风险收益比，不是买卖承诺或投资建议。</td>
+                <td>市场利率、科技股整体估值、AI 叙事变化都会改变 PE 区间。</td>
+              </tr>
+              <tr>
+                <td>iPhone 跟涨尚未发生</td>
+                <td>这是未来 1-3 年最关键但尚未落地的变量。</td>
+                <td>若苹果明确不涨 iPhone，熊市情景概率下降；若大幅涨价，需重估需求风险。</td>
+              </tr>
+              <tr>
+                <td>内存成本周期可能超预期</td>
+                <td>Gartner 预计成本压力会影响 2026 设备价格和出货。</td>
+                <td>若价格峰值延后到 2027 以后，毛利压力和二次涨价风险上升。</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="source-line">
+          <a href="https://www.apple.com/newsroom/2026/04/apple-reports-second-quarter-results/" target="_blank" rel="noreferrer">Apple Q2 FY26 release</a>
+          <a href="https://s2.q4cdn.com/470004039/files/doc_earnings/2026/q2/filing/10Q-Q2-2026-as-filed.pdf" target="_blank" rel="noreferrer">Apple Form 10-Q</a>
+          <a href="https://www.macrumors.com/2026/06/25/apple-just-increased-prices/" target="_blank" rel="noreferrer">MacRumors price list</a>
+          <a href="https://www.macrumors.com/2026/06/25/apple-explains-why-it-raised-prices/" target="_blank" rel="noreferrer">Apple statement via MacRumors</a>
+          <a href="https://www.gartner.com/en/newsroom/press-releases/2026-02-26-gartner-says-surging-memory-costs-will-reduce-global-pc-and-smartphone-shipments-in-2026" target="_blank" rel="noreferrer">Gartner memory-cost forecast</a>
+          <a href="https://www.marketwatch.com/investing/stock/aapl/analystestimates" target="_blank" rel="noreferrer">MarketWatch analyst estimates</a>
+        </div>
+        <p class="footer-note">本报告为研究与决策辅助材料，不构成个性化投资建议。股价与估值数据以 2026 年 6 月 27 日可获取公开信息为基础。</p>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

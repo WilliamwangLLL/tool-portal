@@ -1,0 +1,1065 @@
+{
+  "version": 3,
+  "audienceDefaults": {
+    "public": [
+      "portal-home",
+      "business-page",
+      "report-world-classics-100",
+      "report-ai-methods",
+      "report-starlink",
+      "report-tesla-optimus",
+      "report-options",
+      "report-dan-koe",
+      "report-micron",
+      "report-global-ai",
+      "report-apple-price",
+      "report-musk-x",
+      "report-apple-outlook",
+      "report-storage-cycle",
+      "report-online-education-2026-07",
+      "report-women-45-70",
+      "report-senior-acquisition",
+      "openclaw-manual",
+      "vocal-quiz",
+      "organizer-quiz",
+      "wechat-editor",
+      "mao-legacy-v1",
+      "mao-legacy-v2",
+      "grok-bot-guide",
+      "manhattan-atlas",
+      "songjian-home",
+      "lunar-rover",
+      "pi-digit-explorer",
+      "report-national-day-travel-2026",
+      "silver-observer",
+      "china-footprint-map",
+      "youshanhe"
+    ],
+    "owner": [
+      "huacai-dashboard",
+      "huacai-settlement",
+      "cohort-dashboard",
+      "ai-ops-cockpit",
+      "huacai-admin",
+      "vocal-admin",
+      "organizer-admin",
+      "sales-dashboard",
+      "retire-kaipai-membership"
+    ],
+    "shared": [
+      "community-dashboard",
+      "activity-kit",
+      "chuanmenba",
+      "silver-report"
+    ]
+  },
+  "sections": [
+    {
+      "id": "portal-home",
+      "title": "工具箱首页",
+      "page": "home",
+      "kind": "page",
+      "target": "/my/",
+      "routes": [
+        {
+          "hosts": [
+            "haoyunlai.fun",
+            "www.haoyunlai.fun"
+          ],
+          "exact": "/my/"
+        },
+        {
+          "hosts": [
+            "haoyunlai.fun",
+            "www.haoyunlai.fun"
+          ],
+          "exact": "/my/index.html"
+        }
+      ]
+    },
+    {
+      "id": "business-page",
+      "title": "商业工具页面",
+      "page": "business",
+      "kind": "page",
+      "boardable": true,
+      "heading": "📊 商业工具",
+      "target": "/my/business/",
+      "routes": [
+        {
+          "hosts": [
+            "haoyunlai.fun",
+            "www.haoyunlai.fun"
+          ],
+          "exact": "/my/business/"
+        },
+        {
+          "hosts": [
+            "haoyunlai.fun",
+            "www.haoyunlai.fun"
+          ],
+          "exact": "/my/business/index.html"
+        }
+      ]
+    }
+  ],
+  "boards": [
+    {
+      "id": "business-gateway",
+      "title": "📊 商业工具",
+      "page": "home",
+      "members": [
+        {
+          "kind": "sections",
+          "id": "business-page"
+        }
+      ]
+    },
+    {
+      "id": "creative-tools",
+      "title": "✍️ 创作工具",
+      "page": "home",
+      "members": [
+        {
+          "kind": "items",
+          "id": "wechat-editor"
+        }
+      ]
+    },
+    {
+      "id": "personal-growth",
+      "title": "🌱 个人成长",
+      "page": "home",
+      "members": [
+        {
+          "kind": "items",
+          "id": "report-dan-koe"
+        }
+      ]
+    },
+    {
+      "id": "company-research",
+      "title": "🏢 公司调研",
+      "page": "home",
+      "members": [
+        {
+          "kind": "items",
+          "id": "report-starlink"
+        },
+        {
+          "kind": "items",
+          "id": "report-tesla-optimus"
+        },
+        {
+          "kind": "items",
+          "id": "report-micron"
+        },
+        {
+          "kind": "items",
+          "id": "report-global-ai"
+        },
+        {
+          "kind": "items",
+          "id": "report-apple-price"
+        },
+        {
+          "kind": "items",
+          "id": "report-musk-x"
+        },
+        {
+          "kind": "items",
+          "id": "report-apple-outlook"
+        },
+        {
+          "kind": "items",
+          "id": "report-storage-cycle"
+        },
+        {
+          "kind": "items",
+          "id": "report-online-education-2026-07"
+        }
+      ]
+    },
+    {
+      "id": "community-research",
+      "title": "👥 社群调研",
+      "page": "home",
+      "members": [
+        {
+          "kind": "items",
+          "id": "report-women-45-70"
+        },
+        {
+          "kind": "items",
+          "id": "report-senior-acquisition"
+        }
+      ]
+    },
+    {
+      "id": "knowledge-projects",
+      "title": "📚 知识项目",
+      "page": "home",
+      "members": [
+        {
+          "kind": "items",
+          "id": "china-footprint-map"
+        },
+        {
+          "kind": "items",
+          "id": "youshanhe"
+        },
+        {
+          "kind": "items",
+          "id": "silver-observer"
+        },
+        {
+          "kind": "items",
+          "id": "report-national-day-travel-2026"
+        },
+        {
+          "kind": "items",
+          "id": "pi-digit-explorer"
+        },
+        {
+          "kind": "items",
+          "id": "songjian-home"
+        },
+        {
+          "kind": "items",
+          "id": "lunar-rover"
+        },
+        {
+          "kind": "items",
+          "id": "manhattan-atlas"
+        },
+        {
+          "kind": "items",
+          "id": "grok-bot-guide"
+        },
+        {
+          "kind": "items",
+          "id": "report-world-classics-100"
+        },
+        {
+          "kind": "items",
+          "id": "report-ai-methods"
+        },
+        {
+          "kind": "items",
+          "id": "report-options"
+        },
+        {
+          "kind": "items",
+          "id": "mao-legacy-v1"
+        },
+        {
+          "kind": "items",
+          "id": "mao-legacy-v2"
+        }
+      ]
+    },
+    {
+      "id": "business-tools",
+      "title": "📊 商业工具",
+      "page": "business",
+      "members": [
+        {
+          "kind": "items",
+          "id": "retire-kaipai-membership"
+        },
+        {
+          "kind": "items",
+          "id": "community-dashboard"
+        },
+        {
+          "kind": "items",
+          "id": "activity-kit"
+        },
+        {
+          "kind": "items",
+          "id": "chuanmenba"
+        },
+        {
+          "kind": "items",
+          "id": "silver-report"
+        },
+        {
+          "kind": "items",
+          "id": "huacai-dashboard"
+        },
+        {
+          "kind": "items",
+          "id": "huacai-settlement"
+        },
+        {
+          "kind": "items",
+          "id": "openclaw-manual"
+        },
+        {
+          "kind": "items",
+          "id": "cohort-dashboard"
+        },
+        {
+          "kind": "items",
+          "id": "ai-ops-cockpit"
+        },
+        {
+          "kind": "items",
+          "id": "huacai-admin"
+        },
+        {
+          "kind": "items",
+          "id": "vocal-quiz"
+        },
+        {
+          "kind": "items",
+          "id": "vocal-admin"
+        },
+        {
+          "kind": "items",
+          "id": "organizer-quiz"
+        },
+        {
+          "kind": "items",
+          "id": "organizer-admin"
+        },
+        {
+          "kind": "items",
+          "id": "sales-dashboard"
+        }
+      ]
+    }
+  ],
+  "items": [
+    {
+      "id": "silver-observer",
+      "title": "银发观察",
+      "group": "知识项目",
+      "target": "/my/silver-observer/",
+      "routes": [
+        {
+          "hosts": [
+            "haoyunlai.fun",
+            "www.haoyunlai.fun"
+          ],
+          "prefix": "/my/silver-observer/"
+        },
+        {
+          "hosts": [
+            "haoyunlai.fun",
+            "www.haoyunlai.fun"
+          ],
+          "exact": "/my/silver-observer"
+        }
+      ]
+    },
+    {
+      "id": "pi-digit-explorer",
+      "title": "圆周率数字搜索器",
+      "group": "知识项目",
+      "target": "/my/pi-digit-explorer/",
+      "routes": [
+        {
+          "hosts": [
+            "haoyunlai.fun",
+            "www.haoyunlai.fun"
+          ],
+          "prefix": "/my/pi-digit-explorer/"
+        }
+      ]
+    },
+    {
+      "id": "songjian-home",
+      "title": "松间 · 家居空间探索",
+      "group": "知识项目",
+      "target": "/my/songjian-home/",
+      "routes": [
+        {
+          "hosts": [
+            "haoyunlai.fun",
+            "www.haoyunlai.fun"
+          ],
+          "prefix": "/my/songjian-home/"
+        }
+      ]
+    },
+    {
+      "id": "lunar-rover",
+      "title": "月面漫游 · SELENE",
+      "group": "知识项目",
+      "target": "/my/lunar-rover/",
+      "routes": [
+        {
+          "hosts": [
+            "haoyunlai.fun",
+            "www.haoyunlai.fun"
+          ],
+          "prefix": "/my/lunar-rover/"
+        }
+      ]
+    },
+    {
+      "id": "manhattan-atlas",
+      "title": "曼哈顿 3D 城市 · ISLE",
+      "group": "知识项目",
+      "target": "/my/manhattan-atlas/",
+      "routes": [
+        {
+          "hosts": [
+            "haoyunlai.fun",
+            "www.haoyunlai.fun"
+          ],
+          "prefix": "/my/manhattan-atlas/"
+        }
+      ]
+    },
+    {
+      "id": "report-world-classics-100",
+      "title": "世界名著 100",
+      "group": "调研报告",
+      "target": "/my/reports/100/",
+      "routes": [
+        {
+          "hosts": [
+            "haoyunlai.fun",
+            "www.haoyunlai.fun"
+          ],
+          "prefix": "/my/reports/100/"
+        }
+      ]
+    },
+    {
+      "id": "report-ai-methods",
+      "title": "像内部高手一样用 AI",
+      "group": "调研报告",
+      "target": "/my/reports/research-claude-ai-20260627-anthropic/",
+      "routes": [
+        {
+          "hosts": [
+            "haoyunlai.fun",
+            "www.haoyunlai.fun"
+          ],
+          "prefix": "/my/reports/research-claude-ai-20260627-anthropic/"
+        }
+      ]
+    },
+    {
+      "id": "report-starlink",
+      "title": "星链 Starlink 全景调研",
+      "group": "调研报告",
+      "target": "/my/reports/starlink-report-1-77/",
+      "routes": [
+        {
+          "hosts": [
+            "haoyunlai.fun",
+            "www.haoyunlai.fun"
+          ],
+          "prefix": "/my/reports/starlink-report-1-77/"
+        }
+      ]
+    },
+    {
+      "id": "report-tesla-optimus",
+      "title": "特斯拉人形机器人 Optimus 进展",
+      "group": "调研报告",
+      "target": "/my/reports/tesla-optimus-progress/",
+      "routes": [
+        {
+          "hosts": [
+            "haoyunlai.fun",
+            "www.haoyunlai.fun"
+          ],
+          "prefix": "/my/reports/tesla-optimus-progress/"
+        },
+        {
+          "hosts": [
+            "haoyunlai.fun",
+            "www.haoyunlai.fun"
+          ],
+          "exact": "/my/reports/tesla-optimus-progress"
+        }
+      ]
+    },
+    {
+      "id": "report-options",
+      "title": "段永平卖期权完全操作手册",
+      "group": "调研报告",
+      "target": "/my/reports/20260627/",
+      "routes": [
+        {
+          "hosts": [
+            "haoyunlai.fun",
+            "www.haoyunlai.fun"
+          ],
+          "prefix": "/my/reports/20260627/"
+        }
+      ]
+    },
+    {
+      "id": "report-dan-koe",
+      "title": "Dan Koe《一天修复人生》深度研究",
+      "group": "调研报告",
+      "target": "/my/reports/dan-koe/",
+      "routes": [
+        {
+          "hosts": [
+            "haoyunlai.fun",
+            "www.haoyunlai.fun"
+          ],
+          "prefix": "/my/reports/dan-koe/"
+        }
+      ]
+    },
+    {
+      "id": "report-micron",
+      "title": "美光 Micron 全景研究",
+      "group": "调研报告",
+      "target": "/my/reports/micron/",
+      "routes": [
+        {
+          "hosts": [
+            "haoyunlai.fun",
+            "www.haoyunlai.fun"
+          ],
+          "prefix": "/my/reports/micron/"
+        }
+      ]
+    },
+    {
+      "id": "report-global-ai",
+      "title": "全球大模型格局深度调研 2026",
+      "group": "调研报告",
+      "target": "/my/reports/global-ai-models/index.html",
+      "routes": [
+        {
+          "hosts": [
+            "haoyunlai.fun",
+            "www.haoyunlai.fun"
+          ],
+          "prefix": "/my/reports/global-ai-models/"
+        }
+      ]
+    },
+    {
+      "id": "report-apple-price",
+      "title": "苹果涨价后的 AAPL 投资影响研究",
+      "group": "调研报告",
+      "target": "/my/reports/apple-price-impact-aapl/",
+      "routes": [
+        {
+          "hosts": [
+            "haoyunlai.fun",
+            "www.haoyunlai.fun"
+          ],
+          "prefix": "/my/reports/apple-price-impact-aapl/"
+        }
+      ]
+    },
+    {
+      "id": "report-musk-x",
+      "title": "马斯克与 Twitter / X 改革研究",
+      "group": "调研报告",
+      "target": "/my/reports/musk-twitter-x-reform/",
+      "routes": [
+        {
+          "hosts": [
+            "haoyunlai.fun",
+            "www.haoyunlai.fun"
+          ],
+          "prefix": "/my/reports/musk-twitter-x-reform/"
+        }
+      ]
+    },
+    {
+      "id": "report-apple-outlook",
+      "title": "苹果未来 1–3 年走势与持有决策",
+      "group": "调研报告",
+      "target": "/my/reports/apple-aapl-1-3-year-outlook/",
+      "routes": [
+        {
+          "hosts": [
+            "haoyunlai.fun",
+            "www.haoyunlai.fun"
+          ],
+          "prefix": "/my/reports/apple-aapl-1-3-year-outlook/"
+        }
+      ]
+    },
+    {
+      "id": "report-storage-cycle",
+      "title": "存储超级周期",
+      "group": "调研报告",
+      "target": "/my/reports/deep-20260628-ai/",
+      "routes": [
+        {
+          "hosts": [
+            "haoyunlai.fun",
+            "www.haoyunlai.fun"
+          ],
+          "prefix": "/my/reports/deep-20260628-ai/"
+        }
+      ]
+    },
+    {
+      "id": "report-online-education-2026-07",
+      "title": "中国在线教育行业调研报告 · 2026年7月",
+      "group": "调研报告",
+      "target": "/my/reports/online-education-2026-07/",
+      "routes": [
+        {
+          "hosts": [
+            "haoyunlai.fun",
+            "www.haoyunlai.fun"
+          ],
+          "prefix": "/my/reports/online-education-2026-07/"
+        }
+      ]
+    },
+    {
+      "id": "report-women-45-70",
+      "title": "中国45–70岁女性活动偏好深度调研",
+      "group": "调研报告",
+      "target": "/my/reports/china-women-45-70-activity/",
+      "routes": [
+        {
+          "hosts": [
+            "haoyunlai.fun",
+            "www.haoyunlai.fun"
+          ],
+          "prefix": "/my/reports/china-women-45-70-activity/"
+        }
+      ]
+    },
+    {
+      "id": "report-senior-acquisition",
+      "title": "45–65岁中老年生活工具获客方案",
+      "group": "调研报告",
+      "target": "/my/reports/middle-senior-life-tools-acquisition/",
+      "routes": [
+        {
+          "hosts": [
+            "haoyunlai.fun",
+            "www.haoyunlai.fun"
+          ],
+          "prefix": "/my/reports/middle-senior-life-tools-acquisition/"
+        }
+      ]
+    },
+    {
+      "id": "community-dashboard",
+      "title": "全国社群与俱乐部客户看板",
+      "group": "商业工具",
+      "target": "http://115.190.225.47/community/",
+      "external": true,
+      "note": "外部服务器：工具箱可控制入口，目标站仍由其自身密码策略管理。"
+    },
+    {
+      "id": "activity-kit",
+      "title": "同城活动作战包生成器",
+      "group": "商业工具",
+      "target": "/activity-kit/",
+      "routes": [
+        {
+          "hosts": [
+            "haoyunlai.fun",
+            "www.haoyunlai.fun"
+          ],
+          "prefix": "/activity-kit/"
+        }
+      ]
+    },
+    {
+      "id": "chuanmenba",
+      "title": "串门吧 · 城市剧本生成器",
+      "group": "商业工具",
+      "target": "/chuanmenba/",
+      "routes": [
+        {
+          "hosts": [
+            "haoyunlai.fun",
+            "www.haoyunlai.fun"
+          ],
+          "prefix": "/chuanmenba/"
+        }
+      ]
+    },
+    {
+      "id": "silver-report",
+      "title": "城市银发市场报告生成器",
+      "group": "商业工具",
+      "target": "/silver-report/",
+      "routes": [
+        {
+          "hosts": [
+            "haoyunlai.fun",
+            "www.haoyunlai.fun"
+          ],
+          "prefix": "/silver-report/"
+        }
+      ]
+    },
+    {
+      "id": "huacai-dashboard",
+      "title": "华彩作战指挥仪表盘",
+      "group": "商业工具",
+      "target": "/huacai-dashboard/",
+      "routes": [
+        {
+          "hosts": [
+            "haoyunlai.fun",
+            "www.haoyunlai.fun"
+          ],
+          "prefix": "/huacai-dashboard/"
+        }
+      ]
+    },
+    {
+      "id": "huacai-settlement",
+      "title": "华彩内部结算仪表盘",
+      "group": "商业工具",
+      "target": "/huacai-settlement/",
+      "routes": [
+        {
+          "hosts": [
+            "haoyunlai.fun",
+            "www.haoyunlai.fun"
+          ],
+          "prefix": "/huacai-settlement/"
+        }
+      ]
+    },
+    {
+      "id": "openclaw-manual",
+      "title": "OpenClaw 实战手册",
+      "group": "商业工具",
+      "target": "/openclaw-manual/",
+      "routes": [
+        {
+          "hosts": [
+            "haoyunlai.fun",
+            "www.haoyunlai.fun"
+          ],
+          "prefix": "/openclaw-manual/"
+        }
+      ]
+    },
+    {
+      "id": "cohort-dashboard",
+      "title": "Cohort 利润分析仪表盘",
+      "group": "商业工具",
+      "target": "/cohort/",
+      "routes": [
+        {
+          "hosts": [
+            "haoyunlai.fun",
+            "www.haoyunlai.fun"
+          ],
+          "prefix": "/cohort/"
+        }
+      ]
+    },
+    {
+      "id": "ai-ops-cockpit",
+      "title": "AI 管理驾驶舱",
+      "group": "商业工具",
+      "target": "/cohort/ops_login.html",
+      "routes": [
+        {
+          "hosts": [
+            "haoyunlai.fun",
+            "www.haoyunlai.fun"
+          ],
+          "exact": "/cohort/ops_login.html"
+        },
+        {
+          "hosts": [
+            "haoyunlai.fun",
+            "www.haoyunlai.fun"
+          ],
+          "exact": "/cohort/ops.html"
+        },
+        {
+          "hosts": [
+            "haoyunlai.fun",
+            "www.haoyunlai.fun"
+          ],
+          "prefix": "/cohort-api/"
+        }
+      ]
+    },
+    {
+      "id": "huacai-admin",
+      "title": "同城运营后台",
+      "group": "商业工具",
+      "target": "/huacai-admin/",
+      "routes": [
+        {
+          "hosts": [
+            "haoyunlai.fun",
+            "www.haoyunlai.fun"
+          ],
+          "prefix": "/huacai-admin/"
+        }
+      ]
+    },
+    {
+      "id": "vocal-quiz",
+      "title": "黄金歌曲匹配测评",
+      "group": "商业工具",
+      "target": "https://kkhc.fun/",
+      "routes": [
+        {
+          "hosts": [
+            "kkhc.fun",
+            "www.kkhc.fun"
+          ],
+          "exact": "/"
+        },
+        {
+          "hosts": [
+            "kkhc.fun",
+            "www.kkhc.fun"
+          ],
+          "prefix": "/quiz/"
+        },
+        {
+          "hosts": [
+            "kkhc.fun",
+            "www.kkhc.fun"
+          ],
+          "prefix": "/report/"
+        },
+        {
+          "hosts": [
+            "kkhc.fun",
+            "www.kkhc.fun"
+          ],
+          "prefix": "/book/"
+        },
+        {
+          "hosts": [
+            "kkhc.fun",
+            "www.kkhc.fun"
+          ],
+          "prefix": "/api/vocal/"
+        }
+      ]
+    },
+    {
+      "id": "vocal-admin",
+      "title": "黄金歌曲匹配测评后台",
+      "group": "商业工具",
+      "target": "https://kkhc.fun/admin",
+      "routes": [
+        {
+          "hosts": [
+            "kkhc.fun",
+            "www.kkhc.fun"
+          ],
+          "exact": "/admin"
+        },
+        {
+          "hosts": [
+            "kkhc.fun",
+            "www.kkhc.fun"
+          ],
+          "prefix": "/admin/"
+        }
+      ]
+    },
+    {
+      "id": "organizer-quiz",
+      "title": "主理人测评",
+      "group": "商业工具",
+      "target": "/kkhc/",
+      "routes": [
+        {
+          "hosts": [
+            "haoyunlai.fun",
+            "www.haoyunlai.fun"
+          ],
+          "prefix": "/kkhc/"
+        }
+      ]
+    },
+    {
+      "id": "organizer-admin",
+      "title": "主理人测评后台",
+      "group": "商业工具",
+      "target": "/kkhc/admin/login/",
+      "routes": [
+        {
+          "hosts": [
+            "haoyunlai.fun",
+            "www.haoyunlai.fun"
+          ],
+          "prefix": "/kkhc/admin/"
+        }
+      ]
+    },
+    {
+      "id": "sales-dashboard",
+      "title": "销售作战大盘",
+      "group": "商业工具",
+      "target": "https://haoyunlai.fun/sales/",
+      "routes": [
+        {
+          "hosts": [
+            "haoyunlai.fun",
+            "www.haoyunlai.fun"
+          ],
+          "prefix": "/sales/"
+        }
+      ]
+    },
+    {
+      "id": "wechat-editor",
+      "title": "公众号排版器",
+      "group": "创作工具",
+      "target": "/wechat-editor/",
+      "routes": [
+        {
+          "hosts": [
+            "haoyunlai.fun",
+            "www.haoyunlai.fun"
+          ],
+          "prefix": "/wechat-editor/"
+        }
+      ]
+    },
+    {
+      "id": "mao-legacy-v1",
+      "title": "毛泽东历史功过 v1",
+      "group": "知识项目",
+      "target": "/mao-legacy/",
+      "routes": [
+        {
+          "hosts": [
+            "haoyunlai.fun",
+            "www.haoyunlai.fun"
+          ],
+          "prefix": "/mao-legacy/"
+        }
+      ]
+    },
+    {
+      "id": "mao-legacy-v2",
+      "title": "毛泽东历史功过 v2",
+      "group": "知识项目",
+      "target": "/mao-legacy-v2/",
+      "routes": [
+        {
+          "hosts": [
+            "haoyunlai.fun",
+            "www.haoyunlai.fun"
+          ],
+          "prefix": "/mao-legacy-v2/"
+        }
+      ]
+    },
+    {
+      "id": "grok-bot-guide",
+      "title": "Grok Bot 使用教程",
+      "group": "知识项目",
+      "target": "/my/reports/grok-bot-guide/",
+      "routes": [
+        {
+          "hosts": [
+            "haoyunlai.fun",
+            "www.haoyunlai.fun"
+          ],
+          "prefix": "/my/reports/grok-bot-guide/"
+        }
+      ]
+    },
+    {
+      "id": "retire-kaipai-membership",
+      "title": "退休开拍吧 · 980会员产品文档",
+      "group": "商业工具",
+      "target": "/my/reports/retire-kaipai-membership/",
+      "routes": [
+        {
+          "hosts": [
+            "haoyunlai.fun",
+            "www.haoyunlai.fun"
+          ],
+          "prefix": "/my/reports/retire-kaipai-membership/"
+        },
+        {
+          "hosts": [
+            "haoyunlai.fun",
+            "www.haoyunlai.fun"
+          ],
+          "exact": "/my/reports/retire-kaipai-membership"
+        }
+      ]
+    },
+    {
+      "id": "report-national-day-travel-2026",
+      "title": "2026 国庆全家包栋度假报告",
+      "group": "知识项目",
+      "target": "/my/reports/national-day-travel-2026/",
+      "routes": [
+        {
+          "hosts": [
+            "haoyunlai.fun",
+            "www.haoyunlai.fun"
+          ],
+          "prefix": "/my/reports/national-day-travel-2026/"
+        },
+        {
+          "hosts": [
+            "haoyunlai.fun",
+            "www.haoyunlai.fun"
+          ],
+          "exact": "/my/reports/national-day-travel-2026"
+        }
+      ]
+    },
+    {
+      "id": "china-footprint-map",
+      "title": "我的点亮中国",
+      "group": "知识项目",
+      "target": "/my/reports/china-footprint-map/",
+      "routes": [
+        {
+          "hosts": [
+            "haoyunlai.fun",
+            "www.haoyunlai.fun"
+          ],
+          "prefix": "/my/reports/china-footprint-map/"
+        },
+        {
+          "hosts": [
+            "haoyunlai.fun",
+            "www.haoyunlai.fun"
+          ],
+          "exact": "/my/reports/china-footprint-map"
+        }
+      ]
+    },
+    {
+      "id": "youshanhe",
+      "title": "游山河",
+      "group": "知识项目",
+      "target": "/youshanhe/",
+      "note": "山西秋行图鉴：晋祠到皇城相府等深度长文，一分钟看懂与游览实录。",
+      "routes": [
+        {
+          "hosts": [
+            "haoyunlai.fun",
+            "www.haoyunlai.fun"
+          ],
+          "prefix": "/youshanhe/"
+        },
+        {
+          "hosts": [
+            "haoyunlai.fun",
+            "www.haoyunlai.fun"
+          ],
+          "exact": "/youshanhe"
+        }
+      ]
+    }
+  ]
+}

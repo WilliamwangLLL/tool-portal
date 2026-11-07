@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>练习课 · Grok Bot 教程</title>
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body data-page="10">
+  <a class="skip" href="#main">跳到正文</a>
+  <header class="topbar">
+    <button class="nav-toggle" type="button" aria-controls="course-nav" aria-expanded="false">课程目录</button>
+    <a class="brand" href="../index.html" style="margin:0;font-size:1rem">Grok Bot 教程</a>
+  </header>
+  <div class="layout">
+    <aside class="sidebar" id="course-nav">
+      <a class="brand" href="../index.html">Grok Bot 教程</a>
+      <p class="brand-sub">能上班的命名同事</p>
+      <div class="nav-group">课程</div>
+      <nav><a href="../index.html"><span class="n">00</span><span>学习路径</span></a><a href="01-what-is.html"><span class="n">01</span><span>这是什么</span></a><a href="02-install.html"><span class="n">02</span><span>安装与登录</span></a><a href="03-first-bot.html"><span class="n">03</span><span>第一个 Bot</span></a><a href="04-multiple-bots.html"><span class="n">04</span><span>多个 Bot</span></a><a href="05-manage-bots.html"><span class="n">05</span><span>管理 Bot</span></a><a href="06-computer.html"><span class="n">06</span><span>云电脑</span></a><a href="07-skills-routines.html"><span class="n">07</span><span>Skill 与 Routine</span></a><a href="08-settings.html"><span class="n">08</span><span>设置与通知</span></a><a href="09-approvals.html"><span class="n">09</span><span>审批与安全</span></a><a href="10-practice.html" class="current"><span class="n">10</span><span>练习课</span></a><a href="11-faq.html"><span class="n">11</span><span>FAQ + 小抄</span></a></nav>
+      <div class="nav-group">官方</div>
+      <nav>
+        <a href="https://docs.x.ai/grok-bot/overview"><span class="n">↗</span><span>文档总览</span></a>
+        <a href="https://x.ai/bot"><span class="n">↗</span><span>下载 App</span></a>
+      </nav>
+    </aside>
+    <div>
+      <main id="main" class="main">
+        <p class="kicker">第 10 课</p>
+        <h1>从第一个真任务到第一个 Routine</h1>
+        <p class="lead">带一份非机密文档、一个你真正在用的工具，按清单走完。不要用生产数据和真实客户发送做第一次 Test run。</p>
+        
+<p>按顺序勾。卡住就回对应课文。目标不是「玩一遍功能」，而是留下：一个岗位清楚的 Bot、一条测过的 Skill、一条有审批边界的 Routine。</p>
+
+<div class="check-card">
+  <p class="label" style="color:var(--cinnabar);font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700;margin:0 0 .4rem">A. 工位</p>
+  <ul class="checks">
+    <li><label><input type="checkbox"> 从 <a href="https://x.ai/bot">x.ai/bot</a> 安装桌面 App 并登录 Cursor</label></li>
+    <li><label><input type="checkbox"> 确认套餐合格；若有 Legacy Privacy Mode，已改到支持的数据设置</label></li>
+    <li><label><input type="checkbox"> 打开 Settings，记下 Appearance、Timezone、Execution on Local Computer（建议 Never allowed）</label></li>
+  </ul>
+</div>
+
+<div class="check-card">
+  <p class="label" style="color:var(--cinnabar);font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700;margin:0 0 .4rem">B. 第一个同事</p>
+  <ul class="checks">
+    <li><label><input type="checkbox"> New 或 Cmd/Ctrl+N → Create new agent</label></li>
+    <li><label><input type="checkbox"> Bot actions → Edit Profile：短名字、一个主职、带审批边界的 description</label></li>
+    <li><label><input type="checkbox"> 不要创建第二个 Bot，除非岗位真的稳定分开</label></li>
+  </ul>
+</div>
+<div class="prompt">
+  <p class="label">练习用简介</p>
+  <button class="copy" type="button" data-copy="#p-prac-profile">复制</button>
+  <pre id="p-prac-profile">Name: Brief
+Job: 阅读与摘要
+Description: 把长文档变成可执行的简报。保留日期、决策、未决问题，并引用章节。不改源文件，不对外发送，不把草稿以外的内容发布到任何地方。</pre>
+</div>
+
+<div class="check-card">
+  <p class="label" style="color:var(--cinnabar);font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700;margin:0 0 .4rem">C. 第一个真任务（不需要登录）</p>
+  <ul class="checks">
+    <li><label><input type="checkbox"> 附上一份非机密文档</label></li>
+    <li><label><input type="checkbox"> 用五件套发出摘要任务</label></li>
+    <li><label><input type="checkbox"> 纠正格式，并写成「以后都这样」的偏好</label></li>
+  </ul>
+</div>
+<div class="prompt">
+  <p class="label">任务 1</p>
+  <button class="copy" type="button" data-copy="#p-prac1">复制</button>
+  <pre id="p-prac1">Outcome：让我 3 分钟内看完这份材料。
+Sources：仅使用我附上的文档。
+Constraints：不要改源文件，不要外发，不要补充文档里没有的事实。
+Deliverable：5 条要点；另开一节列出全部日期、决策、未决问题；每项注明章节。
+Review point：简报完成后停下，等我确认格式。</pre>
+</div>
+
+<div class="check-card">
+  <p class="label" style="color:var(--cinnabar);font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700;margin:0 0 .4rem">D. 第二个真任务（可能要接管登录）</p>
+  <ul class="checks">
+    <li><label><input type="checkbox"> 需要登录时：Agent Computer → 接管 → 只做验证步骤 → 交还。密码不进聊天</label></li>
+    <li><label><input type="checkbox"> 有连接器则 Settings → Plugins → Add，再在聊天里 @ 它</label></li>
+    <li><label><input type="checkbox"> 明确禁止改仪表盘</label></li>
+  </ul>
+</div>
+<div class="prompt">
+  <p class="label">任务 2</p>
+  <button class="copy" type="button" data-copy="#p-prac2">复制</button>
+  <pre id="p-prac2">打开我们的分析仪表盘，对比本周与过去 4 周的新用户激活。指出最大的步骤级变化，起草一份简短调查计划并附上图表链接。不要改任何仪表盘。若需要登录，请让我接管电脑登录。</pre>
+</div>
+
+<div class="check-card">
+  <p class="label" style="color:var(--cinnabar);font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700;margin:0 0 .4rem">E. 变成 Skill</p>
+  <ul class="checks">
+    <li><label><input type="checkbox"> 流程稳定后保存 Skill；若有 Teach a task，演示 ≤10 分钟并审草稿</label></li>
+    <li><label><input type="checkbox"> 若没有 Teach a task 入口：请 Bot 根据刚完成的任务保存 Skill</label></li>
+    <li><label><input type="checkbox"> 用 / 能引用到它；否则到 Plugins → Yours 为该 Bot 启用</label></li>
+    <li><label><input type="checkbox"> 用安全例子再跑一次 Skill，确认审批点还在</label></li>
+  </ul>
+</div>
+<div class="prompt">
+  <p class="label">保存 Skill</p>
+  <button class="copy" type="button" data-copy="#p-prac-skill">复制</button>
+  <pre id="p-prac-skill">把刚才的文档简报流程存成 Skill，名称 “Five-bullet brief”。写明：5 条要点、日期/决策/未决问题分节、引用章节、不改源文件、不外发。以后同类附件都用这个格式。</pre>
+</div>
+
+<div class="check-card">
+  <p class="label" style="color:var(--cinnabar);font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700;margin:0 0 .4rem">F. 第一条 Routine</p>
+  <ul class="checks">
+    <li><label><input type="checkbox"> 向拥有者 Bot 下达，确认：拥有者、日程+时区、输入、结果、审批边界、缺数据怎么办</label></li>
+    <li><label><input type="checkbox"> View conversation details → Routines 能看到它</label></li>
+    <li><label><input type="checkbox"> Test run 用安全输入；记住这是真干活</label></li>
+    <li><label><input type="checkbox"> 需要时暂停；不需要时不要 Delete Bot 来「关掉」它</label></li>
+  </ul>
+</div>
+<div class="prompt">
+  <p class="label">第一条 Routine 示例</p>
+  <button class="copy" type="button" data-copy="#p-prac-r">复制</button>
+  <pre id="p-prac-r">每个工作日 9:00（使用我在 Settings 里设置的时区），如果本对话里有新的附件文档，就运行 Five-bullet brief Skill，把简报发在本对话。没有新附件就报告「今日无输入」，不要用旧文档凑数。不要发送到任何外部渠道。先做一次 Test run，用我指定的那份非机密样本。</pre>
+</div>
+
+<div class="callout pine">
+  <p class="label">毕业标准</p>
+  <p>你能向朋友演示：打开 Bot → 发出五件套任务 → 需要时接管电脑 → 保存 Skill → 在 Routines 里看到一条会在审批边界内运行的日程。做完这些，Grok Bot 才算真正开始上班。</p>
+</div>
+
+        <nav class="pager"><a href="09-approvals.html"><span class="dir">上一课</span><span class="to">审批与安全</span></a><a href="11-faq.html" style="text-align:right"><span class="dir">下一课</span><span class="to">FAQ + 小抄</span></a></nav>
+      </main>
+      <footer class="footer">
+        <p>界面以你的 App 当前版本为准。本教程只收录官方文档与课程说明里的路径；若按钮文案不同，以当前界面为准，并查阅 <a href="https://docs.x.ai/grok-bot/overview">Grok Bot 官方文档</a>。</p>
+        <p>Grok Bot 是 xAI / Cursor 产品，不是 grok.com 聊天窗口。产品词保持英文：Grok Bot、Bot、Cursor、Plugins、Auto-review、Skill、Routine。</p>
+      </footer>
+    </div>
+  </div>
+  <script src="../js/app.js"></script>
+</body>
+</html>

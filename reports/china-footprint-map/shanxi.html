@@ -1,0 +1,523 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>表里山河 · 写给路上的山西全景</title>
+<meta name="description" content="地理、五千年、11 座城、今天和明天：一篇读完就能在路上看懂山西的长文。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Ccircle cx=%2216%22 cy=%2216%22 r=%2210%22 fill=%22%23ffbf4d%22/%3E%3C/svg%3E">
+<style>
+:root{
+  --bg:#0b1220;--panel:#121a2c;--panel-2:#18223a;--line:rgba(255,255,255,.09);
+  --fg:#efe7d6;--muted:#a3a9b8;--dim:#6f7891;
+  --gold:#ffbf4d;--pink:#ff5fa2;--blue:#6cc8ff;--river:#ffcf6b;
+  --f-serif:"Songti SC","STSong","Noto Serif SC","Source Han Serif SC",serif;
+  --f-body:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;
+  --f-num:"Avenir Next","Helvetica Neue",Menlo,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:64px}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:16px;line-height:1.8;-webkit-text-size-adjust:100%}
+a{color:var(--gold)}
+#bar{position:fixed;left:0;top:0;height:3px;width:0;background:linear-gradient(90deg,var(--gold),var(--pink));z-index:50}
+.wrap{max-width:780px;margin:0 auto;padding:0 18px}
+
+/* hero */
+.hero{position:relative;min-height:88vh;display:flex;align-items:flex-end;background:#0b1220 url(shanxi-terrain.jpg) center 40%/cover no-repeat}
+.hero:before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,18,32,.25),rgba(11,18,32,.55) 45%,var(--bg) 96%)}
+.hero .wrap{position:relative;padding-bottom:42px;padding-top:80px}
+.back{position:absolute;top:calc(14px + env(safe-area-inset-top,0px));left:18px;z-index:2;font-size:14px;color:var(--fg);text-decoration:none;opacity:.85}
+.kicker{font-size:14px;letter-spacing:.3em;color:var(--pink);font-weight:600}
+.hero h1{font-family:var(--f-serif);font-weight:900;font-size:clamp(56px,16vw,104px);line-height:1.05;margin:10px 0 6px;letter-spacing:.08em;text-shadow:0 8px 40px rgba(0,0,0,.6)}
+.hero .sub{font-size:18px;color:#e6dcc6;margin:0 0 22px}
+.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.facts div{background:rgba(18,26,44,.78);border:1px solid var(--line);border-radius:14px;padding:12px 12px 10px;backdrop-filter:blur(6px)}
+.facts b{display:block;font:700 24px/1.1 var(--f-num);color:var(--gold)}
+.facts span{font-size:12.5px;color:var(--muted);line-height:1.4;display:block;margin-top:4px}
+
+/* nav */
+nav.toc{position:sticky;top:0;z-index:40;background:rgba(11,18,32,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+nav.toc .wrap{display:flex;gap:8px;overflow-x:auto;padding:10px 18px;scrollbar-width:none}
+nav.toc .wrap::-webkit-scrollbar{display:none}
+nav.toc a{flex:none;font-size:14px;color:var(--muted);text-decoration:none;padding:5px 12px;border-radius:20px;border:1px solid var(--line);white-space:nowrap}
+nav.toc a.on{color:var(--bg);background:var(--gold);border-color:var(--gold);font-weight:700}
+
+section{padding:46px 0 10px}
+.sec-no{font:700 13px var(--f-num);color:var(--pink);letter-spacing:.2em}
+h2{font-family:var(--f-serif);font-weight:900;font-size:32px;line-height:1.25;margin:6px 0 16px}
+h3{font-size:19px;margin:26px 0 8px}
+p{margin:0 0 14px}
+.lead{font-size:17.5px;color:#e9dfca}
+.muted{color:var(--muted)}
+.note{font-size:13px;color:var(--dim)}
+b.g{color:var(--gold)} b.p{color:var(--pink)}
+ul{padding-left:1.2em;margin:0 0 14px} li{margin:4px 0}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:18px 18px 8px;margin:14px 0}
+.quote{border-left:3px solid var(--gold);padding:6px 0 6px 16px;margin:18px 0;font-family:var(--f-serif);font-size:19px;line-height:1.9;color:#f3e6c8}
+.quote small{display:block;font-family:var(--f-body);font-size:13px;color:var(--muted);margin-top:6px}
+
+/* map */
+.mapbox{background:#0d1526;border:1px solid var(--line);border-radius:18px;overflow:hidden;margin:6px 0 10px;position:relative}
+#map{display:block;width:100%;height:auto;touch-action:manipulation}
+#map .city{cursor:pointer;transition:fill .3s}
+#map text{pointer-events:none;paint-order:stroke;stroke:#0b1220;stroke-linejoin:round}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12.5px;color:var(--muted);padding:10px 14px 12px;border-top:1px solid var(--line)}
+.legend i{display:inline-block;width:14px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+
+/* compass */
+.compass{display:grid;grid-template-columns:1fr 1.1fr 1fr;grid-template-rows:auto auto auto;gap:8px;margin:12px 0 18px;text-align:center}
+.compass div{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:10px 8px;font-size:13.5px;line-height:1.5}
+.compass b{display:block;font-family:var(--f-serif);font-size:20px;color:var(--gold)}
+.compass .c{grid-column:2;grid-row:2;background:linear-gradient(135deg,#3b2a12,#2a1d33);border-color:rgba(255,191,77,.4);display:flex;flex-direction:column;justify-content:center}
+.compass .c b{font-size:24px;color:#fff}
+.compass .n{grid-column:2;grid-row:1}.compass .w{grid-column:1;grid-row:2}.compass .e{grid-column:3;grid-row:2}.compass .s{grid-column:2;grid-row:3}
+.chain{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:10px 0 16px}
+.chain span{background:var(--panel-2);border:1px solid rgba(108,200,255,.35);color:#cfeaff;border-radius:30px;padding:4px 12px;font-size:14px}
+.chain em{color:var(--blue);font-style:normal}
+table{width:100%;border-collapse:collapse;font-size:14.5px;margin:10px 0 16px}
+th,td{border-bottom:1px solid var(--line);padding:9px 8px;text-align:left;vertical-align:top}
+th{color:var(--gold);font-weight:600;font-size:13px}
+
+/* timeline */
+.tl{position:relative;margin:10px 0 0 4px;padding-left:22px}
+.tl:before{content:"";position:absolute;left:5px;top:6px;bottom:6px;width:2px;background:linear-gradient(var(--gold),var(--pink),var(--blue))}
+.era{position:relative;margin:0 0 18px}
+.era:before{content:"";position:absolute;left:-22px;top:20px;width:12px;height:12px;border-radius:50%;background:var(--bg);border:3px solid var(--gold)}
+.era .card{margin:0}
+.era .yr{font:600 13px var(--f-num);color:var(--gold);letter-spacing:.05em}
+.era h3{margin:2px 0 8px;font-family:var(--f-serif);font-size:21px}
+.tie{display:inline-block;font-size:12.5px;background:rgba(255,95,162,.14);color:#ffb3d2;border:1px solid rgba(255,95,162,.35);border-radius:6px;padding:1px 8px;margin:0 0 12px}
+.idioms{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 14px}
+.idioms span{font-family:var(--f-serif);font-size:15px;background:#2a2112;color:#ffe2a8;border-radius:6px;padding:2px 10px}
+
+/* stats */
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}
+.stats div{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:14px}
+.stats b{display:block;font:700 26px/1.1 var(--f-num);color:var(--gold)}
+.stats span{font-size:13px;color:var(--muted);line-height:1.5;display:block;margin-top:6px}
+
+/* city cards */
+.mnemo{font-family:var(--f-serif);font-size:24px;letter-spacing:.35em;text-align:center;background:var(--panel);border:1px solid rgba(255,191,77,.35);border-radius:16px;padding:14px 8px;margin:12px 0 4px;color:#ffe2a8}
+.city-card{background:var(--panel);border:1px solid var(--line);border-radius:20px;margin:16px 0;overflow:hidden}
+.city-card header{display:flex;align-items:center;gap:14px;padding:16px 18px 12px;background:linear-gradient(90deg,rgba(255,191,77,.08),transparent)}
+.city-card .glyph{flex:none;width:58px;height:58px;border-radius:14px;display:grid;place-items:center;font-family:var(--f-serif);font-weight:900;font-size:34px;background:#2a2112;color:var(--gold);border:1px solid rgba(255,191,77,.4)}
+.city-card h3{margin:0;font-family:var(--f-serif);font-size:25px}
+.city-card .pos{font-size:13px;color:var(--muted)}
+.badge{display:inline-block;font-size:12px;font-weight:700;border-radius:6px;padding:1px 8px;margin-left:6px;vertical-align:3px}
+.badge.lit{background:var(--gold);color:#2a1a00}
+.badge.next{background:transparent;color:var(--pink);border:1.5px solid var(--pink)}
+.city-card .body{padding:4px 18px 10px}
+.city-card dl{margin:0}
+.city-card dt{font-size:12.5px;color:var(--pink);font-weight:700;margin-top:10px;letter-spacing:.1em}
+.city-card dd{margin:2px 0 0}
+
+/* trip */
+.days{display:grid;gap:10px;margin:12px 0}
+.day{display:grid;grid-template-columns:62px 1fr;gap:12px;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:14px}
+.day .d{text-align:center;line-height:1.2}
+.day .d b{display:block;font:700 19px var(--f-num);color:var(--pink)}
+.day .d span{font-size:12px;color:var(--muted)}
+.day .d em{display:inline-block;margin-top:5px;font-style:normal;font-size:11px;font-weight:700;background:var(--pink);color:#fff;border-radius:5px;padding:0 6px}
+.day.today{border:2px solid var(--pink);box-shadow:0 0 22px rgba(255,95,162,.25)}
+.day.past{opacity:.5}
+.day h4{margin:0 0 4px;font-size:16px}
+.day ul{margin:0;font-size:14.5px;color:#ddd3c0}
+
+.end{text-align:center;padding:50px 0 30px}
+.end p{font-family:var(--f-serif);font-size:22px;line-height:1.8;color:#ffe9bf}
+.end a.btn{display:inline-block;margin:18px 6px 0;padding:10px 18px;border-radius:12px;border:1.5px solid var(--pink);color:var(--pink);text-decoration:none;font-weight:700}
+footer{padding:10px 0 calc(40px + env(safe-area-inset-bottom,0px));font-size:12.5px;color:var(--dim);text-align:center}
+@media (min-width:700px){.facts{grid-template-columns:repeat(6,1fr)}.stats{grid-template-columns:repeat(4,1fr)}}
+</style>
+</head>
+<body>
+<div id="bar"></div>
+
+<header class="hero">
+  <a class="back" href="./">← 我的点亮中国</a>
+  <div class="wrap">
+    <div class="kicker">写给路上的山西全景</div>
+    <h1>表里山河</h1>
+    <p class="sub">地理、五千年、11 座城、今天和明天。<br>读完这一篇，再去看山西。</p>
+    <div class="facts">
+      <div><b>15.7万</b><span>平方公里，黄土高原东部</span></div>
+      <div><b>11</b><span>个地级市</span></div>
+      <div><b>500+</b><span>全国重点文物保护单位，全国第一</span></div>
+      <div><b>4/4</b><span>中国现存的唐代木构，全在山西</span></div>
+      <div><b>3</b><span>世界遗产：平遥、云冈、五台山</span></div>
+      <div><b>~7成</b><span>全国元代以前木构古建在山西</span></div>
+    </div>
+  </div>
+</header>
+
+<nav class="toc"><div class="wrap">
+  <a href="#map-sec">地图</a><a href="#geo">地理</a><a href="#history">五千年</a><a href="#now">今天</a><a href="#cities">11 城</a><a href="#taste">风味</a><a href="#future">明天</a><a href="#trip">路上</a>
+</div></nav>
+
+<main class="wrap">
+
+<section id="intro">
+  <p class="lead">中国有句老话：「<b class="g">地下文物看陕西，地上文物看山西</b>」。</p>
+  <p>从「尧舜禹」的传说，到春秋霸主晋国，到唐朝起兵、宋辽对峙、明清晋商、八路军太行山，中国历史上几乎每一个重要的转折点，山西都在现场。</p>
+  <p>如果把中国古代史比作一本书，山西就是那本书里<b class="g">插图最多的几页</b>：别的地方只剩文字记载，山西还留着实物。</p>
+</section>
+
+<!-- ============ 地图 ============ -->
+<section id="map-sec">
+  <div class="sec-no">MAP</div>
+  <h2>一张图看懂山西</h2>
+  <p class="muted" style="font-size:14.5px">真实地形打底。金色是已经点亮的城市，粉色框是这趟还要去的。<b class="g">点任意一座山西城市，跳到它的介绍。</b></p>
+  <div class="mapbox">
+    <svg id="map" viewBox="0 0 600 760" role="img" aria-label="山西地形、河流、城市与行程地图"></svg>
+    <div class="legend">
+      <span><i style="background:rgba(255,191,77,.55)"></i>已点亮</span>
+      <span><i style="border:2px solid var(--pink);background:transparent"></i>这趟将点亮</span>
+      <span><i style="background:var(--river);height:4px"></i>黄河</span>
+      <span><i style="background:var(--blue);height:3px"></i>汾河等支流</span>
+      <span><i style="background:var(--pink);height:4px"></i>接下来的路线</span>
+      <span><i style="background:repeating-linear-gradient(90deg,var(--gold) 0 5px,transparent 5px 9px);height:3px"></i>已走过</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 地理 ============ -->
+<section id="geo">
+  <div class="sec-no">01 · 地理</div>
+  <h2>一个被「锁」起来的省</h2>
+  <div class="compass">
+    <div class="n"><b>北</b>恒山、长城<br><span class="muted">外面是内蒙古</span></div>
+    <div class="w"><b>西</b>吕梁山<br>黄河晋陕峡谷<br><span class="muted">对岸是陕西</span></div>
+    <div class="c"><b>山西</b><span style="font-size:13px;color:#f3e2bf">汾河穿中间</span></div>
+    <div class="e"><b>东</b>太行山<br><span class="muted">翻过去是河北、河南</span></div>
+    <div class="s"><b>南</b>中条山、黄河<br><span class="muted">黄河在这里拐弯东流</span></div>
+  </div>
+  <p>古人管这叫「<b class="g">表里山河</b>」：外有大河，内有高山。易守难攻，所以历代兵家必争；交通闭塞，所以古建筑躲过了很多劫难。</p>
+
+  <h3>一根脊梁，一串葫芦</h3>
+  <p>山西是黄土高原的东部，平均海拔 1000 米以上，山地丘陵约占八成。中间一条<b class="g">汾河</b>，从北到南七百多公里，是黄河第二大支流。汾河沿途冲出一串盆地，像串起来的葫芦：</p>
+  <div class="chain"><span>大同盆地</span><em>→</em><span>忻定盆地</span><em>→</em><span>太原盆地</span><em>→</em><span>临汾盆地</span><em>→</em><span>运城盆地</span><em>＋</em><span>东南的上党高地</span></div>
+  <p>山西的城市、古建、良田，几乎都长在这串「葫芦」里。</p>
+
+  <h3>三列看 11 城</h3>
+  <table>
+    <tr><th>西列 · 吕梁山、黄河</th><th>中列 · 汾河谷地</th><th>东列 · 太行山</th></tr>
+    <tr><td>吕梁</td><td>大同、朔州、忻州、太原、晋中、临汾、运城</td><td>阳泉、长治、晋城</td></tr>
+  </table>
+
+  <h3>一首歌就是一张地图</h3>
+  <div class="quote">人说山西好风光，地肥水美五谷香。<br><b class="g">左手一指太行山，右手一指是吕梁。</b><br>站在那高处望上一望，你看那汾河的水呀，<br>哗啦啦啦流过我的小村旁。
+    <small>《人说山西好风光》，1959 年电影《我们村里的年轻人》插曲，郭兰英演唱。面朝南站在山西中部：左手（东）太行，右手（西）吕梁，脚下汾河。</small></div>
+</section>
+
+<!-- ============ 历史 ============ -->
+<section id="history">
+  <div class="sec-no">02 · 五千年</div>
+  <h2>十个时代，看山西怎样站在历史现场</h2>
+  <div class="tl" id="timeline"></div>
+  <div class="card">
+    <p><b class="g">为什么山西的古建能留下来？</b>干燥少雨、山多路险、相对偏远，外加历代民间不断重修。</p>
+  </div>
+</section>
+
+<!-- ============ 今天 ============ -->
+<section id="now">
+  <div class="sec-no">03 · 今天</div>
+  <h2>煤、转型、古建热</h2>
+  <div class="stats">
+    <div><b>十几亿吨</b><span>每年原煤产量，近几年和内蒙古轮流排全国第一</span></div>
+    <div><b>2019</b><span>起成为国家能源革命综合改革试点</span></div>
+    <div><b>27 / 36</b><span>《黑神话：悟空》36 处取景地，27 处在山西</span></div>
+    <div><b>~0.02mm</b><span>太钢「手撕钢」，薄到用手就能撕开</span></div>
+  </div>
+  <h3>煤：让山西富过，也让山西痛过</h3>
+  <ul>
+    <li>全国很多城市的电、钢、化工都靠山西的煤。</li>
+    <li>2000 年代的「煤炭黄金十年」造就了「煤老板」，也带来了矿难、污染和腐败。之后几年，山西经历了煤矿兼并重组和大规模的反腐整顿。</li>
+    <li>临汾等城市曾经是全国污染最重的城市之一，这些年空气明显改善。</li>
+  </ul>
+  <h3>转型：从「挖煤」到「用能」</h3>
+  <ul>
+    <li><b>风光</b>：晋北风大光照好，风电、光伏装机快速增长；大同在采煤沉陷区上建了大片光伏电站。</li>
+    <li><b>煤层气</b>：晋城、长治所在的沁水盆地，是全国最重要的煤层气产区之一。</li>
+    <li><b>数据</b>：阳泉有大型数据中心，从「煤城」变成「数据之城」。</li>
+    <li><b>航天</b>：太原卫星发射中心其实在忻州岢岚县，很多气象、遥感卫星从这里升空。</li>
+  </ul>
+  <h3>文旅：古建成了「顶流」</h3>
+  <ul>
+    <li>3 处世界遗产：平遥古城、云冈石窟、五台山。</li>
+    <li>2024 年《黑神话：悟空》火遍全球，取景地包括隰县小西天、晋城玉皇庙、高平铁佛寺、浑源悬空寺、佛光寺、南禅寺、应县木塔、朔州崇福寺等，很多年轻人第一次专门来山西看古建。</li>
+    <li>从 2017 年起，山西允许企业和个人「<b class="g">认养</b>」文物，出钱修缮、负责看护散落在村子里的小庙。</li>
+  </ul>
+  <h3>交通</h3>
+  <ul>
+    <li>大西高铁纵贯南北（大同—太原—西安）；太焦高铁（太原—长治—晋城—焦作）穿过太行山。</li>
+    <li>「黄河一号」「长城一号」「太行一号」三条旅游公路，把沿黄、沿长城、沿太行的景点串起来。</li>
+  </ul>
+</section>
+
+<!-- ============ 11 城 ============ -->
+<section id="cities">
+  <div class="sec-no">04 · 11 城</div>
+  <h2>一城一页</h2>
+  <p class="muted" style="font-size:14.5px">一个字记住一座城（按这趟的行车顺序）：</p>
+  <div class="mnemo">关钱龙佛塔<br>酒根盐相天</div>
+  <p class="note" style="text-align:center">阳泉关 · 晋中钱 · 太原龙 · 忻州佛 · 朔州塔 · 吕梁酒 · 临汾根 · 运城盐 · 晋城相 · 长治天（大同：窟）</p>
+  <div id="citylist"></div>
+</section>
+
+<!-- ============ 风味 ============ -->
+<section id="taste">
+  <div class="sec-no">05 · 风味</div>
+  <h2>山西味道，山西声音</h2>
+  <div class="card"><ul>
+    <li><b class="g">面</b>：号称「一面百样」。刀削面、剔尖、拨鱼、猫耳朵、揪片、莜面栲栳栳……同样的面粉，换个手法就是另一种面。</li>
+    <li><b class="g">醋</b>：山西人顿顿离不开醋，清徐老陈醋最有名。一种说法是，山西水土碱性重，吃醋能中和。</li>
+    <li><b class="g">酒</b>：汾阳杏花村的汾酒，清香型白酒的代表。</li>
+    <li><b class="g">戏</b>：「四大梆子」：蒲剧（运城）、晋剧（晋中、太原）、北路梆子（忻州、大同）、上党梆子（长治、晋城）。现存的元代戏台几乎都在晋南。</li>
+    <li><b class="g">话</b>：山西话（晋语）保留了古汉语的「入声」，用山西话读唐诗，有时比普通话更押韵。</li>
+    <li><b class="g">歌</b>：《走西口》《人说山西好风光》、左权开花调、河曲民歌。</li>
+  </ul></div>
+</section>
+
+<!-- ============ 明天 ============ -->
+<section id="future">
+  <div class="sec-no">06 · 明天</div>
+  <h2>山西的五道题</h2>
+  <div class="card"><ol style="padding-left:1.3em">
+    <li><b>能源</b>：从「挖煤卖煤」到「煤电、风光、氢能一起发展」，山西能否转型成功，关系到中国的能源安全。</li>
+    <li><b>古建</b>：几万处文物，大量在偏远村子里，没人看护、没钱修缮。文物认养、数字化测绘、游戏带来的游客，都在给这些老房子续命。</li>
+    <li><b>黄河</b>：黄河流域生态保护是国家战略，沿黄的吕梁、临汾、运城正在做水土保持和沿黄旅游。</li>
+    <li><b>人口</b>：和很多北方省份一样，山西也面临年轻人外流。太原—忻州一体化、高铁网络，都在把人留住、把城连起来。</li>
+    <li><b>文旅</b>：游客不再只去平遥、五台山，开始钻进村子里看一座宋代小殿、一尊金代彩塑。山西最大的财富，可能不在地下，而在地上。</li>
+  </ol></div>
+</section>
+
+<!-- ============ 路上 ============ -->
+<section id="trip">
+  <div class="sec-no">07 · 路上</div>
+  <h2>剩下几天，带着这些背景去看</h2>
+  <p class="muted" style="font-size:14.5px">今天那张卡片会发光，过去的会变暗。</p>
+  <div class="days" id="days"></div>
+</section>
+
+<div class="end">
+  <p>表里山河藏住了它，汾河养活了它；<br>地下的煤让它富过，<br>地上的古建让它不朽。</p>
+  <a class="btn" href="./">打开我的点亮地图</a><a class="btn" href="#map-sec">回到山西地图</a>
+</div>
+</main>
+<footer>数字和年代以通行说法为准，传说已标明。地形：公开高程数据；河流：Natural Earth；边界：DataV。</footer>
+
+<script src="d3.min.js"></script>
+<script>
+/* ---------------- data ---------------- */
+const ERAS=[
+ {yr:'约 180 万年前 — 夏',t:'文明的老根',tie:'10-27 临汾 · 10-28 运城',items:[
+  '<b>西侯度遗址</b>（运城芮城）：距今约 180 万年，发现了可能是人类用火的痕迹，是中国最早的旧石器遗址之一。',
+  '<b>丁村遗址</b>（临汾襄汾）：旧石器时代「丁村人」。',
+  '<b>陶寺遗址</b>（临汾襄汾）：距今约 4300 年，有大型城址、宫殿区、古观象台，还有朱砂写在陶壶上的字。很多学者认为它可能就是传说中的「<b class="g">尧都</b>」。',
+  '<b>尧舜禹都在晋南</b>：尧都平阳（临汾），舜都蒲坂（永济），禹都安邑（夏县）。',
+  '<b>运城盐池</b>：传说黄帝与蚩尤大战争的就是这片盐池；蚩尤被杀后身首异处，血化为卤水，那里便叫「解」州。（传说）']},
+ {yr:'西周',t:'「晋」字的诞生',tie:'你 10-25 去过的晋祠',items:[
+  '<b>桐叶封弟</b>：周成王小时候削一片桐叶当玉圭，对弟弟叔虞说「封你」。大臣说「天子无戏言」，于是真把叔虞封在「唐」地。',
+  '叔虞的儿子因境内有<b class="g">晋水</b>，改国号为「晋」。晋水的源头，就是晋祠的<b>难老泉</b>。',
+  '晋祠本来就是祭祀叔虞的祠堂，圣母殿供的是他的母亲邑姜。晋祠，就是「晋」这个字的家。']},
+ {yr:'春秋',t:'霸主晋国',tie:'10-27 博物院找「晋侯鸟尊」 · 10-29 三门峡',idioms:['退避三舍','秦晋之好','假途灭虢','唇亡齿寒','病入膏肓','结草衔环'],items:[
+  '晋国是春秋时间最长的霸主，主导中原一百多年。',
+  '<b>晋文公重耳</b>流亡 19 年，62 岁才回国即位，城濮之战大败楚国，成为「春秋五霸」之一。流亡时他答应楚王，将来交战晋军先退九十里，就是「退避三舍」。',
+  '<b>假途灭虢</b>：晋献公向虞国借路去打虢国，回师顺手灭了虞国。虞国在运城平陆，<b class="g">虢国就在三门峡</b>。',
+  '<b>晋侯墓地</b>（临汾曲沃一带）出土的<b class="g">晋侯鸟尊</b>，是山西博物院的镇馆之宝，博物院的标志就是它。']},
+ {yr:'前 497 — 前 260',t:'三家分晋，《资治通鉴》从这里写起',tie:'你住的晋阳湖旁就是晋阳古城',items:[
+  '约前 497 年，晋国赵氏修<b class="g">晋阳城</b>，这是太原的前身。',
+  '前 453 年，智伯联合韩、魏<b>引汾水灌晋阳</b>，城里「悬釜而炊」。赵襄子死守，暗中策反韩、魏，反杀智伯。',
+  '前 403 年周天子承认韩、赵、魏为诸侯，史称「三家分晋」。<b>司马光的《资治通鉴》就从这一年写起</b>。',
+  '<b>长平之战</b>（前 260 年，晋城高平）：赵括「纸上谈兵」，赵国几十万降卒被坑杀，从此六国再无力抗秦。']},
+ {yr:'秦汉 — 南北朝',t:'边塞与民族大熔炉',tie:'10-27 博物院：北齐壁画',items:[
+  '<b>白登之围</b>（前 200 年，大同）：刘邦被匈奴围了七天。忻州「忻口」的地名传说就和这次突围有关。',
+  '<b>马邑之谋</b>（前 133 年，朔州）：汉武帝设伏诱击匈奴，计谋败露，汉匈全面开战。',
+  '<b>卫青、霍去病</b>都是河东平阳（今临汾）人；<b>关羽</b>是河东解良（今运城）人。',
+  '304 年，匈奴贵族<b>刘渊</b>在离石（今吕梁）起兵称汉王，五胡十六国由此开场。',
+  '398 年北魏迁都<b>平城</b>（大同），460 年开凿<b>云冈石窟</b>；494 年孝文帝迁都洛阳。',
+  '北齐把<b>晋阳</b>当「霸府」，地位甚至超过都城，天龙山石窟、蒙山大佛都是这时候的。']},
+ {yr:'隋唐五代',t:'龙兴之地',tie:'',items:[
+  '<b class="g">617 年，李渊、李世民父子在晋阳起兵</b>，打下长安。太原被视为「龙兴之地」，唐朝一度称它「北都」「北京」。',
+  '<b>武则天</b>是并州文水（今吕梁）人。',
+  '<b>唐诗里的山西人</b>：王维、王勃、王之涣、王翰、白居易、柳宗元、温庭筠……',
+  '<b>4 座唐代木构全在山西</b>：南禅寺（782 年）、广仁王庙、佛光寺东大殿（857 年）、天台庵。1937 年梁思成、林徽因找到佛光寺，推翻了「中国已无唐代木构」的说法。',
+  '五代的后唐、后晋、后汉、北汉，都从太原起家。']},
+ {yr:'979 年',t:'一座城的毁灭',tie:'晋阳湖边',items:[
+  '宋太宗灭北汉，忌惮这块「龙兴之地」，<b class="p">一把火烧了晋阳城，又引水灌城</b>，1400 多年的古城就此消失。',
+  '新太原城建在北边的唐明镇，就是今天太原的前身。民间传说新城特意修了很多「丁」字街，寓意「钉死龙脉」。']},
+ {yr:'宋辽金元',t:'边疆与古建的黄金时代',tie:'10-26 应县木塔 · 10-27 广胜寺',items:[
+  '<b>宋辽对峙线就在雁门关一带</b>。杨业（杨老令公）986 年在朔州陈家谷战败被俘，绝食而死，「杨家将」由此而来。',
+  '<b>辽</b>：1056 年建应县木塔；大同华严寺、善化寺。<b>北宋</b>：晋祠圣母殿和宋代侍女像。<b>金</b>：平遥文庙大成殿、朔州崇福寺、应县净土寺藻井。',
+  '<b>元</b>：芮城永乐宫壁画；洪洞广胜寺水神庙有一幅 1324 年的<b class="g">戏剧壁画</b>，题着「大行散乐忠都秀在此作场」，是中国最早的戏剧演出图像之一。',
+  '《西厢记》的故事发生在永济普救寺；罗贯中，一说是太原人。']},
+ {yr:'明清',t:'移民、边镇与晋商',tie:'10-24 平遥 · 10-27 洪洞大槐树',items:[
+  '<b>洪洞大槐树</b>：明初从山西大规模移民到中原各地。传说移民被反绑双手押送，要方便就喊「解开手」，于是有了「<b>解手</b>」这个词；后裔的小脚趾指甲分两瓣，是当年被砍了一刀做记号。（都是传说）',
+  '<b>外三关</b>都在山西：雁门关、宁武关、偏关；明朝九边重镇，山西占大同镇、山西镇两个。',
+  '<b>晋商四步</b>：开中法（运粮到边关换盐引）→ 走西口（杀虎口出关，「先有复盛公，后有包头城」）→ 万里茶道（武夷山到恰克图）→ 票号（1823 年平遥日升昌，「汇通天下」）。',
+  '清末民初，现代银行兴起，票号几乎全部倒闭，留下了平遥古城和晋中大院。',
+  '1877—1878 年「<b class="p">丁戊奇荒</b>」，山西大旱，饿死的人以百万计。']},
+ {yr:'1907 — 1949',t:'从「模范省」到太行山',tie:'10-24 娘子关老铁路 · 10-30 长治',items:[
+  '<b>1907 年正太铁路</b>（石家庄—太原）通车，法国人修的窄轨，就从娘子关下穿过。',
+  '<b>阎锡山</b>统治山西 38 年（1911—1949），号称「模范省」。他修的同蒲铁路故意用窄轨，外省火车开不进来。',
+  '1937 年 9 月<b>平型关大捷</b>，10 月<b>忻口会战</b>，11 月太原失守。',
+  '八路军东渡黄河，建立晋察冀、晋绥、晋冀鲁豫根据地；八路军总部长期驻在武乡、左权一带。1940 年<b>百团大战</b>主战场就在正太铁路沿线。',
+  '1942 年左权将军牺牲；1947 年刘胡兰在文水就义；1949 年 4 月 24 日太原解放。']}
+];
+const CITIES=[
+ {n:'大同',g:'窟',pos:'晋北 · 大同盆地，长城脚下',st:'old',
+  name:'辽代设大同府，取「天下大同」。',
+  hist:'北魏都城「平城」；辽金的「西京」；明朝九边重镇。',
+  see:'云冈石窟、华严寺、善化寺、九龙壁、浑源悬空寺、北岳恒山、修复后的古城墙。',
+  now:'「煤都」转型光伏基地；云州黄花菜。',eat:'刀削面、羊杂、兔头。'},
+ {n:'朔州',g:'塔',pos:'晋北 · 大同盆地南部',st:'2026-10-26',
+  name:'「朔」就是北方。',
+  hist:'秦汉的「马邑」，汉匈战争从「马邑之谋」开始；杨业在这里战死。',
+  see:'<b class="g">应县木塔</b>（1056 年，约 67 米，世界最高最老的纯木楼阁式塔）、净土寺藻井、崇福寺、广武长城、右玉杀虎口。',
+  now:'平朔露天煤矿曾是中国最早的大型中外合资项目之一；右玉几十年种树，把风沙地变成林地。',eat:'羊肉、莜面。'},
+ {n:'忻州',g:'佛',pos:'晋北 · 忻定盆地',st:'2026-10-26',
+  name:'传说刘邦白登突围，将士到此「欣然」，称「欣口」。',
+  hist:'宋辽边境、雁门关；抗战忻口会战；元好问、徐向前的家乡。',
+  see:'<b class="g">五台山</b>、南禅寺、佛光寺、雁门关、忻口、阎锡山故居、宁武汾河源头与万年冰洞、偏关老牛湾。',
+  now:'太原卫星发射中心在岢岚；「太忻一体化」把太原和忻州连成一片。',eat:'莜面、台蘑。'},
+ {n:'太原',g:'龙',pos:'省会 · 汾河中游',st:'2026-10-25',
+  name:'「大的高平之地」，《尚书》里就有「既修太原」。',
+  hist:'建城约 2500 年；三家分晋、唐朝起兵、五代王朝都从这里起家；979 年晋阳被毁，故称「龙城」。',
+  see:'<b class="g">晋祠</b>、<b class="g">山西博物院</b>、双塔寺、天龙山石窟、晋阳古城遗址、晋阳湖、钟楼街柳巷。',
+  now:'太钢「手撕钢」；山西大学（1902 年创办，中国最早的国立大学之一）。',eat:'头脑、过油肉、清徐老陈醋、六味斋酱肉。'},
+ {n:'阳泉',g:'关',pos:'东列 · 太行山腹地',st:'2026-10-24',
+  name:'古称「漾泉」，泉水多到往外漫。',
+  hist:'晋冀咽喉；百团大战主战场之一；1947 年设市。',
+  see:'<b class="g">娘子关</b>（关城、瀑布、水上人家）、藏山（赵氏孤儿传说）、狮脑山百团大战纪念碑。',
+  now:'无烟煤城，大型数据中心。',eat:'平定砂锅、娘子关虹鳟鱼。'},
+ {n:'晋中',g:'钱',pos:'中列 · 太原盆地南段',st:'2026-10-24',
+  name:'山西的中部。平遥原叫「平陶」，北魏为避太武帝拓跋焘的讳改名。',
+  hist:'晋商大本营，「祁太平」三帮；寒食节传说起源于介休绵山。',
+  see:'<b class="g">平遥古城</b>、日升昌、双林寺、镇国寺、乔家大院、王家大院、常家庄园、张壁古堡。',
+  now:'山西多所大学的新校区所在地，和太原几乎连在一起。',eat:'平遥牛肉、太谷饼、碗托。'},
+ {n:'吕梁',g:'酒',pos:'西列 · 吕梁山与黄河',st:'2026-10-26',
+  name:'来自吕梁山，一说「吕」是脊骨，吕梁就是山西的「脊梁」。',
+  hist:'刘渊在离石起兵；武则天、刘胡兰都是文水人；晋绥根据地，《吕梁英雄传》。',
+  see:'碛口古镇与李家山窑洞、汾阳杏花村、交城庞泉沟（省鸟褐马鸡的家园）。',
+  now:'沿黄旅游公路；红枣之乡。',eat:'汾酒、竹叶青、红枣、碗托。'},
+ {n:'临汾',g:'根',pos:'中列 · 临汾盆地',st:'2026-10-27',
+  name:'紧临汾河。',
+  hist:'尧都平阳、陶寺遗址；曲沃晋侯墓地；卫青、霍去病的故乡。',
+  see:'<b class="g">洪洞大槐树</b>；<b class="g">广胜寺</b>：明代琉璃飞虹塔、元代戏剧壁画，还有《赵城金藏》：1942 年八路军从日军手里抢运出来，现藏国家图书馆；<b class="g">壶口瀑布</b>、隰县小西天、霍州署、苏三监狱。',
+  now:'曾是污染重灾区，正在转型。',eat:'牛肉丸子面。'},
+ {n:'运城',g:'盐',pos:'西南角 · 运城盆地',st:'2026-10-29',
+  name:'盐运之城，元代在这里设河东盐运司。',
+  hist:'古称「河东」；舜都蒲坂、禹都安邑；关羽、司马光、柳宗元、王勃、薛仁贵的故乡；闻喜裴柏村号称「中华宰相村」。',
+  see:'<b class="g">解州关帝庙</b>、<b class="g">运城盐湖</b>、鹳雀楼、普救寺、蒲津渡唐代铁牛、永乐宫、万荣后土祠、风陵渡。',
+  now:'全国重要的苹果产区。',eat:'羊肉胡卜、闻喜煮饼。'},
+ {n:'晋城',g:'相',pos:'东列南端 · 太行山南麓',st:'2026-10-30',
+  name:'唐代设晋城县，古称泽州。',
+  hist:'高平是长平之战古战场；传说炎帝在这一带尝百草。',
+  see:'<b class="g">皇城相府</b>（陈廷敬，《康熙字典》总阅官）、沁河古堡群、玉皇庙二十八星宿、高平铁佛寺、王莽岭。',
+  now:'全国最重要的煤层气产区之一；太焦高铁穿城而过。',eat:'高平烧豆腐、阳城烧肝。'},
+ {n:'长治',g:'天',pos:'东列 · 上党高地',st:'2026-10-30',
+  name:'明代平叛后取「长治久安」；古称上党，「与天为党」，「得上党者得天下」。',
+  hist:'精卫填海的发鸠山在长子县；八路军总部曾驻武乡。',
+  see:'太行山大峡谷、平顺天台庵（唐代木构）、八路军太行纪念馆、上党梆子。',
+  now:'煤炭与新能源并进。',eat:'腊驴肉、壶关羊汤。'}
+];
+const DAYS=[
+ {d:'2026-10-27',t:'山西博物院 → 洪洞',items:['博物院找三件宝：<b>晋侯鸟尊</b>（晋国）、<b>龙形觥</b>（商代，吕梁石楼出土）、<b>胡傅温酒樽</b>（西汉，朔州右玉出土）','洪洞：大槐树的「解手」传说；苏三监狱','点亮临汾']},
+ {d:'2026-10-28',t:'广胜寺 → 壶口瀑布 → 韩城',items:['广胜寺飞虹塔、元代戏剧壁画、赵城金藏的抢运','1938 年诗人光未然在壶口一带东渡黄河，后来在延安写成《黄河大合唱》歌词；过河到陕西岸，点亮延安','韩城：司马迁的故乡，晚上逛古城']},
+ {d:'2026-10-29',t:'禹门口 → 关帝庙、盐湖 → 三门峡',items:['禹门口就是「龙门」：传说大禹在此凿山导河，「鲤鱼跳龙门」说的就是这里','关羽老乡；盐是晋商的第一桶金','三门峡：「假途灭虢」的虢国；新中国治黄第一坝，永乐宫为它整体搬家']},
+ {d:'2026-10-30',t:'济源 → 焦作 → 皇城相府 → 长治',items:['济源王屋山、太行山就是「愚公移山」的那两座山；焦作修武一带传说是竹林七贤隐居处','陈廷敬与《康熙字典》；附近就是长平之战的高平','上党「与天为党」；精卫填海']},
+ {d:'2026-10-31',t:'长治 → 邢台 → 衡水 → 北京',items:['邢台：商周邢国；元代天文学家郭守敬的故乡；邢窑白瓷','衡水湖、衡水老白干；汉代大儒董仲舒生在这一带','31 号当天到京即可']},
+ {d:'2026-11-01',t:'北京 · 演唱会',items:['白天休息，晚上演唱会']}
+];
+const ROUTE=[[114.51,38.04,'10-23'],[113.87,37.97,'10-24'],[113.58,37.86,'10-24'],[112.75,37.69,'10-24'],[112.18,37.20,'10-24'],[112.44,37.71,'10-25'],[112.55,37.87,'10-25'],
+ [112.73,38.42,'10-26'],[112.95,39.10,'10-26'],[113.19,39.56,'10-26'],[112.95,39.10,'10-26'],[112.73,38.42,'10-26'],[112.55,37.87,'10-26'],
+ [112.17,37.20,'10-27'],[111.67,36.25,'10-27'],[111.86,36.42,'10-28'],[110.45,36.15,'10-28'],[110.35,36.10,'10-28'],[110.44,35.48,'10-28'],[110.60,35.65,'10-29'],[110.70,35.60,'10-29'],[111.00,35.03,'10-29'],[110.84,34.92,'10-29'],[111.20,34.78,'10-29'],
+ [112.10,34.95,'10-30'],[112.60,35.07,'10-30'],[113.24,35.22,'10-30'],[112.53,35.50,'10-30'],[112.85,35.49,'10-30'],[113.12,36.20,'10-30'],[114.50,37.07,'10-31']];
+const LIT_ON={阳泉:'2026-10-24',晋中:'2026-10-24',太原:'2026-10-25',吕梁:'2026-10-26',忻州:'2026-10-26',朔州:'2026-10-26',临汾:'2026-10-27',延安:'2026-10-28',运城:'2026-10-29',三门峡:'2026-10-29',济源:'2026-10-30',焦作:'2026-10-30',晋城:'2026-10-30',长治:'2026-10-30',邢台:'2026-10-31'};
+const today=new Date(Date.now()+8*3600e3).toISOString().slice(0,10);
+const WK='日一二三四五六';
+const isLit=n=>LIT_ON[n]?LIT_ON[n]<=today:false;
+
+/* ---------------- render text ---------------- */
+document.getElementById('timeline').innerHTML=ERAS.map(e=>`<div class="era"><div class="card">
+  <div class="yr">${e.yr}</div><h3>${e.t}</h3>${e.tie?`<span class="tie">📍 ${e.tie}</span>`:''}
+  ${e.idioms?`<div class="idioms">${e.idioms.map(x=>`<span>${x}</span>`).join('')}</div>`:''}
+  <ul>${e.items.map(x=>`<li>${x}</li>`).join('')}</ul></div></div>`).join('');
+document.getElementById('citylist').innerHTML=CITIES.map(c=>{
+  const lit=c.st==='old'||c.st<=today;
+  const badge=c.st==='old'?'<span class="badge lit">早已点亮</span>':lit?`<span class="badge lit">${c.st.slice(5)} 点亮</span>`:`<span class="badge next">${c.st.slice(5)} 去</span>`;
+  return `<article class="city-card" id="city-${c.n}"><header><div class="glyph">${c.g}</div><div><h3>${c.n}${badge}</h3><div class="pos">${c.pos}</div></div></header>
+  <div class="body"><dl><dt>名字</dt><dd>${c.name}</dd><dt>历史</dt><dd>${c.hist}</dd><dt>看点</dt><dd>${c.see}</dd><dt>现在</dt><dd>${c.now}</dd><dt>吃</dt><dd>${c.eat}</dd></dl></div></article>`}).join('');
+document.getElementById('days').innerHTML=DAYS.map(x=>{const st=x.d<today?'past':x.d===today?'today':'';const w=WK[new Date(x.d+'T12:00:00Z').getUTCDay()];
+  return `<div class="day ${st}"><div class="d"><b>${x.d.slice(5)}</b><span>周${w}</span>${st==='today'?'<em>今天</em>':''}</div><div><h4>${x.t}</h4><ul>${x.items.map(i=>`<li>${i}</li>`).join('')}</ul></div></div>`}).join('');
+const td=document.querySelector('.day.today');
+
+/* ---------------- progress + toc ---------------- */
+const bar=document.getElementById('bar'),links=[...document.querySelectorAll('nav.toc a')];
+const secs=links.map(a=>document.querySelector(a.getAttribute('href')));
+const tocBox=document.querySelector('nav.toc .wrap');let cur=-1,ticking=false;
+function onScroll(){ticking=false;const y=window.pageYOffset||document.documentElement.scrollTop,h=document.documentElement;
+  bar.style.width=(y/Math.max(1,h.scrollHeight-h.clientHeight)*100)+'%';
+  let k=-1;if(y>innerHeight*.6){k=0;secs.forEach((s,i)=>{if(s.getBoundingClientRect().top<120)k=i})}
+  if(k===cur)return;cur=k;links.forEach((a,i)=>a.classList.toggle('on',i===k));
+  if(k>=0){const a=links[k];tocBox.scrollLeft=a.offsetLeft-(tocBox.clientWidth-a.offsetWidth)/2}}
+addEventListener('scroll',()=>{if(!ticking){ticking=true;requestAnimationFrame(onScroll)}},{passive:true});
+
+/* ---------------- map ---------------- */
+fetch('shanxi-geo.json').then(r=>r.json()).then(G=>{
+  const W=600,H=760,svg=d3.select('#map');
+  const proj=d3.geoMercator().fitExtent([[18,18],[W-18,H-18]],{type:'MultiPoint',coordinates:[[110.0,34.5],[114.75,40.8]]});
+  const path=d3.geoPath(proj);
+  const defs=svg.append('defs');
+  const gl=defs.append('filter').attr('id','gl').attr('x','-40%').attr('y','-40%').attr('width','180%').attr('height','180%');
+  gl.append('feGaussianBlur').attr('stdDeviation',3).attr('result','b');const m=gl.append('feMerge');m.append('feMergeNode').attr('in','b');m.append('feMergeNode').attr('in','SourceGraphic');
+  const T=G.terrain,a=proj([T.w,T.n]),b=proj([T.e,T.s]);
+  svg.append('image').attr('href','shanxi-terrain.jpg').attr('x',a[0]).attr('y',a[1]).attr('width',b[0]-a[0]).attr('height',b[1]-a[1]).attr('preserveAspectRatio','none').attr('opacity',.95);
+  // dim outside Shanxi
+  const sx=G.provs.find(f=>f.properties.p==='山西');
+  svg.append('path').attr('d',`M0,0H${W}V${H}H0Z`+path(sx)).attr('fill','rgba(11,18,32,.5)').attr('fill-rule','evenodd');
+  svg.append('g').selectAll('path').data(G.ranges).join('path').attr('d',path).attr('fill','rgba(255,200,130,.07)').attr('stroke','rgba(255,210,150,.35)').attr('stroke-dasharray','3 5');
+  const cg=svg.append('g');
+  cg.selectAll('path').data(G.cities).join('path').attr('class','city').attr('d',path)
+    .attr('fill',d=>{const n=d.properties.s;return d.properties.l||isLit(n)?'rgba(255,191,77,.2)':'rgba(255,255,255,.02)'})
+    .attr('stroke',d=>{const n=d.properties.s;return !d.properties.l&&!isLit(n)&&LIT_ON[n]?'#ff5fa2':'rgba(255,255,255,.28)'})
+    .attr('stroke-width',d=>{const n=d.properties.s;return !d.properties.l&&!isLit(n)&&LIT_ON[n]?1.8:.8})
+    .attr('stroke-dasharray',d=>{const n=d.properties.s;return !d.properties.l&&!isLit(n)&&LIT_ON[n]?'5 3':null})
+    .on('click',(e,d)=>{const el=document.getElementById('city-'+d.properties.s);if(el)el.scrollIntoView({behavior:'smooth'})});
+  svg.append('path').datum(sx).attr('d',path).attr('fill','none').attr('stroke','rgba(255,220,160,.9)').attr('stroke-width',2.2);
+  // rivers
+  const rg=svg.append('g').attr('filter','url(#gl)');
+  G.rivers.forEach(r=>rg.append('path').attr('d',path({type:'LineString',coordinates:r.c})).attr('fill','none')
+    .attr('stroke',r.n==='黄河'?'#ffcf6b':'#6cc8ff').attr('stroke-width',r.n==='黄河'?3.6:r.n==='汾河'?2.4:1.4).attr('stroke-linecap','round').attr('stroke-linejoin','round').attr('opacity',r.n==='黄河'||r.n==='汾河'?1:.75));
+  // route
+  const P=ROUTE.map(p=>[p[0],p[1]]);let k=0;ROUTE.forEach((p,i)=>{if(('2026-'+p[2])<=today)k=i});
+  const done=P.slice(0,k+1),rest=P.slice(k);
+  if(done.length>1)svg.append('path').attr('d',path({type:'LineString',coordinates:done})).attr('fill','none').attr('stroke','#ffd27a').attr('stroke-width',2.4).attr('stroke-dasharray','6 5');
+  if(rest.length>1)svg.append('path').attr('d',path({type:'LineString',coordinates:rest})).attr('fill','none').attr('stroke','#ff5fa2').attr('stroke-width',3.6).attr('stroke-linejoin','round').attr('filter','url(#gl)');
+  const here=proj(P[k]);svg.append('circle').attr('cx',here[0]).attr('cy',here[1]).attr('r',7).attr('fill','#fff').attr('stroke','#ff5fa2').attr('stroke-width',4);
+  // labels
+  const L=svg.append('g');
+  const lab=(xy,t,o)=>L.append('text').attr('x',xy[0]).attr('y',xy[1]).attr('text-anchor',o.a||'middle').attr('font-size',o.s||13).attr('font-weight',o.w||600)
+     .attr('fill',o.c||'#fff').attr('stroke-width',o.sw||3.5).attr('font-family',o.f||'inherit').attr('letter-spacing',o.ls||0).attr('writing-mode',o.v?'vertical-rl':null).attr('font-style',o.i?'italic':null).text(t);
+  const serif='Songti SC, STSong, serif';
+  lab(proj([113.85,37.25]),'太 行 山',{s:22,w:900,c:'#f7dcae',f:serif,v:1,sw:5});
+  lab(proj([111.25,38.05]),'吕 梁 山',{s:22,w:900,c:'#f7dcae',f:serif,v:1,sw:5});
+  lab(proj([110.55,37.25]),'黄河',{s:18,w:800,c:'#ffd98a',f:serif,v:1,i:1});
+  lab(proj([112.0,34.83]),'黄 河',{s:16,w:800,c:'#ffd98a',f:serif,i:1});
+  lab(proj([111.78,36.85]),'汾河',{s:14,w:700,c:'#bfe8ff',f:serif,i:1});
+  lab(proj([112.38,35.86]),'沁河',{s:12,c:'#bfe8ff',i:1});
+  lab(proj([113.25,39.88]),'桑干河',{s:12,c:'#bfe8ff',i:1});
+  [['五台山',113.58,39.08],['恒山',113.73,39.67],['中条山',111.15,35.12],['太岳山',112.05,36.62],['王屋山',112.25,35.18]].forEach(([n,x,y])=>{
+    const p=proj([x,y]);L.append('path').attr('d',`M${p[0]},${p[1]-7}l6,10h-12z`).attr('fill','#ffe1b0');lab([p[0]+9,p[1]+3],n,{a:'start',s:11.5,c:'#ffe1b0'})});
+  [['娘子关',113.87,37.97],['平遥',112.18,37.20],['应县木塔',113.19,39.56],['壶口',110.45,36.15],['解州',110.84,34.92]].forEach(([n,x,y])=>{
+    const p=proj([x,y]);L.append('circle').attr('cx',p[0]).attr('cy',p[1]).attr('r',3.5).attr('fill','#fff');lab([p[0]-6,p[1]+4],n,{a:'end',s:11,c:'#ffd1e5'})});
+  G.cities.forEach(f=>{const n=f.properties.s,p=proj(f.properties.c);if(p[0]<10||p[0]>W-10||p[1]<10||p[1]>H-10)return;
+    const lit=f.properties.l||isLit(n),up=!lit&&LIT_ON[n];
+    lab([p[0],p[1]+5],n,{s:['太原'].includes(n)?17:14.5,w:800,c:lit?'#ffd27a':up?'#ffb3d2':'rgba(255,255,255,.6)'});
+    if(up)lab([p[0],p[1]+20],LIT_ON[n].slice(5).replace('-','/'),{s:10.5,w:600,c:'#ff8cbf'})});
+  L.append('text').attr('x',W-14).attr('y',H-14).attr('text-anchor','end').attr('font-size',11).attr('fill','rgba(255,255,255,.5)').attr('stroke-width',3).text('点山西的城市 → 跳到介绍');
+}).catch(()=>{document.getElementById('map').outerHTML='<p class="muted" style="padding:16px">地图加载失败，刷新试试。</p>'});
+</script>
+</body>
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>多个 Bot · Grok Bot 教程</title>
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body data-page="04">
+  <a class="skip" href="#main">跳到正文</a>
+  <header class="topbar">
+    <button class="nav-toggle" type="button" aria-controls="course-nav" aria-expanded="false">课程目录</button>
+    <a class="brand" href="../index.html" style="margin:0;font-size:1rem">Grok Bot 教程</a>
+  </header>
+  <div class="layout">
+    <aside class="sidebar" id="course-nav">
+      <a class="brand" href="../index.html">Grok Bot 教程</a>
+      <p class="brand-sub">能上班的命名同事</p>
+      <div class="nav-group">课程</div>
+      <nav><a href="../index.html"><span class="n">00</span><span>学习路径</span></a><a href="01-what-is.html"><span class="n">01</span><span>这是什么</span></a><a href="02-install.html"><span class="n">02</span><span>安装与登录</span></a><a href="03-first-bot.html"><span class="n">03</span><span>第一个 Bot</span></a><a href="04-multiple-bots.html" class="current"><span class="n">04</span><span>多个 Bot</span></a><a href="05-manage-bots.html"><span class="n">05</span><span>管理 Bot</span></a><a href="06-computer.html"><span class="n">06</span><span>云电脑</span></a><a href="07-skills-routines.html"><span class="n">07</span><span>Skill 与 Routine</span></a><a href="08-settings.html"><span class="n">08</span><span>设置与通知</span></a><a href="09-approvals.html"><span class="n">09</span><span>审批与安全</span></a><a href="10-practice.html"><span class="n">10</span><span>练习课</span></a><a href="11-faq.html"><span class="n">11</span><span>FAQ + 小抄</span></a></nav>
+      <div class="nav-group">官方</div>
+      <nav>
+        <a href="https://docs.x.ai/grok-bot/overview"><span class="n">↗</span><span>文档总览</span></a>
+        <a href="https://x.ai/bot"><span class="n">↗</span><span>下载 App</span></a>
+      </nav>
+    </aside>
+    <div>
+      <main id="main" class="main">
+        <p class="kicker">第 04 课</p>
+        <h1>聊天隔离，电脑不分家</h1>
+        <p class="lead">多个 Bot 可以并行，但它们不是互不认识的保险柜。聊天各聊各的，工位却是同一张桌子。</p>
+        
+<figure class="diagram">
+  <img src="../assets/context-flow.svg" alt="私聊不会自动同步，上下文通过群聊、转告、共享文件和各自记忆移动">
+  <figcaption>私聊不是共享大脑。要传上下文，得走这四条路之一。</figcaption>
+</figure>
+
+<h2>三层关系，不要混</h2>
+<table>
+  <thead><tr><th>层</th><th>隔离吗</th><th>记住什么</th></tr></thead>
+  <tbody>
+    <tr><td>私聊 / 角色记忆</td><td>是。各 Bot 各聊各的</td><td>该 Bot 的偏好、要点、摘要。不是把全文自动塞给别人</td></tr>
+    <tr><td>云电脑</td><td>否。全体共享</td><td>文件、浏览器登录、会话、命令行凭证</td></tr>
+    <tr><td>群聊与转告</td><td>可见的交接</td><td>你让他们看到的那一段，不是隐秘同步整段记录</td></tr>
+  </tbody>
+</table>
+<p>几个 Bot 可以同时推理、用连接器、处理文件、互相协调。每个 Bot 在共享电脑上有自己的屏幕；一个 Bot 在自己的屏幕上一次只能跑一个电脑操作任务。</p>
+<div class="callout warn">
+  <p class="label">不要这样想</p>
+  <p>「这个 Bot 看不到那个 Bot 的聊天，所以登录是隔离的。」错。登录在电脑上，电脑是共享的。也不要声称「完整对话记录会自动共享」——官方没这么说。</p>
+</div>
+
+<h2>上下文怎么搬家</h2>
+<ol class="steps">
+  <li><strong>群聊</strong>：交接过程本身需要被看见时用。</li>
+  <li><strong>请一个 Bot 转告另一个</strong>：直接让 A 给 B 发需要的结论，而不是幻想 B 读过 A 的私聊。</li>
+  <li><strong>共享文件</strong>：结论放进云电脑上的项目文件夹，谁都能接着干。</li>
+  <li><strong>该 Bot 自己的记忆</strong>：只服务它自己的下一次任务。</li>
+</ol>
+<div class="prompt">
+  <p class="label">请 A 转告 B</p>
+  <button class="copy" type="button" data-copy="#p-handoff">复制</button>
+  <pre id="p-handoff">把刚才调查的结论（最大步骤变化、图表链接、未决问题）发给 Analytics Reviewer。只要结论和链接，不要粘贴我们的整段聊天。提醒它：不要改仪表盘，先出调查计划给我审。</pre>
+</div>
+
+<h2>最小编制</h2>
+<figure class="diagram">
+  <img src="../assets/roster.svg" alt="一个稳定岗位一个 Bot；群聊用于可见交接；不要万能助手也不要把 Bot 当隔离墙">
+  <figcaption>编制从最小有用的名单长出来，不要从「再雇一个」的兴奋长出来。</figcaption>
+</figure>
+<ol class="steps">
+  <li>让一个 Bot 对一条端到端结果负责。</li>
+  <li>只有出现稳定的专家岗位时，再加第二个。</li>
+  <li>当<strong>交接本身</strong>需要可见时，把他们放进群聊。</li>
+  <li>对外动作继续放在审批后面。</li>
+</ol>
+<p>官方举例：Website Launch 群里可以有发布协调、内容编辑、分析复核。协调者分活，群把交接留在同一段对话里。好岗位像 Talent Scout、Expense Manager、Bug Reproduction；「General Helper」给的指引太少，存下来的上下文也难复用。</p>
+<p>再拆 Bot 的信号：不同目标、不同工具与来源、不同工作风格、不同审批边界、不同重复日程。</p>
+<div class="prompt">
+  <p class="label">岗位说明书（可放进 description）</p>
+  <button class="copy" type="button" data-copy="#p-job">复制</button>
+  <pre id="p-job">负责每周账号健康回顾。拉取产品使用和支持信号，标出流失或扩张证据，给客户成功团队一份带链接的观察名单。未经审批，绝不联系客户或改账号。</pre>
+</div>
+
+<h2>在对话里 @ 谁</h2>
+<p>composer 里用 <code>@</code> 附上 Bot、群、Routine、连接器。这是点名，不是把私聊历史合并。用 <code>/</code> 引用 Skill。</p>
+
+<h2>本课核对</h2>
+<div class="check-card">
+  <ul class="checks">
+    <li><label><input type="checkbox"> 能说出聊天隔离和电脑共享的差别</label></li>
+    <li><label><input type="checkbox"> 知道四种搬上下文的方法，且不假设全文同步</label></li>
+    <li><label><input type="checkbox"> 能解释什么时候才需要群聊</label></li>
+  </ul>
+</div>
+
+        <nav class="pager"><a href="03-first-bot.html"><span class="dir">上一课</span><span class="to">第一个 Bot</span></a><a href="05-manage-bots.html" style="text-align:right"><span class="dir">下一课</span><span class="to">管理 Bot</span></a></nav>
+      </main>
+      <footer class="footer">
+        <p>界面以你的 App 当前版本为准。本教程只收录官方文档与课程说明里的路径；若按钮文案不同，以当前界面为准，并查阅 <a href="https://docs.x.ai/grok-bot/overview">Grok Bot 官方文档</a>。</p>
+        <p>Grok Bot 是 xAI / Cursor 产品，不是 grok.com 聊天窗口。产品词保持英文：Grok Bot、Bot、Cursor、Plugins、Auto-review、Skill、Routine。</p>
+      </footer>
+    </div>
+  </div>
+  <script src="../js/app.js"></script>
+</body>
+</html>

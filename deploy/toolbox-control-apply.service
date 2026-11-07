@@ -1,0 +1,13 @@
+[Unit]
+Description=Apply Leige Toolbox access policy to Nginx
+After=toolbox-control.service
+
+[Service]
+Type=oneshot
+Environment=TOOLBOX_CONTROL_APP_ROOT=/opt/toolbox-control
+Environment=TOOLBOX_CONTROL_DATA_ROOT=/var/lib/toolbox-control
+Environment=TOOLBOX_CONTROL_NGINX_MAP=/www/server/nginx/conf/toolbox-control-map.conf
+Environment=TOOLBOX_CONTROL_NGINX_BIN=/www/server/nginx/sbin/nginx
+ExecStart=/usr/bin/node /opt/toolbox-control/scripts/apply-nginx.mjs
+UMask=0022
+

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>审批与安全 · Grok Bot 教程</title>
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body data-page="09">
+  <a class="skip" href="#main">跳到正文</a>
+  <header class="topbar">
+    <button class="nav-toggle" type="button" aria-controls="course-nav" aria-expanded="false">课程目录</button>
+    <a class="brand" href="../index.html" style="margin:0;font-size:1rem">Grok Bot 教程</a>
+  </header>
+  <div class="layout">
+    <aside class="sidebar" id="course-nav">
+      <a class="brand" href="../index.html">Grok Bot 教程</a>
+      <p class="brand-sub">能上班的命名同事</p>
+      <div class="nav-group">课程</div>
+      <nav><a href="../index.html"><span class="n">00</span><span>学习路径</span></a><a href="01-what-is.html"><span class="n">01</span><span>这是什么</span></a><a href="02-install.html"><span class="n">02</span><span>安装与登录</span></a><a href="03-first-bot.html"><span class="n">03</span><span>第一个 Bot</span></a><a href="04-multiple-bots.html"><span class="n">04</span><span>多个 Bot</span></a><a href="05-manage-bots.html"><span class="n">05</span><span>管理 Bot</span></a><a href="06-computer.html"><span class="n">06</span><span>云电脑</span></a><a href="07-skills-routines.html"><span class="n">07</span><span>Skill 与 Routine</span></a><a href="08-settings.html"><span class="n">08</span><span>设置与通知</span></a><a href="09-approvals.html" class="current"><span class="n">09</span><span>审批与安全</span></a><a href="10-practice.html"><span class="n">10</span><span>练习课</span></a><a href="11-faq.html"><span class="n">11</span><span>FAQ + 小抄</span></a></nav>
+      <div class="nav-group">官方</div>
+      <nav>
+        <a href="https://docs.x.ai/grok-bot/overview"><span class="n">↗</span><span>文档总览</span></a>
+        <a href="https://x.ai/bot"><span class="n">↗</span><span>下载 App</span></a>
+      </nav>
+    </aside>
+    <div>
+      <main id="main" class="main">
+        <p class="kicker">第 09 课</p>
+        <h1>先停下来的，才是真边界</h1>
+        <p class="lead">你可以把调查和草稿交给 Bot。发送、发布、花钱、删数据和改生产，必须经过你。</p>
+        
+<figure class="diagram">
+  <img src="../assets/approval.svg" alt="起草可以先做，发送发布删除购买改生产必须停下">
+  <figcaption>审批管的是即将发生的动作，不能撤回已经做完的事。</figcaption>
+</figure>
+
+<h2>先把边界写进请求</h2>
+<div class="prompt">
+  <p class="label">先给草稿，再谈改动</p>
+  <button class="copy" type="button" data-copy="#p-bound">复制</button>
+  <pre id="p-bound">对账活动数据并起草一份建议的预算调整。不要改活动，也不要给代理商发消息。展示当前值、建议值和预期影响之后，再向我要审批。</pre>
+</div>
+<p>这些动作默认写进禁区：发消息或邀请、发布内容、购买和资金转移、删除或覆盖数据、改权限、改生产、接受法律条款。</p>
+
+<h2>审一条动作</h2>
+<p>需要审批时，对话会展示拟议操作和输入。先看目标、范围、数值。</p>
+<ul class="clean">
+  <li>桌面：<strong>Allow once</strong> 放行这次；<strong>Deny</strong> 拒绝；<strong>Always allow</strong> 可存一条匹配规则。</li>
+  <li>iPhone：<strong>Approve once</strong> / <strong>Deny</strong>。</li>
+</ul>
+<p>看不清目标或效果就不要批。让 Bot 用白话解释，或先出草稿。审批<strong>不能撤销已经完成的工作</strong>。</p>
+
+<h2>Auto-review</h2>
+<p>当 Auto-review 强制可用时，Grok Bot 会在工具调用和电脑动作执行前评估。打开 <strong>Settings → General → Auto-review</strong> 添加规则。</p>
+<ul class="clean">
+  <li><strong>Require Approval</strong>：匹配的动作一律停下给你。</li>
+  <li><strong>Always Allow</strong>：仅当自动审查没有别的理由拦截时才放行。</li>
+  <li>两类都匹配时，<strong>Require Approval 获胜</strong>。</li>
+</ul>
+<p>规则写窄，对准已知动作和范围。例如：发任何外部邮件前要审批；改生产仪表盘前要审批；允许在 <code>/workspace/reports</code> 跑 <code>git status</code>。避免「允许浏览器里的一切」这种宽规则。网站和工具会变。Auto-review 基于模型，是补充，不是最小权限的替代。个人规则存在当前桌面并同步到它的云电脑；另一台桌面要单独核对。</p>
+
+<h2>密码自己填</h2>
+<p>密码、passkey、两步验证码、CAPTCHA、支付确认：打开 Agent Computer → 接管 → 做完敏感步骤 → 交还控制。不要把密码或一次性码发进普通聊天。secure secret request 见第 06 课：遮罩、不进文字记录、不给模型看。</p>
+
+<h2>本机电脑</h2>
+<p><strong>Settings → General → Agent → Execution on Local Computer</strong>。默认 Ask every time。没有让 Bot 动你本地文件的具体理由，就选 <strong>Never allowed</strong>。这不影响云电脑。</p>
+
+<h2>共享电脑不是安全边界</h2>
+<ul class="clean">
+  <li>不要用「分开的 Bot」当隔离。</li>
+  <li>某个服务不该再被使用时，在共享电脑上登出。</li>
+  <li>做完后删掉敏感临时文件。</li>
+  <li>不再需要的连接器：卸载，并在源服务撤销授权。</li>
+</ul>
+<p>分享 Bot 也不是安全边界：公开链接只复制配置，不含电脑和登录，但 description / skills / routines 里的秘密会被看见。</p>
+
+<h2>账号与隐私</h2>
+<p>Grok Bot 使用 Cursor 认证和账号数据设置。需要云端存储，<strong>不支持 Legacy Privacy Mode</strong>。训练退出遵循适用的 Cursor 账号与隐私设置。合同细节看当前 Cursor Privacy Policy 与安全说明。组织管理员可能限制本机执行，并提供云电脑托管设置。</p>
+
+<h2>收回访问</h2>
+<ol class="steps">
+  <li>暂停或删除相关 Routines。</li>
+  <li>在共享电脑上登出网站。</li>
+  <li>卸载连接器，并在源服务撤销授权。</li>
+  <li>从 <code>/workspace</code> 去掉敏感项目文件。</li>
+  <li>Hide 或 Delete 不该再出现的 Bot。</li>
+  <li>若要删除 Cursor 账号，走账号设置流程。</li>
+</ol>
+<p>删除 Bot 不会清掉共享电脑上的文件或浏览器会话。</p>
+
+<h2>最小权限清单</h2>
+<ul class="clean">
+  <li>只连接流程需要的工具。</li>
+  <li>源系统支持时用范围受限的服务账号。</li>
+  <li>从只读任务和草稿输出开始。</li>
+  <li>发送、发布、购买、删除、改生产，一律审批。</li>
+  <li>定期看已装连接器和活跃 Routines。</li>
+  <li>源系统或预期流程一变，就暂停 Routine。</li>
+  <li>重要决策保留源链接和动作记录。</li>
+</ul>
+
+<h2>本课核对</h2>
+<div class="check-card">
+  <ul class="checks">
+    <li><label><input type="checkbox"> Auto-review 里 Require Approval 压过 Always Allow</label></li>
+    <li><label><input type="checkbox"> 发送 / 发布 / 删除 / 购买 / 改生产有审批点</label></li>
+    <li><label><input type="checkbox"> 本机执行不是 Always allow</label></li>
+    <li><label><input type="checkbox"> 不会把多个 Bot 当成隔离墙</label></li>
+  </ul>
+</div>
+
+        <nav class="pager"><a href="08-settings.html"><span class="dir">上一课</span><span class="to">设置与通知</span></a><a href="10-practice.html" style="text-align:right"><span class="dir">下一课</span><span class="to">练习课</span></a></nav>
+      </main>
+      <footer class="footer">
+        <p>界面以你的 App 当前版本为准。本教程只收录官方文档与课程说明里的路径；若按钮文案不同，以当前界面为准，并查阅 <a href="https://docs.x.ai/grok-bot/overview">Grok Bot 官方文档</a>。</p>
+        <p>Grok Bot 是 xAI / Cursor 产品，不是 grok.com 聊天窗口。产品词保持英文：Grok Bot、Bot、Cursor、Plugins、Auto-review、Skill、Routine。</p>
+      </footer>
+    </div>
+  </div>
+  <script src="../js/app.js"></script>
+</body>
+</html>

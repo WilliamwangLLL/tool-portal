@@ -1,0 +1,1360 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta name="x-poe-datastore-behavior" content="local_only"><meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://code.jquery.com https://unpkg.com https://d3js.org https://threejs.org https://cdn.plot.ly https://stackpath.bootstrapcdn.com https://maps.googleapis.com https://cdn.tailwindcss.com https://ajax.googleapis.com https://kit.fontawesome.com https://cdn.datatables.net https://maxcdn.bootstrapcdn.com https://code.highcharts.com https://tako-static-assets-production.s3.amazonaws.com https://www.youtube.com https://fonts.googleapis.com https://fonts.gstatic.com https://pfst.cf2.poecdn.net https://puc.poecdn.net https://i.imgur.com https://wikimedia.org https://*.icons8.com https://*.giphy.com https://picsum.photos https://images.unsplash.com; frame-src 'self' https://www.youtube.com https://trytako.com; child-src 'self'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>毛泽东一生功过：较为全面、客观的网页介绍</title>
+  <style>
+    :root {
+      --bg: #eef3f9;
+      --card: #ffffff;
+      --text: #0f172a;
+      --muted: #475569;
+      --line: #dbe4f0;
+      --primary: #1d4ed8;
+      --primary-soft: #dbeafe;
+      --good: #0f766e;
+      --good-soft: #ccfbf1;
+      --bad: #b91c1c;
+      --bad-soft: #fee2e2;
+      --warn: #9a3412;
+      --warn-soft: #ffedd5;
+      --shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+      --hero-1: #0f172a;
+      --hero-2: #1e3a8a;
+      --hero-3: #0f766e;
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+        "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.75;
+    }
+
+    a { color: var(--primary); }
+    p { margin: 0 0 14px; }
+    h1, h2, h3, h4 { line-height: 1.3; margin: 0 0 12px; }
+    ul, ol { margin: 12px 0 0 22px; }
+    li { margin-bottom: 8px; }
+
+    .hero {
+      color: white;
+      padding: 52px 20px 36px;
+      background:
+        radial-gradient(circle at top right, rgba(255,255,255,.16), transparent 30%),
+        radial-gradient(circle at bottom left, rgba(255,255,255,.10), transparent 30%),
+        linear-gradient(135deg, var(--hero-1), var(--hero-2) 55%, var(--hero-3));
+    }
+
+    .hero-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.18);
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 0.92rem;
+      margin-bottom: 16px;
+      backdrop-filter: blur(8px);
+    }
+
+    .hero h1 {
+      font-size: clamp(2rem, 3.8vw, 3.4rem);
+      margin-bottom: 12px;
+      max-width: 980px;
+    }
+
+    .subtitle {
+      max-width: 960px;
+      color: rgba(255,255,255,.90);
+      font-size: 1.05rem;
+      margin-bottom: 18px;
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: 18px 0 16px;
+    }
+
+    .btn {
+      appearance: none;
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.10);
+      color: white;
+      padding: 10px 14px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 0.96rem;
+      transition: transform .15s ease, background .15s ease, color .15s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      background: rgba(255,255,255,.16);
+    }
+
+    .btn.active {
+      background: white;
+      color: var(--text);
+      border-color: white;
+      font-weight: 700;
+    }
+
+    .hero-note {
+      background: rgba(255,255,255,.10);
+      border: 1px solid rgba(255,255,255,.14);
+      color: rgba(255,255,255,.92);
+      padding: 14px 16px;
+      border-radius: 16px;
+      max-width: 980px;
+    }
+
+    .page {
+      max-width: 1200px;
+      margin: 24px auto 48px;
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: 290px minmax(0, 1fr);
+      gap: 20px;
+    }
+
+    .toc-card {
+      position: sticky;
+      top: 16px;
+      align-self: start;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 18px;
+      box-shadow: var(--shadow);
+    }
+
+    .toc-title {
+      font-size: 1rem;
+      margin-bottom: 12px;
+      color: var(--muted);
+    }
+
+    .toc {
+      display: grid;
+      gap: 6px;
+    }
+
+    .toc a {
+      text-decoration: none;
+      color: #334155;
+      padding: 10px 12px;
+      border-radius: 12px;
+      transition: background .15s ease, color .15s ease;
+      font-size: 0.95rem;
+    }
+
+    .toc a:hover,
+    .toc a.active {
+      background: var(--primary-soft);
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow);
+      margin-bottom: 20px;
+    }
+
+    .section-header {
+      margin-bottom: 12px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      width: fit-content;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: #e0f2fe;
+      color: #075985;
+      font-size: 0.84rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .fact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 14px;
+      margin-top: 16px;
+    }
+
+    .fact {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 14px;
+    }
+
+    .fact .label {
+      font-size: 0.88rem;
+      color: #64748b;
+      margin-bottom: 6px;
+    }
+
+    .fact .value {
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    .callout {
+      margin-top: 16px;
+      background: var(--warn-soft);
+      border: 1px solid #fed7aa;
+      color: var(--warn);
+      padding: 16px;
+      border-radius: 16px;
+    }
+
+    .duo-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .mini-card {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-left: 5px solid transparent;
+      border-radius: 14px;
+      padding: 16px;
+    }
+
+    .mini-card.good {
+      border-left-color: var(--good);
+      background: #f0fdfa;
+    }
+
+    .mini-card.bad {
+      border-left-color: var(--bad);
+      background: #fef2f2;
+    }
+
+    .mini-card h3 {
+      font-size: 1.02rem;
+      margin-bottom: 8px;
+    }
+
+    .table-wrap {
+      overflow: auto;
+      margin-top: 12px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 720px;
+    }
+
+    th, td {
+      text-align: left;
+      vertical-align: top;
+      padding: 14px 12px;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    th {
+      background: #f8fafc;
+      font-size: 0.95rem;
+    }
+
+    .timeline {
+      position: relative;
+      margin-top: 8px;
+      padding-left: 28px;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 8px;
+      top: 6px;
+      bottom: 6px;
+      width: 2px;
+      background: #cbd5e1;
+    }
+
+    .timeline-item {
+      position: relative;
+      padding: 0 0 18px;
+    }
+
+    .timeline-item::before {
+      content: "";
+      position: absolute;
+      left: -20px;
+      top: 8px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--primary);
+      box-shadow: 0 0 0 4px var(--primary-soft);
+    }
+
+    .year {
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 4px;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    .top-btn {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      width: 50px;
+      height: 50px;
+      border: none;
+      border-radius: 999px;
+      background: var(--primary);
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 12px 28px rgba(29, 78, 216, .28);
+      display: none;
+      font-size: 1rem;
+    }
+
+    .top-btn.show { display: block; }
+
+    footer {
+      max-width: 1200px;
+      margin: 0 auto 48px;
+      padding: 0 20px;
+      color: var(--muted);
+    }
+
+    @media (max-width: 960px) {
+      .page {
+        grid-template-columns: 1fr;
+      }
+
+      .toc-card {
+        position: static;
+      }
+
+      .duo-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media print {
+      body {
+        background: white;
+      }
+
+      .hero {
+        background: white;
+        color: black;
+        padding-top: 20px;
+        padding-bottom: 10px;
+      }
+
+      .subtitle,
+      .hero-note {
+        color: #222;
+      }
+
+      .controls,
+      .toc-card,
+      .top-btn {
+        display: none !important;
+      }
+
+      .card {
+        box-shadow: none;
+        border-color: #ddd;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="badge" id="langBadge">中英双语 | Bilingual</div>
+      <h1 id="pageTitle">毛泽东：一生功过的较为全面、客观介绍</h1>
+      <p class="subtitle" id="pageSubtitle"></p>
+      <div class="controls">
+        <button class="btn active" id="zhBtn" type="button" aria-pressed="true">中文</button>
+        <button class="btn" id="enBtn" type="button" aria-pressed="false">English</button>
+        <button class="btn" id="printBtn" type="button">打印 / 保存 PDF</button>
+      </div>
+      <div class="hero-note" id="heroNote"></div>
+    </div>
+  </header>
+
+  <div class="page">
+    <aside class="toc-card">
+      <h2 class="toc-title" id="tocTitle">目录</h2>
+      <nav class="toc" id="toc"></nav>
+    </aside>
+
+    <main id="app"></main>
+  </div>
+
+  <button class="top-btn" id="topBtn" type="button" aria-label="返回顶部">顶</button>
+
+  <footer id="footer"></footer>
+
+  <script>
+    const content = {
+      zh: {
+        browserTitle: "毛泽东一生功过：较为全面、客观的网页介绍",
+        htmlLang: "zh-CN",
+        title: "毛泽东：一生功过的较为全面、客观介绍",
+        subtitle: "一份面向公众的中英双语网页：从革命、建国、治理、国际关系与历史代价等多个维度理解毛泽东",
+        note: "本页尽量避免“神化”或“妖魔化”。涉及饥荒、政治运动、人口损失、经济表现等数字时，学界估计与解释往往并不一致；阅读时建议交叉参考不同立场的研究。",
+        labels: {
+          toc: "目录",
+          print: "打印 / 保存 PDF",
+          top: "顶",
+          noteTitle: "阅读提醒",
+          languageBadge: "中英双语 | Bilingual",
+          overview: "导言与方法",
+          facts: "基本信息",
+          chapter: "专题",
+          merits: "主要功绩",
+          faults: "主要过失与责任",
+          matrix: "综合评价矩阵",
+          debates: "为什么评价分歧很大",
+          timeline: "关键时间线",
+          readings: "延伸阅读",
+          conclusion: "简明结论",
+          domain: "维度",
+          positive: "积极影响",
+          negative: "问题与代价"
+        },
+        intro: {
+          title: "如何阅读毛泽东这一历史人物",
+          paragraphs: [
+            "毛泽东（1893—1976）是20世纪最有影响力、也最具争议的政治人物之一。他既是中国共产党长期的核心领导人，也是中华人民共和国的主要缔造者之一；既深刻改变了中国的国家结构、社会动员方式和国际地位，也对中国造成了极其沉重的人道、制度与文化代价。",
+            "要理解毛泽东，不能只看单一事件，也不能仅仅用“伟人”或“暴君”这类简单标签概括。更有效的方式，是同时从革命战争、国家建构、经济治理、思想动员、社会改造、外交战略和历史后果等多个维度来观察。",
+            "这份网页的目标，不是替读者预设最终结论，而是提供一个相对完整的框架：既看到他在国家统一、反帝反殖民、社会动员、工业化起步等方面的作用，也正视他在反右、大跃进、文化大革命等重大事件中的责任。"
+          ],
+          noteTitle: "史料与数字提醒",
+          noteText: "关于大跃进饥荒的非正常死亡人数、文化大革命中的伤亡与迫害规模，以及某些社会指标的具体改善幅度，学界没有绝对统一的数字。尤其是涉及“责任比例”“死亡口径”“地方与中央的作用分配”时，研究差异很大。较稳妥的读法是：看区间、看方法、看原始史料来源，而不要只记一个单一数字。"
+        },
+        facts: [
+          { label: "出生—逝世", value: "1893—1976" },
+          { label: "出生地", value: "湖南湘潭韶山" },
+          { label: "主要身份", value: "革命领袖、军事统帅、中华人民共和国主要缔造者之一" },
+          { label: "关键历史阶段", value: "革命战争、建国与国家重建、激进化与政治运动" },
+          { label: "中国官方常见概括", value: "功绩第一位，错误第二位；民间常简化为“七分功、三分过”" },
+          { label: "国际形象", value: "反帝革命象征，同时也是高度争议的集权政治人物" }
+        ],
+        chapters: [
+          {
+            id: "early",
+            title: "一、早年经历与思想形成（1893—1921）",
+            paragraphs: [
+              "毛泽东出生于湖南一个较为殷实的农家。清末民初的政治动荡、民族危机和地方社会变化，为他后来的政治意识提供了背景。他少年时期接受过传统教育，也接触了新式学校教育，逐渐形成了对国家衰弱、列强入侵和社会不平等的强烈关注。",
+              "他年轻时受过民族主义、新文化运动、反帝思想、社会进化论以及早期社会主义思潮的影响。1911年前后，他曾短暂参与与辛亥革命相关的军事经历；此后在湖南求学、组织学生活动，并在北京接触到更系统的马克思主义传播环境。",
+              "这一时期最关键的变化，在于他逐步相信：中国的出路不只是改良，而需要以组织化的政治运动和社会革命来改造国家。他也较早意识到农民在中国社会中的巨大力量，这一点后来成为其政治路线的核心。"
+            ],
+            points: [
+              "1918年毕业于湖南第一师范",
+              "在北京接触李大钊等人所处的马克思主义传播环境",
+              "1921年参与中国共产党第一次全国代表大会"
+            ]
+          },
+          {
+            id: "revolution",
+            title: "二、革命、战争与最高领导地位的形成（1921—1949）",
+            paragraphs: [
+              "中国共产党成立初期，毛泽东主要在湖南从事组织工作，特别关注工农运动。1927年国共分裂后，中共在城市起义受挫，毛泽东逐步转向以农村根据地和武装斗争为中心的革命道路，这与当时强调城市工人中心路线的思路存在明显差异。",
+              "在井冈山和后来的中央苏区时期，毛泽东与朱德等人结合，推动了“工农武装割据”、土地革命与游击战争相结合的实践。长征及遵义会议，是他党内地位显著上升的关键节点。延安时期，中共在抗日战争中扩大力量，毛泽东的思想和权威也通过整风运动得到系统强化。",
+              "1945年以后，国共内战再起。到1949年，中共在军事、组织和社会动员层面取得决定性优势，中华人民共和国成立。毛泽东由革命领袖转变为新国家的最高领导核心。这个阶段的功绩主要体现在组织能力、战略判断、动员农民与重建政治秩序方面；但与此同时，土地革命、肃反与战争中的政治暴力也造成大量伤害。"
+            ],
+            points: [
+              "提出并实践以农村包围城市、武装夺取政权的道路",
+              "长征与遵义会议之后，党内领导地位巩固",
+              "延安整风既增强了组织统一，也强化了思想控制与个人权威",
+              "1949年中华人民共和国成立"
+            ]
+          },
+          {
+            id: "state",
+            title: "三、建国、国家重建与早期治理（1949—1956）",
+            paragraphs: [
+              "1949年后，新政权首先面对的是战争创伤、经济凋敝、通货膨胀、地方割据残余和行政体系重建等问题。中共政权在较短时间内完成了全国范围的统治整合，恢复财政和货币秩序，建立中央集权的国家机器，并通过抗美援朝等行动强化了国家安全感与主权意识。",
+              "这一时期的重要政策包括土地改革、镇压反革命、“三反五反”、婚姻法推行、扫盲、基层组织建设和公共卫生动员。1953年开始的第一个五年计划，在苏联模式影响下推动了重工业、交通、能源和国家计划能力的提升。这些措施对国家能力的形成具有深远影响。",
+              "但早期国家建设并非只有正面效果。土地改革与镇反伴随处决和社会恐惧；大规模政治运动使司法、舆论和社会组织缺乏独立空间；国家能力的增强与政治高压是同时发生的。换言之，毛泽东治下的国家重建既有效率，也高度强制。"
+            ],
+            points: [
+              "较快恢复财政、货币与社会秩序",
+              "土地改革深刻改变乡村权力结构",
+              "婚姻法提升妇女在法律上的地位",
+              "“一五计划”为工业化和国家行政能力奠基"
+            ]
+          },
+          {
+            id: "leap",
+            title: "四、激进化、反右与大跃进（1956—1965）",
+            paragraphs: [
+              "1956年前后，中国完成对农业、手工业和资本主义工商业的社会主义改造后，毛泽东并没有转向制度化、温和化治理，反而愈发强调继续革命、群众动员和高速赶超。1957年“百花齐放、百家争鸣”短暂开放后，迅速转入反右运动，大量知识分子、干部和批评者受到打击，思想空间明显收缩。",
+              "1958年开始的大跃进，试图通过人民公社、超常规征购、基层指标竞赛和“大炼钢铁”等方式，在短期内实现工业与农业的双重跃升。这一政策建立在高度理想化和政治化的决策环境中，层层夸大产量、错误征粮、基层压迫以及自然灾害等因素叠加，最终导致严重饥荒。",
+              "关于大跃进饥荒中的非正常死亡人数，学界常见估计大致在1500万至4500万之间，具体区间与统计口径、资料来源和研究方法有关。毛泽东作为最高领导人，对政策方向、政治氛围和纠错迟缓负有重大责任；但地方干部层层加码、制度激励失真、信息封锁等因素也共同促成了灾难。1960年代初期，刘少奇、邓小平、周恩来等推动了一定程度的调整与恢复，但毛泽东并未真正放弃“继续革命”的思路。"
+            ],
+            points: [
+              "1957年反右运动重创知识界与公共讨论空间",
+              "1958年人民公社化与浮夸风导致严重政策失真",
+              "大跃进饥荒是毛时代最严重的人道灾难之一",
+              "1961—1962年出现调整恢复，但深层政治逻辑并未改变"
+            ]
+          },
+          {
+            id: "culture",
+            title: "五、文化大革命与制度危机（1966—1976）",
+            paragraphs: [
+              "1966年，毛泽东发动文化大革命，既有意识形态上的“防修反修”“反对资本主义复辟”诉求，也与权力再集中、打击党内对手、重塑革命热情密切相关。青年学生、红卫兵和各类群众组织被动员起来，迅速冲击学校、机关、党政系统和社会秩序。",
+              "文革造成广泛而深远的破坏：干部、知识分子与普通民众遭到批斗、监禁、羞辱、流放乃至死亡；教育系统长期停摆；法治与常规行政受到严重侵蚀；大规模派性冲突和权力斗争加剧社会撕裂；大量文化遗产和社会信任被破坏。",
+              "一些支持者会提到文革中某些“反特权”口号、平等主义激情，或在后来对乡村医疗、基层参与等方面留下的复杂记忆，但主流历史研究与中国官方结论均认为，文化大革命是一场给党、国家和各族人民带来严重灾难的内乱。毛泽东作为发动者和最高仲裁者，对这场灾难负有首要责任。"
+            ],
+            points: [
+              "红卫兵运动与“造反夺权”引发持续社会动荡",
+              "教育、科研、法治和行政制度遭受重创",
+              "林彪事件进一步加深政治危机",
+              "1976年毛泽东去世后，文革历史阶段结束"
+            ]
+          },
+          {
+            id: "foreign",
+            title: "六、外交、战争与全球影响",
+            paragraphs: [
+              "毛泽东时代的中国外交，一方面体现出强烈的主权独立意识，另一方面也带有革命输出和意识形态竞争色彩。抗美援朝巩固了新政权的安全地位，也让中国付出巨大人员与物资代价；中苏关系从同盟走向决裂，则深刻改变了冷战格局中的中国位置。",
+              "在亚非拉民族解放运动高涨的年代，毛泽东思想对不少第三世界国家、游击组织和革命团体产生过很大影响。中国成功发展核武器、1971年恢复联合国合法席位、1972年尼克松访华，标志着毛时代中国从被孤立走向在大国博弈中重新占据关键位置。",
+              "从国际史看，毛泽东既是反帝反殖民语境中的象征人物，也是冷战时期极具争议的革命输出者和意识形态领导者。他对世界左翼、民族解放、游击战理论与全球南方政治话语都产生过深远影响。"
+            ],
+            points: [
+              "抗美援朝强化了国家安全感与政权合法性",
+              "中苏分裂改变中国的外交战略空间",
+              "中国恢复联合国合法席位并走向中美接触",
+              "毛泽东思想对全球革命运动影响深远但高度分裂"
+            ]
+          },
+          {
+            id: "legacy",
+            title: "七、历史遗产与后世评价",
+            paragraphs: [
+              "支持者强调，毛泽东结束了长期战乱与列强压迫下的国家分裂局面，完成了现代中国意义上的统一政权建构，使中国从“被动挨打”的弱国状态中走出，并通过强力动员推动了社会重组、工业化起步和国家能力形成。",
+              "批评者则指出，毛泽东把革命逻辑和斗争哲学长期带入执政阶段，形成高度集权、个人崇拜、运动治国和对制度边界的持续破坏；其统治下发生的大跃进饥荒和文化大革命，给中国带来极其沉重的人命损失、制度倒退和长期心理创伤。",
+              "1981年中国共产党《关于建国以来党的若干历史问题的决议》通常被概括为“功绩是第一位的，错误是第二位的”，民间常简化为“七分功、三分过”。但在国际学术研究中，很多学者并不赞成用固定数字来评价毛泽东，而更强调：他既是改变中国和世界格局的重要革命家，也是对本国社会造成巨大破坏的最高决策者。"
+            ],
+            points: [
+              "他的历史地位与中华人民共和国的建国叙事密切相连",
+              "他的错误与灾难性后果也已成为中国现代史无法回避的核心议题",
+              "理解毛泽东，关键在于同时看到“国家建构”与“制度伤害”"
+            ]
+          }
+        ],
+        merits: [
+          {
+            title: "国家统一与主权重建",
+            text: "在经历晚清衰败、军阀混战、长期内战与侵略战争之后，毛泽东领导下的新政权实现了全国范围的政治整合，显著改变了中国在国际体系中的被动地位。"
+          },
+          {
+            title: "建立了强有力的现代国家机器",
+            text: "从财政、军队、基层组织到行政系统，毛时代建立了高动员能力的中央集权国家。这种国家能力后来也成为改革开放能够快速推进的重要制度基础之一。"
+          },
+          {
+            title: "推动土地改革与旧乡村结构重组",
+            text: "土地改革打破了传统乡村权力格局，使大量贫苦农民获得政治与经济上的重新定位，增强了新政权在农村的支持基础。"
+          },
+          {
+            title: "工业化起步与战略工业基础",
+            text: "第一个五年计划及相关建设推动了重工业、能源、交通、国防工业和技术体系的基础形成，虽然效率并非始终理想，但其历史意义不可忽视。"
+          },
+          {
+            title: "基础公共卫生与识字水平改善",
+            text: "在战乱结束、基层组织重建、公共卫生运动、疫病防治和教育推广等多重因素作用下，中国的人口健康、识字率和社会动员能力总体上出现明显提升。"
+          },
+          {
+            title: "妇女地位的法律提升",
+            text: "婚姻法和新政权的社会动员在一定程度上削弱了包办婚姻、买卖婚姻等旧习俗，提升了女性在婚姻和家庭中的法律地位。"
+          },
+          {
+            title: "军事与战略影响",
+            text: "毛泽东在革命战争中的战略能力、游击战与人民战争理论，对中国内战胜负和世界范围内的革命战略讨论都产生过重要影响。"
+          },
+          {
+            title: "全球南方与反殖民语境中的象征意义",
+            text: "在20世纪中期的亚非拉世界，毛泽东及毛泽东思想曾被许多国家和运动视为反帝、反殖民与民族自主的象征。"
+          }
+        ],
+        faults: [
+          {
+            title: "高度集权与个人崇拜",
+            text: "毛泽东在长期革命和执政中不断强化个人权威，弱化集体决策与制度制衡，导致错误政策更容易被放大且更难及时纠正。"
+          },
+          {
+            title: "反右运动重创知识界与公共理性",
+            text: "1957年后，大量知识分子、干部与批评者被打成“右派”，造成长期思想恐惧，也削弱了国家纠错和理性讨论能力。"
+          },
+          {
+            title: "大跃进与严重饥荒",
+            text: "大跃进中以政治激情替代经济规律，以运动化指标替代真实信息，最终造成灾难性饥荒。毛泽东对这一政策方向和政治环境负有重大责任。"
+          },
+          {
+            title: "发动文化大革命",
+            text: "文化大革命导致广泛迫害、制度失序、教育中断、社会撕裂和文化破坏，是毛泽东政治生涯中最严重的历史责任之一。"
+          },
+          {
+            title: "以政治运动代替法治和常规治理",
+            text: "毛时代反复依赖群众运动、斗争逻辑和政治审查，削弱了法治、程序、专业行政和稳定治理的基础。"
+          },
+          {
+            title: "对知识、专业与制度边界缺乏持续尊重",
+            text: "在多个阶段，毛泽东更偏好政治意志和群众动员，而非专家治理和制度约束，这使经济和社会政策更容易走向激进和失真。"
+          },
+          {
+            title: "政治暴力与长期社会创伤",
+            text: "从土地革命、镇反到文革，政治斗争常伴随羞辱、监禁、处决、连坐和集体恐惧，其创伤延续到几代人的记忆之中。"
+          },
+          {
+            title: "对国家制度现代化造成长期阻滞",
+            text: "尽管建立了强国家，但同时也破坏了制度化、法治化、专业化的成长条件，导致中国在其去世后不得不进行深刻纠偏。"
+          }
+        ],
+        matrix: [
+          {
+            domain: "革命与建国",
+            positive: "领导中共取得政权，完成国家重建，在反帝和民族独立叙事中具有关键地位。",
+            negative: "革命过程伴随长期战争、清洗和政治暴力，建国合法性与革命暴力始终交织在一起。"
+          },
+          {
+            domain: "国家能力",
+            positive: "建立中央集权、覆盖全国的财政、军队和基层组织体系，行政穿透力显著增强。",
+            negative: "国家能力与社会控制同步增强，个人权力过大，制度制衡不足。"
+          },
+          {
+            domain: "经济与发展",
+            positive: "完成工业化起步，奠定部分重工业和国防工业基础。",
+            negative: "大跃进等激进政策造成巨大损失，计划体制在资源配置和信息反馈上存在严重缺陷。"
+          },
+          {
+            domain: "社会改造",
+            positive: "土地改革、婚姻法、扫盲和公共卫生改善了部分基层群体的生活机会与社会地位。",
+            negative: "许多社会改造以高压方式实施，伴随迫害、阶级标签化和长期心理阴影。"
+          },
+          {
+            domain: "政治制度",
+            positive: "形成高度动员型政治体系，能在短期内集中资源解决特定目标。",
+            negative: "法治、言论空间、知识独立和常规治理被不断削弱，运动政治成为高风险常态。"
+          },
+          {
+            domain: "国际地位",
+            positive: "显著提升中国的主权意识、军事实力和外交存在感，使中国重新进入世界政治核心舞台。",
+            negative: "部分时期外交高度意识形态化，付出经济和战略代价，也加深了外部对其统治方式的争议。"
+          }
+        ],
+        debates: [
+          "如何同时评价毛泽东在民族独立、国家统一方面的作用，与其在执政后造成的巨大人道灾难？",
+          "大跃进饥荒中，中央最高决策、地方层层加码、制度激励失真与自然因素，各自应承担多大责任？",
+          "毛时代社会指标的某些改善，应在多大程度上归因于毛个人，还是归因于战争结束、国家统一、基层组织重建等更广泛因素？",
+          "在全球南方和反殖民历史中，毛泽东为何仍被部分人视为解放象征，而在许多现代史研究中又被视为灾难性统治者？",
+          "官方记忆、民间记忆、海外档案、口述史与地方志材料之间，常常存在不同叙述，这使评价长期保持分歧。"
+        ],
+        timeline: [
+          { year: "1893", text: "生于湖南湘潭韶山。" },
+          { year: "1911", text: "在辛亥革命前后短暂参与军事经历，开始接触现代政治变局。" },
+          { year: "1918", text: "毕业于湖南第一师范，后赴北京，接触马克思主义传播环境。" },
+          { year: "1921", text: "参与中国共产党第一次全国代表大会。" },
+          { year: "1927", text: "国共分裂后转向农村革命与武装斗争。" },
+          { year: "1934—1935", text: "长征与遵义会议，党内领导地位显著上升。" },
+          { year: "1937—1945", text: "抗日战争时期，中共力量迅速扩张，延安成为政治与思想中心。" },
+          { year: "1949", text: "中华人民共和国成立。" },
+          { year: "1950—1953", text: "土地改革、抗美援朝、镇反与国家政权巩固。" },
+          { year: "1953—1957", text: "第一个五年计划推进工业化和国家计划体系建设。" },
+          { year: "1957", text: "反右运动开始，知识界与公共讨论空间遭受重创。" },
+          { year: "1958—1961", text: "大跃进与严重饥荒。" },
+          { year: "1966", text: "文化大革命爆发。" },
+          { year: "1971", text: "中国恢复联合国合法席位；同年发生林彪事件。" },
+          { year: "1972", text: "尼克松访华，中美关系出现重大转折。" },
+          { year: "1976", text: "毛泽东逝世，文革时代走向结束。" }
+        ],
+        readings: [
+          {
+            name: "《毛泽东选集》",
+            note: "理解毛泽东思想与政治语言的重要原始文本，但它并不等于全部历史事实，需要与其他史料对读。"
+          },
+          {
+            name: "中共中央《关于建国以来党的若干历史问题的决议》（1981）",
+            note: "中国官方评价毛泽东和文革的重要文本，适合了解中国共产党内部的正式历史结论。"
+          },
+          {
+            name: "Stuart Schram, The Political Thought of Mao Tse-tung",
+            note: "研究毛政治思想的重要著作之一，适合理解其理论形成与演变。"
+          },
+          {
+            name: "Philip Short, Mao: A Life",
+            note: "较具影响力的英文传记之一，试图在成就与灾难之间保持叙述平衡。"
+          },
+          {
+            name: "Roderick MacFarquhar & Michael Schoenhals, Mao's Last Revolution",
+            note: "研究文化大革命的重要作品。"
+          },
+          {
+            name: "Maurice Meisner, Mao's China and After",
+            note: "从社会与政治发展的长时段视角理解毛时代中国。"
+          },
+          {
+            name: "杨继绳《墓碑》",
+            note: "关于大跃进饥荒的重要研究之一，影响很大。"
+          },
+          {
+            name: "Frank Dikötter, Mao's Great Famine",
+            note: "国际传播广泛，但其估计与解释也存在争议，适合与其他研究对照阅读。"
+          }
+        ],
+        conclusion: {
+          title: "简明结论",
+          paragraphs: [
+            "如果用一句话概括：毛泽东是把革命、国家建构、意识形态动员和个人权力结合到极致的领导人。他确实深刻改变了中国的国家面貌、社会结构和国际位置；但他也通过高度集权和反复政治运动，把中国推入了多次深重灾难。",
+            "因此，对毛泽东最接近“客观”的看法，往往不是极端赞美，也不是单向否定，而是承认这两个事实必须同时成立：他是现代中国最重要的建国型政治人物之一；也是对中国社会造成巨大人道与制度代价的最高决策者之一。"
+          ]
+        },
+        footer: "本页为学习与讨论用途。你可以继续把它扩展成：学术引注版、时间轴增强版、图文长卷版、课堂展示版，或更完整的中英双语传播版。"
+      },
+
+      en: {
+        browserTitle: "Mao Zedong: A balanced and comprehensive profile",
+        htmlLang: "en",
+        title: "Mao Zedong: A Balanced and Comprehensive Historical Profile",
+        subtitle: "A bilingual public-facing webpage that examines Mao through revolution, state-building, governance, foreign policy, and human cost",
+        note: "This page aims to avoid both hagiography and demonization. Estimates concerning famine deaths, political violence, and social outcomes vary across sources, so readers should compare works from different viewpoints and methods.",
+        labels: {
+          toc: "Contents",
+          print: "Print / Save PDF",
+          top: "Top",
+          noteTitle: "Reading note",
+          languageBadge: "中英双语 | Bilingual",
+          overview: "Introduction & method",
+          facts: "Quick facts",
+          chapter: "Section",
+          merits: "Major achievements",
+          faults: "Major failures and responsibilities",
+          matrix: "Evaluation matrix",
+          debates: "Why interpretations differ",
+          timeline: "Key timeline",
+          readings: "Further reading",
+          conclusion: "Concise conclusion",
+          domain: "Domain",
+          positive: "Positive impact",
+          negative: "Problems and costs"
+        },
+        intro: {
+          title: "How to read Mao as a historical figure",
+          paragraphs: [
+            "Mao Zedong (1893–1976) was one of the most consequential and controversial political figures of the twentieth century. He was a central leader of the Chinese Communist Party and one of the principal founders of the People's Republic of China. He transformed China's political structure, social organization, and international position, but he also presided over catastrophic campaigns with immense human and institutional costs.",
+            "Mao cannot be understood well through a single label such as 'great leader' or 'tyrant.' A more useful approach is to examine him at once as a revolutionary, a wartime strategist, a builder of a new state, an ideological mobilizer, and a ruler whose style of politics repeatedly damaged institutions and society.",
+            "The purpose of this webpage is not to impose a final verdict on the reader, but to present a structured overview: Mao's role in national unification, anti-imperial politics, mobilization, and industrial beginnings, as well as his responsibility for the Anti-Rightist Campaign, the Great Leap Forward famine, and the Cultural Revolution."
+          ],
+          noteTitle: "Sources and numbers",
+          noteText: "There is no single universally accepted figure for excess deaths during the Great Leap Forward famine, for casualties and persecution during the Cultural Revolution, or for the exact scale of some social gains. Different scholars use different archives, demographic methods, and definitions. It is usually better to compare ranges, methods, and source bases rather than memorizing one number."
+        },
+        facts: [
+          { label: "Born—Died", value: "1893—1976" },
+          { label: "Birthplace", value: "Shaoshan, Xiangtan, Hunan" },
+          { label: "Main roles", value: "Revolutionary leader, military strategist, principal founder of the PRC" },
+          { label: "Key historical phases", value: "Revolutionary war, state-building, radicalization and mass campaigns" },
+          { label: "Common official formula in China", value: "Achievements are primary, mistakes secondary; often simplified as '70% merit, 30% fault'" },
+          { label: "International image", value: "An anti-imperial revolutionary symbol, yet also a deeply contested authoritarian ruler" }
+        ],
+        chapters: [
+          {
+            id: "early",
+            title: "1. Early life and intellectual formation (1893–1921)",
+            paragraphs: [
+              "Mao was born into a relatively prosperous peasant household in Hunan. The collapse of the Qing order, foreign pressure, domestic upheaval, and local social change formed the background of his early political consciousness. He received both traditional and modern schooling and became increasingly preoccupied with China's weakness and social inequality.",
+              "In his youth he was influenced by nationalism, anti-imperial thought, the New Culture Movement, and early socialist ideas. He also gradually came to believe that peasants, not only urban workers, would be a decisive force in China's transformation.",
+              "This early period matters because Mao's later politics cannot be separated from his conviction that China required not merely reform, but organized mass politics and revolutionary struggle."
+            ],
+            points: [
+              "Graduated from Hunan First Normal School in 1918",
+              "Worked in an environment linked to early Marxist circles in Beijing",
+              "Took part in the First National Congress of the Chinese Communist Party in 1921"
+            ]
+          },
+          {
+            id: "revolution",
+            title: "2. Revolution, civil war, and the rise to supreme leadership (1921–1949)",
+            paragraphs: [
+              "In the CCP's early years Mao worked mainly in organization and rural activism, especially in Hunan. After the 1927 rupture between the Nationalists and the Communists, Mao increasingly turned toward armed struggle rooted in the countryside rather than an urban-worker-centered strategy.",
+              "In Jinggangshan and later revolutionary bases, Mao and other Communist commanders combined land revolution, guerrilla war, and rural political organization. The Long March and the Zunyi Conference were crucial in strengthening Mao's authority inside the party.",
+              "During the Yan'an years, the CCP expanded rapidly during the anti-Japanese war, and Mao's authority was consolidated through ideological rectification. By 1949, after renewed civil war, the Communists defeated the Nationalists and founded the PRC. Mao's achievements in this era included strategic leadership, organizational skill, and mass mobilization, but the revolutionary process also involved coercion and political violence."
+            ],
+            points: [
+              "Helped develop a rural-based revolutionary strategy",
+              "Rose to predominant leadership after the Long March",
+              "Yan'an rectification strengthened party cohesion but also intensified thought control",
+              "The People's Republic of China was founded in 1949"
+            ]
+          },
+          {
+            id: "state",
+            title: "3. Founding the PRC and building a new state (1949–1956)",
+            paragraphs: [
+              "After 1949, the new regime faced war damage, inflation, weak institutions, and the task of establishing authority across a vast country. The Communist state moved quickly to unify administration, stabilize the economy, and construct a centralized political apparatus. The Korean War also reinforced the new regime's sense of security and sovereignty, though at great cost.",
+              "Major policies in this period included land reform, campaigns against counterrevolutionaries, the Three-Anti and Five-Anti campaigns, literacy drives, public health campaigns, and the Marriage Law. The First Five-Year Plan, under strong Soviet influence, laid the foundations for heavy industry, infrastructure, and planning capacity.",
+              "Yet this early state-building was inseparable from coercion. Land reform and suppression campaigns involved executions and fear; state capacity expanded together with political repression. Mao's China was effective at mobilization, but it was also highly authoritarian from the start."
+            ],
+            points: [
+              "Rapid restoration of monetary and political order",
+              "Land reform reshaped village power relations",
+              "The Marriage Law improved women's legal position",
+              "The First Five-Year Plan built parts of the industrial and administrative base"
+            ]
+          },
+          {
+            id: "leap",
+            title: "4. Radicalization, the Anti-Rightist Campaign, and the Great Leap Forward (1956–1965)",
+            paragraphs: [
+              "After socialist transformation was largely completed, Mao did not move toward a more stable or institutional style of rule. Instead, he increasingly emphasized continued revolution, mass mobilization, and rapid advance. The brief opening of the Hundred Flowers movement in 1957 quickly gave way to the Anti-Rightist Campaign, which struck intellectuals, officials, and critics and sharply narrowed the space for criticism.",
+              "The Great Leap Forward, launched in 1958, tried to accelerate development through people's communes, inflated production targets, overprocurement, and symbolic projects such as backyard steelmaking. In a political environment shaped by ideological pressure and false reporting, policy failure escalated into catastrophe.",
+              "Scholarly estimates of excess deaths in the famine vary widely, often ranging roughly from 15 million to 45 million depending on method and definition. Mao, as the supreme leader, bears major responsibility for the policy direction and the political atmosphere that blocked correction, though local exaggeration, institutional incentives, and information distortion also contributed. Early 1960s recovery measures moderated the crisis, but Mao did not abandon the underlying logic of permanent revolutionary pressure."
+            ],
+            points: [
+              "The Anti-Rightist Campaign damaged intellectual life and critical debate",
+              "Communes and inflated reporting produced severe policy distortion",
+              "The Great Leap famine was one of the gravest human disasters of the Mao era",
+              "Recovery began in the early 1960s, but the political logic of radicalism remained"
+            ]
+          },
+          {
+            id: "culture",
+            title: "5. The Cultural Revolution and the crisis of institutions (1966–1976)",
+            paragraphs: [
+              "Mao launched the Cultural Revolution in 1966. It was driven partly by ideological claims about preventing 'revisionism' and partly by Mao's desire to reassert authority, attack rivals, and rekindle revolutionary fervor. Students, Red Guards, and mass organizations were mobilized against schools, officials, and party structures.",
+              "The result was massive disruption: officials, intellectuals, and ordinary citizens were humiliated, imprisoned, exiled, tortured, or killed; education was crippled; legal and administrative institutions were shattered; factional violence spread; and cultural heritage was damaged. The political center itself became unstable.",
+              "Some later defenders point to anti-privilege rhetoric, egalitarian passion, or complicated memories of rural medical and grassroots experience. Still, mainstream scholarship and the Chinese Party's own later verdict both regard the Cultural Revolution as a profound disaster. Mao, as initiator and ultimate arbiter, bears primary responsibility."
+            ],
+            points: [
+              "Red Guard mobilization and power seizures led to prolonged chaos",
+              "Education, research, law, and regular administration were deeply damaged",
+              "The Lin Biao affair intensified the political crisis",
+              "Mao's death in 1976 marked the end of the Cultural Revolution era"
+            ]
+          },
+          {
+            id: "foreign",
+            title: "6. Foreign policy, war, and Mao's global impact",
+            paragraphs: [
+              "Mao-era foreign policy combined strong concern for sovereignty with revolutionary ideology. The Korean War strengthened the new regime's legitimacy and security, but it was extremely costly. The Sino-Soviet split later transformed China's position in the Cold War.",
+              "Maoism influenced many movements in Asia, Africa, and Latin America during the era of decolonization. China's acquisition of nuclear weapons, its restoration to the United Nations in 1971, and Nixon's visit in 1972 signaled Mao-era China's emergence as a major actor in world politics.",
+              "In global history, Mao appears both as an anti-imperial symbol and as a polarizing exporter of revolutionary ideology. His influence on left-wing movements, guerrilla strategy, and Third World political language was extensive, though deeply contested."
+            ],
+            points: [
+              "The Korean War shaped the PRC's security position",
+              "The Sino-Soviet split opened new strategic space but also new dangers",
+              "China returned to the UN and entered a major opening to the United States",
+              "Maoism had broad but divisive global influence"
+            ]
+          },
+          {
+            id: "legacy",
+            title: "7. Historical legacy and later interpretations",
+            paragraphs: [
+              "Supporters stress that Mao helped end prolonged warfare, foreign domination, and state fragmentation, and that he built a unified modern state with the capacity to mobilize resources on a national scale.",
+              "Critics stress that Mao carried revolutionary struggle into peacetime rule, producing extreme centralization, personality cult, recurring political campaigns, and destructive hostility toward institutional limits. The Great Leap famine and the Cultural Revolution remain central to this criticism.",
+              "The CCP's 1981 resolution is commonly summarized as saying Mao's achievements were primary and his mistakes secondary, often simplified as a '70/30' formula. Many scholars, however, reject fixed numerical formulas and instead emphasize a dual truth: Mao was both a world-historically important revolutionary state founder and a ruler responsible for immense human suffering and institutional damage."
+            ],
+            points: [
+              "Mao's standing is inseparable from the founding narrative of the PRC",
+              "His mistakes are equally inseparable from the darkest chapters of modern Chinese history",
+              "A serious assessment must hold together both state-building and destruction"
+            ]
+          }
+        ],
+        merits: [
+          {
+            title: "National unification and restored sovereignty",
+            text: "Under Mao, China emerged from decades of war, fragmentation, and foreign domination into a unified state with much greater international weight."
+          },
+          {
+            title: "Creation of a powerful modern state apparatus",
+            text: "The Mao era built a high-capacity central state with strong fiscal, military, and organizational reach. Later reforms also benefited from this inherited state capacity."
+          },
+          {
+            title: "Rural revolution and restructuring of village power",
+            text: "Land reform transformed traditional rural hierarchies and gave the new regime a broad mass base among poor peasants."
+          },
+          {
+            title: "Industrial takeoff and strategic industry",
+            text: "Early planning and state-led development laid parts of the foundation for heavy industry, infrastructure, and defense production."
+          },
+          {
+            title: "Public health and literacy gains",
+            text: "With peace, mass organization, public health campaigns, and basic education drives, life expectancy and literacy improved substantially overall, though regional variation was wide and causes were mixed."
+          },
+          {
+            title: "Improved legal status of women",
+            text: "The Marriage Law and related reforms weakened some older patriarchal customs and improved women's formal legal standing."
+          },
+          {
+            title: "Military and strategic influence",
+            text: "Mao's ideas on guerrilla war and people's war shaped both the Chinese Revolution and wider debates on revolutionary strategy."
+          },
+          {
+            title: "Symbolic importance in the anti-colonial world",
+            text: "For many in Asia, Africa, and Latin America, Mao became a symbol of anti-imperial struggle and political self-assertion."
+          }
+        ],
+        faults: [
+          {
+            title: "Extreme concentration of power and personality cult",
+            text: "Mao's authority progressively overwhelmed institutional restraint, making large errors easier to magnify and harder to correct."
+          },
+          {
+            title: "The Anti-Rightist Campaign",
+            text: "The campaign devastated intellectual life and open criticism, weakening the state's capacity for self-correction."
+          },
+          {
+            title: "The Great Leap Forward famine",
+            text: "A politically driven development strategy, detached from economic reality and reliable information, produced catastrophic famine. Mao bears major responsibility."
+          },
+          {
+            title: "Launching the Cultural Revolution",
+            text: "The Cultural Revolution brought persecution, social rupture, administrative chaos, educational collapse, and long-term trauma."
+          },
+          {
+            title: "Substituting political campaigns for law and routine governance",
+            text: "Repeated mass campaigns undercut legal norms, institutional continuity, and predictable administration."
+          },
+          {
+            title: "Disregard for expertise and institutional limits",
+            text: "Mao often privileged political will and ideological fervor over professional knowledge, which increased the risk of radical policy failure."
+          },
+          {
+            title: "Political violence and enduring social trauma",
+            text: "Humiliation, imprisonment, execution, stigma, and fear marked many Mao-era campaigns and left scars across generations."
+          },
+          {
+            title: "Long-term damage to institutional modernization",
+            text: "Even while creating a strong state, Mao also weakened the legal, procedural, and professional foundations required for stable modern governance."
+          }
+        ],
+        matrix: [
+          {
+            domain: "Revolution and state founding",
+            positive: "Mao led the CCP to power and played a decisive role in the creation of the PRC and in anti-imperial nationalist politics.",
+            negative: "Revolutionary legitimacy was intertwined with war, coercion, and political violence."
+          },
+          {
+            domain: "State capacity",
+            positive: "A centralized nationwide apparatus of taxation, military organization, and grassroots control was built rapidly.",
+            negative: "State capacity grew together with social control, and institutional checks remained weak."
+          },
+          {
+            domain: "Economy and development",
+            positive: "The Mao era laid part of the industrial and strategic base of modern China.",
+            negative: "Radical campaigns, especially the Great Leap Forward, caused immense loss and revealed severe planning failures."
+          },
+          {
+            domain: "Social transformation",
+            positive: "Land reform, literacy campaigns, public health efforts, and legal reforms changed opportunities for many ordinary people.",
+            negative: "These transformations often came through coercion, labeling, persecution, and fear."
+          },
+          {
+            domain: "Political system",
+            positive: "The regime could mobilize resources rapidly for major goals.",
+            negative: "Rule of law, free inquiry, institutional autonomy, and regular administration were repeatedly undermined."
+          },
+          {
+            domain: "International position",
+            positive: "China's sovereignty, military standing, and diplomatic importance were greatly strengthened.",
+            negative: "Foreign policy was at times heavily ideological and strategically costly, and Mao's rule remained globally divisive."
+          }
+        ],
+        debates: [
+          "How should one weigh Mao's role in national independence and state formation against the human catastrophes that occurred under his rule?",
+          "In the Great Leap famine, how should responsibility be distributed among central decisions, local overcompliance, distorted incentives, and natural conditions?",
+          "How much of Mao-era progress in health or literacy should be attributed to Mao personally, and how much to broader factors such as peace, state integration, and mass administration?",
+          "Why does Mao remain a symbol of liberation in some anti-colonial and Global South contexts while appearing in much modern scholarship as a catastrophic ruler?",
+          "Official memory, local memory, overseas archives, oral history, and demographic reconstruction often tell different stories, which keeps interpretation contested."
+        ],
+        timeline: [
+          { year: "1893", text: "Born in Shaoshan, Hunan." },
+          { year: "1911", text: "Brief military-related experience around the Xinhai Revolution and the fall of the Qing." },
+          { year: "1918", text: "Graduated from Hunan First Normal School; later moved in circles connected to early Marxist activity in Beijing." },
+          { year: "1921", text: "Participated in the First National Congress of the Chinese Communist Party." },
+          { year: "1927", text: "Turned toward rural revolution and armed struggle after the Nationalist-Communist split." },
+          { year: "1934–1935", text: "The Long March and Zunyi Conference greatly strengthened Mao's position." },
+          { year: "1937–1945", text: "During the anti-Japanese war, the CCP expanded rapidly and Yan'an became its political center." },
+          { year: "1949", text: "The People's Republic of China was founded." },
+          { year: "1950–1953", text: "Land reform, Korean War, suppression campaigns, and consolidation of the new regime." },
+          { year: "1953–1957", text: "The First Five-Year Plan advanced industrialization and planning institutions." },
+          { year: "1957", text: "The Anti-Rightist Campaign began." },
+          { year: "1958–1961", text: "The Great Leap Forward and the famine." },
+          { year: "1966", text: "The Cultural Revolution began." },
+          { year: "1971", text: "China regained its seat at the United Nations; the Lin Biao affair also occurred that year." },
+          { year: "1972", text: "Nixon visited China, marking a major diplomatic turn." },
+          { year: "1976", text: "Mao died; the Cultural Revolution era came to an end." }
+        ],
+        readings: [
+          {
+            name: "Selected Works of Mao Zedong",
+            note: "Essential for understanding Mao's own language and political ideas, but not sufficient as a full historical record."
+          },
+          {
+            name: "CCP Resolution on Certain Questions in the History of Our Party since the Founding of the PRC (1981)",
+            note: "A key official Chinese text on Mao and the Cultural Revolution."
+          },
+          {
+            name: "Stuart Schram, The Political Thought of Mao Tse-tung",
+            note: "A major study of Mao's political thought and its development."
+          },
+          {
+            name: "Philip Short, Mao: A Life",
+            note: "An influential English-language biography that attempts a relatively balanced narrative."
+          },
+          {
+            name: "Roderick MacFarquhar & Michael Schoenhals, Mao's Last Revolution",
+            note: "A major scholarly work on the Cultural Revolution."
+          },
+          {
+            name: "Maurice Meisner, Mao's China and After",
+            note: "Useful for placing Mao's era in the longer arc of Chinese social and political change."
+          },
+          {
+            name: "Yang Jisheng, Tombstone",
+            note: "One of the major works on the Great Leap famine."
+          },
+          {
+            name: "Frank Dikötter, Mao's Great Famine",
+            note: "Widely read internationally, though its estimates and interpretations are debated."
+          }
+        ],
+        conclusion: {
+          title: "Concise conclusion",
+          paragraphs: [
+            "In one sentence: Mao was a leader who fused revolution, state-building, ideological mobilization, and personal power to an extraordinary degree. He undeniably transformed China's position in the world and the structure of Chinese society; he also drove China into repeated disasters through extreme centralization and mass political campaigns.",
+            "A more objective assessment therefore usually requires holding two truths together at once: Mao was one of the most important founding figures of modern China, and he was also one of the chief decision-makers responsible for immense human suffering and institutional damage."
+          ]
+        },
+        footer: "This page is intended for learning and discussion. It can be expanded into a fully annotated academic version, a richer timeline edition, a visual long-form article, or a fuller bilingual public education version."
+      }
+    };
+
+    const refs = {
+      title: document.getElementById("pageTitle"),
+      subtitle: document.getElementById("pageSubtitle"),
+      note: document.getElementById("heroNote"),
+      tocTitle: document.getElementById("tocTitle"),
+      toc: document.getElementById("toc"),
+      app: document.getElementById("app"),
+      footer: document.getElementById("footer"),
+      zhBtn: document.getElementById("zhBtn"),
+      enBtn: document.getElementById("enBtn"),
+      printBtn: document.getElementById("printBtn"),
+      topBtn: document.getElementById("topBtn"),
+      langBadge: document.getElementById("langBadge")
+    };
+
+    let currentLang = "zh";
+    let tocObserver = null;
+
+    function renderParagraphs(arr) {
+      return arr.map(p => `<p>${p}</p>`).join("");
+    }
+
+    function renderChapter(chapter, d) {
+      return `
+        <section id="${chapter.id}" class="card">
+          <div class="section-header">
+            <div class="eyebrow">${d.labels.chapter}</div>
+            <h2>${chapter.title}</h2>
+          </div>
+          ${renderParagraphs(chapter.paragraphs)}
+          ${chapter.points && chapter.points.length
+            ? `<ul>${chapter.points.map(item => `<li>${item}</li>`).join("")}</ul>`
+            : ""
+          }
+        </section>
+      `;
+    }
+
+    function renderCards(items, type) {
+      return `
+        <div class="duo-grid">
+          ${items.map(item => `
+            <article class="mini-card ${type}">
+              <h3>${item.title}</h3>
+              <p>${item.text}</p>
+            </article>
+          `).join("")}
+        </div>
+      `;
+    }
+
+    function renderMatrix(rows, d) {
+      return `
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>${d.labels.domain}</th>
+                <th>${d.labels.positive}</th>
+                <th>${d.labels.negative}</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${rows.map(row => `
+                <tr>
+                  <td><strong>${row.domain}</strong></td>
+                  <td>${row.positive}</td>
+                  <td>${row.negative}</td>
+                </tr>
+              `).join("")}
+            </tbody>
+          </table>
+        </div>
+      `;
+    }
+
+    function renderTimeline(items) {
+      return `
+        <div class="timeline">
+          ${items.map(item => `
+            <div class="timeline-item">
+              <div class="year">${item.year}</div>
+              <div>${item.text}</div>
+            </div>
+          `).join("")}
+        </div>
+      `;
+    }
+
+    function renderReadings(items) {
+      return `
+        <ol>
+          ${items.map(item => `
+            <li>
+              <strong>${item.name}</strong><br />
+              <span class="muted">${item.note}</span>
+            </li>
+          `).join("")}
+        </ol>
+      `;
+    }
+
+    function buildTOC(d) {
+      const items = [
+        { id: "overview", title: d.labels.overview },
+        ...d.chapters.map(c => ({ id: c.id, title: c.title })),
+        { id: "merits", title: d.labels.merits },
+        { id: "faults", title: d.labels.faults },
+        { id: "matrix", title: d.labels.matrix },
+        { id: "debates", title: d.labels.debates },
+        { id: "timeline", title: d.labels.timeline },
+        { id: "readings", title: d.labels.readings },
+        { id: "conclusion", title: d.labels.conclusion }
+      ];
+
+      refs.toc.innerHTML = items.map(item => `
+        <a href="#${item.id}">${item.title}</a>
+      `).join("");
+    }
+
+    function renderPage(lang) {
+      currentLang = lang;
+      const d = content[lang];
+
+      document.documentElement.lang = d.htmlLang;
+      document.title = d.browserTitle;
+
+      refs.title.textContent = d.title;
+      refs.subtitle.textContent = d.subtitle;
+      refs.note.innerHTML = `<strong>${d.labels.noteTitle}：</strong>${d.note}`;
+      refs.tocTitle.textContent = d.labels.toc;
+      refs.printBtn.textContent = d.labels.print;
+      refs.topBtn.textContent = d.labels.top;
+      refs.langBadge.textContent = d.labels.languageBadge;
+      refs.footer.textContent = d.footer;
+
+      buildTOC(d);
+
+      refs.app.innerHTML = `
+        <section id="overview" class="card">
+          <div class="section-header">
+            <div class="eyebrow">${d.labels.overview}</div>
+            <h2>${d.intro.title}</h2>
+          </div>
+          ${renderParagraphs(d.intro.paragraphs)}
+
+          <div class="callout">
+            <strong>${d.intro.noteTitle}：</strong>${d.intro.noteText}
+          </div>
+
+          <h3 style="margin-top:20px;">${d.labels.facts}</h3>
+          <div class="fact-grid">
+            ${d.facts.map(item => `
+              <div class="fact">
+                <div class="label">${item.label}</div>
+                <div class="value">${item.value}</div>
+              </div>
+            `).join("")}
+          </div>
+        </section>
+
+        ${d.chapters.map(chapter => renderChapter(chapter, d)).join("")}
+
+        <section id="merits" class="card">
+          <div class="section-header">
+            <div class="eyebrow">${d.labels.merits}</div>
+            <h2>${d.labels.merits}</h2>
+          </div>
+          <p>${lang === "zh"
+            ? "下面列出的“功”，并不意味着其统治没有巨大代价；它强调的是毛泽东在国家形成、社会重组和国际地位提升中的历史作用。"
+            : "The items below identify major achievements, without implying that Mao's rule lacked severe costs. They highlight his role in state formation, social restructuring, and China's rise in international standing."
+          }</p>
+          ${renderCards(d.merits, "good")}
+        </section>
+
+        <section id="faults" class="card">
+          <div class="section-header">
+            <div class="eyebrow">${d.labels.faults}</div>
+            <h2>${d.labels.faults}</h2>
+          </div>
+          <p>${lang === "zh"
+            ? "下面列出的“过”，强调的是毛泽东作为最高领导人在政策选择、政治氛围和制度破坏上的责任。"
+            : "The items below emphasize Mao's responsibility, as supreme leader, for policy choices, political atmosphere, and institutional damage."
+          }</p>
+          ${renderCards(d.faults, "bad")}
+        </section>
+
+        <section id="matrix" class="card">
+          <div class="section-header">
+            <div class="eyebrow">${d.labels.matrix}</div>
+            <h2>${d.labels.matrix}</h2>
+          </div>
+          <p>${lang === "zh"
+            ? "如果要尽量客观地评价毛泽东，最好的方法往往不是只说一句总评，而是在不同维度上分别衡量其成就与代价。"
+            : "A more objective assessment usually comes not from one slogan-like verdict, but from evaluating Mao across separate domains of achievement and cost."
+          }</p>
+          ${renderMatrix(d.matrix, d)}
+        </section>
+
+        <section id="debates" class="card">
+          <div class="section-header">
+            <div class="eyebrow">${d.labels.debates}</div>
+            <h2>${d.labels.debates}</h2>
+          </div>
+          <ol>
+            ${d.debates.map(item => `<li>${item}</li>`).join("")}
+          </ol>
+        </section>
+
+        <section id="timeline" class="card">
+          <div class="section-header">
+            <div class="eyebrow">${d.labels.timeline}</div>
+            <h2>${d.labels.timeline}</h2>
+          </div>
+          ${renderTimeline(d.timeline)}
+        </section>
+
+        <section id="readings" class="card">
+          <div class="section-header">
+            <div class="eyebrow">${d.labels.readings}</div>
+            <h2>${d.labels.readings}</h2>
+          </div>
+          <p>${lang === "zh"
+            ? "如果你希望真正“深入了解”毛泽东，最好同时阅读原始文本、官方结论、海外研究、社会史研究和人口史研究，而不是只依赖单一立场的材料。"
+            : "If you want a genuinely deep understanding of Mao, it is best to read across original texts, official resolutions, overseas scholarship, social history, and demographic studies rather than relying on a single viewpoint."
+          }</p>
+          ${renderReadings(d.readings)}
+        </section>
+
+        <section id="conclusion" class="card">
+          <div class="section-header">
+            <div class="eyebrow">${d.labels.conclusion}</div>
+            <h2>${d.conclusion.title}</h2>
+          </div>
+          ${renderParagraphs(d.conclusion.paragraphs)}
+        </section>
+      `;
+
+      updateLangButtons(lang);
+      setupObserver();
+    }
+
+    function updateLangButtons(lang) {
+      const isZh = lang === "zh";
+      refs.zhBtn.classList.toggle("active", isZh);
+      refs.enBtn.classList.toggle("active", !isZh);
+      refs.zhBtn.setAttribute("aria-pressed", String(isZh));
+      refs.enBtn.setAttribute("aria-pressed", String(!isZh));
+    }
+
+    function setupObserver() {
+      if (tocObserver) tocObserver.disconnect();
+
+      const links = Array.from(document.querySelectorAll(".toc a"));
+      const sections = Array.from(document.querySelectorAll("main section[id]"));
+
+      tocObserver = new IntersectionObserver(
+        entries => {
+          const visible = entries
+            .filter(entry => entry.isIntersecting)
+            .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)[0];
+
+          if (!visible) return;
+          const id = visible.target.id;
+
+          links.forEach(link => {
+            link.classList.toggle("active", link.getAttribute("href") === `#${id}`);
+          });
+        },
+        {
+          rootMargin: "-20% 0px -65% 0px",
+          threshold: 0.01
+        }
+      );
+
+      sections.forEach(section => tocObserver.observe(section));
+    }
+
+    refs.zhBtn.addEventListener("click", () => renderPage("zh"));
+    refs.enBtn.addEventListener("click", () => renderPage("en"));
+    refs.printBtn.addEventListener("click", () => window.print());
+
+    refs.topBtn.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > 320) {
+        refs.topBtn.classList.add("show");
+      } else {
+        refs.topBtn.classList.remove("show");
+      }
+    });
+
+    renderPage("zh");
+  </script>
+
+
+</body></html>

@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300" role="img" aria-labelledby="t">
+  <title id="t">私聊不会自动同步</title>
+  
+<style>
+  .p { fill: #fffaf1; }
+  .ink { fill: #1a1611; }
+  .muted { fill: #6a5f52; }
+  .stroke { stroke: #c4b59a; fill: none; }
+  .box { fill: #fffaf1; stroke: #c4b59a; }
+  .cin { fill: #b1321a; }
+  .pine { fill: #245848; }
+  .gold { fill: #9a7428; }
+  .cinb { fill: #f3ddd6; stroke: #b1321a; }
+  .pineb { fill: #d7ebe2; stroke: #245848; }
+  .goldb { fill: #f3e6c4; stroke: #9a7428; }
+  .soft { fill: #f3eee4; stroke: #d8cdbb; }
+  text { font-family: "Noto Sans SC", "PingFang SC", "Hiragino Sans GB", sans-serif; }
+  @media (prefers-color-scheme: dark) {
+    .p { fill: #1c1914; }
+    .ink { fill: #f3eadc; }
+    .muted { fill: #b3a693; }
+    .stroke { stroke: #5a5044; }
+    .box { fill: #1c1914; stroke: #5a5044; }
+    .cin { fill: #e06a4c; }
+    .pine { fill: #7ec9ae; }
+    .gold { fill: #e0c078; }
+    .cinb { fill: #3a221c; stroke: #e06a4c; }
+    .pineb { fill: #1b322b; stroke: #7ec9ae; }
+    .goldb { fill: #332a16; stroke: #e0c078; }
+    .soft { fill: #13110e; stroke: #3a342b; }
+  }
+</style>
+
+  <rect class="p" width="720" height="300"/>
+  <rect class="cinb" x="40" y="40" width="190" height="90" rx="12" stroke-width="1.6"/>
+  <text class="ink" x="135" y="80" text-anchor="middle" font-size="15" font-weight="700">Bot A 私聊</text>
+  <text class="muted" x="135" y="104" text-anchor="middle" font-size="12">不会自动给 B</text>
+  <rect class="cinb" x="490" y="40" width="190" height="90" rx="12" stroke-width="1.6"/>
+  <text class="ink" x="585" y="80" text-anchor="middle" font-size="15" font-weight="700">Bot B 私聊</text>
+  <text class="muted" x="585" y="104" text-anchor="middle" font-size="12">各自记忆</text>
+  <text class="cin" x="360" y="88" text-anchor="middle" font-size="14">✗ 没有自动同步</text>
+  <rect class="pineb" x="40" y="180" width="150" height="80" rx="12" stroke-width="1.6"/>
+  <text class="ink" x="115" y="226" text-anchor="middle" font-size="14">群聊</text>
+  <rect class="pineb" x="203" y="180" width="150" height="80" rx="12" stroke-width="1.6"/>
+  <text class="ink" x="278" y="218" text-anchor="middle" font-size="14">请 A 转告 B</text>
+  <text class="muted" x="278" y="240" text-anchor="middle" font-size="11">不是整段记录</text>
+  <rect class="pineb" x="366" y="180" width="150" height="80" rx="12" stroke-width="1.6"/>
+  <text class="ink" x="441" y="226" text-anchor="middle" font-size="14">共享文件</text>
+  <rect class="pineb" x="530" y="180" width="150" height="80" rx="12" stroke-width="1.6"/>
+  <text class="ink" x="605" y="218" text-anchor="middle" font-size="14">该 Bot 自己的</text>
+  <text class="muted" x="605" y="240" text-anchor="middle" font-size="11">角色记忆</text>
+</svg>

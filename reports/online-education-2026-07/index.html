@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>中国在线教育行业调研报告 · 2026年7月</title>
+<link rel="icon" href="data:,">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+<style>
+  :root{
+    --bg:#0d1117; --bg2:#131a26; --card:#161e2e; --card2:#1b2436;
+    --line:#2a3550; --txt:#e6eaf2; --txt2:#9aa7bd; --txt3:#6b7891;
+    --blue:#5b9dff; --cyan:#41c7d4; --gold:#f0b858; --red:#e8645a;
+    --green:#4ecb8f; --purple:#9d7ff0;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--bg);color:var(--txt);font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Helvetica Neue",sans-serif;line-height:1.75;font-size:15px}
+  .wrap{max-width:1080px;margin:0 auto;padding:48px 28px 80px}
+  header.hero{border:1px solid var(--line);border-radius:18px;padding:44px 40px;background:linear-gradient(135deg,#16213a 0%,#101728 55%,#0f1524 100%);position:relative;overflow:hidden}
+  header.hero::after{content:"";position:absolute;right:-80px;top:-80px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(91,157,255,.18),transparent 70%)}
+  .kicker{color:var(--blue);font-size:13px;letter-spacing:3px;font-weight:600}
+  h1{font-size:32px;margin:10px 0 6px;letter-spacing:.5px}
+  .sub{color:var(--txt2);font-size:15px;max-width:760px}
+  .meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+  .meta span{border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--txt2);font-size:12.5px;padding:5px 12px;border-radius:999px}
+  h2{font-size:22px;margin:56px 0 8px;display:flex;align-items:center;gap:10px}
+  h2::before{content:"";width:5px;height:22px;border-radius:3px;background:linear-gradient(180deg,var(--blue),var(--cyan))}
+  .h2sub{color:var(--txt3);font-size:13.5px;margin-bottom:20px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:26px 28px;margin-top:16px}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  @media(max-width:860px){.grid2,.grid3{grid-template-columns:1fr}}
+  .stat{background:var(--card2);border:1px solid var(--line);border-radius:12px;padding:18px 20px}
+  .stat .n{font-size:26px;font-weight:700;color:var(--blue);line-height:1.2}
+  .stat .n small{font-size:13px;font-weight:500;color:var(--txt2)}
+  .stat .l{color:var(--txt3);font-size:12.5px;margin-top:4px}
+  .up{color:var(--red)} .down{color:var(--green)}
+  table{width:100%;border-collapse:collapse;margin-top:8px;font-size:13.5px}
+  th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+  th{color:var(--txt2);font-weight:600;background:rgba(255,255,255,.02);white-space:nowrap}
+  tr:last-child td{border-bottom:none}
+  td b{color:var(--txt)}
+  .tag{display:inline-block;font-size:11.5px;padding:2px 9px;border-radius:999px;margin-right:6px;border:1px solid var(--line);color:var(--txt2);white-space:nowrap}
+  .tag.b{border-color:rgba(91,157,255,.5);color:var(--blue)}
+  .tag.g{border-color:rgba(78,203,143,.5);color:var(--green)}
+  .tag.r{border-color:rgba(232,100,90,.5);color:var(--red)}
+  .tag.y{border-color:rgba(240,184,88,.5);color:var(--gold)}
+  ul.tight{padding-left:20px} ul.tight li{margin:7px 0;color:var(--txt)}
+  ul.tight li::marker{color:var(--blue)}
+  .muted{color:var(--txt2)} .small{font-size:13px} .tiny{font-size:12px;color:var(--txt3)}
+  .company-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:6px}
+  .company-head h3{font-size:19px}
+  .chart-box{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px;margin-top:16px}
+  .chart-box h4{font-size:15px;margin-bottom:2px}
+  .chart-box .note{font-size:12px;color:var(--txt3);margin-bottom:12px}
+  .chart-c{position:relative;height:300px}
+  .callout{border-left:3px solid var(--gold);background:rgba(240,184,88,.07);padding:16px 20px;border-radius:0 12px 12px 0;margin-top:16px}
+  .callout.blue{border-color:var(--blue);background:rgba(91,157,255,.07)}
+  .timeline{position:relative;padding-left:26px;margin-top:14px}
+  .timeline::before{content:"";position:absolute;left:8px;top:6px;bottom:6px;width:2px;background:var(--line)}
+  .tl-item{position:relative;margin-bottom:18px}
+  .tl-item::before{content:"";position:absolute;left:-23px;top:8px;width:10px;height:10px;border-radius:50%;background:var(--blue);box-shadow:0 0 0 3px rgba(91,157,255,.2)}
+  .tl-item .t{color:var(--gold);font-weight:600;font-size:13.5px}
+  .src{font-size:12.5px;color:var(--txt3);line-height:1.9}
+  .src a{color:var(--blue);text-decoration:none;word-break:break-all}
+  .src a:hover{text-decoration:underline}
+  footer{margin-top:64px;padding-top:24px;border-top:1px solid var(--line);color:var(--txt3);font-size:12.5px;text-align:center}
+  .num{font-variant-numeric:tabular-nums}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <div class="kicker">行业调研 · 专家团并行研究</div>
+  <h1>中国在线教育行业调研报告</h1>
+  <div class="sub">调研对象：学而思网校（好未来）、乐读、希望学、猿辅导、高途、作业帮。覆盖 2024 年至 2026 年 7 月的业务发展、财务业绩与模式演变，兼论行业整体格局与银发教育赛道。</div>
+  <div class="meta">
+    <span>报告日期：2026-07-28</span>
+    <span>数据窗口：2024 — 2026年中</span>
+    <span>方法：4 路并行研究（2 路专家代理 + 2 路主研究）</span>
+    <span>财务数据来源：公司 IR / SEC 文件 / 权威财经媒体</span>
+  </div>
+</header>
+
+<!-- ============ 核心结论 ============ -->
+<h2>一、核心结论（TL;DR）</h2>
+<div class="h2sub">十条判断，先看结论再看证据</div>
+<div class="card">
+  <ul class="tight">
+    <li><b>在线教育模式没有死，死的是"烧钱大班流量课"。</b>双减五年后，活得好的是三类：<span class="tag b">高粘性线下小班素养课</span><span class="tag b">AI 学习机（硬件+内容订阅）</span><span class="tag b">非营利学科牌照机构</span>。好未来 FY2026 收入 30.09 亿美元，已恢复到双减前峰值的约 67%。</li>
+    <li><b>头部业绩明显分化。</b>好未来 FY2026 净利 5.31 亿美元（含约 3.9 亿一次性投资收益，核心经营利润 2.76 亿）；高途 2025 年收入 61.47 亿元（+35%）但仍亏损 3.23 亿，2026Q1 增收不增利；猿辅导、作业帮未上市不披露，但均 5 年以上无新融资，靠硬件和自我造血。</li>
+    <li><b>学习机是最大单一战场，但 2026 年首现增长瓶颈。</b>2025 年销量 632 万台（+6.7%）；2026Q1 全渠道销量 125.2 万台，同比 <span class="down">-1%</span> 首次下滑。作业帮（32.9%）、学而思（20.1%）、科大讯飞（18.5%）三强格局，猿辅导学练机跌出前三后靠 T6 重回线上前三（16.4%，2026.4 线上口径）。</li>
+    <li><b>AI 大模型是入场券不是护城河。</b>各家"AI 老师"功能高度同质化；通用大模型（豆包、DeepSeek）正在免费侵蚀拍搜类入口——作业帮 App 从教育免费榜第 2 滑到第 6（2026 上半年）。赢法在于"AI × 自有教研数据 × 服务闭环"，而非模型本身。</li>
+    <li><b>乐读、希望学是"双减制度红利"的隐形赢家。</b>两家均为好未来系营转非非营利学校（乐读=原学而思培优团队，希望学=原学而思网校团队，法定代表人为同一人），政府指导价 22 元/课时，靠口碑低成本获客，希望学号称累计服务学生超千万。天花板明确，但现金流稳定。</li>
+    <li><b>出海分化：工具出海被字节碾压，课程出海稳步赚钱。</b>作业帮 Question.AI 曾一年下载近 600 万，但 2025Q3 被字节 Gauth 拉开量级差距（25 万 vs 200 万下载），97% 收入依赖美国单一市场；好未来 Think Academy 课程出海 6 国、累计服务超 500 万学生。</li>
+    <li><b>直播电商转型基本证伪。</b>高途佳品退回教育本位低水位运营；猿辅导的咖啡、羽绒服、月子中心"均未掀起太大波澜"。东方甄选只有一个。</li>
+    <li><b>行业整体进入"合规常态化 + 盈利修复"期。</b>2025 年市场规模约 5450–6500 亿元（口径不同），K12 学科占比已不足 15%，职教+素质+信息化占 85%+；头部合规企业净利率回升至 8–12%。</li>
+    <li><b>银发教育是确定性最高的增量赛道，但"只靠卖课活不下去"。</b>量子之歌 FY2025 营收 27.26 亿（-28%）、教育主业收缩 All in 潮玩；及象教育 20.2 亿、兴趣岛完课率 85%、东软睿新 20 亿级——跑通的都是"课程建信任 → 游学/健康消费/旅居后端变现"模式。</li>
+    <li><b>对开开华彩的直接启示</b>：声乐培训恰好在"银发兴趣 + 强社交 + 可展演"的甜蜜点上，模式对标兴趣岛（完课率 85%）优于对标量子之歌（流量课萎缩）；详见第八节。</li>
+  </ul>
+</div>
+
+<!-- ============ 六家公司速览 ============ -->
+<h2>二、六家公司速览对比</h2>
+<div class="h2sub">一张表看清位置（数据时间口径见各公司专节）</div>
+<div class="card" style="overflow-x:auto">
+<table>
+  <thead><tr><th>公司</th><th>状态 / 估值</th><th>最新规模业绩</th><th>核心打法</th><th>近况一句话</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><b>好未来</b><br><span class="tiny">学而思网校母公司</span></td>
+      <td>纽交所 TAL<br><span class="tiny">张邦鑫 73% 投票权</span></td>
+      <td class="num">FY2026 收入 30.09 亿美元(+33.7%)<br>净利 5.31 亿美元（含一次性收益）</td>
+      <td>素养小班 + 学习机 + 出海 + AI 应用</td>
+      <td>双减转型最成功的样本，收入恢复至峰值 67%</td>
+    </tr>
+    <tr>
+      <td><b>乐读</b></td>
+      <td>非营利 K9 学校<br><span class="tiny">原学而思培优团队</span></td>
+      <td class="num">师资 3000+（2024.7）<br>政府指导价 22 元/课时</td>
+      <td>牌照稀缺 + 口碑获客 + 本地化分层</td>
+      <td>制度红利型稳定盘，天花板明确但现金流健康</td>
+    </tr>
+    <tr>
+      <td><b>希望学</b></td>
+      <td>非营利 K9 学校<br><span class="tiny">原学而思网校团队</span></td>
+      <td class="num">号称累计服务学生超千万<br>网校 MAU 219 万量级（并列第一）</td>
+      <td>同上，大班直播性价比路线</td>
+      <td>与乐读同源（法人为同一人），未见重大违规</td>
+    </tr>
+    <tr>
+      <td><b>猿辅导</b></td>
+      <td>未上市<br><span class="tiny">2020 年估值 155 亿美元</span></td>
+      <td class="num">学练机 16 个月卖 100 万台<br>小猿 T6 线上份额 16.4%（2026.4）</td>
+      <td>AI 原生内容服务 + 硬件 + 启蒙（斑马）</td>
+      <td>跨界消费（咖啡/羽绒/月子）平淡，全面押注 AI</td>
+    </tr>
+    <tr>
+      <td><b>高途</b></td>
+      <td>纽交所 GOTU<br><span class="tiny">市值不足 4 亿美元</span></td>
+      <td class="num">2025 收入 61.47 亿元(+35%)<br>净亏 3.23 亿（收窄）</td>
+      <td>高中+成人+大学生全学段 + AI 提效</td>
+      <td>收入回来了利润没回来，2026Q1 净利 -72%</td>
+    </tr>
+    <tr>
+      <td><b>作业帮</b></td>
+      <td>未上市<br><span class="tiny">2020 年估值 110 亿美元</span></td>
+      <td class="num">学习机份额第一 32.9%（2026Q1）<br>累计融资 34 亿美元，5 年无新融资</td>
+      <td>硬件大众市场（2000-4000 元档占半壁）+ 出海</td>
+      <td>硬件第一，但搜题入口正被豆包/DeepSeek 侵蚀</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<!-- ============ 财务图表 ============ -->
+<h2>三、业绩透视</h2>
+<div class="h2sub">上市公司财报口径，官方 IR / SEC 数据</div>
+<div class="grid2">
+  <div class="chart-box">
+    <h4>好未来：收入与净利（亿美元）</h4>
+    <div class="note">财年截至当年 2 月末 · FY2026 净利含约 3.9 亿美元一次性投资公允价值收益</div>
+    <div class="chart-c"><canvas id="talChart"></canvas></div>
+  </div>
+  <div class="chart-box">
+    <h4>高途 vs 量子之歌：年度收入（亿元人民币）</h4>
+    <div class="note">高途=自然年（2024 为按 +35% 增速的推算值）；量子之歌=财年（截至当年 6 月末）</div>
+    <div class="chart-c"><canvas id="gtChart"></canvas></div>
+  </div>
+</div>
+<div class="grid2">
+  <div class="chart-box">
+    <h4>中国在线教育市场规模（亿元）</h4>
+    <div class="note">中国报告大厅口径；另一口径（中研普华）2025 年为 5450 亿（+11.3%），2026 年预计 8000 亿</div>
+    <div class="chart-c"><canvas id="mktChart"></canvas></div>
+  </div>
+  <div class="chart-box">
+    <h4>学习平板市场份额（2026Q1，销量口径）</h4>
+    <div class="note">洛图科技全渠道数据：当季销量 125.2 万台，同比 -1%，行业首现增长瓶颈</div>
+    <div class="chart-c"><canvas id="hwChart"></canvas></div>
+  </div>
+</div>
+
+<div class="grid3" style="margin-top:16px">
+  <div class="stat"><div class="n num">30.09<small> 亿美元</small></div><div class="l">好未来 FY2026 收入，+33.7%，递延收入 8.82 亿美元（+31.4%）预示在手订单充足</div></div>
+  <div class="stat"><div class="n num">61.47<small> 亿元</small></div><div class="l">高途 2025 年收入，+35%，但净亏 3.23 亿；2026Q1 净利同比 -72%，获客成本挤压利润</div></div>
+  <div class="stat"><div class="n num">27.26<small> 亿元</small></div><div class="l">量子之歌 FY2025 收入，-28.2%；在线学习收入 -50.6%，银发流量课模式见顶收缩</div></div>
+  <div class="stat"><div class="n num">632<small> 万台</small></div><div class="l">2025 年学习平板销量（+6.7%）；2026 年 AI 学习机销售额预计 318.9 亿元（+56.7%）</div></div>
+  <div class="stat"><div class="n num">&lt;15<small>%</small></div><div class="l">K12 学科类占行业比重（2026）；职教+素质+信息化合计超 85%，行业结构彻底重构</div></div>
+  <div class="stat"><div class="n num">+45<small>%</small></div><div class="l">55 岁以上在线教育用户同比增速（2024），老年用户是各人群中增长最快的一层</div></div>
+</div>
+
+<!-- ============ 分公司详节 ============ -->
+<h2>四、分公司详解</h2>
+<div class="h2sub">每家：定位 → 最新业绩 → 近期动作 → 风险</div>
+
+<div class="card">
+  <div class="company-head"><h3>4.1 好未来（学而思网校）</h3><span class="tag g">转型最成功的样本</span><span class="tag b">NYSE: TAL</span></div>
+  <p class="muted small">双减后停止 K9 学科培训，转型"素养教育 + 教育科技"。收入结构（FY2026）：学习服务约 19.5 亿美元（64.7%）+ 内容解决方案（学习机等）约 10.6 亿美元（35.3%）。员工约 2.3 万人。</p>
+  <table>
+    <thead><tr><th>财年</th><th>净收入</th><th>同比</th><th>归母净利</th><th>备注</th></tr></thead>
+    <tbody>
+      <tr><td>FY2024（至2024.2）</td><td class="num">14.90 亿美元</td><td class="num up">+46%</td><td class="num">-357 万美元</td><td>亏损收窄</td></tr>
+      <tr><td>FY2025（至2025.2）</td><td class="num">22.50 亿美元</td><td class="num up">+51.0%</td><td class="num">8,459 万美元</td><td>扭亏</td></tr>
+      <tr><td>FY2026（至2026.2）</td><td class="num">30.09 亿美元</td><td class="num up">+33.7%</td><td class="num">5.31 亿美元</td><td>含 3.9 亿一次性投资收益；经营利润 2.76 亿</td></tr>
+    </tbody>
+  </table>
+  <ul class="tight" style="margin-top:12px">
+    <li><b>学而思素养（线下小班）</b>：最大收入来源，526 个学习中心（2025.2，+58.9%）覆盖国内 40 城+海外 5 城，<b>续报率稳定 80%+</b>，科学思维/人文创作/编程等 7 门课。</li>
+    <li><b>学而思网校（在线素养）</b>：6–14 岁，6–12 人在线小班；2025 年 3 月 MAU 219 万、同比 +158%（QuestMobile），与希望学并列 K12 在线教育第一。</li>
+    <li><b>学习机</b>：8 款 SKU 覆盖 2000–9000 元，AI 设备周活跃 110 万台（2025.2，上年同期 40 万），周活跃率约 80%、日均使用约 1 小时；2025.5 首次下探 2000–2999 元价位打价格战；2026.5 与华为平板独家合作入驻鸿蒙教育空间。</li>
+    <li><b>AI 策略</b>：九章大模型 + 接入 DeepSeek 双引擎，明确"AI 应用优先"（而非自研底层大模型）；小思 AI 1 对 1 获信通院 4+ 级认证；教师端"九章爱学"升级 170+ 智能体。</li>
+    <li><b>出海 Think Academy</b>：美英新加澳马 6 国，累计服务超 500 万 K12 学生（2025）。</li>
+    <li><b>风险</b>：净利含金量（一次性收益占大头）、学习机硬件净利率不足 10% 靠内容续费、内存芯片涨价、增速回落（Q1 FY2026 的 38.8% 已为近 8 季最低）。FY2027 定调：有质量增长、AI 应用优先、提升盈利。</li>
+  </ul>
+</div>
+
+<div class="card">
+  <div class="company-head"><h3>4.2 乐读 & 4.3 希望学</h3><span class="tag y">双减制度红利</span><span class="tag b">非营利 K9 牌照</span></div>
+  <p class="muted small">查证结论（工商信息 + 权威报道）：<b>两家均为好未来系的"营转非"非营利线上学科培训学校</b>——乐读（上海长宁区乐读线上教育培训学校）承接<b>原学而思培优</b>团队与课程体系；希望学（北京希望在线线上学科培训学校）承接<b>原学而思网校</b>团队。两校法定代表人为同一人（解飞）。与高途、猿辅导、新东方无关，网络传言有误。</p>
+  <ul class="tight">
+    <li><b>合规身份</b>：2021 年 12 月获批的非营利 K9 在线学科机构，执行政府指导价 <b>22 元/课时</b>，授课限工作日晚间。乐读曾上线 3 天即下架整改，2022.1.5 按指导价重新上线——这是"双减定价"的标志性事件。</li>
+    <li><b>规模</b>：乐读面向全国 1–9 年级全学科，35 人小班，为北上广深杭等 8 城做本地化版本；师资超 3000 人（2024.7），多来自原学而思培优；客单价约 110 元/节课，家长评价"难度高于希望学、性价比好"。希望学走大班直播性价比路线，号称累计服务学生超千万，未见重大违规记录，投诉以退费个案为主。</li>
+    <li><b>模式点评</b>：牌照稀缺 + 非营利 + 指导价 = 没有扩张想象力，但获客成本极低、需求刚性、现金流稳定。这是政策给"体面退场者"的制度性回报，<b>天花板与护城河同源</b>。</li>
+  </ul>
+</div>
+
+<div class="card">
+  <div class="company-head"><h3>4.4 猿辅导</h3><span class="tag y">未上市 · 估值 155 亿美元（2020）</span><span class="tag b">AI 全线押注</span></div>
+  <p class="muted small">双减冲击最重的公司之一（裁员近 4 万人、IPO 搁浅，钛媒体），从未披露营收。当前产品矩阵：猿辅导素养课、斑马AI学、小猿口算、猿编程、海豚AI学、小猿学练机/AI学习机、飞象星球（B 端进校）。</p>
+  <ul class="tight">
+    <li><b>硬件起伏</b>：小猿学练机（2023.5）开创"学练机"品类，16 个月销量破百万台、登顶墨水屏平板亚洲第一；但 2024 年起被学而思/作业帮以彩屏+教材同步反超，跌出全渠道前三。2026.3 发布 AI 学习机 T6（"超级学练智能体"，5299 元起），2026 年 4 月以 16.4% 线上份额重回前三。牵头制定信通院《智能学练》团体标准。</li>
+    <li><b>AI 主线</b>：2024 自研"猿力大模型"获信通院最高等级认证 + 引入 DeepSeek-R1 双引擎；2025.4 发布"小猿AI"（App 覆盖 100+ 学习场景）；2025.12 "AI 课堂 2.0"（AI 贯穿预习/课中点评/课后素养画像，官方称作文个性化程度 +67%）；2026.7 上线 AI 大阅读。路线清晰：<b>从卖硬件转向卖"AI 原生内容服务"</b>。</li>
+    <li><b>多元化基本证伪</b>：Grid Coffee 精品咖啡、SKYPEOPLE 高端羽绒服、茉莉智慧月子中心——"均未掀起太大波澜"（氢消费）。</li>
+    <li><b>风险</b>：学练机先发红利被快速蚕食的前科说明其硬件护城河有限；AI 功能与同业同质化；现金流依赖硬件+素养课造血。</li>
+  </ul>
+</div>
+
+<div class="card">
+  <div class="company-head"><h3>4.5 高途</h3><span class="tag r">增收不增利</span><span class="tag b">NYSE: GOTU</span></div>
+  <p class="muted small">业务覆盖高途高中、大学生与成人教育（考研/财经/公考）、素养教育、国际教育。财年 = 自然年。</p>
+  <table>
+    <thead><tr><th>期间</th><th>收入</th><th>利润</th><th>备注</th></tr></thead>
+    <tbody>
+      <tr><td>2024 年</td><td class="num">≈45.5 亿元（推算）</td><td class="num">亏损</td><td>—</td></tr>
+      <tr><td>2025 年</td><td class="num">61.47 亿元（+35%）</td><td class="num">净亏 3.23 亿（收窄）</td><td>现金储备 32.65 亿</td></tr>
+      <tr><td>2026 Q1</td><td class="num">16.9 亿元（+13.2%）</td><td class="num down">净利同比 -72%</td><td>获客/投放成本挤压利润</td></tr>
+    </tbody>
+  </table>
+  <ul class="tight" style="margin-top:12px">
+    <li><b>直播电商"高途佳品"</b>：对标东方甄选的尝试已退回教育本位、低水位运营——证明教培公司复制直播带货的路径基本走不通。</li>
+    <li><b>AI 是当前唯一战略主线</b>：用 AI 压缩教研与服务成本、做 AI 学习产品，本质是"用技术修复利润表"。</li>
+    <li><b>资本市场</b>：股价约 1.6 美元、市值不足 4 亿美元（2026.7），市场给的是"收入修复但盈利模型未验证"的定价。</li>
+  </ul>
+</div>
+
+<div class="card">
+  <div class="company-head"><h3>4.6 作业帮</h3><span class="tag y">未上市 · 估值 110 亿美元（2020）</span><span class="tag g">学习机份额第一</span><span class="tag r">入口失守中</span></div>
+  <p class="muted small">百度孵化（2014 拍题工具），2015–2020 完成 8 轮累计超 34 亿美元融资（软银愿景、阿里、红杉等），双减后 5 年无新融资。2022.4 起实控人由百度变更为创始人侯建彬（持股 53.8%，百度保留 46.2%）。2024 年保密提交美股 IPO（拟募 1 亿美元，较 2021 年传闻的 5 亿缩水八成），至今未上市。</p>
+  <ul class="tight">
+    <li><b>学习机第一</b>：2026Q1 全渠道销量份额 32.9%（洛图）；2025 年 8 月线上销量份额 38.6%；2000–4000 元主力价格带占约半壁江山；线下门店覆盖全国大部分地级市——"普惠定价 + 全渠道"是其打赢硬件战的核心。银河大模型获信通院 5 级认证（2025.6），"AI 超级老师"为卖点。</li>
+    <li><b>出海 Question.AI</b>：2023.5 上线美国，6 个月日活破百万、一年下载近 600 万、冲进教育下载榜前三；但 2025Q3 起被字节 Gauth 拉开量级差距（25 万 vs 200 万季度下载），且 97.2% 收入来自美国，单一市场风险突出。</li>
+    <li><b>基本盘被 AI 侵蚀</b>：40% 中学生已用豆包/DeepSeek 辅助作业（2025 寒假调研）；作业帮 App 从 App Store 教育免费榜第 2（2026.1）滑落至第 6，字节"豆包爱学"进入前 20。"遇题就开作业帮"的时代正在结束。</li>
+    <li><b>争议</b>：2025.11 "跳楼物理题"舆论事件暴露题库审核缺位；黑猫投诉累计 5144 条（诱导购课、推销骚扰、硬件绑定付费等）。</li>
+  </ul>
+</div>
+
+<!-- ============ 行业趋势 ============ -->
+<h2>五、行业整体：五年重构后的新格局</h2>
+<div class="h2sub">政策、结构、硬件、AI、出海五条线</div>
+
+<div class="card">
+  <h4 style="margin-bottom:8px">5.1 政策脉络：从"急刹"到"合规常态化"</h4>
+  <div class="timeline">
+    <div class="tl-item"><div class="t">2021.7</div><div class="small muted">"双减"落地：K9 学科类培训一律非营利、禁止资本化；行业市值蒸发超 90%。</div></div>
+    <div class="tl-item"><div class="t">2021.12–2022.1</div><div class="small muted">营转非落地：乐读、希望学等获批，政府指导价 22 元/课时，成为学科培训仅存的合规形态。</div></div>
+    <div class="tl-item"><div class="t">2023.10</div><div class="small muted">《校外培训行政处罚暂行办法》施行，隐形变异学科培训（一对一上门、众筹私教）纳入处罚。</div></div>
+    <div class="tl-item"><div class="t">2024–2025</div><div class="small muted">非学科类培训纳入规范（预收费监管、白名单）；无证办学、低价获客、预付费乱象基本清零；2025 年全国合规在线教育机构持证率超 95%。<b>学科类无松动信号，监管转向"常态执法"而非"运动式整治"。</b></div></div>
+    <div class="tl-item"><div class="t">2025–2026</div><div class="small muted">政策鼓励面转向 AI+ 教育与银发经济：教育部推进教育数字化，2026 世界数字教育大会称中国率先进入"AI+教育"阶段；"大力发展银发经济"写入政府工作报告，15 部门联合发文支持老年教育。</div></div>
+  </div>
+</div>
+
+<div class="card">
+  <h4 style="margin-bottom:8px">5.2 结构变化：从"K12 单腿走路"到"三元格局"</h4>
+  <ul class="tight">
+    <li>市场规模：2020 约 4800 亿 → 2023 约 4868 亿 → 2024 约 5800 亿 → 2025E 约 6500 亿元（中国报告大厅）；中研普华口径 2025 年 5450 亿（+11.3%）、2026 年超 8000 亿。<b>口径差异大，共识是"双位数复苏增长"。</b></li>
+    <li>结构：K12 学科类合规培训占比已不足 15%；在线职业教育（2025 约 2200 亿、+18.2%）、素养教育（2024 约 1200 亿）、教育信息化三大合规赛道合计超 85%。</li>
+    <li>盈利：行业净利率从烧钱时代修复至头部 8–12%、优质细分 15–20%（中研普华）。"高复购、高口碑"取代"低价获客"成为核心盈利逻辑。</li>
+    <li>获客环境：教培机构获客成本同比上涨 30%+，暑期招生普遍只有往年 50% 水平（校长邦 2026 调研）——流量红利彻底结束，这也是新生儿下降的直接传导。</li>
+  </ul>
+</div>
+
+<div class="card">
+  <h4 style="margin-bottom:8px">5.3 学习机战场：三强格局与"效果验证"拐点</h4>
+  <ul class="tight">
+    <li>量价：2025 年销量 632 万台（+6.7%）；2026 年 AI 学习机销售额预计 318.9 亿元（+56.7%）、渗透率从 2025 年初 29.8% 升至 2026.3 的 77%；但 2026Q1 销量同比 -1% 首现瓶颈，行业从"功能堆砌"转向"效果验证"。</li>
+    <li>格局：作业帮（普惠大众市场 + 全渠道）第一、学而思（内容 + 品牌）第二、科大讯飞（线下代理体系）第三；小猿靠 T6 重回线上前三。2000–4000 元价格带占近七成，是主战场。</li>
+    <li>商业模式：硬件净利率不足 10%，本质是"硬件引流 + 内容/服务订阅续费"——与当年"低价课引流"逻辑同源，只是载体从课变成了机器。</li>
+  </ul>
+</div>
+
+<div class="card">
+  <h4 style="margin-bottom:8px">5.4 AI 与出海：两个战场，两种命运</h4>
+  <ul class="tight">
+    <li><b>教育大模型</b>：好未来九章、作业帮银河、猿辅导猿力、网易子曰、讯飞星火——全部接入 DeepSeek 形成"通用底座 + 教育垂直"双引擎标配。信通院认证成为营销标配，功能（诊断/批改/1对1）高度同质化。</li>
+    <li><b>真正的变量是通用大模型降维打击</b>：豆包、DeepSeek 免费解題讲题，正在瓦解拍搜类 App 的入口价值（作业帮是最大受害者）；字节 Gauth 在美国超越 Question.AI 同理。<b>拥有私有学情数据和真人服务闭环的公司才守得住。</b></li>
+    <li><b>出海</b>：工具出海（Question.AI）被字节量级碾压；课程出海（Think Academy 数学、6 国 500 万学生）稳步盈利——美国华人鸡娃市场是真实付费市场（湾区精英二代培养 300 万美元起）。</li>
+  </ul>
+</div>
+
+<!-- ============ 银发教育 ============ -->
+<h2>六、银发教育赛道专节</h2>
+<div class="h2sub">与开开华彩直接相关：3.1 亿老人、严重缺供给、但玩法与 K12 完全不同</div>
+<div class="card">
+  <table>
+    <thead><tr><th>玩家</th><th>规模业绩</th><th>模式要点</th><th>近况</th></tr></thead>
+    <tbody>
+      <tr><td><b>量子之歌</b><br><span class="tiny">千尺学堂 · 纳斯达克 QSG</span></td>
+        <td class="num">FY2025 营收 27.26 亿(-28.2%)<br>净利 3.57 亿；注册 1.396 亿、付费约 30 万</td>
+        <td>免费/低价流量课 → 高价进阶课；书法高级课转化率 40%→60%；线下"四季千尺"社区学堂 11+ 家</td>
+        <td>教育主业收缩（在线学习收入 -50.6%），保健品（芝秋堂 +51.7%）续命，2025 年起 All in 潮玩（奇梦岛/Letsvan）——<b>流量课模式在银发赛道见顶</b></td></tr>
+      <tr><td><b>及象教育</b><br><span class="tiny">尚德机构旗下</span></td>
+        <td class="num">FY2025 营收 20.2 亿元</td>
+        <td>数字技能、法律常识、理财科普——解决真实焦虑而非打发时间</td>
+        <td>稳健增长，验证"实用型课程"路线</td></tr>
+      <tr><td><b>兴趣岛</b><br><span class="tiny">原千聊特训营 · 未上市</span></td>
+        <td class="num">注册用户 5000 万+<br>年完课率 85%（远超行业均值）</td>
+        <td>武当传人/国家一级演员级师资；学员上央视春晚、线下音乐会——<b>从"学会"到"被看见"</b></td>
+        <td>30 门课程 21 门学员数全国领先，展演驱动续费的标杆</td></tr>
+      <tr><td><b>东软睿新</b></td>
+        <td class="num">营收 20 亿级</td>
+        <td>教育+医疗+康养+旅居一体：课程是入口，健康管理/旅居/适老产品在后端变现</td>
+        <td>"课程 → 信任 → 大健康消费"链路最完整</td></tr>
+      <tr><td><b>新东方之家</b></td>
+        <td class="num">100 万户家庭入驻（2026.6）</td>
+        <td>教育+甄选+文旅全家桶，覆盖一个家庭三代人；30 万/张南极船票一天卖光</td>
+        <td>全生命周期家庭账户的样本</td></tr>
+    </tbody>
+  </table>
+  <div class="callout" style="margin-top:18px">
+    <b>赛道共识（校长邦/多鲸等行业观察）</b>：全国 3.1 亿 60 岁以上人口，公办老年大学在册仅约 2000 万，供给严重不足；55+ 在线教育用户 2024 年同比 +45%，是增速最快的人群。但<b>只靠学费盈利的银发机构活不下去</b>——头部机构的共同答案是：课程建立信任，利润在游学、健康消费、旅居、电商等后端。银发教育的本质不是卖课，是经营信任关系。
+  </div>
+</div>
+
+<!-- ============ 对开开华彩的启示 ============ -->
+<h2>七、对开开华彩的启示</h2>
+<div class="h2sub">结合"线上声乐培训 + 线下伙伴网络"的现有打法</div>
+<div class="card">
+  <ul class="tight">
+    <li><b>1. 模式对标兴趣岛，而不是量子之歌。</b>量子之歌的"低价流量课 → 高价进阶"在银发赛道已见顶（教育收入 -50.6%）；兴趣岛靠"名师 + 展演 + 社群"做到 85% 完课率。声乐天然具备展演属性（汇报演出、合唱团、短视频作品），"被看见"是续费最强引擎——这正是开开华彩的产品基因，应该系统化（学员 IP、年度汇演、上电视/上晚会通道）。</li>
+    <li><b>2. "线下捞人、线上留人"的打法被全行业验证。</b>学习机厂商集体开线下店、千尺学堂进社区开"四季学堂"、新东方做线下文旅——纯线上信任不够，纯线下规模不够。建议线下伙伴网络增加"展演/比赛"职能而不只是招生职能。</li>
+    <li><b>3. AI 要用在成本结构和效果可视化上，不是噱头。</b>好未来的"AI 应用优先"策略（不自研底层模型、接入 DeepSeek）值得直接照搬。声乐场景的具体落点：AI 音准/节奏测评打分（对标小猿"掌握度模型"）、每阶段自动生成"进步报告"给学员和子女看——<b>让学习效果可量化、可炫耀</b>，这是 2026 年家长/学员决策的第一要素。</li>
+    <li><b>4. 后端变现要尽早设计。</b>行业共识是学费打平、利润在后端（游学/演出/健康消费/电商）。声乐的后端可以是：主题游学（音乐之都/合唱团巡演）、演出服/设备电商、子女尽孝礼品卡（新东方之家"家庭账户"思路——付费者是子女，使用者是父母）。</li>
+    <li><b>5. 家庭账户是被低估的杠杆。</b>新东方之家 100 万户家庭证明"一个家庭三代人"的渗透逻辑成立。声乐课的学员（父母）与付费者（子女）分离场景下，"给爸妈报个班"的礼品化入口值得专门设计。</li>
+    <li><b>6. 合规与口碑是生命线。</b>预收费监管常态化；作业帮 5144 条投诉、量子之歌 6000+ 条投诉的教训就在眼前——中老年用户的退费纠纷和"虚假宣传"指控对品牌是毁灭性的。退费政策、销售话术、效果承诺要前置合规设计。</li>
+    <li><b>7. 窗口期判断。</b>银发教育供给严重不足（3.1 亿人 vs 2000 万学位），政策在推（15 部委文件）、资本在进，但巨头还没形成——这是区域性/垂直品牌跑马圈地的 3–5 年窗口，速度比完美重要。</li>
+  </ul>
+</div>
+
+<!-- ============ 来源 ============ -->
+<h2>八、主要信息来源</h2>
+<div class="card src">
+  1. TAL IR：FY2026 Q4 及全年财报新闻稿（2026-04-23）· ir.tal.com<br>
+  2. TAL IR：FY2025 全年财报新闻稿（2025-04-24）· ir.100tal.com<br>
+  3. 多知网：好未来 FY2026 财报会纪要（2026-04-24）· duozhi.com<br>
+  4. 高途集团 SEC 6-K：2025 全年及 2026Q1 业绩公告（2026）· sec.gov<br>
+  5. 北京市民政局社会组织公示：希望学/乐读登记信息 · mzj.beijing.gov.cn<br>
+  6. 中国经营报：希望学背景调查报道 · cb.com.cn<br>
+  7. 洛图科技：2025 中国学习平板市场年报 / 2026Q1 季报 · runto.com.cn<br>
+  8. 奥维睿沃：中国学习平板线上零售月度数据报告（2025.8/2025Q3）<br>
+  9. 虎嗅：作业帮，一代人的学习入口失效了（2026）· huxiu.com/article/4871959.html<br>
+  10. 财中社/中新周刊：五年未融资——作业帮"题"都出不好了（2025-11-05）<br>
+  11. 腾讯新闻·棱镜：猿辅导的 AI 长征（2026-07-24）· new.qq.com/rain/a/20260724A08MEP00<br>
+  12. 腾讯科技：中国教培 AI，硬控美国中小学生（2025-10-17）<br>
+  13. 多鲸：三款拍题应用三条路径，谁在定义下一代教育 AI（2025-10-21）<br>
+  14. 中研普华：2026 年在线教育行业发展现状与未来发展趋势分析（2026-07）<br>
+  15. 中国报告大厅：迈向 2025——在线教育政策驱动下的市场新格局与数据洞察<br>
+  16. 量子之歌 FY2025 全年财报（2025-09-17）· ir.quantsing.com<br>
+  17. 51 嚷鳴/深圳商报：量子之歌财报分析（2025-09）<br>
+  18. 校长邦：你的教室空着，3 亿人的银发需求却在等待爆发（2026）· sohu.com/a/1044872750_354728<br>
+  19. QuestMobile：K12 在线教育 MAU 数据（2025-03）<br>
+  20. 极客公园：作业帮学习机近四成线上销量份额领跑（2025-09）<br>
+  <br>
+  <span class="tiny">说明：未上市公司（猿辅导、作业帮、乐读、希望学）无公开审计财报，相关规模为媒体核实口径或公司自述口径，已在文中标注；行业规模存在多口径差异，均已注明机构来源。好未来 Q1 FY2027 财报将于 2026-07-30 发布，可关注更新。</span>
+</div>
+
+<footer>
+  开开华彩 · 内部行业调研 · 2026-07-28 · 由阿布（WorkBuddy）组织专家团并行研究并汇总
+</footer>
+
+</div>
+
+<script>
+Chart.defaults.color = '#9aa7bd';
+Chart.defaults.borderColor = 'rgba(42,53,80,.6)';
+Chart.defaults.font.family = '-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif';
+
+// 好未来
+new Chart(document.getElementById('talChart'), {
+  data: {
+    labels: ['FY2024', 'FY2025', 'FY2026'],
+    datasets: [
+      { type:'bar', label:'净收入（亿美元）', data:[14.90, 22.50, 30.09],
+        backgroundColor:['rgba(91,157,255,.55)','rgba(91,157,255,.7)','rgba(91,157,255,.9)'],
+        borderRadius:8, yAxisID:'y' },
+      { type:'line', label:'归母净利（亿美元）', data:[-0.036, 0.846, 5.31],
+        borderColor:'#f0b858', backgroundColor:'#f0b858', tension:.35, pointRadius:5, yAxisID:'y1' }
+    ]
+  },
+  options: { responsive:true, maintainAspectRatio:false,
+    scales:{ y:{title:{display:true,text:'收入'}}, y1:{position:'right',grid:{drawOnChartArea:false},title:{display:true,text:'净利'}} },
+    plugins:{legend:{position:'bottom'}} }
+});
+
+// 高途 vs 量子之歌
+new Chart(document.getElementById('gtChart'), {
+  type:'bar',
+  data: {
+    labels: ['高途 2024', '高途 2025', '量子之歌 FY2024', '量子之歌 FY2025'],
+    datasets: [{ label:'年度收入（亿元）', data:[45.5, 61.47, 37.95, 27.26],
+      backgroundColor:['rgba(65,199,212,.5)','rgba(65,199,212,.9)','rgba(157,127,240,.55)','rgba(157,127,240,.85)'],
+      borderRadius:8 }]
+  },
+  options: { responsive:true, maintainAspectRatio:false,
+    plugins:{legend:{position:'bottom'},
+      tooltip:{callbacks:{label:(c)=>c.parsed.y+' 亿元'+(c.dataIndex===0?'（推算）':'')}}},
+    scales:{y:{title:{display:true,text:'亿元'}}} }
+});
+
+// 行业规模
+new Chart(document.getElementById('mktChart'), {
+  type:'line',
+  data: {
+    labels: ['2020', '2021', '2022', '2023', '2024', '2025E'],
+    datasets: [{ label:'在线教育市场规模（亿元）', data:[4800, null, null, 4868, 5800, 6500],
+      borderColor:'#41c7d4', backgroundColor:'rgba(65,199,212,.15)', fill:true, tension:.35,
+      pointRadius:5, pointBackgroundColor:'#41c7d4', spanGaps:true }]
+  },
+  options: { responsive:true, maintainAspectRatio:false,
+    plugins:{legend:{position:'bottom'},
+      tooltip:{callbacks:{label:(c)=>c.parsed.y+' 亿元'}}},
+    scales:{y:{min:4000}} }
+});
+
+// 学习机份额
+new Chart(document.getElementById('hwChart'), {
+  type:'doughnut',
+  data: {
+    labels: ['作业帮 32.9%', '学而思 20.1%', '科大讯飞 18.5%', '其他 28.5%'],
+    datasets: [{ data:[32.9, 20.1, 18.5, 28.5],
+      backgroundColor:['#5b9dff','#f0b858','#41c7d4','#3a4763'],
+      borderColor:'#0d1117', borderWidth:3 }]
+  },
+  options: { responsive:true, maintainAspectRatio:false, cutout:'58%',
+    plugins:{legend:{position:'bottom'}} }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 200" role="img" aria-labelledby="t">
+  <title id="t">Grok Bot 不是聊天窗口</title>
+  
+<style>
+  .p { fill: #fffaf1; }
+  .ink { fill: #1a1611; }
+  .muted { fill: #6a5f52; }
+  .stroke { stroke: #c4b59a; fill: none; }
+  .box { fill: #fffaf1; stroke: #c4b59a; }
+  .cin { fill: #b1321a; }
+  .pine { fill: #245848; }
+  .gold { fill: #9a7428; }
+  .cinb { fill: #f3ddd6; stroke: #b1321a; }
+  .pineb { fill: #d7ebe2; stroke: #245848; }
+  .goldb { fill: #f3e6c4; stroke: #9a7428; }
+  .soft { fill: #f3eee4; stroke: #d8cdbb; }
+  text { font-family: "Noto Sans SC", "PingFang SC", "Hiragino Sans GB", sans-serif; }
+  @media (prefers-color-scheme: dark) {
+    .p { fill: #1c1914; }
+    .ink { fill: #f3eadc; }
+    .muted { fill: #b3a693; }
+    .stroke { stroke: #5a5044; }
+    .box { fill: #1c1914; stroke: #5a5044; }
+    .cin { fill: #e06a4c; }
+    .pine { fill: #7ec9ae; }
+    .gold { fill: #e0c078; }
+    .cinb { fill: #3a221c; stroke: #e06a4c; }
+    .pineb { fill: #1b322b; stroke: #7ec9ae; }
+    .goldb { fill: #332a16; stroke: #e0c078; }
+    .soft { fill: #13110e; stroke: #3a342b; }
+  }
+</style>
+
+  <rect class="p" width="720" height="200"/>
+  <rect class="soft" x="36" y="36" width="200" height="128" rx="14" stroke-width="1.5"/>
+  <text class="muted" x="136" y="88" text-anchor="middle" font-size="14">不是这个</text>
+  <text class="ink" x="136" y="118" text-anchor="middle" font-size="16">grok.com 聊天</text>
+  <rect class="cinb" x="260" y="36" width="424" height="128" rx="14" stroke-width="2"/>
+  <text class="cin" x="472" y="80" text-anchor="middle" font-size="14" font-weight="700">而是这个</text>
+  <text class="ink" x="472" y="112" text-anchor="middle" font-size="18" font-weight="700">有工位的命名同事</text>
+  <text class="muted" x="472" y="138" text-anchor="middle" font-size="13">桌面 App · 共享云电脑 · 能把活干完</text>
+</svg>

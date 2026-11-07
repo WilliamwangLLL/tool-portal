@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>苹果 AAPL · 未来 1–3 年股价走势与持有决策 | 深度研究</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Noto+Serif+SC:wght@500;600;700;900&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0F1217; --ink-2:#0B0E13; --surface:#161B24; --surface-2:#1C222D;
+    --line:#2A313D; --line-soft:#222a35;
+    --text:#E9ECF1; --dim:#98A1AE; --faint:#69727F;
+    --gold:#C9A86A; --gold-2:#E0C690; --gold-soft:rgba(201,168,106,.12);
+    --bull:#46C892; --bear:#E26C5C; --amber:#E0A23C; --blue:#6F9EEB;
+    --sans:'Noto Sans SC',system-ui,-apple-system,sans-serif;
+    --serif:'Noto Serif SC',Georgia,serif;
+    --grotesk:'Space Grotesk',var(--sans);
+    --mono:'Space Mono','Noto Sans SC',monospace;
+    --maxw:1080px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--ink); color:var(--text); font-family:var(--sans);
+    font-weight:400; line-height:1.75; -webkit-font-smoothing:antialiased;
+    letter-spacing:.01em; overflow-x:hidden;
+  }
+  ::selection{background:var(--gold-soft); color:var(--gold-2)}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 28px}
+
+  /* ---------- ticker bar ---------- */
+  .ticker{
+    position:sticky; top:0; z-index:50; background:rgba(11,14,19,.86);
+    backdrop-filter:blur(14px); border-bottom:1px solid var(--line);
+    font-family:var(--mono); font-size:12.5px;
+  }
+  .ticker-in{max-width:var(--maxw); margin:0 auto; padding:11px 28px;
+    display:flex; align-items:center; gap:22px; flex-wrap:wrap; color:var(--dim)}
+  .ticker b{color:var(--text)}
+  .tk-sym{color:var(--gold)!important; letter-spacing:.12em; font-weight:700}
+  .tk-down{color:var(--bear)}
+  .tk-sep{width:1px;height:13px;background:var(--line);display:inline-block}
+  .ticker .asof{margin-left:auto;color:var(--faint)}
+
+  /* ---------- shared ---------- */
+  .eyebrow{font-family:var(--mono); font-size:12px; letter-spacing:.28em;
+    text-transform:uppercase; color:var(--gold); display:inline-block}
+  section{padding:78px 0; border-top:1px solid var(--line-soft)}
+  .sec-num{font-family:var(--grotesk); font-size:13px; font-weight:600;
+    color:var(--faint); letter-spacing:.18em}
+  h2{font-family:var(--serif); font-weight:700; font-size:clamp(26px,4.2vw,40px);
+    line-height:1.18; letter-spacing:.01em; margin:12px 0 8px}
+  h3{font-family:var(--serif); font-weight:600; font-size:20px; line-height:1.4; margin:0 0 6px}
+  .lead{color:var(--dim); font-size:16.5px; max-width:760px; margin-top:14px}
+  p{margin:0 0 14px}
+  .muted{color:var(--dim)}
+  .hl{color:var(--gold-2); font-weight:500}
+  strong{color:var(--text); font-weight:700}
+  .reveal{opacity:0; transform:translateY(22px); transition:opacity .7s ease, transform .7s ease}
+  .reveal.in{opacity:1; transform:none}
+
+  /* ---------- hero ---------- */
+  .hero{position:relative; padding:64px 0 60px; border-top:none; overflow:hidden}
+  .hero::before{content:""; position:absolute; inset:0;
+    background:
+      radial-gradient(900px 420px at 78% -10%, rgba(201,168,106,.10), transparent 60%),
+      radial-gradient(700px 500px at 0% 30%, rgba(111,158,235,.06), transparent 60%);
+    pointer-events:none}
+  .hero h1{font-family:var(--serif); font-weight:900;
+    font-size:clamp(34px,6.2vw,62px); line-height:1.08; letter-spacing:.005em;
+    margin:20px 0 0; max-width:14ch}
+  .hero h1 .accent{color:var(--gold)}
+  .thesis{font-size:clamp(16px,2.2vw,19px); color:var(--text); max-width:720px;
+    margin:22px 0 0; line-height:1.7; border-left:2px solid var(--gold); padding-left:18px}
+  .thesis b{color:var(--gold-2)}
+
+  /* hero verdict cards */
+  .verdict{display:grid; grid-template-columns:repeat(3,1fr); gap:1px;
+    background:var(--line); border:1px solid var(--line); border-radius:14px;
+    overflow:hidden; margin-top:40px}
+  .vc{background:var(--surface); padding:22px 22px 20px}
+  .vc .k{font-family:var(--mono); font-size:11px; letter-spacing:.16em;
+    text-transform:uppercase; color:var(--faint)}
+  .vc .v{font-family:var(--grotesk); font-weight:700; font-size:30px;
+    margin-top:8px; line-height:1}
+  .vc .s{font-size:13px; color:var(--dim); margin-top:9px; line-height:1.5}
+  .vc.bull .v{color:var(--bull)} .vc.base .v{color:var(--gold-2)} .vc.bear .v{color:var(--bear)}
+
+  /* ---------- scenario cone ---------- */
+  .cone-card{margin-top:42px; background:linear-gradient(180deg,var(--surface),#13171f);
+    border:1px solid var(--line); border-radius:16px; padding:26px 24px 18px}
+  .cone-head{display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:10px; margin-bottom:6px}
+  .cone-head .t{font-family:var(--serif); font-weight:600; font-size:17px}
+  .cone-head .leg{font-family:var(--mono); font-size:11.5px; color:var(--dim); display:flex; gap:16px; flex-wrap:wrap}
+  .leg i{font-style:normal; display:inline-flex; align-items:center; gap:6px}
+  .dot{width:9px;height:9px;border-radius:50%;display:inline-block}
+  svg.cone{width:100%; height:auto; display:block; margin-top:6px}
+  .cone-foot{font-family:var(--mono); font-size:11px; color:var(--faint); margin-top:8px; text-align:center}
+  .draw{stroke-dasharray:1400; stroke-dashoffset:1400; animation:draw 1.8s ease forwards .25s}
+  @keyframes draw{to{stroke-dashoffset:0}}
+
+  /* ---------- summary block ---------- */
+  .summary{background:var(--ink-2); border-top:1px solid var(--line); border-bottom:1px solid var(--line)}
+  .verdict-line{font-family:var(--serif); font-size:clamp(19px,2.6vw,24px); line-height:1.55;
+    color:var(--text); max-width:880px}
+  .verdict-line b{color:var(--gold-2)}
+  .swing{display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:34px}
+  .swing-item{background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:20px}
+  .swing-item .n{font-family:var(--grotesk); font-weight:700; color:var(--gold); font-size:13px; letter-spacing:.14em}
+  .swing-item h4{font-family:var(--serif); font-weight:600; font-size:16px; margin:8px 0 6px}
+  .swing-item p{font-size:13.5px; color:var(--dim); margin:0; line-height:1.6}
+
+  /* ---------- metric grid ---------- */
+  .grid-2{display:grid; grid-template-columns:1.15fr .85fr; gap:30px; align-items:start; margin-top:36px}
+  .metrics{display:grid; grid-template-columns:repeat(2,1fr); gap:1px; background:var(--line);
+    border:1px solid var(--line); border-radius:12px; overflow:hidden}
+  .m{background:var(--surface); padding:18px 18px 16px}
+  .m .k{font-size:12px; color:var(--dim)}
+  .m .v{font-family:var(--grotesk); font-weight:700; font-size:23px; margin-top:5px}
+  .m .d{font-family:var(--mono); font-size:11px; margin-top:4px}
+  .up{color:var(--bull)} .down{color:var(--bear)} .neu{color:var(--faint)}
+
+  /* revenue mini chart */
+  .chart-card{background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:22px}
+  .chart-card .ct{font-family:var(--serif); font-weight:600; font-size:15px; margin-bottom:2px}
+  .chart-card .cs{font-family:var(--mono); font-size:11px; color:var(--faint); margin-bottom:18px}
+  .bars{display:flex; align-items:flex-end; gap:16px; height:188px; padding-top:6px}
+  .bar-col{flex:1; display:flex; flex-direction:column; align-items:center; justify-content:flex-end; height:100%}
+  .bar-stack{width:100%; display:flex; flex-direction:column; justify-content:flex-end; gap:3px; margin:6px 0}
+  .bar{width:100%; border-radius:3px 3px 0 0; background:var(--gold)}
+  .bar.svc{background:rgba(70,200,146,.55)}
+  .bar-lab{font-family:var(--mono); font-size:10.5px; color:var(--dim); text-align:center; line-height:1.3}
+  .bar-val{font-family:var(--grotesk); font-weight:600; font-size:12px; color:var(--text)}
+  .clegend{display:flex; gap:18px; margin-top:16px; font-family:var(--mono); font-size:11px; color:var(--dim)}
+  .clegend i{font-style:normal; display:inline-flex; align-items:center; gap:6px}
+  .sq{width:10px;height:10px;border-radius:2px;display:inline-block}
+
+  /* ---------- bull/bear debates ---------- */
+  .debate{border:1px solid var(--line); border-radius:14px; overflow:hidden; margin-top:18px; background:var(--surface)}
+  .debate-head{display:flex; align-items:center; gap:14px; padding:16px 20px; border-bottom:1px solid var(--line); background:var(--surface-2)}
+  .debate-head .idx{font-family:var(--grotesk); font-weight:700; font-size:13px; color:var(--gold); min-width:26px}
+  .debate-head h3{font-size:17px; margin:0}
+  .debate-head .tag{margin-left:auto; font-family:var(--mono); font-size:10.5px; letter-spacing:.1em;
+    padding:4px 9px; border-radius:20px; border:1px solid var(--line); color:var(--dim)}
+  .bb{display:grid; grid-template-columns:1fr 1fr}
+  .bb > div{padding:18px 20px}
+  .bb .bull-side{border-right:1px solid var(--line)}
+  .side-k{font-family:var(--mono); font-size:11px; letter-spacing:.12em; text-transform:uppercase;
+    display:inline-flex; align-items:center; gap:7px; margin-bottom:9px}
+  .side-k.b{color:var(--bull)} .side-k.r{color:var(--bear)}
+  .bb p{font-size:14px; color:var(--dim); margin:0; line-height:1.65}
+  .bb .arrow{width:7px;height:7px;border-radius:50%}
+
+  /* ---------- scenario table ---------- */
+  .scen{margin-top:34px; border:1px solid var(--line); border-radius:14px; overflow:hidden}
+  .scen-row{display:grid; grid-template-columns:130px 150px 1fr 96px; gap:0; border-bottom:1px solid var(--line)}
+  .scen-row:last-child{border-bottom:none}
+  .scen-row.head{background:var(--surface-2); font-family:var(--mono); font-size:11px;
+    letter-spacing:.1em; text-transform:uppercase; color:var(--faint)}
+  .scen-row > div{padding:16px 18px; display:flex; flex-direction:column; justify-content:center}
+  .scen-row.head > div{padding:13px 18px}
+  .scen-name{font-family:var(--serif); font-weight:600; font-size:16px}
+  .scen-name.bull{color:var(--bull)} .scen-name.base{color:var(--gold-2)} .scen-name.bear{color:var(--bear)}
+  .scen-pt{font-family:var(--grotesk); font-weight:700; font-size:19px}
+  .scen-chg{font-family:var(--mono); font-size:11.5px; margin-top:3px}
+  .scen-drv{font-size:13px; color:var(--dim); line-height:1.55}
+  .scen-prob{font-family:var(--grotesk); font-weight:700; font-size:18px; color:var(--text)}
+  .scen-note{font-family:var(--mono); font-size:11px; color:var(--faint); margin-top:14px; text-align:center}
+
+  /* ---------- framework / checklist ---------- */
+  .lenses{display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:30px}
+  .lens{background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:22px; border-top:2px solid var(--gold)}
+  .lens h4{font-family:var(--serif); font-weight:600; font-size:16px; margin-bottom:8px}
+  .lens p{font-size:13.5px; color:var(--dim); margin:0; line-height:1.65}
+
+  .checklist{margin-top:30px; background:var(--ink-2); border:1px solid var(--line); border-radius:14px; padding:26px 28px}
+  .checklist .ct{font-family:var(--serif); font-weight:600; font-size:18px; margin-bottom:4px}
+  .checklist .cs{color:var(--dim); font-size:14px; margin-bottom:18px}
+  .check-item{display:flex; gap:14px; padding:13px 0; border-bottom:1px dashed var(--line-soft)}
+  .check-item:last-child{border-bottom:none}
+  .check-item .ck{color:var(--gold); font-family:var(--mono); font-size:13px; margin-top:2px}
+  .check-item .txt{font-size:14px; color:var(--text)}
+  .check-item .txt span{color:var(--dim); font-size:13px}
+
+  .breakbox{margin-top:24px; border:1px solid rgba(226,108,92,.4); background:rgba(226,108,92,.06);
+    border-radius:12px; padding:20px 22px}
+  .breakbox .bt{font-family:var(--mono); font-size:11.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--bear); margin-bottom:10px}
+  .breakbox ul{list-style:none; display:grid; gap:8px}
+  .breakbox li{font-size:13.5px; color:var(--dim); padding-left:18px; position:relative; line-height:1.55}
+  .breakbox li::before{content:"–"; position:absolute; left:0; color:var(--bear)}
+
+  /* ---------- timeline ---------- */
+  .tl{margin-top:34px; position:relative; padding-left:8px}
+  .tl-item{display:grid; grid-template-columns:120px 1fr; gap:22px; padding:16px 0; position:relative}
+  .tl-item:not(:last-child){border-bottom:1px solid var(--line-soft)}
+  .tl-date{font-family:var(--mono); font-size:12.5px; color:var(--gold); letter-spacing:.04em}
+  .tl-body h4{font-family:var(--serif); font-weight:600; font-size:15.5px; margin-bottom:4px}
+  .tl-body p{font-size:13.5px; color:var(--dim); margin:0; line-height:1.6}
+
+  /* ---------- appendix table ---------- */
+  table.data{width:100%; border-collapse:collapse; margin-top:24px; font-size:13.5px}
+  table.data th,table.data td{text-align:left; padding:12px 14px; border-bottom:1px solid var(--line-soft)}
+  table.data th{font-family:var(--mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--faint); font-weight:400}
+  table.data td:first-child{color:var(--dim)}
+  table.data td:last-child{font-family:var(--grotesk); font-weight:600; text-align:right; color:var(--text)}
+  table.data tr:hover td{background:rgba(255,255,255,.015)}
+
+  .sources{margin-top:28px; font-family:var(--mono); font-size:11.5px; color:var(--faint); line-height:1.9}
+  .sources b{color:var(--dim); font-weight:400}
+
+  .disclaimer{margin-top:34px; padding:22px 24px; border:1px solid var(--line); border-radius:12px;
+    background:var(--surface); font-size:12.5px; color:var(--faint); line-height:1.75}
+  .disclaimer b{color:var(--dim)}
+
+  footer{padding:46px 0 70px; border-top:1px solid var(--line); text-align:center}
+  footer .fm{font-family:var(--mono); font-size:11px; color:var(--faint); letter-spacing:.1em}
+
+  /* ---------- responsive ---------- */
+  @media(max-width:760px){
+    .verdict,.swing,.lenses{grid-template-columns:1fr}
+    .grid-2{grid-template-columns:1fr}
+    .metrics{grid-template-columns:1fr 1fr}
+    .bb{grid-template-columns:1fr}
+    .bb .bull-side{border-right:none; border-bottom:1px solid var(--line)}
+    .scen-row{grid-template-columns:1fr 1fr; }
+    .scen-row.head{display:none}
+    .scen-row > div{padding:12px 14px}
+    .scen-drv{grid-column:1/-1}
+    .tl-item{grid-template-columns:1fr; gap:6px}
+    .ticker-in{gap:14px}
+    .ticker .asof{display:none}
+  }
+  @media(prefers-reduced-motion:reduce){
+    .reveal{opacity:1!important;transform:none!important;transition:none}
+    .draw{animation:none;stroke-dashoffset:0}
+  }
+</style>
+</head>
+<body>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-in">
+    <span class="tk-sym">NASDAQ : AAPL</span>
+    <span><b>$275.15</b></span>
+    <span class="tk-down">▼ 6.12% （6/25）</span>
+    <span class="tk-sep"></span>
+    <span>市值 <b>$4.1T</b></span>
+    <span>P/E <b>35×</b></span>
+    <span>远期 <b>~29×</b></span>
+    <span class="tk-sep"></span>
+    <span>共识 <b style="color:var(--gold)">买入</b></span>
+    <span>目标 <b>~$315</b></span>
+    <span class="asof">数据截至 2026-06-27</span>
+  </div>
+</div>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="wrap">
+    <span class="eyebrow">深度股票研究 · Equity Deep-Dive</span>
+    <h1>苹果 <span class="accent">AAPL</span><br>未来 1–3 年股价<br>与持有决策</h1>
+    <p class="thesis">一句话结论：苹果仍是一台<b>高质量复利机器</b>，但当前估值偏满。短期遭遇一次<b>真实却大概率是暂时</b>的内存涨价毛利冲击；AI 与中国是真实但正在收敛的风险；<b>首款折叠屏 iPhone</b> 是未来 18 个月最大的看涨催化剂。1–3 年的结局，取决于三个摆动变量是否兑现。</p>
+
+    <!-- VERDICT CARDS -->
+    <div class="verdict reveal">
+      <div class="vc base">
+        <div class="k">基准情景 · 12–36月</div>
+        <div class="v">$310–340</div>
+        <div class="s">约 +13% ～ +24%　与华尔街共识区间吻合</div>
+      </div>
+      <div class="vc bull">
+        <div class="k">看涨情景</div>
+        <div class="v">$400–430</div>
+        <div class="s">折叠屏超级周期 + 毛利回升 + AI 补齐</div>
+      </div>
+      <div class="vc bear">
+        <div class="k">看跌情景</div>
+        <div class="v">$210–245</div>
+        <div class="s">内存持续挤压 · 涨价压需求 · 杀估值</div>
+      </div>
+    </div>
+
+    <!-- SIGNATURE: SCENARIO CONE -->
+    <div class="cone-card reveal">
+      <div class="cone-head">
+        <div class="t">前瞻价格情景锥 · 自当前 $275 起的三条路径</div>
+        <div class="leg">
+          <i><span class="dot" style="background:var(--bull)"></span>看涨</i>
+          <i><span class="dot" style="background:var(--gold)"></span>基准</i>
+          <i><span class="dot" style="background:var(--bear)"></span>看跌</i>
+        </div>
+      </div>
+      <svg class="cone" viewBox="0 0 800 330" preserveAspectRatio="xMidYMid meet" role="img" aria-label="苹果股价未来三年三情景路径图">
+        <defs>
+          <linearGradient id="coneFill" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="rgba(70,200,146,.16)"/>
+            <stop offset="50%" stop-color="rgba(201,168,106,.10)"/>
+            <stop offset="100%" stop-color="rgba(226,108,92,.14)"/>
+          </linearGradient>
+        </defs>
+        <!-- gridlines -->
+        <g stroke="#222933" stroke-width="1">
+          <line x1="90" y1="40" x2="740" y2="40"/>
+          <line x1="90" y1="100" x2="740" y2="100"/>
+          <line x1="90" y1="160" x2="740" y2="160"/>
+          <line x1="90" y1="220" x2="740" y2="220"/>
+          <line x1="90" y1="280" x2="740" y2="280"/>
+        </g>
+        <g fill="#69727F" font-family="Space Mono, monospace" font-size="11" text-anchor="end">
+          <text x="78" y="44">$440</text>
+          <text x="78" y="104">$380</text>
+          <text x="78" y="164">$320</text>
+          <text x="78" y="224">$260</text>
+          <text x="78" y="284">$200</text>
+        </g>
+        <!-- cone fill -->
+        <path d="M90,205 Q320,150 740,60 L740,250 Q320,235 90,205 Z" fill="url(#coneFill)"/>
+        <!-- base dashed -->
+        <path class="draw" d="M90,205 Q400,178 740,150" fill="none" stroke="#C9A86A" stroke-width="2" stroke-dasharray="6 5"/>
+        <!-- bull -->
+        <path class="draw" d="M90,205 Q320,150 740,60" fill="none" stroke="#46C892" stroke-width="2.4"/>
+        <!-- bear -->
+        <path class="draw" d="M90,205 Q320,235 740,250" fill="none" stroke="#E26C5C" stroke-width="2.4"/>
+        <!-- today dot -->
+        <circle cx="90" cy="205" r="5.5" fill="#E9ECF1"/>
+        <circle cx="90" cy="205" r="11" fill="none" stroke="#E9ECF1" stroke-opacity=".25" stroke-width="1.5"/>
+        <text x="90" y="226" fill="#E9ECF1" font-family="Space Grotesk" font-size="12" font-weight="600" text-anchor="middle">今天 $275</text>
+        <!-- end labels -->
+        <text x="748" y="62" fill="#46C892" font-family="Space Grotesk" font-size="13" font-weight="700">$420</text>
+        <text x="748" y="153" fill="#E0C690" font-family="Space Grotesk" font-size="13" font-weight="700">$330</text>
+        <text x="748" y="253" fill="#E26C5C" font-family="Space Grotesk" font-size="13" font-weight="700">$230</text>
+        <!-- x labels -->
+        <g fill="#69727F" font-family="Space Mono, monospace" font-size="11" text-anchor="middle">
+          <text x="90" y="310">现在</text>
+          <text x="307" y="310">+12月</text>
+          <text x="523" y="310">+24月</text>
+          <text x="715" y="310">+36月</text>
+        </g>
+      </svg>
+      <div class="cone-foot">示意性情景，非价格预测；区间锚定卖方目标价 $215–$400，共识中枢约 $310–325</div>
+    </div>
+  </div>
+</header>
+
+<!-- EXECUTIVE SUMMARY -->
+<section class="summary">
+  <div class="wrap reveal">
+    <span class="sec-num">摘要 · EXECUTIVE SUMMARY</span>
+    <h2>结论先行</h2>
+    <p class="verdict-line">这不是一个“便宜的好公司”，而是一个<b>定价偏满的伟大公司</b>正经历一次周期性扰动。基本面其实在<b>加速</b>（营收增速回到 16–17%、服务收入创纪录），但 35 倍的 TTM 市盈率已高于自身五年均值，未来回报将更依赖<b>盈利增长</b>而非估值扩张。1–3 年是看涨还是看跌，由下面三件事决定。</p>
+
+    <div class="swing">
+      <div class="swing-item">
+        <div class="n">摆动变量 01</div>
+        <h4>内存成本与毛利率</h4>
+        <p>AI 把 DRAM/NAND 抽干，苹果二季度毛利率已指引下调至 47.5–48.5%。关键看 2026–27 年内存价格何时见顶、毛利能否回升，以及 iPhone 18 是否跟涨、跟涨是否压制需求。</p>
+      </div>
+      <div class="swing-item">
+        <div class="n">摆动变量 02</div>
+        <h4>AI 与中国双线</h4>
+        <p>苹果被市场视为 AI 落后者，被迫依赖谷歌 Gemini；中国市场年初强劲反弹后 5 月又急转直下。两者叠加决定了苹果的“成长性叙事”能否成立。</p>
+      </div>
+      <div class="swing-item">
+        <div class="n">摆动变量 03</div>
+        <h4>折叠屏换机周期</h4>
+        <p>2026 秋首款折叠屏 iPhone（售价 &gt;$2,000）是十余年来最大的硬件赌注。若点燃高端换机超级周期即奔向看涨情景；若首代缺货、定价小众则只是噱头。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PART 01 -->
+<section>
+  <div class="wrap reveal">
+    <span class="sec-num">01 / 导火索</span>
+    <h2>这次涨价，到底意味着什么</h2>
+    <p class="lead">你观察到的涨价属实，而且是理解未来 1–3 年的关键起点。它既是一次毛利率的真实警报，也是一个被严重误读的“暂时性”信号。</p>
+
+    <p style="margin-top:26px">2026 年 6 月 25 日，苹果一夜之间对 Mac、iPad、Vision Pro、HomePod、Apple TV 等 <strong>15 条产品线全球涨价</strong>——MacBook Air +$200 至 $1,299、MacBook Pro +$300 至 $1,999——而 <strong>iPhone、AirPods 暂时豁免</strong>。这是苹果极罕见的“中周期、无新配置涨价”，等于承认成本压力真实且来得很快。当天股价大跌 <strong>6.12%</strong> 至 $275.15，是当年第二大单日跌幅。</p>
+
+    <p>根源不是苹果，而是一场<span class="hl">内存超级周期</span>：AI 数据中心疯抢 HBM，三大原厂（三星、SK 海力士、美光）把产能转向高带宽内存，挤压了手机/电脑用的普通 DRAM。据 TrendForce，合约 DRAM 价格<strong>一季度涨约 90%、二季度再涨约 60%</strong>；Gartner 估计 DRAM+SSD 综合价格到 2026 年底将累计上涨约 130%，<strong>缓解要等到 2027 年下半年</strong>。库克称这是“百年一遇的洪水”。一个旁证：美光最新季度营收同比暴增 346% 至约 $415 亿、毛利率约 85%。</p>
+
+    <h3 style="margin-top:30px">为什么这对股价是“双刃剑”</h3>
+    <p>对苹果的直接利润影响其实<strong>有限</strong>：Mac+iPad 合计仅占营收约 14%。真正的问题在毛利率——苹果已把二季度（6 月季）毛利率指引从 49.3% 下调至 <strong>47.5–48.5%</strong>，而<strong>每 100 个基点的毛利率波动约等于 38 亿美元营业利润</strong>。市场把这次涨价读作“成本问题真实且正在逼近 iPhone”的确认信号。关于 iPhone 18 的跟涨幅度，卖方分歧很大：摩根大通估约 $50，TechInsights 估高达 $270，Counterpoint 落在 $150–200。涨多少、是否伤及销量，是未来四个季度的核心看点。</p>
+  </div>
+</section>
+
+<!-- PART 02 -->
+<section>
+  <div class="wrap reveal">
+    <span class="sec-num">02 / 基本面体检</span>
+    <h2>抛开噪音：这台机器还很强</h2>
+    <p class="lead">在涨价恐慌之下，容易忽略一个事实——苹果最近两个季度的财务其实在<span class="hl">加速</span>，且现金生成与资本回报能力近乎无敌。</p>
+
+    <div class="grid-2">
+      <div>
+        <div class="metrics reveal">
+          <div class="m"><div class="k">FY26 Q2 营收（3月季）</div><div class="v">$111.2B</div><div class="d up">▲ 17% YoY · 史上最佳3月季</div></div>
+          <div class="m"><div class="k">摊薄 EPS</div><div class="v">$2.01</div><div class="d up">▲ 22% YoY</div></div>
+          <div class="m"><div class="k">服务收入</div><div class="v">$31.0B</div><div class="d up">▲ 16% · 历史新高 · 毛利率 76%+</div></div>
+          <div class="m"><div class="k">iPhone 收入</div><div class="v">$57.0B</div><div class="d up">▲ 22% · iPhone 17 拉动</div></div>
+          <div class="m"><div class="k">毛利率</div><div class="v">49.3%</div><div class="d down">Q3 指引降至 47.5–48.5%</div></div>
+          <div class="m"><div class="k">净现金</div><div class="v">~$62B</div><div class="d neu">半年经营现金流 $82.6B</div></div>
+        </div>
+        <p style="margin-top:24px">资本回报是苹果的“安全垫”：本季新授权 <strong>$1,000 亿回购</strong>、股息提至 $0.27（连续第 14 年增长），TTM 回购约 $1,080 亿，自计划启动以来已向股东返还逾 <strong>$8,950 亿</strong>。持续缩股本身就在抬高每股收益。服务业务虽只占营收约 28%，却贡献约 <strong>35% 的毛利</strong>——这是把苹果从“硬件公司”重估为“高质量复利平台”的核心。</p>
+      </div>
+
+      <div class="chart-card reveal">
+        <div class="ct">季度营收与服务收入</div>
+        <div class="cs">单位：十亿美元 · FY2026</div>
+        <div class="bars">
+          <div class="bar-col">
+            <div class="bar-val">$143.8</div>
+            <div class="bar-stack">
+              <div class="bar svc" style="height:31px"></div>
+              <div class="bar" style="height:119px"></div>
+            </div>
+            <div class="bar-lab">Q1 · 12月季<br>+16% YoY</div>
+          </div>
+          <div class="bar-col">
+            <div class="bar-val">$111.2</div>
+            <div class="bar-stack">
+              <div class="bar svc" style="height:32px"></div>
+              <div class="bar" style="height:84px"></div>
+            </div>
+            <div class="bar-lab">Q2 · 3月季<br>+17% YoY</div>
+          </div>
+          <div class="bar-col">
+            <div class="bar-val" style="color:var(--dim)">≈ +15%</div>
+            <div class="bar-stack" style="opacity:.5">
+              <div class="bar svc" style="height:33px"></div>
+              <div class="bar" style="height:82px; background:#5a5040"></div>
+            </div>
+            <div class="bar-lab">Q3e · 6月季<br>毛利↓</div>
+          </div>
+        </div>
+        <div class="clegend">
+          <i><span class="sq" style="background:var(--gold)"></span>产品</i>
+          <i><span class="sq" style="background:rgba(70,200,146,.55)"></span>服务</i>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PART 03 -->
+<section>
+  <div class="wrap reveal">
+    <span class="sec-num">03 / 多空全景</span>
+    <h2>八条主线，把多空摆上台面</h2>
+    <p class="lead">专业的判断不是站队，而是把每条逻辑的<span class="hl">最强看涨</span>与<span class="hl">最强看跌</span>并列，让你自己权衡。以下八条决定了苹果未来 1–3 年的走向。</p>
+
+    <!-- 1 -->
+    <div class="debate reveal">
+      <div class="debate-head"><span class="idx">01</span><h3>内存成本与毛利率</h3><span class="tag">权重 · 高</span></div>
+      <div class="bb">
+        <div class="bull-side"><div class="side-k b"><span class="arrow" style="background:var(--bull)"></span>看涨</div><p>苹果供应链议价力全行业最强：长约、巨额预付、SKU 级定价权，能率先把成本转嫁出去而保住品牌。历史上毛利率已从 30% 多一路爬到 49%，结构性向上。</p></div>
+        <div><div class="side-k r"><span class="arrow" style="background:var(--bear)"></span>看跌</div><p>Q3 毛利率指引已下调，每 100bp 约 $38 亿营业利润。内存还在涨、2027 下半年才缓解，iPhone 18 大概率跟涨——涨价可能反噬销量，形成“保毛利还是保销量”的两难。</p></div>
+      </div>
+    </div>
+    <!-- 2 -->
+    <div class="debate reveal">
+      <div class="debate-head"><span class="idx">02</span><h3>AI 战略</h3><span class="tag">权重 · 高</span></div>
+      <div class="bb">
+        <div class="bull-side"><div class="side-k b"><span class="arrow" style="background:var(--bull)"></span>看涨</div><p>“AI 审慎”可能反成优势：私有云计算的隐私架构差异化；通过定制版 Gemini 快速补齐前沿能力；20 亿级活跃装机量是 AI 分发的天然入口，苹果可做“AI 的最后一公里”。</p></div>
+        <div><div class="side-k r"><span class="arrow" style="background:var(--bear)"></span>看跌</div><p>自研大模型没跟上，被迫每年付谷歌约 $10 亿用 Gemini 驱动 Siri，被市场打上“AI 落后者”标签。“更个性化 Siri”从 2024 反复跳票到 iOS 27，且在华、欧盟因监管延迟落地。</p></div>
+      </div>
+    </div>
+    <!-- 3 -->
+    <div class="debate reveal">
+      <div class="debate-head"><span class="idx">03</span><h3>中国市场</h3><span class="tag">权重 · 高</span></div>
+      <div class="bb">
+        <div class="bull-side"><div class="side-k b"><span class="arrow" style="background:var(--bull)"></span>看涨</div><p>iPhone 17 带动 2026 一季度中国销量 +20% 以上，一度逼近市场第一；高端需求韧性强，叠加地方政府补贴。证明只要产品到位，中国仍是增量而非拖累。</p></div>
+        <div><div class="side-k r"><span class="arrow" style="background:var(--bear)"></span>看跌</div><p>5 月急转直下：UBS 估中国 iPhone 销量 -19%、份额从 16% 跌至约 11%，华为强势反扑。AI 在华缺位是结构性劣势，全年中国手机市场预计 -10%。波动极大。</p></div>
+      </div>
+    </div>
+    <!-- 4 -->
+    <div class="debate reveal">
+      <div class="debate-head"><span class="idx">04</span><h3>折叠屏与换机周期</h3><span class="tag">权重 · 高</span></div>
+      <div class="bb">
+        <div class="bull-side"><div class="side-k b"><span class="arrow" style="background:var(--bull)"></span>看涨</div><p>首款折叠屏（&gt;$2,000）+ 2nm A20 芯片 + 号称“无折痕”工艺，是十余年最大硬件创新，有望点燃高端换机超级周期；创纪录的装机量提供巨大的升级蓄水池。</p></div>
+        <div><div class="side-k r"><span class="arrow" style="background:var(--bear)"></span>看跌</div><p>首代良率/产能受限（三星面板约 1,100 万片、量产推迟到 8 月），大概率缺货、分批上市，体验更像 Vision Pro 而非 iPhone。标准版 iPhone 18 推迟到 2027 春，短期走量承压。</p></div>
+      </div>
+    </div>
+    <!-- 5 -->
+    <div class="debate reveal">
+      <div class="debate-head"><span class="idx">05</span><h3>服务业务与谷歌付费</h3><span class="tag">权重 · 中高</span></div>
+      <div class="bb">
+        <div class="bull-side"><div class="side-k b"><span class="arrow" style="background:var(--bull)"></span>看涨</div><p>服务收入约 $310 亿创纪录、毛利率 76%+、贡献约 35% 毛利，是高质量复利引擎；广告（地图、App Store）打开新增量。法官 2025 年裁定不拆分，谷歌可继续付费。</p></div>
+        <div><div class="side-k r"><span class="arrow" style="background:var(--bear)"></span>看跌</div><p>谷歌每年约 <strong>$200 亿</strong>近乎“白送”的利润（占苹果税前利润约 7%）正被上诉挑战（2026 年 5 月已上诉），长期还有被 AI 搜索替代之忧；App Store 面临欧盟 DMA 等全球监管的分佣压力。</p></div>
+      </div>
+    </div>
+    <!-- 6 -->
+    <div class="debate reveal">
+      <div class="debate-head"><span class="idx">06</span><h3>关税与地缘</h3><span class="tag">权重 · 中</span></div>
+      <div class="bb">
+        <div class="bull-side"><div class="side-k b"><span class="arrow" style="background:var(--bull)"></span>看涨</div><p>iPhone 与半导体目前获关税豁免；苹果以 $5,000 亿 + $1,000 亿美国制造投资换取政治缓冲；供应链已多元化（iPhone 印度、iPad 越南），抗风险能力增强。</p></div>
+        <div><div class="side-k r"><span class="arrow" style="background:var(--bear)"></span>看跌</div><p>特朗普关税反复无常（印度税率升至 50%），曾威胁对苹果单独征 25%。美国本土造 iPhone 成本估 $1,500–3,500；两季关税成本已超 $20 亿。政策不确定性是持续悬顶之剑。</p></div>
+      </div>
+    </div>
+    <!-- 7 -->
+    <div class="debate reveal">
+      <div class="debate-head"><span class="idx">07</span><h3>管理层换届</h3><span class="tag">权重 · 中</span></div>
+      <div class="bb">
+        <div class="bull-side"><div class="side-k b"><span class="arrow" style="background:var(--bull)"></span>看涨</div><p>9/1 接任的 Ternus 是硬件/产品出身，恰好操盘折叠屏与 AI 硬件叙事；长达数月的有序交接、文化延续；库克转任执行董事长，继续负责全球政府关系。</p></div>
+        <div><div class="side-k r"><span class="arrow" style="background:var(--bear)"></span>看跌</div><p>这是 15 年来首次换帅，Ternus 公众沟通能力逊于库克；恰逢 AI 落后与中国走弱的关键期，新帅的执行与定调存在不确定性，市场需要时间观察。</p></div>
+      </div>
+    </div>
+    <!-- 8 -->
+    <div class="debate reveal">
+      <div class="debate-head"><span class="idx">08</span><h3>估值</h3><span class="tag">权重 · 高</span></div>
+      <div class="bb">
+        <div class="bull-side"><div class="side-k b"><span class="arrow" style="background:var(--bull)"></span>看涨</div><p>远期市盈率约 29–30 倍，对应 15%+ 营收增长、服务占比提升、$1,000 亿回购缩股，并非离谱；质地稀缺、现金牛、近乎“消费必需品”，理应享受溢价。</p></div>
+        <div><div class="side-k r"><span class="arrow" style="background:var(--bear)"></span>看跌</div><p>TTM 约 35 倍，<strong>高于自身五年均值约 30.5 倍</strong>，多重估值扩张已透支预期；一旦增长或毛利不及预期，杀估值空间巨大；股息率仅约 0.4%，向下安全垫薄。</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PART 04 -->
+<section>
+  <div class="wrap reveal">
+    <span class="sec-num">04 / 情景与目标价</span>
+    <h2>三种未来，分别值多少钱</h2>
+    <p class="lead">把上述八条逻辑收敛为三个情景，给出 12–36 个月的目标价区间、关键驱动与主观概率。概率为研究判断，非确定性预测。</p>
+
+    <div class="scen reveal">
+      <div class="scen-row head">
+        <div>情景</div><div>目标价 · 隐含涨跌</div><div>关键驱动</div><div>主观概率</div>
+      </div>
+      <div class="scen-row">
+        <div><span class="scen-name bull">看涨</span></div>
+        <div><span class="scen-pt" style="color:var(--bull)">$400–430</span><span class="scen-chg up">+45% ～ +56%</span></div>
+        <div class="scen-drv">内存 2027 年缓解、毛利回升；折叠屏点燃高端换机超级周期；AI 借 Gemini 补齐口碑；中国企稳；服务复利 12–15%，估值维持 ~33×。</div>
+        <div><span class="scen-prob" style="color:var(--bull)">~28%</span></div>
+      </div>
+      <div class="scen-row">
+        <div><span class="scen-name base">基准</span></div>
+        <div><span class="scen-pt" style="color:var(--gold-2)">$310–340</span><span class="scen-chg" style="color:var(--gold-2)">+13% ～ +24%</span></div>
+        <div class="scen-drv">毛利受压后逐步回稳；折叠屏稳健但产能受限；AI “够用”；中国震荡；服务约 +12%，盈利高个位/低双位增长，估值 ~29–31× 远期。与共识吻合。</div>
+        <div><span class="scen-prob" style="color:var(--gold-2)">~47%</span></div>
+      </div>
+      <div class="scen-row">
+        <div><span class="scen-name bear">看跌</span></div>
+        <div><span class="scen-pt" style="color:var(--bear)">$210–245</span><span class="scen-chg down">-11% ～ -24%</span></div>
+        <div class="scen-drv">内存持续挤压并经由涨价压制需求；iPhone 18 跟涨伤量；AI 差距扩大；中国走弱；估值下杀至 24–26×。尾部风险：谷歌上诉败诉、$200 亿付费被裁。</div>
+        <div><span class="scen-prob" style="color:var(--bear)">~25%</span></div>
+      </div>
+    </div>
+    <div class="scen-note">注：区间锚定卖方目标价分布 $215–$400（Wedbush/Dan Ives $400 最高、UBS $296、摩根士丹利增持 $360），共识中枢约 $310–325。</div>
+  </div>
+</section>
+
+<!-- PART 05 -->
+<section>
+  <div class="wrap reveal">
+    <span class="sec-num">05 / 持有决策框架</span>
+    <h2>作为持有人，该怎么想</h2>
+    <p class="lead">这部分直接回应你的问题——“还要不要继续持有”。下面给的是<span class="hl">决策框架与监测清单</span>，不是替你做的买卖指令。把它套到你的时间维度、仓位集中度和风险承受力上。</p>
+
+    <div class="lenses">
+      <div class="lens reveal">
+        <h4>透镜一 · 长期复利是否还在</h4>
+        <p>生态锁定、服务高毛利复利、定价权、巨额回购缩股——这些“伟大公司”的内核基本完好。若你是巴菲特/段永平式的长期持有者，把苹果当“带强网络效应的消费必需品”，则<strong>穿越周期持有</strong>的逻辑依然成立。</p>
+      </div>
+      <div class="lens reveal">
+        <h4>透镜二 · 价格是否苛刻</h4>
+        <p>35 倍 TTM 高于自身历史，意味着未来回报更多要靠<strong>盈利增长</strong>兑现，而非估值再扩张。当前价位已 price-in 了不少乐观预期，向上空间与向下风险都被估值放大。安全边际不厚。</p>
+      </div>
+      <div class="lens reveal">
+        <h4>透镜三 · 你的时间与仓位</h4>
+        <p>1–3 年的回报区间很宽（-24% 到 +56%），高度依赖摆动变量。若仓位过于集中，可考虑用<strong>纪律性再平衡</strong>而非择时；若是长期资金且仓位适度，核心持有 + 回调加仓的胜率更高。</p>
+      </div>
+    </div>
+
+    <div class="checklist reveal">
+      <div class="ct">监测清单 · 什么会改变判断</div>
+      <div class="cs">与其猜测，不如盯住这些可观测的信号。任一项明确转向，都应触发你重新评估。</div>
+      <div class="check-item"><span class="ck">[1]</span><div class="txt">毛利率轨迹　<span>— 7/29 的 Q3 财报及后续，能否守住 47%+ 并逐季回升</span></div></div>
+      <div class="check-item"><span class="ck">[2]</span><div class="txt">DRAM/NAND 合约价拐点　<span>— 关注 TrendForce 月度数据与美光指引，2027 下半年是关键窗口</span></div></div>
+      <div class="check-item"><span class="ck">[3]</span><div class="txt">iPhone 18 是否涨价及幅度　<span>— 涨价对销量的实际影响（9 月发布会揭晓）</span></div></div>
+      <div class="check-item"><span class="ck">[4]</span><div class="txt">折叠屏首销与供货　<span>— 预订热度、缺货程度、是否带动 Pro 系列换机</span></div></div>
+      <div class="check-item"><span class="ck">[5]</span><div class="txt">中国月度份额　<span>— 是否企稳回升、华为高端动向、AI 在华何时落地</span></div></div>
+      <div class="check-item"><span class="ck">[6]</span><div class="txt">新 Siri（iOS 27）口碑　<span>— 实际体验是否扭转“AI 落后”叙事</span></div></div>
+      <div class="check-item"><span class="ck">[7]</span><div class="txt">谷歌反垄断上诉进展　<span>— $200 亿付费这块利润是否动摇</span></div></div>
+      <div class="check-item"><span class="ck">[8]</span><div class="txt">估值相对自身历史　<span>— 溢价是否拉伸到难以为继</span></div></div>
+    </div>
+
+    <div class="breakbox reveal">
+      <div class="bt">论点破裂信号 · 出现则应认真考虑减仓</div>
+      <ul>
+        <li>毛利率出现结构性下台阶且看不到回升路径（而非一两个季度的扰动）</li>
+        <li>服务收入增速跌破双位数——这是“复利叙事”的命门</li>
+        <li>iPhone 全球装机量见顶回落，生态扩张停滞</li>
+        <li>谷歌付费被司法裁掉且无对等替代收入</li>
+        <li>估值远超历史区间的同时，增长明显降速（戴维斯双杀风险）</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- CATALYST TIMELINE -->
+<section>
+  <div class="wrap reveal">
+    <span class="sec-num">催化剂时间轴 · CATALYSTS</span>
+    <h2>未来 24 个月的关键节点</h2>
+    <div class="tl">
+      <div class="tl-item"><div class="tl-date">2026.07.29</div><div class="tl-body"><h4>FY26 Q3 财报</h4><p>验证毛利率指引（47.5–48.5%）是否兑现，以及涨价后的需求弹性首个读数。</p></div></div>
+      <div class="tl-item"><div class="tl-date">2026.09</div><div class="tl-body"><h4>iPhone 18 Pro / Pro Max + 首款折叠屏发布</h4><p>最重大的硬件时刻；同时揭晓 iPhone 是否跟涨及幅度——直接决定看涨/看跌路径。</p></div></div>
+      <div class="tl-item"><div class="tl-date">2026.09.01</div><div class="tl-body"><h4>库克卸任 · Ternus 接任 CEO</h4><p>15 年来首次换帅，新帅定调与公众沟通将被密切解读。</p></div></div>
+      <div class="tl-item"><div class="tl-date">2026.Q4</div><div class="tl-body"><h4>折叠屏上市供货 + 假日季</h4><p>检验首代产能与真实需求，以及对整体 ASP 的提振。</p></div></div>
+      <div class="tl-item"><div class="tl-date">2027.H2</div><div class="tl-body"><h4>内存价格拐点观察窗</h4><p>Gartner 估内存供需在此缓解；同时标准版 iPhone 18 / 18e 上市补齐走量机型。</p></div></div>
+      <div class="tl-item"><div class="tl-date">2028</div><div class="tl-body"><h4>谷歌反垄断上诉结果 · 折叠屏第二代</h4><p>$200 亿付费的最终命运，以及折叠屏能否从噱头变成走量品类。</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- APPENDIX -->
+<section>
+  <div class="wrap reveal">
+    <span class="sec-num">附录 · APPENDIX</span>
+    <h2>关键数据与来源</h2>
+
+    <table class="data">
+      <thead><tr><th>指标</th><th>说明</th><th>数值</th></tr></thead>
+      <tbody>
+        <tr><td>股价 / 52周区间</td><td>6/25 收盘（当日 -6.12%）</td><td>$275 / $199–317</td></tr>
+        <tr><td>市值</td><td>2026 年 6 月</td><td>~$4.1 万亿</td></tr>
+        <tr><td>市盈率 TTM / 远期</td><td>5 年均值约 30.5×</td><td>~35× / ~29×</td></tr>
+        <tr><td>股息率</td><td>连续 14 年增长</td><td>~0.4%</td></tr>
+        <tr><td>FY26 Q1 营收 / EPS</td><td>12 月季 · YoY</td><td>$143.8B（+16%）/ $2.84</td></tr>
+        <tr><td>FY26 Q2 营收 / EPS</td><td>3 月季 · 史上最佳</td><td>$111.2B（+17%）/ $2.01</td></tr>
+        <tr><td>服务收入 / 毛利率</td><td>FY26 Q2 · 历史新高</td><td>$31.0B / 76%+</td></tr>
+        <tr><td>整体毛利率</td><td>Q2 实际 / Q3 指引</td><td>49.3% / 47.5–48.5%</td></tr>
+        <tr><td>回购授权 / 净现金</td><td>本季新增 / 在手</td><td>$100B / ~$62B</td></tr>
+        <tr><td>谷歌搜索默认付费</td><td>每年 · 近乎纯利</td><td>~$200 亿</td></tr>
+        <tr><td>分析师共识 / 目标价</td><td>买入 · 区间 $215–400</td><td>~$310–325</td></tr>
+        <tr><td>下次财报</td><td>FY26 Q3</td><td>2026-07-29</td></tr>
+      </tbody>
+    </table>
+
+    <div class="sources">
+      <b>资料来源（公开报道与财报，2025–2026）：</b><br>
+      Apple 投资者关系 8-K / 10-Q 财报 · Apple Newsroom（换帅公告）· CBS / CBC / Bloomberg / CNBC / Fortune · MacRumors（涨价与 iPhone Fold）· TrendForce、Gartner、IDC、Counterpoint、UBS（内存与中国份额）· Jefferies / Morgan Stanley / Wedbush / UBS（评级与目标价）· 美国 v. 谷歌反垄断案 Mehta 法官裁决及上诉报道 · Macrotrends / Yahoo Finance / Morningstar / TipRanks（估值与共识）。
+    </div>
+
+    <div class="disclaimer">
+      <b>重要声明：</b>本报告由 AI 基于公开信息整理，仅供研究与信息参考，<b>不构成任何个性化投资建议、要约或买卖推荐</b>。本人非持牌投资顾问，无法评估你的具体财务状况与风险承受能力。文中目标价与概率为情景化研究判断，并非对未来价格的保证；股价可能大幅偏离任何情景。投资有风险，过往业绩不预示未来表现，请在做出任何决策前结合自身情况并咨询持牌专业人士、独立完成尽职调查。
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="fm">AAPL · 1–3 YEAR EQUITY DEEP-DIVE · 数据截至 2026-06-27 · 仅供研究参考</div>
+  </div>
+</footer>
+
+<script>
+  // scroll reveal
+  (function(){
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(reduce){document.querySelectorAll('.reveal').forEach(function(e){e.classList.add('in')});return;}
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target);} });
+    },{threshold:.12, rootMargin:'0px 0px -40px 0px'});
+    document.querySelectorAll('.reveal').forEach(function(e){io.observe(e)});
+  })();
+</script>
+</body>
+</html>

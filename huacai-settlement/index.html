@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>华彩内部结算仪表盘</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap');
+:root{--bg:#0a0e14;--sf:#111820;--sf2:#1a2230;--bd:#2a3444;--tx:#e0e6ed;--tx2:#8899aa;--ac:#f0b429;--gn:#2ecc71;--rd:#e74c3c;--s2:#3498db;--s3:#2ecc71;--s4:#f39c12;--s5:#9b59b6;--aq:#e74c3c}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--tx);min-height:100vh}
+.mono{font-family:'DM Mono',monospace}
+.hd{background:linear-gradient(135deg,#0d1117,#161b22);border-bottom:1px solid var(--bd);padding:18px 28px;display:flex;align-items:center;justify-content:space-between}
+.hd h1{font-size:20px;font-weight:900;letter-spacing:-.5px}.hd h1 span{color:var(--ac)}
+.hd .badge{background:var(--sf2);border:1px solid var(--ac);border-radius:8px;padding:7px 14px;font-size:12px;color:var(--ac);font-weight:500}
+.wrap{display:grid;grid-template-columns:310px 1fr;min-height:calc(100vh - 60px)}
+.pn{background:var(--sf);border-right:1px solid var(--bd);padding:16px;overflow-y:auto;max-height:calc(100vh - 60px)}
+.ps{margin-bottom:16px}.pt{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--tx2);margin-bottom:10px;padding-bottom:5px;border-bottom:1px solid var(--bd)}
+.pr{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.pl{font-size:12px;color:var(--tx);flex:1}
+.pi{width:78px;background:var(--sf2);border:1px solid var(--bd);border-radius:5px;padding:5px 8px;color:var(--ac);font-family:'DM Mono',monospace;font-size:12px;text-align:right;outline:none}
+.pi:focus{border-color:var(--ac)}
+.pu{font-size:10px;color:var(--tx2);width:28px;text-align:center}
+.sr{margin-bottom:12px}.sh{display:flex;justify-content:space-between;align-items:center;margin-bottom:3px}
+.sl{font-size:12px;color:var(--tx)}.sv{font-family:'DM Mono',monospace;font-size:13px;font-weight:500;color:var(--ac);cursor:pointer;padding:1px 5px;border-radius:3px;border:1px solid transparent}
+.sv:hover{border-color:var(--ac);background:rgba(240,180,41,.1)}
+input[type=range]{width:100%;height:4px;-webkit-appearance:none;appearance:none;background:var(--bd);border-radius:2px;outline:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:15px;height:15px;border-radius:50%;background:var(--ac);cursor:pointer;border:2px solid var(--bg)}
+.sub-r{display:flex;align-items:center;gap:5px;margin-bottom:5px;padding:5px 7px;background:var(--sf2);border-radius:5px}
+.sub-d{width:9px;height:9px;border-radius:50%;flex-shrink:0}.sub-l{font-size:11px;flex:1}
+.sub-i{width:46px;background:var(--bg);border:1px solid var(--bd);border-radius:3px;padding:3px 5px;color:var(--ac);font-family:'DM Mono',monospace;font-size:11px;text-align:right;outline:none}
+.sub-i:focus{border-color:var(--ac)}
+.mn{padding:20px;overflow-y:auto;max-height:calc(100vh - 60px)}
+.pb{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px}
+.pc{background:var(--sf);border:1px solid var(--bd);border-radius:10px;padding:14px;position:relative;overflow:hidden}
+.pc::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.pc.c2::before{background:var(--s2)}.pc.c3::before{background:var(--s3)}.pc.c4::before{background:var(--s4)}
+.pc .t{font-size:11px;color:var(--tx2);margin-bottom:6px}
+.pc .f{font-size:12px;color:var(--tx);margin-bottom:8px;padding:7px;background:var(--bg);border-radius:5px;font-family:'DM Mono',monospace}
+.pc .f .h{color:var(--ac);font-weight:500}
+.pc .r{display:flex;justify-content:space-between;align-items:baseline}
+.pc .ra{font-size:26px;font-weight:900;font-family:'DM Mono',monospace}
+.pc .rp{font-size:18px;font-weight:700;color:var(--ac);font-family:'DM Mono',monospace}
+.pc .rs{font-size:10px;color:var(--tx2);margin-top:3px}
+.tb{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px}
+.kp{background:var(--sf);border:1px solid var(--bd);border-radius:10px;padding:14px;text-align:center}
+.kp .kl{font-size:10px;color:var(--tx2);margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px}
+.kp .kv{font-family:'DM Mono',monospace;font-size:22px;font-weight:700}
+.wf{background:var(--sf);border:1px solid var(--bd);border-radius:10px;padding:16px;margin-bottom:20px}
+.wf h3{font-size:12px;font-weight:700;margin-bottom:12px;color:var(--tx2);text-transform:uppercase;letter-spacing:1px}
+.sf{display:flex;align-items:center;gap:6px;padding:8px 0}
+.fn{flex:1;text-align:center;padding:10px 6px;border-radius:7px;background:var(--sf2);border:1px solid var(--bd)}
+.fn .fs{font-size:11px;font-weight:700;margin-bottom:3px}.fn .fc{font-family:'DM Mono',monospace;font-size:18px;font-weight:700}.fn .fb{font-size:10px;color:var(--tx2);margin-top:1px}
+.fa{font-size:16px;color:var(--tx2);flex-shrink:0;text-align:center}.fr{font-family:'DM Mono',monospace;font-size:10px;color:var(--ac);text-align:center}
+.pg{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:20px}
+.plc{background:var(--sf);border:1px solid var(--bd);border-radius:10px;overflow:hidden}
+.plh{padding:10px 12px;display:flex;align-items:center;gap:6px;font-size:13px;font-weight:700}
+.pld{width:7px;height:7px;border-radius:50%}
+.plb{padding:0 12px 12px}
+.plr{display:flex;justify-content:space-between;align-items:center;padding:4px 0;font-size:11px;border-bottom:1px solid rgba(42,52,68,.5)}
+.plr:last-child{border-bottom:none}
+.plr .l{color:var(--tx2)}.plr .v{font-family:'DM Mono',monospace;font-size:12px;font-weight:500}
+.plr.rv .v{color:var(--gn)}.plr.ct .v{color:var(--rd)}
+.plr.pf{padding:7px 0 3px;border-top:2px solid var(--bd);border-bottom:none;margin-top:3px}
+.plr.pf .l{font-weight:700;color:var(--tx)}.plr.pf .v{font-size:14px;font-weight:700}
+.pp{color:var(--gn)!important}.pn2{color:var(--rd)!important}
+.cs{background:var(--sf);border:1px solid var(--bd);border-radius:10px;padding:16px;margin-bottom:20px}
+.cs h3{font-size:12px;font-weight:700;margin-bottom:14px;color:var(--tx2);text-transform:uppercase;letter-spacing:1px}
+.bc{display:flex;gap:10px;align-items:flex-end;height:160px;padding:0 16px;margin-bottom:10px}
+.bco{flex:1;display:flex;flex-direction:column;align-items:center;height:100%;justify-content:flex-end}
+.ba{width:100%;max-width:54px;border-radius:5px 5px 0 0;min-height:2px;transition:height .4s ease}
+.bl2{font-size:10px;color:var(--tx2);margin-top:6px;text-align:center}
+.bv{font-family:'DM Mono',monospace;font-size:11px;font-weight:500;margin-bottom:3px;text-align:center}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--bd);border-radius:2px}
+</style>
+</head>
+<body>
+<div class="hd">
+<h1><span>华彩</span> 内部结算仪表盘</h1>
+<div class="badge mono">核心公式：结算比例 = 续报率 + 阶段补贴</div>
+</div>
+<div class="wrap">
+<div class="pn" id="pn">
+<div class="ps"><div class="pt">📊 学员流量</div>
+<div class="pr"><span class="pl">2980课程 新增</span><input class="pi" id="i_n1" value="800"><span class="pu">人</span></div>
+<div class="pr"><span class="pl">1880课程 新增</span><input class="pi" id="i_n2" value="200"><span class="pu">人</span></div>
+</div>
+<div class="ps"><div class="pt">🔄 续报率（核心杠杆）</div>
+<div class="sr"><div class="sh"><span class="sl">S2→S3</span><span class="sv mono" id="v2" onclick="pp('r2')">50%</span></div><input type="range" id="r2" min="10" max="80" value="50"></div>
+<div class="sr"><div class="sh"><span class="sl">S3→S4</span><span class="sv mono" id="v3" onclick="pp('r3')">50%</span></div><input type="range" id="r3" min="10" max="80" value="50"></div>
+<div class="sr"><div class="sh"><span class="sl">S4→S5</span><span class="sv mono" id="v4" onclick="pp('r4')">50%</span></div><input type="range" id="r4" min="10" max="80" value="50"></div>
+</div>
+<div class="ps"><div class="pt">🎁 阶段补贴</div>
+<div class="sub-r"><div class="sub-d" style="background:var(--s2)"></div><span class="sub-l">S2 补贴</span><input class="sub-i" id="b2" value="20"><span class="pu">%</span></div>
+<div class="sub-r"><div class="sub-d" style="background:var(--s3)"></div><span class="sub-l">S3 补贴</span><input class="sub-i" id="b3" value="10"><span class="pu">%</span></div>
+<div class="sub-r"><div class="sub-d" style="background:var(--s4)"></div><span class="sub-l">S4 补贴</span><input class="sub-i" id="b4" value="5"><span class="pu">%</span></div>
+</div>
+<div class="ps"><div class="pt">💰 获客定价</div>
+<div class="pr"><span class="pl">2980用户 CAC</span><input class="pi" id="cac1" value="3800"><span class="pu">元</span></div>
+<div class="pr"><span class="pl">1880用户 CAC</span><input class="pi" id="cac2" value="2000"><span class="pu">元</span></div>
+<div class="pr"><span class="pl">获客→S2(2980)</span><input class="pi" id="tp1" value="3500"><span class="pu">元</span></div>
+<div class="pr"><span class="pl">获客→S2(1880)</span><input class="pi" id="tp2" value="2100"><span class="pu">元</span></div>
+</div>
+<div class="ps"><div class="pt">📋 课程定价</div>
+<div class="pr"><span class="pl">S3 学费</span><input class="pi" id="p3" value="2980"><span class="pu">元</span></div>
+<div class="pr"><span class="pl">S4 学费</span><input class="pi" id="p4" value="3980"><span class="pu">元</span></div>
+<div class="pr"><span class="pl">S5 学费</span><input class="pi" id="p5" value="4980"><span class="pu">元</span></div>
+</div>
+<div class="ps"><div class="pt">🏢 获客中心月成本</div>
+<div class="pr"><span class="pl">团队人力</span><input class="pi" id="ah" value="150000"><span class="pu">元</span></div>
+<div class="pr"><span class="pl">其他成本</span><input class="pi" id="ao" value="20000"><span class="pu">元</span></div>
+</div>
+<div class="ps"><div class="pt">⚙️ 阶段运营成本/月</div>
+<div class="pr"><span class="pl">S2 运营成本</span><input class="pi" id="c2" value="200000"><span class="pu">元</span></div>
+<div class="pr"><span class="pl">S3 运营成本</span><input class="pi" id="c3" value="120000"><span class="pu">元</span></div>
+<div class="pr"><span class="pl">S4 运营成本</span><input class="pi" id="c4" value="80000"><span class="pu">元</span></div>
+<div class="pr"><span class="pl">S5 运营成本</span><input class="pi" id="c5" value="60000"><span class="pu">元</span></div>
+</div>
+</div>
+<div class="mn" id="mn">
+<div class="pb" id="PB"></div>
+<div class="tb" id="TB"></div>
+<div class="wf"><h3>📉 学员漏斗与资金流向</h3><div class="sf" id="SF"></div></div>
+<div class="pg" id="PG"></div>
+<div class="cs"><h3>📊 各利润中心月利润对比</h3><div class="bc" id="BC"></div></div>
+</div>
+</div>
+<script>
+const g=id=>(parseFloat(document.getElementById(id).value.replace(/,/g,''))||0);
+function pp(k){const s=document.getElementById(k);const v=prompt('请输入续报率（%）：',s.value);if(v!==null&&!isNaN(parseFloat(v))){s.value=Math.max(10,Math.min(80,parseFloat(v)));calc()}}
+function fm(n){if(Math.abs(n)>=1e4)return(n/1e4).toFixed(1)+'万';return n.toLocaleString('zh-CN',{maximumFractionDigits:0})}
+function ff(n){return n.toLocaleString('zh-CN',{maximumFractionDigits:0})}
+
+function calc(){
+const n1=g('i_n1'),n2=g('i_n2');
+const rr2=+document.getElementById('r2').value/100,rr3=+document.getElementById('r3').value/100,rr4=+document.getElementById('r4').value/100;
+const b2v=g('b2')/100,b3v=g('b3')/100,b4v=g('b4')/100;
+const cac1v=g('cac1'),cac2v=g('cac2'),tp1v=g('tp1'),tp2v=g('tp2');
+const p3v=g('p3'),p4v=g('p4'),p5v=g('p5');
+const ahv=g('ah'),aov=g('ao');
+const c2v=g('c2'),c3v=g('c3'),c4v=g('c4'),c5v=g('c5');
+
+document.getElementById('v2').textContent=(rr2*100|0)+'%';
+document.getElementById('v3').textContent=(rr3*100|0)+'%';
+document.getElementById('v4').textContent=(rr4*100|0)+'%';
+
+const sN2=n1+n2,sN3=Math.round(sN2*rr2),sN4=Math.round(sN3*rr3),sN5=Math.round(sN4*rr4);
+const rt2=Math.min(1,rr2+b2v),rt3=Math.min(1,rr3+b3v),rt4=Math.min(1,rr4+b4v);
+const sp2=Math.round(rt2*p3v),sp3=Math.round(rt3*p4v),sp4=Math.round(rt4*p5v);
+
+// Pricing banner
+document.getElementById('PB').innerHTML=[
+{s:'S2→S3',c:'c2',rn:rr2,bn:b2v,rt:rt2,sp:sp2,bp:p3v,cl:'var(--s2)'},
+{s:'S3→S4',c:'c3',rn:rr3,bn:b3v,rt:rt3,sp:sp3,bp:p4v,cl:'var(--s3)'},
+{s:'S4→S5',c:'c4',rn:rr4,bn:b4v,rt:rt4,sp:sp4,bp:p5v,cl:'var(--s4)'},
+].map(d=>`<div class="pc ${d.c}"><div class="t">${d.s} 结算定价</div>
+<div class="f"><span class="h">${(d.rn*100|0)}%</span> 续报 + <span class="h">${(d.bn*100|0)}%</span> 补贴 = <span class="h">${(d.rt*100|0)}%</span></div>
+<div class="r"><span class="ra" style="color:${d.cl}">${(d.rt*100|0)}%</span><span class="rp">¥${ff(d.sp)}/人</span></div>
+<div class="rs">${(d.rt*100|0)}% × ¥${ff(d.bp)} = ¥${ff(d.sp)}</div></div>`).join('');
+
+// P&L calculations
+const aR=n1*tp1v+n2*tp2v,aCA=n1*cac1v+n2*cac2v,aCT=aCA+ahv+aov,aP=aR-aCT;
+const s2FR=n1*2980+n2*1880,s2SR=sN3*sp2,s2R=s2FR+s2SR,s2PC=n1*tp1v+n2*tp2v,s2C=s2PC+c2v,s2P=s2R-s2C;
+const s3FR=sN3*p3v,s3SR=sN4*sp3,s3R=s3FR+s3SR,s3PC=sN3*sp2,s3C=s3PC+c3v,s3P=s3R-s3C;
+const s4FR=sN4*p4v,s4SR=sN5*sp4,s4R=s4FR+s4SR,s4PC=sN4*sp3,s4C=s4PC+c4v,s4P=s4R-s4C;
+const s5FR=sN5*p5v,s5R=s5FR,s5PC=sN5*sp4,s5C=s5PC+c5v,s5P=s5R-s5C;
+const tER=s2FR+s3FR+s4FR+s5FR,tP=aP+s2P+s3P+s4P+s5P;
+
+// KPIs
+document.getElementById('TB').innerHTML=`
+<div class="kp"><div class="kl">外部总收入</div><div class="kv mono" style="color:var(--gn)">¥${fm(tER)}</div></div>
+<div class="kp"><div class="kl">合并总利润</div><div class="kv mono" style="color:${tP>=0?'var(--gn)':'var(--rd)'}">¥${fm(tP)}</div></div>
+<div class="kp"><div class="kl">合并利润率</div><div class="kv mono" style="color:${tP>=0?'var(--gn)':'var(--rd)'}">${tER>0?(tP/tER*100).toFixed(1)+'%':'--'}</div></div>
+<div class="kp"><div class="kl">内部交易对冲</div><div class="kv mono" style="color:var(--tx2)">¥0</div></div>`;
+
+// Student flow
+const fd=[{s:'获客',n:sN2,b:'新进入',cl:'var(--aq)'},{s:'S2',n:sN2,b:'¥'+fm(s2FR),cl:'var(--s2)'},{s:'S3',n:sN3,b:'¥'+fm(s3FR),cl:'var(--s3)'},{s:'S4',n:sN4,b:'¥'+fm(s4FR),cl:'var(--s4)'},{s:'S5',n:sN5,b:'¥'+fm(s5FR),cl:'var(--s5)'}];
+const rs=[null,null,rr2,rr3,rr4];
+let fh='';
+for(let i=0;i<fd.length;i++){const d=fd[i];fh+=`<div class="fn"><div class="fs" style="color:${d.cl}">${d.s}</div><div class="fc mono">${ff(d.n)}</div><div class="fb">${d.b}</div></div>`;
+if(i<fd.length-1){const rate=rs[i+1];fh+=`<div style="text-align:center"><div class="fa">→</div>${rate!==null?`<div class="fr">${(rate*100|0)}%</div>`:''}</div>`}}
+document.getElementById('SF').innerHTML=fh;
+
+// P&L cards
+const cd=[
+{nm:'获客中心',cl:'var(--aq)',rv:aR,ct:aCT,pf:aP,dt:[{l:'转移收入',v:aR},{l:'投放成本',v:aCA,n:1},{l:'人力成本',v:ahv,n:1},{l:'其他',v:aov,n:1}]},
+{nm:'S2',cl:'var(--s2)',rv:s2R,ct:s2C,pf:s2P,dt:[{l:'学费',v:s2FR},{l:'续报出售→S3',v:s2SR},{l:'采购←获客',v:s2PC,n:1},{l:'运营',v:c2v,n:1}]},
+{nm:'S3',cl:'var(--s3)',rv:s3R,ct:s3C,pf:s3P,dt:[{l:'学费',v:s3FR},{l:'续报出售→S4',v:s3SR},{l:'采购←S2',v:s3PC,n:1},{l:'运营',v:c3v,n:1}]},
+{nm:'S4',cl:'var(--s4)',rv:s4R,ct:s4C,pf:s4P,dt:[{l:'学费',v:s4FR},{l:'续报出售→S5',v:s4SR},{l:'采购←S3',v:s4PC,n:1},{l:'运营',v:c4v,n:1}]},
+{nm:'S5',cl:'var(--s5)',rv:s5R,ct:s5C,pf:s5P,dt:[{l:'学费',v:s5FR},{l:'(无续报)',v:0},{l:'采购←S4',v:s5PC,n:1},{l:'运营',v:c5v,n:1}]},
+];
+document.getElementById('PG').innerHTML=cd.map(c=>`<div class="plc">
+<div class="plh" style="background:${c.cl}22;border-bottom:1px solid ${c.cl}44"><div class="pld" style="background:${c.cl}"></div>${c.nm}</div>
+<div class="plb">
+<div class="plr rv"><span class="l">总收入</span><span class="v">¥${fm(c.rv)}</span></div>
+${c.dt.map(d=>`<div class="plr${d.n?' ct':''}"><span class="l">${d.l}</span><span class="v">${d.n?'-':''}¥${fm(d.v)}</span></div>`).join('')}
+<div class="plr pf"><span class="l">月利润</span><span class="v ${c.pf>=0?'pp':'pn2'}">¥${fm(c.pf)}</span></div>
+<div class="plr"><span class="l">利润率</span><span class="v mono" style="color:${c.pf>=0?'var(--gn)':'var(--rd)'}">${c.rv>0?(c.pf/c.rv*100).toFixed(1)+'%':'--'}</span></div>
+<div class="plr"><span class="l">单生利润</span><span class="v mono" style="color:${c.pf>=0?'var(--gn)':'var(--rd)'}">¥${c.nm==='获客中心'?ff(Math.round(c.pf/Math.max(1,sN2))):c.nm==='S2'?ff(Math.round(c.pf/Math.max(1,sN2))):c.nm==='S3'?ff(Math.round(c.pf/Math.max(1,sN3))):c.nm==='S4'?ff(Math.round(c.pf/Math.max(1,sN4))):ff(Math.round(c.pf/Math.max(1,sN5)))}</span></div>
+</div></div>`).join('');
+
+// Bar chart
+const ps=[{n:'获客',v:aP,c:'var(--aq)'},{n:'S2',v:s2P,c:'var(--s2)'},{n:'S3',v:s3P,c:'var(--s3)'},{n:'S4',v:s4P,c:'var(--s4)'},{n:'S5',v:s5P,c:'var(--s5)'}];
+const mx=Math.max(...ps.map(p=>Math.abs(p.v)),1);
+document.getElementById('BC').innerHTML=ps.map(p=>{const h=Math.max(2,Math.abs(p.v)/mx*130);const ng=p.v<0;
+return`<div class="bco"><div class="bv mono" style="color:${ng?'var(--rd)':'var(--gn)'}">¥${fm(p.v)}</div><div class="ba" style="height:${h}px;background:${ng?'var(--rd)':p.c};opacity:${ng?.6:.8}"></div><div class="bl2">${p.n}</div></div>`}).join('');
+}
+
+document.querySelectorAll('.pi,.sub-i').forEach(e=>{e.addEventListener('input',calc);e.addEventListener('change',calc)});
+document.querySelectorAll('input[type=range]').forEach(e=>e.addEventListener('input',calc));
+calc();
+</script>
+</body>
+</html>

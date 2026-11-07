@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 260" role="img" aria-labelledby="t">
+  <title id="t">Skill 是怎么做，Routine 是谁在何时做</title>
+  
+<style>
+  .p { fill: #fffaf1; }
+  .ink { fill: #1a1611; }
+  .muted { fill: #6a5f52; }
+  .stroke { stroke: #c4b59a; fill: none; }
+  .box { fill: #fffaf1; stroke: #c4b59a; }
+  .cin { fill: #b1321a; }
+  .pine { fill: #245848; }
+  .gold { fill: #9a7428; }
+  .cinb { fill: #f3ddd6; stroke: #b1321a; }
+  .pineb { fill: #d7ebe2; stroke: #245848; }
+  .goldb { fill: #f3e6c4; stroke: #9a7428; }
+  .soft { fill: #f3eee4; stroke: #d8cdbb; }
+  text { font-family: "Noto Sans SC", "PingFang SC", "Hiragino Sans GB", sans-serif; }
+  @media (prefers-color-scheme: dark) {
+    .p { fill: #1c1914; }
+    .ink { fill: #f3eadc; }
+    .muted { fill: #b3a693; }
+    .stroke { stroke: #5a5044; }
+    .box { fill: #1c1914; stroke: #5a5044; }
+    .cin { fill: #e06a4c; }
+    .pine { fill: #7ec9ae; }
+    .gold { fill: #e0c078; }
+    .cinb { fill: #3a221c; stroke: #e06a4c; }
+    .pineb { fill: #1b322b; stroke: #7ec9ae; }
+    .goldb { fill: #332a16; stroke: #e0c078; }
+    .soft { fill: #13110e; stroke: #3a342b; }
+  }
+</style>
+
+  <rect class="p" width="720" height="260"/>
+  <rect class="pineb" x="40" y="40" width="300" height="180" rx="16" stroke-width="2"/>
+  <text class="pine" x="190" y="84" text-anchor="middle" font-size="20" font-weight="700">Skill</text>
+  <text class="ink" x="190" y="118" text-anchor="middle" font-size="16">怎么做</text>
+  <text class="muted" x="190" y="148" text-anchor="middle" font-size="13">步骤 · 规则 · 交付格式</text>
+  <text class="muted" x="190" y="172" text-anchor="middle" font-size="13">可被多个 Bot 引用</text>
+  <text class="muted" x="190" y="196" text-anchor="middle" font-size="13">先在一次性任务里测通</text>
+  <rect class="goldb" x="380" y="40" width="300" height="180" rx="16" stroke-width="2"/>
+  <text class="gold" x="530" y="84" text-anchor="middle" font-size="20" font-weight="700">Routine</text>
+  <text class="ink" x="530" y="118" text-anchor="middle" font-size="16">哪个 Bot + 何时</text>
+  <text class="muted" x="530" y="148" text-anchor="middle" font-size="13">日程 或 事件触发</text>
+  <text class="muted" x="530" y="172" text-anchor="middle" font-size="13">属于某一个 Bot</text>
+  <text class="muted" x="530" y="196" text-anchor="middle" font-size="13">删 Bot 会一并删掉</text>
+</svg>

@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>特斯拉人形机器人 Optimus 进展 · 代际、工厂与商业化时间线</title>
+<meta name="description" content="面向聪明外行的 Optimus 公开进展梳理：代际演进、时间线、演示能力、产能与售价口径、竞品对照与风险。资料截至 2026-11-01（Asia/Shanghai）。">
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Noto+Serif+SC:wght@500;700;900&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#07090F;
+  --bg-2:#0C1018;
+  --panel:#10151F;
+  --panel-2:#151C29;
+  --line:rgba(255,255,255,.08);
+  --line-2:rgba(255,255,255,.14);
+  --ink:#E8ECF5;
+  --ink-2:#9AA6BD;
+  --ink-3:#5E6B84;
+  --blue:#5B8CFF;
+  --teal:#3DDFC8;
+  --gold:#F2C14E;
+  --amber:#FF8A4C;
+  --red:#FF6B5C;
+  --violet:#A78BFA;
+  --serif:"Noto Serif SC",serif;
+  --sans:"Noto Sans SC",system-ui,sans-serif;
+  --grotesk:"Space Grotesk",sans-serif;
+  --mono:"JetBrains Mono",monospace;
+  --maxw:1040px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);color:var(--ink);font-family:var(--sans);
+  font-weight:400;line-height:1.75;-webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+body::before{
+  content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(900px 520px at 88% -8%,rgba(255,107,92,.12),transparent),
+    radial-gradient(700px 480px at 8% 8%,rgba(91,140,255,.10),transparent),
+    radial-gradient(1px 1px at 18% 28%,rgba(255,255,255,.4),transparent),
+    radial-gradient(1px 1px at 72% 18%,rgba(255,255,255,.28),transparent),
+    radial-gradient(1.4px 1.4px at 42% 76%,rgba(61,223,200,.35),transparent),
+    radial-gradient(1px 1px at 90% 55%,rgba(255,255,255,.25),transparent);
+  background-repeat:no-repeat;
+}
+.wrap{position:relative;z-index:1;max-width:var(--maxw);margin:0 auto;padding:0 24px}
+.num{font-family:var(--grotesk);font-feature-settings:"tnum" 1;letter-spacing:-.01em}
+.mono{font-family:var(--mono)}
+a{color:var(--blue);text-decoration:none}
+a:hover{text-decoration:underline}
+strong{color:#fff;font-weight:700}
+em{color:var(--teal);font-style:normal;font-weight:500}
+p{margin:0 0 16px;color:var(--ink)}
+.muted{color:var(--ink-2)}
+.c-blue{color:var(--blue)}.c-teal{color:var(--teal)}.c-gold{color:var(--gold)}.c-amber{color:var(--amber)}.c-red{color:var(--red)}.c-violet{color:var(--violet)}
+
+.topjump{
+  position:sticky;top:0;z-index:30;backdrop-filter:blur(14px);
+  background:rgba(7,9,15,.86);border-bottom:1px solid var(--line);
+}
+.topjump-inner{
+  max-width:var(--maxw);margin:0 auto;padding:10px 24px;
+  display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;
+}
+.topjump-inner::-webkit-scrollbar{display:none}
+.topjump a{
+  flex:0 0 auto;font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;
+  color:var(--ink-2);border:1px solid var(--line);border-radius:999px;padding:6px 11px;
+  text-decoration:none;background:rgba(255,255,255,.02);
+}
+.topjump a:hover{color:var(--ink);border-color:var(--line-2);text-decoration:none}
+
+.hero{position:relative;padding:72px 0 42px}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:9px;
+  font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--amber);border:1px solid var(--line-2);border-radius:100px;
+  padding:7px 15px;background:rgba(255,138,76,.06);
+}
+.eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--amber);box-shadow:0 0 10px var(--amber)}
+h1.title{
+  font-family:var(--serif);font-weight:900;
+  font-size:clamp(34px,6.6vw,64px);line-height:1.08;letter-spacing:-.015em;margin:22px 0 0;
+}
+h1.title .grad{
+  background:linear-gradient(96deg,var(--amber) 0%,var(--gold) 45%,var(--blue) 100%);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+}
+.subtitle{
+  font-size:clamp(15.5px,2.2vw,19.5px);color:var(--ink-2);font-weight:300;
+  margin:22px 0 0;max-width:720px;line-height:1.7;
+}
+.subtitle b{color:var(--ink);font-weight:500}
+.hero-meta{
+  display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:26px;
+  font-family:var(--mono);font-size:12.5px;color:var(--ink-3);
+}
+.hero-meta span{display:inline-flex;align-items:center;gap:7px}
+.hero-meta span::before{content:"";width:5px;height:5px;background:var(--ink-3);border-radius:50%}
+
+.statstrip{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:40px;
+  border:1px solid var(--line);border-radius:16px;overflow:hidden;
+  background:linear-gradient(180deg,rgba(24,30,44,.65),rgba(14,18,28,.65));
+}
+.statstrip .cell{padding:20px 16px;border-right:1px solid var(--line)}
+.statstrip .cell:last-child{border-right:none}
+.statstrip .v{font-family:var(--grotesk);font-weight:700;font-size:clamp(20px,3.2vw,28px);line-height:1.05;letter-spacing:-.02em}
+.statstrip .v small{font-size:.48em;font-weight:500;color:var(--ink-2);margin-left:3px}
+.statstrip .k{font-size:12px;color:var(--ink-2);margin-top:8px;line-height:1.4}
+
+.note-bar{
+  margin-top:16px;padding:12px 14px;border-radius:12px;border:1px solid rgba(242,193,78,.25);
+  background:rgba(242,193,78,.06);font-size:13px;color:var(--ink-2);line-height:1.55;
+}
+.note-bar b{color:var(--gold)}
+
+section{position:relative;padding:58px 0;border-top:1px solid var(--line)}
+.sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:28px}
+.sec-no{font-family:var(--mono);font-size:13px;color:var(--amber);letter-spacing:.1em;flex-shrink:0;padding-top:6px}
+.sec-title{font-family:var(--serif);font-weight:700;font-size:clamp(24px,4vw,34px);line-height:1.18;letter-spacing:-.01em}
+.sec-kicker{font-size:15px;color:var(--ink-2);margin-top:10px;font-weight:300;max-width:720px}
+
+.bluf{
+  border:1px solid var(--line-2);border-radius:18px;padding:30px 28px;
+  background:
+    radial-gradient(520px 240px at 100% 0%,rgba(255,138,76,.10),transparent),
+    linear-gradient(180deg,var(--panel-2),var(--panel));
+  position:relative;overflow:hidden;
+}
+.bluf::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;
+  background:linear-gradient(180deg,var(--amber),var(--blue))}
+.bluf .tag{font-family:var(--mono);font-size:11.5px;letter-spacing:.18em;color:var(--amber);text-transform:uppercase}
+.bluf h3{font-family:var(--serif);font-weight:700;font-size:21px;margin:12px 0 14px;line-height:1.35}
+.bluf p{font-size:15.5px;line-height:1.85;color:var(--ink-2);margin-bottom:12px}
+.bluf p:last-child{margin-bottom:0}
+.verdict{
+  margin-top:18px;padding:16px 18px;border-radius:12px;
+  background:rgba(91,140,255,.07);border:1px solid rgba(91,140,255,.22);
+  display:flex;gap:14px;align-items:flex-start;
+}
+.verdict .lbl{font-family:var(--mono);font-size:11px;letter-spacing:.16em;color:var(--blue);text-transform:uppercase;flex-shrink:0;padding-top:3px}
+.verdict p{margin:0;font-size:14.5px;color:var(--ink)}
+
+.gengrid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.gcard{
+  border:1px solid var(--line);border-radius:14px;padding:20px 20px 18px;
+  background:linear-gradient(180deg,var(--panel-2),var(--panel));
+}
+.gcard .gy{font-family:var(--mono);font-size:12px;color:var(--ink-3)}
+.gcard h4{font-family:var(--serif);font-size:20px;margin:8px 0 10px;color:#fff}
+.gcard ul{list-style:none}
+.gcard li{font-size:13.5px;color:var(--ink-2);padding:7px 0 7px 16px;position:relative;border-bottom:1px solid var(--line);line-height:1.55}
+.gcard li:last-child{border-bottom:none}
+.gcard li::before{content:"";position:absolute;left:2px;top:14px;width:6px;height:6px;border-radius:1px;transform:rotate(45deg);background:var(--amber)}
+.gcard.now{border-color:rgba(61,223,200,.35);box-shadow:inset 0 0 0 1px rgba(61,223,200,.08)}
+.gcard.now .gy{color:var(--teal)}
+
+.tl{position:relative;margin-top:6px;padding-left:4px}
+.tl-row{display:grid;grid-template-columns:92px 1fr;gap:16px;position:relative;padding-bottom:20px}
+.tl-row::before{content:"";position:absolute;left:103px;top:7px;bottom:-4px;width:1px;background:var(--line-2)}
+.tl-row:last-child::before{display:none}
+.tl-date{font-family:var(--mono);font-size:12.5px;color:var(--teal);font-weight:500;text-align:right;padding-top:2px}
+.tl-body{position:relative;padding-left:22px}
+.tl-body::before{content:"";position:absolute;left:-5px;top:6px;width:9px;height:9px;border-radius:50%;background:var(--bg);border:2px solid var(--blue)}
+.tl-row.major .tl-body::before{background:var(--gold);border-color:var(--gold);box-shadow:0 0 10px rgba(242,193,78,.55)}
+.tl-t{font-weight:700;font-size:14.5px;color:#fff}
+.tl-d{font-size:13px;color:var(--ink-2);margin-top:2px;line-height:1.55}
+
+.tagrow{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px}
+.pill{display:inline-block;padding:4px 10px;border-radius:100px;font-family:var(--mono);font-size:11px;font-weight:500}
+.pill.off{background:rgba(91,140,255,.12);color:var(--blue)}
+.pill.demo{background:rgba(61,223,200,.12);color:var(--teal)}
+.pill.3p{background:rgba(167,139,250,.12);color:var(--violet)}
+.pill.warn{background:rgba(242,193,78,.14);color:var(--gold)}
+
+.tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:14px;margin:8px 0 6px}
+table{width:100%;border-collapse:collapse;min-width:560px}
+th,td{padding:12px 14px;text-align:left;font-size:13.5px;border-bottom:1px solid var(--line);vertical-align:top}
+thead th{font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);background:rgba(255,255,255,.02);font-weight:500}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover{background:rgba(255,255,255,.02)}
+
+.metricgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.mcard{
+  border:1px solid var(--line);border-radius:14px;padding:18px 16px;
+  background:linear-gradient(180deg,rgba(24,30,44,.55),rgba(14,18,28,.55));
+}
+.mcard .mv{font-family:var(--grotesk);font-weight:700;font-size:24px;letter-spacing:-.02em;line-height:1.1}
+.mcard .mk{font-size:12.5px;color:var(--ink-2);margin-top:8px;line-height:1.45}
+.mcard .ms{font-family:var(--mono);font-size:11px;color:var(--ink-3);margin-top:10px}
+
+.callout{
+  border:1px solid var(--line-2);border-radius:12px;padding:16px 18px;margin:16px 0;
+  background:rgba(255,107,92,.05);font-size:13.8px;color:var(--ink-2);line-height:1.7;
+}
+.callout b{color:var(--ink)}
+
+.compgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.ccard{border:1px solid var(--line);border-radius:14px;padding:18px 18px 16px;background:var(--panel)}
+.ccard h4{font-size:15.5px;color:#fff;margin-bottom:8px}
+.ccard p{font-size:13.5px;color:var(--ink-2);margin:0;line-height:1.6}
+
+.riskgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.risk{border:1px solid var(--line);border-radius:12px;padding:16px 18px;background:var(--panel)}
+.risk .rt{font-weight:700;font-size:14.5px;color:#fff;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.risk .sev{font-family:var(--mono);font-size:10px;letter-spacing:.1em;padding:3px 8px;border-radius:6px;text-transform:uppercase;flex-shrink:0}
+.sev.hi{background:rgba(255,107,92,.15);color:var(--red)}
+.sev.md{background:rgba(242,193,78,.15);color:var(--gold)}
+.sev.lo{background:rgba(157,170,194,.12);color:var(--ink-2)}
+.risk .rd{font-size:13px;color:var(--ink-2);margin-top:8px;line-height:1.55}
+
+.src-list{list-style:none}
+.src-list li{font-size:13.2px;color:var(--ink-2);padding:9px 0;border-bottom:1px solid var(--line);line-height:1.55}
+.src-list li:last-child{border-bottom:none}
+.src-list b{color:var(--ink);font-weight:500}
+.disclaimer{
+  margin-top:26px;padding:18px 20px;border:1px solid var(--line);border-radius:12px;
+  background:var(--bg-2);font-size:12.5px;color:var(--ink-3);line-height:1.7;
+}
+.disclaimer b{color:var(--ink-2)}
+footer{padding:42px 0 64px;text-align:center;border-top:1px solid var(--line)}
+footer .fl{font-family:var(--serif);font-weight:700;font-size:17px;color:var(--ink-2)}
+footer .fm{font-family:var(--mono);font-size:12px;color:var(--ink-3);margin-top:10px}
+.back{display:inline-block;margin-top:18px;font-size:13px;color:var(--blue)}
+
+@media (max-width:760px){
+  .statstrip{grid-template-columns:1fr 1fr}
+  .statstrip .cell:nth-child(2),.statstrip .cell:nth-child(4){border-right:none}
+  .statstrip .cell:nth-child(3),.statstrip .cell:nth-child(4){border-top:1px solid var(--line)}
+  .gengrid,.metricgrid,.compgrid,.riskgrid{grid-template-columns:1fr}
+  .sec-head{flex-direction:column;gap:6px}
+  .tl-row{grid-template-columns:72px 1fr;gap:12px}
+  .tl-row::before{left:83px}
+  .bluf{padding:24px 20px}
+  .hero{padding:52px 0 28px}
+}
+</style>
+</head>
+<body>
+
+<nav class="topjump" aria-label="本页目录">
+  <div class="topjump-inner">
+    <a href="#bluf">一分钟看懂</a>
+    <a href="#gens">代际</a>
+    <a href="#timeline">时间线</a>
+    <a href="#capability">能力</a>
+    <a href="#commercial">产能商业化</a>
+    <a href="#competitors">竞品</a>
+    <a href="#risks">风险</a>
+    <a href="#sources">来源</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow"><span class="dot"></span>Tesla · Optimus · Public Brief</div>
+    <h1 class="title">特斯拉人形机器人<br><span class="grad">Optimus 进展</span></h1>
+    <p class="subtitle">从 AI Day 概念到 Fremont「早期量产」：这份中文简报只写<strong>可核实的公开信息</strong>，并把<em>官方宣称 / 演示所见 / 第三方报道</em>分开标注。马斯克给的产量与售价，一律按<strong>目标口径</strong>处理——历史上多次跳票。</p>
+    <div class="hero-meta">
+      <span>资料截至 2026-11-01（Asia/Shanghai）</span>
+      <span>面向聪明外行</span>
+      <span>非投资建议</span>
+    </div>
+    <div class="statstrip" role="group" aria-label="关键数字卡片">
+      <div class="cell">
+        <div class="v c-amber">Gen 3</div>
+        <div class="k">官方口中「面向量产」的一代；相对 2.5 有大手部升级</div>
+      </div>
+      <div class="cell">
+        <div class="v c-teal">Fremont</div>
+        <div class="k">2026-10 起：原 Model S/X 产线区位启动早期量产</div>
+      </div>
+      <div class="cell">
+        <div class="v c-gold">晚 2027</div>
+        <div class="k">马斯克最新：对外交付目标约在 2027 年末（可能跳票）</div>
+      </div>
+      <div class="cell">
+        <div class="v c-blue">$20–30k</div>
+        <div class="k">长期规模化售价想象；不是现货 MSRP，也未开售</div>
+      </div>
+    </div>
+    <div class="note-bar"><b>读数提示：</b>顶部卡片是记忆锚点，不是已实现 KPI。产能「百万台/年」、周产「约 2 万台」等属于设计/远期目标，页面后文会单独标出。</div>
+  </div>
+</header>
+
+<section id="bluf">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-no">01</span>
+      <div>
+        <div class="sec-title">一分钟看懂</div>
+        <div class="sec-kicker">Optimus 是什么，为什么特斯拉把它和 FSD、工厂数据绑在一起讲。</div>
+      </div>
+    </div>
+    <div class="bluf">
+      <div class="tag">BLUF · Bottom Line Up Front</div>
+      <h3>Optimus 是特斯拉押注的通用人形机器人：先工厂，再对外卖；硬件已进早期产线，真正「有用」仍卡在手、可靠性和泛化 AI。</h3>
+      <p>它不是工业机械臂的换皮，而是想做成能在人类环境里走路、抓取、换任务的双足机器人。特斯拉反复强调的差异化，是<strong>车端视觉与神经网络经验（FSD）+ 自建算力与训练闭环 + 自己的工厂当数据与场景练兵场</strong>——理论上形成「造车飞轮」的物理世界版。</p>
+      <p>到 2026 年 10 月，特斯拉在 Q3 股东更新里写：Fremont 高产能线已开始出「第一批生产级」Optimus，并称当前制造流程「适合商业产品」。但同月财报电话会上，马斯克又把对外交付推到约 <strong>2027 年末</strong>，并承认手部、耐用度和 AI 架构仍未解决；此前 2025 年「约造 1 万台、数千台做有用工作」的口径也未兑现。</p>
+      <div class="verdict">
+        <div class="lbl">一句话</div>
+        <p>现在更接近「能造出生产级样机并缓慢爬坡」的阶段，而不是「已在工厂稳定创造经济价值、可对外下单」的阶段。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="gens">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-no">02</span>
+      <div>
+        <div class="sec-title">代际演进</div>
+        <div class="sec-kicker">公开可见的主线是 Gen1 → Gen2 → 2.5 过渡 → Gen3（量产设计）。中间代号与工程样机很多，下面只保留能对上公开演示/财报表述的节点。</div>
+      </div>
+    </div>
+    <div class="gengrid">
+      <article class="gcard">
+        <div class="gy">2021–2022 · 概念与原型</div>
+        <h4>概念 → Bumblebee / Gen1 设计</h4>
+        <ul>
+          <li>2021 AI Day：人穿紧身衣登台，项目正式亮相，外界嘲讽与关注并存。</li>
+          <li>2022 AI Day：半成品「Bumblebee」首次无系绳上台走几步；另一台更接近量产外形的样机尚不能独立行走。</li>
+          <li>早期量产向手部设计公开口径约 <strong>11 DoF / 6 个驱动</strong>（肌腱耦合）。</li>
+        </ul>
+      </article>
+      <article class="gcard">
+        <div class="gy">2023 · Gen1 走动 → Gen2</div>
+        <h4>Gen1 独立行走 · Gen2 亮相</h4>
+        <ul>
+          <li>2023 上半年起，官方视频展示 Gen1 独立行走、分拣等。</li>
+          <li>2023-12 Gen2：官方称体重减约 <strong>10 kg</strong>、行走速度约 <strong>+30%</strong>；手部 11 DoF + 指尖触觉；演示端蛋（操作精细度宣传点）。</li>
+          <li>公开视频通常不完整披露是否遥操作，需谨慎解读「自主」程度。</li>
+        </ul>
+      </article>
+      <article class="gcard">
+        <div class="gy">2024 · We, Robot 与新手</div>
+        <h4>Gen2 社交演示 · 22 DoF 手</h4>
+        <ul>
+          <li>2024-10「We, Robot」：多台 Optimus 走动互动；多方报道确认<strong>行走可走 AI</strong>，倒酒/聊天等互动大量依赖<strong>遥操作</strong>。</li>
+          <li>2024-11：新手数达 <strong>手部 22 DoF + 腕/前臂约 3 DoF</strong>；官方工程师确认网球接球演示为遥操作。</li>
+          <li>驱动前移到前臂、仿肌腱结构——灵巧度上去，可靠性与磨损成为后续主矛盾。</li>
+        </ul>
+      </article>
+      <article class="gcard now">
+        <div class="gy">2025–2026 · 2.5 → Gen3 / 产线</div>
+        <h4>2.5 过渡 · Gen3 量产向</h4>
+        <ul>
+          <li>特斯拉财报表述：Gen3「面向大规模生产」，相对 <strong>2.5</strong> 有重大升级（含最新手部设计）。</li>
+          <li>Gen3 公开揭幕多次后移；马斯克称担心对手逐帧抄设计。</li>
+          <li>2026-10：Fremont 高产能线开始产出「第一批生产级」机器人——官方未在股东信里写清具体代数型号名。</li>
+        </ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="timeline">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-no">03</span>
+      <div>
+        <div class="sec-title">关键时间线</div>
+        <div class="sec-kicker">每条尽量带年份与事件名。口径变化本身就是信息。</div>
+      </div>
+    </div>
+    <div class="tl">
+      <div class="tl-row"><div class="tl-date">2021-08</div><div class="tl-body"><div class="tl-t">AI Day 宣布人形机器人</div><div class="tl-d">概念与紧身衣表演；项目公开化。</div></div></div>
+      <div class="tl-row major"><div class="tl-date">2022-09</div><div class="tl-body"><div class="tl-t">AI Day 2：Bumblebee 上台</div><div class="tl-d">首次无系绳短距行走演示；同时展示更接近量产外形、当时还不能走的样机。马斯克口头猜测远期售价「可能低于 $20,000」。</div></div></div>
+      <div class="tl-row"><div class="tl-date">2023</div><div class="tl-body"><div class="tl-t">Gen1 独立行走与作业视频</div><div class="tl-d">官方社交平台陆续放出行走、分拣等片段。</div></div></div>
+      <div class="tl-row major"><div class="tl-date">2023-12</div><div class="tl-body"><div class="tl-t">Optimus Gen2 公开</div><div class="tl-d">更轻、更快、11 DoF 触觉手；端蛋成为传播点。</div></div></div>
+      <div class="tl-row major"><div class="tl-date">2024-10</div><div class="tl-body"><div class="tl-t">We, Robot 活动</div><div class="tl-d">大量现场互动后被证实含遥操作；马斯克谈长期家用/规模化价格想象约 $20k–$30k。</div></div></div>
+      <div class="tl-row"><div class="tl-date">2025-01</div><div class="tl-body"><div class="tl-t">产量口径：约 1 万台 / 年</div><div class="tl-d">马斯克称 2025 大约造 1 万台、年底数千台做有用工作——后续承认未兑现「有用工作」。</div></div></div>
+      <div class="tl-row"><div class="tl-date">2026-01</div><div class="tl-body"><div class="tl-t">Q4/年初沟通：停 S/X 给机器人腾地</div><div class="tl-d">计划停产 Model S/X，把 Fremont 空间转 Optimus；谈及 Gen3 揭幕与年底前开产线等目标（后续日程继续滑动）。</div></div></div>
+      <div class="tl-row"><div class="tl-date">2026-Q2</div><div class="tl-body"><div class="tl-t">拆线换装 · Optimus Academy</div><div class="tl-d">公开报道：S/X 线拆除、安装机器人线；早期样机偏向训练数据采集（Optimus Academy），而非对外销售。</div></div></div>
+      <div class="tl-row major"><div class="tl-date">2026-10</div><div class="tl-body"><div class="tl-t">Q3：Fremont 早期量产启动</div><div class="tl-d">股东信：高产能线开始出「第一批生产级」Optimus；电话会：对外交付约 2027 年末；手/耐用/AI 仍是瓶颈；谈及约 1–2 万台进 Academy、约 2027-04 前后上 AI5 等计划。</div></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="capability">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-no">04</span>
+      <div>
+        <div class="sec-title">能力与演示：怎么读视频</div>
+        <div class="sec-kicker">同样一段「机器人干活」视频，证据强度可以差很多。先看标签，再谈惊叹。</div>
+      </div>
+    </div>
+    <div class="tagrow" aria-hidden="true">
+      <span class="pill off">官方宣称</span>
+      <span class="pill demo">演示所见</span>
+      <span class="pill 3p">第三方报道</span>
+      <span class="pill warn">目标/可能跳票</span>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr><th>主题</th><th>公开可见内容</th><th>证据类型</th><th>读法</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>行走与平衡</strong></td>
+            <td>舞台无系绳短距走、工厂/室内行走视频；We, Robot 列队行走</td>
+            <td><span class="pill demo">演示所见</span> + <span class="pill 3p">第三方</span></td>
+            <td>行走是相对成熟的展示项；不等于复杂地形与长时间可靠作业。</td>
+          </tr>
+          <tr>
+            <td><strong>精细操作</strong></td>
+            <td>端蛋、分拣、接网球等</td>
+            <td><span class="pill demo">演示所见</span></td>
+            <td>多项已被官方/工程师承认为遥操作或未充分披露自主比例。</td>
+          </tr>
+          <tr>
+            <td><strong>现场互动</strong></td>
+            <td>倒酒、闲聊、游戏等（We, Robot）</td>
+            <td><span class="pill 3p">第三方报道</span></td>
+            <td>多方报道：互动大量人类远程辅助；行走可走本地 AI。</td>
+          </tr>
+          <tr>
+            <td><strong>工厂有用工作</strong></td>
+            <td>早期「在厂内执行任务」宣传；2026-01 马斯克承认当时没有机器人在做有用工作</td>
+            <td><span class="pill off">官方宣称</span> → 后被本人修正</td>
+            <td>把「进过工厂」和「创造稳定经济价值」分开。</td>
+          </tr>
+          <tr>
+            <td><strong>生产级硬件</strong></td>
+            <td>Q3 2026：Fremont 线出「第一批生产级」；制造流程「适合商业产品」</td>
+            <td><span class="pill off">官方宣称</span></td>
+            <td>这是制造成熟度声明，不是对外可售清单、也不是任务成功率报表。</td>
+          </tr>
+          <tr>
+            <td><strong>开放任务 AI</strong></td>
+            <td>马斯克称仍有大量 AI 架构工作；计划用上万台进 Academy 练任务；承诺拍「非预编程」视频</td>
+            <td><span class="pill warn">目标</span></td>
+            <td>泛化操作仍是全行业未解；特斯拉也不例外。</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout"><b>实用判别：</b>若视频未标明自主/遥操作、未给出任务定义与干预率、未给出连续运行时长，就把它当「硬件与动作幅度演示」，不要自动升级成「已能量产部署的通用劳动力」。</div>
+  </div>
+</section>
+
+<section id="commercial">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-no">05</span>
+      <div>
+        <div class="sec-title">产能与商业化口径</div>
+        <div class="sec-kicker">下列数字全部来自公开电话会/股东材料或可靠二手报道。标注「目标」的，默认可能跳票。</div>
+      </div>
+    </div>
+    <div class="metricgrid">
+      <div class="mcard">
+        <div class="mv c-teal">已启动</div>
+        <div class="mk">Fremont 高产能线早期量产（2026-10 股东信）</div>
+        <div class="ms">官方 · 事实陈述</div>
+      </div>
+      <div class="mcard">
+        <div class="mv c-gold">~1e6/年</div>
+        <div class="mk">Fremont 线设计产能量级（百万台/年级）；不是当前爬坡产量</div>
+        <div class="ms">目标 / 设计口径</div>
+      </div>
+      <div class="mcard">
+        <div class="mv c-amber">晚'27</div>
+        <div class="mk">对外客户交付：马斯克最新口头目标约 2027 年末</div>
+        <div class="ms">目标 · 可能跳票</div>
+      </div>
+      <div class="mcard">
+        <div class="mv c-blue">2万+/周</div>
+        <div class="mk">马斯克称 2027 年底前后有望达到约每周 2 万台量级（对应百万年产叙事）</div>
+        <div class="ms">远期目标</div>
+      </div>
+      <div class="mcard">
+        <div class="mv c-violet">1–2万</div>
+        <div class="mk">计划造一批进 Optimus Academy 练任务（补车队级数据飞轮缺口）</div>
+        <div class="ms">计划口径</div>
+      </div>
+      <div class="mcard">
+        <div class="mv c-red">$20–30k</div>
+        <div class="mk">长期规模化售价想象；另有「成本可低于 $20k」条件语句。无公开 MSRP、无下单页</div>
+        <div class="ms">非现货价格</div>
+      </div>
+    </div>
+    <div class="callout" style="margin-top:18px"><b>已跳票样本：</b>2024–2025 曾展望内部高用量、甚至 2026 对外放量；2025「约 1 万台 + 数千台有用工作」未兑现。读任何新时间表时，建议默认「再延一年」的压力测试。</div>
+    <p class="muted" style="margin-top:18px;font-size:14px">官方 Q3 产能表：California Optimus 状态为 <strong>Early Ramp</strong>（未给具体年产能数字），Texas Optimus 为 <strong>Construction</strong>。马斯克另谈及更远期更高年产能设计；在未公布已安装产能数字前，本页不把「在建/早期爬坡」写成「已满产」。</p>
+  </div>
+</section>
+
+<section id="competitors">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-no">06</span>
+      <div>
+        <div class="sec-title">和竞品比什么</div>
+        <div class="sec-kicker">只比公开可见的「有没有真实场景与客户承诺」，不比 PPT 愿景。</div>
+      </div>
+    </div>
+    <div class="compgrid">
+      <div class="ccard">
+        <h4>Figure（Figure 02/03）</h4>
+        <p>BMW 南卡工厂有较完整公开运行披露（钣金上料试点 → 后续物流分拣更新）。强项是<strong>具名客户 + 工时/件数级披露</strong>；仍非大规模泛化劳动力。</p>
+      </div>
+      <div class="ccard">
+        <h4>Boston Dynamics Atlas（电动版）</h4>
+        <p>2026 产量据报道已承诺给现代与 DeepMind 等；佐治亚培训中心公开，工厂规模部署时间表更偏后。运动控制传统强，手部路线更偏工业夹持务实。</p>
+      </div>
+      <div class="ccard">
+        <h4>优必选 Walker 等国内玩家</h4>
+        <p>公开订单/交付叙事更积极（车厂、3C 等具名客户常见于公司与行业追踪）。要把「交付台数」和「单机经济性、干预率」分开看。</p>
+      </div>
+      <div class="ccard">
+        <h4>特斯拉相对位置</h4>
+        <p>叙事优势在视觉 AI + 自有工厂 + 成本规模化野心；截至本页截点，<strong>对外付费客户与稳定产线 KPI</strong>仍弱于部分竞品的公开案例。马斯克称「无人接近」属于竞争话术，需用现场证据核对。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="risks">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-no">07</span>
+      <div>
+        <div class="sec-title">风险与未解问题</div>
+        <div class="sec-kicker">硬件能下线，不等于劳动力市场被改写。</div>
+      </div>
+    </div>
+    <div class="riskgrid">
+      <div class="risk">
+        <div class="rt">手与耐用性 <span class="sev hi">高</span></div>
+        <div class="rd">官方自己把手指「够软又够耐造」列为难题；产线仍在改设计时，爬坡速度天然受限。</div>
+      </div>
+      <div class="risk">
+        <div class="rt">泛化操作 AI <span class="sev hi">高</span></div>
+        <div class="rd">没有车队级机器人数据时，只能先堆 Academy。跨任务、跨场景的成功率与干预率仍缺公开审计。</div>
+      </div>
+      <div class="risk">
+        <div class="rt">安全与监管 <span class="sev md">中</span></div>
+        <div class="rd">近人作业的碰撞、夹伤、误操作；家用场景监管远严于封闭工厂。公开材料很少给出完整安全认证路径。</div>
+      </div>
+      <div class="risk">
+        <div class="rt">成本与需求 <span class="sev md">中</span></div>
+        <div class="rd">$20–30k 是规模化故事。若长期停在更高成本且只能做窄任务，ROI 讲不通，百万台产能就是空转。</div>
+      </div>
+      <div class="risk">
+        <div class="rt">组织与人才波动 <span class="sev md">中</span></div>
+        <div class="rd">机器人负责人离职等人事变动被媒体跟踪；项目高度依赖关键工程班底与供应链首次量产。</div>
+      </div>
+      <div class="risk">
+        <div class="rt">预期管理 <span class="sev lo">叙事</span></div>
+        <div class="rd">薪酬包、市值叙事与 Optimus 绑定后，公开口径更容易乐观。投资/关注请用时间表历史做折现。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="sources">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-no">08</span>
+      <div>
+        <div class="sec-title">来源与更新</div>
+        <div class="sec-kicker">优先二手里的财报/电话会转述与主流科技媒体；数字冲突时以更新的官方口径为准，并在文中标明。</div>
+      </div>
+    </div>
+    <ul class="src-list">
+      <li><b>Tesla Q3 2026 Update（官方 PDF）</b> — <a href="https://assets-ir.tesla.com/tesla-contents/IR/TSLA-Q3-2026-Update.pdf" target="_blank" rel="noopener">assets-ir.tesla.com … TSLA-Q3-2026-Update.pdf</a>：California Optimus 状态 Early Ramp；Texas Construction；原文称 Fremont 高产能线开始生产、产出「first production-quality bots」，并称制造流程 suitable for a commercial product。Outlook 亦写 production has begun … Optimus in Fremont。</li>
+      <li><b>Q3 电话会转述</b> — TechCrunch（2026-10-21）、Electrek（2026-10-22）：对外交付约晚 2027、手/耐用/AI 瓶颈、Academy 约 1–2 万台、AI5 约 2027-04、周产远期口径等（非股东信正文数字）。</li>
+      <li><b>The Verge</b>（2026-01-28）— Gen3 面向量产、相对 2.5 升级、产线准备与百万台级产能叙事、停 S/X 腾产线等。</li>
+      <li><b>Electrek</b>（2026-04-22）— Fremont 换线节奏、初期产量「很难预测」、2025 产量目标落空等回顾。</li>
+      <li><b>AI Day / Gen2 硬件节点</b> — Ars Technica、The Robot Report、Teslarati 等对 2022–2023 演示与 Gen2 参数（减重、速度、11 DoF 手）的报道。</li>
+      <li><b>We, Robot 遥操作</b> — Los Angeles Times、Ars Technica、Electrek；新手 22 DoF 与遥操作确认见 Electrek / Teslarati（2024-11）。</li>
+      <li><b>竞品对照</b> — 行业追踪文与公司通稿汇总（Figure×BMW、Atlas×Hyundai、优必选交付叙事等）；仅作要点，不作排行榜。</li>
+    </ul>
+    <div class="disclaimer">
+      <b>免责声明：</b>本页为公开信息整理，供个人学习与讨论，不构成投资、采购或技术采纳建议。特斯拉与竞品进度变化快；若官方发布更新的股东信或产品规格，以原件为准。页内「目标 / 可能跳票」标注用于对抗叙事惯性，不代表对结果的预测。<br><br>
+      <b>资料截至：</b>2026-11-01（Asia/Shanghai）· 工具箱报告页 · 特斯拉人形机器人 Optimus 进展
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="fl">特斯拉人形机器人 Optimus 进展</div>
+    <div class="fm">haoyunlai.fun · 公司调研 · 2026-11-01</div>
+    <a class="back" href="/my/">← 返回磊哥工具箱</a>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>安装与登录 · Grok Bot 教程</title>
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body data-page="02">
+  <a class="skip" href="#main">跳到正文</a>
+  <header class="topbar">
+    <button class="nav-toggle" type="button" aria-controls="course-nav" aria-expanded="false">课程目录</button>
+    <a class="brand" href="../index.html" style="margin:0;font-size:1rem">Grok Bot 教程</a>
+  </header>
+  <div class="layout">
+    <aside class="sidebar" id="course-nav">
+      <a class="brand" href="../index.html">Grok Bot 教程</a>
+      <p class="brand-sub">能上班的命名同事</p>
+      <div class="nav-group">课程</div>
+      <nav><a href="../index.html"><span class="n">00</span><span>学习路径</span></a><a href="01-what-is.html"><span class="n">01</span><span>这是什么</span></a><a href="02-install.html" class="current"><span class="n">02</span><span>安装与登录</span></a><a href="03-first-bot.html"><span class="n">03</span><span>第一个 Bot</span></a><a href="04-multiple-bots.html"><span class="n">04</span><span>多个 Bot</span></a><a href="05-manage-bots.html"><span class="n">05</span><span>管理 Bot</span></a><a href="06-computer.html"><span class="n">06</span><span>云电脑</span></a><a href="07-skills-routines.html"><span class="n">07</span><span>Skill 与 Routine</span></a><a href="08-settings.html"><span class="n">08</span><span>设置与通知</span></a><a href="09-approvals.html"><span class="n">09</span><span>审批与安全</span></a><a href="10-practice.html"><span class="n">10</span><span>练习课</span></a><a href="11-faq.html"><span class="n">11</span><span>FAQ + 小抄</span></a></nav>
+      <div class="nav-group">官方</div>
+      <nav>
+        <a href="https://docs.x.ai/grok-bot/overview"><span class="n">↗</span><span>文档总览</span></a>
+        <a href="https://x.ai/bot"><span class="n">↗</span><span>下载 App</span></a>
+      </nav>
+    </aside>
+    <div>
+      <main id="main" class="main">
+        <p class="kicker">第 02 课</p>
+        <h1>先把工位打开</h1>
+        <p class="lead">下载桌面 App，用 Cursor 登录。云电脑在云端，你的笔记本只是遥控器。</p>
+        
+<p>你需要三样东西：合格套餐、桌面 App、以及一件 Bot 能在真实应用或网站里完成的事。</p>
+
+<h2>平台</h2>
+<table>
+  <thead><tr><th>可以</th><th>现在不行</th></tr></thead>
+  <tbody>
+    <tr><td>macOS：Apple silicon 与 Intel</td><td>Linux 桌面</td></tr>
+    <tr><td>Windows：x64 与 Arm64</td><td>Android</td></tr>
+    <tr><td>iPhone：iOS 18 及以上（伴侣 App）</td><td>iPad</td></tr>
+  </tbody>
+</table>
+<p>同一批 Bot 会在已登录设备间同步。工作跑在云电脑上：合上笔记本、关掉 App 或 iPhone，后台任务和 Routine 不会因此停下。</p>
+
+<h2>谁能用</h2>
+<p>用 Cursor 账号登录。合格套餐包括：<strong>SuperGrok Plus / Heavy</strong>，<strong>Cursor Pro+ / Ultra</strong>，<strong>Cursor Teams Standard / Premium</strong>。套餐含每周用量；符合条件的账号可以打开按需用量。如果同时有 Cursor 和 SuperGrok，Grok Bot 会用用量更多的那一份。价格和条款会变，这里不写数字——看 <a href="https://x.ai/bot">x.ai/bot</a> 或 Cursor 定价页。</p>
+<p>Grok Bot 需要云端数据存储。<strong>Legacy Privacy Mode 不受支持</strong>。若账号还在旧隐私模式，需先改到 Cursor 支持的数据设置，Grok Bot 才能启动。企业可用性与管理控件因组织而异，以你当前版本界面和账号团队说明为准。</p>
+
+<h2>安装桌面 App</h2>
+<p>打开 <a href="https://x.ai/bot">https://x.ai/bot</a>，选对应安装包。</p>
+<h3>macOS</h3>
+<ol class="steps">
+  <li>选 Apple silicon 或 Intel 下载。判断方法：苹果菜单 → 关于本机。有 Chip 字段是 Apple silicon，有 Processor 字段是 Intel。</li>
+  <li>打开磁盘映像，把 Grok Bot 拖进 Applications。</li>
+  <li>打开 App。若系统询问确认，选 Open。</li>
+</ol>
+<h3>Windows</h3>
+<ol class="steps">
+  <li>选 x64 或 Arm64。判断方法：设置 → 系统 → 关于 → 系统类型。</li>
+  <li>运行安装程序。</li>
+  <li>从开始菜单打开 Grok Bot。</li>
+</ol>
+<p>App 会自动检查更新。也可以在设置里的 <strong>Updates</strong> 或 <strong>Beta</strong> 区域选 <strong>Check for Updates</strong>（更新的是 App 本身，不是云电脑）。区域名称以你当前版本界面为准。</p>
+
+<h2>登录</h2>
+<ol class="steps">
+  <li>欢迎屏选 Get started。若已在 App 内：打开设置，选 <strong>Sign In with Cursor</strong>。</li>
+  <li>在弹出的浏览器里完成认证。</li>
+  <li>浏览器确认后回到 Grok Bot。</li>
+</ol>
+<p>组织若要求 SSO，走平时的组织登录即可。设置怎么打开见第 08 课：侧边栏左下角账号按钮（头像 + 账号名），或 <kbd>Cmd/Ctrl</kbd>+<kbd>,</kbd>，或命令面板搜 <code>Open settings</code>。没有 macOS「系统设置 / Preferences」菜单项，也没有菜单栏齿轮。</p>
+
+<h2>第一次打开会问工具</h2>
+<p>Grok Bot 会介绍 Bot、共享电脑和 Routine，然后问你常用哪些工具。这些回答只用来<strong>塑造第一批同事建议</strong>，并不会连接或改动那些工具。云电脑在后台准备，最后一步进入 <strong>Meet a future teammate</strong>。</p>
+<div class="callout gold">
+  <p class="label">练习</p>
+  <p>装好并登录后，先别急着授权一堆网站。下一课我们只创建一个岗位清晰的 Bot，并发一条不需要登录的文档任务。</p>
+</div>
+
+<h2>本课核对</h2>
+<div class="check-card">
+  <ul class="checks">
+    <li><label><input type="checkbox"> 已从 x.ai/bot 安装对应架构的桌面 App</label></li>
+    <li><label><input type="checkbox"> 已用 Cursor 账号完成浏览器登录</label></li>
+    <li><label><input type="checkbox"> 知道合上笔记本也不会停掉云端工作</label></li>
+    <li><label><input type="checkbox"> 知道首次问卷不会自动连接那些工具</label></li>
+  </ul>
+</div>
+
+        <nav class="pager"><a href="01-what-is.html"><span class="dir">上一课</span><span class="to">这是什么</span></a><a href="03-first-bot.html" style="text-align:right"><span class="dir">下一课</span><span class="to">第一个 Bot</span></a></nav>
+      </main>
+      <footer class="footer">
+        <p>界面以你的 App 当前版本为准。本教程只收录官方文档与课程说明里的路径；若按钮文案不同，以当前界面为准，并查阅 <a href="https://docs.x.ai/grok-bot/overview">Grok Bot 官方文档</a>。</p>
+        <p>Grok Bot 是 xAI / Cursor 产品，不是 grok.com 聊天窗口。产品词保持英文：Grok Bot、Bot、Cursor、Plugins、Auto-review、Skill、Routine。</p>
+      </footer>
+    </div>
+  </div>
+  <script src="../js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>段永平卖期权完全操作手册 · 从"开保险公司"到可复用的交易工具</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Noto+Serif+SC:wght@500;700;900&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#ECE6D8;        /* 旧契约纸 */
+  --paper-2:#E3DCCB;      /* 略深纸 */
+  --card:#F4EFE3;         /* 卡片浅纸 */
+  --ink:#16211C;          /* 墨松绿 */
+  --ink-2:#35514A;        /* 松灰，次级 */
+  --ink-3:#6B7B72;        /* 浅松灰 */
+  --brass:#A97C2C;        /* 黄铜金 = 保费/钱 */
+  --brass-2:#C8A24E;      /* 亮铜 */
+  --brass-tint:rgba(169,124,44,.13);
+  --ox:#963A2B;           /* 氧化红 = 风险/亏损 */
+  --ox-tint:rgba(150,58,43,.12);
+  --line:rgba(22,33,28,.16);
+  --line-strong:rgba(22,33,28,.32);
+  --shadow:0 1px 0 rgba(22,33,28,.04), 0 10px 30px -18px rgba(22,33,28,.35);
+  --serif:"Noto Serif SC",serif;
+  --sans:"Noto Sans SC",system-ui,sans-serif;
+  --grotesk:"Space Grotesk","Noto Sans SC",sans-serif;
+  --mono:"Space Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:var(--sans);font-weight:400;line-height:1.78;
+  font-size:17px;letter-spacing:.005em;
+  background-image:
+    radial-gradient(circle at 12% 8%, rgba(169,124,44,.05), transparent 42%),
+    radial-gradient(circle at 88% 92%, rgba(53,81,74,.05), transparent 46%);
+  background-attachment:fixed;
+}
+.wrap{max-width:980px;margin:0 auto;padding:0 22px}
+h1,h2,h3,h4{font-family:var(--serif);font-weight:700;line-height:1.2;color:var(--ink);letter-spacing:0}
+p{margin:0 0 1.05em}
+em{font-style:normal;color:var(--brass);font-weight:500}
+strong{font-weight:700;color:var(--ink)}
+.num{font-family:var(--grotesk);font-feature-settings:"tnum" 1;font-weight:600}
+.mono{font-family:var(--mono);letter-spacing:-.02em}
+a{color:var(--ink-2);text-decoration:none;border-bottom:1px solid var(--line-strong)}
+
+/* ---------- 顶部细标 ---------- */
+.topbar{border-bottom:1px solid var(--line);background:rgba(236,230,216,.86);backdrop-filter:blur(6px);position:sticky;top:0;z-index:30}
+.topbar .wrap{display:flex;justify-content:space-between;align-items:center;height:46px;font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:var(--ink-3);text-transform:uppercase}
+.topbar b{color:var(--brass);font-weight:700}
+
+/* ---------- 封面 ---------- */
+.cover{padding:74px 0 30px;position:relative}
+.eyebrow{font-family:var(--mono);font-size:12.5px;letter-spacing:.32em;text-transform:uppercase;color:var(--brass);margin-bottom:26px;display:flex;align-items:center;gap:14px}
+.eyebrow::before{content:"";width:34px;height:1px;background:var(--brass)}
+.cover h1{font-size:clamp(34px,6.4vw,62px);font-weight:900;letter-spacing:-.01em;margin:0 0 8px}
+.cover .sub-zh{font-family:var(--serif);font-weight:500;font-size:clamp(18px,2.6vw,23px);color:var(--ink-2);margin-bottom:30px}
+.thesis{font-size:clamp(17px,2vw,19.5px);line-height:1.85;max-width:760px;border-left:3px solid var(--brass);padding:4px 0 4px 22px;color:var(--ink)}
+.thesis b{color:var(--brass);font-weight:700}
+.meta-row{display:flex;flex-wrap:wrap;gap:10px 8px;margin-top:34px}
+.chip{font-family:var(--mono);font-size:11.5px;letter-spacing:.02em;color:var(--ink-2);background:var(--card);border:1px solid var(--line);border-radius:999px;padding:6px 13px;display:inline-flex;gap:7px;align-items:center}
+.chip b{color:var(--brass);font-weight:700}
+.chip.warn{border-color:rgba(150,58,43,.35);color:var(--ox)}
+
+/* ---------- 区块通用 ---------- */
+section{padding:52px 0;border-top:1px solid var(--line)}
+.sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:30px}
+.sec-no{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--brass);letter-spacing:.05em;flex-shrink:0;padding-top:6px}
+.sec-head h2{font-size:clamp(25px,4vw,36px);font-weight:900;letter-spacing:-.005em}
+.sec-head .kicker{font-family:var(--mono);font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-3);display:block;margin-bottom:8px;font-weight:400}
+.lead{font-size:19px;line-height:1.8}
+
+/* ---------- BLUF ---------- */
+.bluf{background:linear-gradient(180deg,var(--card),var(--paper-2));border:1px solid var(--line);border-radius:16px;padding:34px 32px;box-shadow:var(--shadow)}
+.bluf .tag{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:#fff;background:var(--ink);padding:5px 11px;border-radius:5px;margin-bottom:22px}
+.bluf ol{margin:0;padding:0;list-style:none;counter-reset:b}
+.bluf li{counter-increment:b;position:relative;padding:16px 4px 16px 52px;border-top:1px solid var(--line)}
+.bluf li:first-child{border-top:none;padding-top:4px}
+.bluf li::before{content:counter(b,decimal-leading-zero);position:absolute;left:0;top:15px;font-family:var(--grotesk);font-weight:700;font-size:15px;color:var(--brass);background:var(--brass-tint);width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center}
+.bluf li:first-child::before{top:3px}
+.bluf li b{color:var(--ink)}
+
+/* ---------- 关键发现卡 ---------- */
+.find-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.find{background:var(--card);border:1px solid var(--line);border-radius:13px;padding:20px 20px 18px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.find .big{font-family:var(--grotesk);font-weight:700;font-size:30px;color:var(--ink);line-height:1.05;letter-spacing:-.01em}
+.find .big .unit{font-size:16px;color:var(--ink-3);font-weight:500}
+.find .lbl{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--brass);margin:4px 0 10px}
+.find p{font-size:14.5px;line-height:1.66;color:var(--ink-2);margin:0}
+.find .src{font-family:var(--mono);font-size:10.5px;color:var(--ink-3);margin-top:9px}
+.find.ox .big{color:var(--ox)} .find.ox .lbl{color:var(--ox)}
+
+/* ---------- 引用 ---------- */
+.quote{font-family:var(--serif);font-weight:500;font-size:20px;line-height:1.7;color:var(--ink);border-left:3px solid var(--brass);padding:6px 0 6px 22px;margin:26px 0}
+.quote .by{display:block;font-family:var(--mono);font-size:12px;font-weight:400;color:var(--ink-3);margin-top:12px;letter-spacing:.02em;text-transform:none}
+.quote .by::before{content:"— "}
+
+/* ---------- 卡片/盒子 ---------- */
+.box{background:var(--card);border:1px solid var(--line);border-radius:13px;padding:24px 26px;margin:22px 0;box-shadow:var(--shadow)}
+.box h4{font-size:18px;margin:0 0 12px}
+.callout{border-radius:13px;padding:20px 24px;margin:22px 0;border:1px solid}
+.callout.brass{background:var(--brass-tint);border-color:rgba(169,124,44,.3)}
+.callout.ox{background:var(--ox-tint);border-color:rgba(150,58,43,.3)}
+.callout .ct{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.callout.brass .ct{color:var(--brass)} .callout.ox .ct{color:var(--ox)}
+.callout p:last-child{margin-bottom:0}
+
+/* ---------- 公式块 ---------- */
+.formula{background:var(--ink);color:#EDE7D6;border-radius:12px;padding:22px 24px;margin:20px 0;font-family:var(--mono);font-size:15px;line-height:1.9;overflow-x:auto}
+.formula .hl{color:var(--brass-2);font-weight:700}
+.formula .gt{color:#8FB0A4}
+.formula .cap{font-family:var(--sans);font-size:12.5px;color:#9FB3AB;letter-spacing:.04em;display:block;margin-bottom:12px;text-transform:uppercase;font-weight:500}
+.formula .small{font-size:12.5px;color:#9FB3AB;font-family:var(--sans)}
+
+/* ---------- 表格 ---------- */
+.tbl-wrap{overflow-x:auto;margin:22px 0;border:1px solid var(--line);border-radius:12px}
+table{width:100%;border-collapse:collapse;font-size:14px;background:var(--card);min-width:560px}
+th,td{text-align:left;padding:12px 15px;border-bottom:1px solid var(--line)}
+th{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);font-weight:700;background:var(--paper-2)}
+td{color:var(--ink-2);vertical-align:top}
+td .num{color:var(--ink)}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover{background:rgba(169,124,44,.04)}
+.tag-win{color:var(--brass);font-weight:700;font-family:var(--mono);font-size:12px}
+.tag-loss{color:var(--ox);font-weight:700;font-family:var(--mono);font-size:12px}
+
+/* ---------- 图表容器 ---------- */
+.fig{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px 22px 18px;margin:26px 0;box-shadow:var(--shadow)}
+.fig svg{display:block;width:100%;height:auto}
+.fig .figcap{font-family:var(--mono);font-size:11.5px;color:var(--ink-3);margin-top:12px;letter-spacing:.02em;line-height:1.6}
+.fig .figcap b{color:var(--brass);font-weight:700}
+.fig .figttl{font-family:var(--serif);font-weight:700;font-size:17px;margin:0 0 4px;color:var(--ink)}
+.fig .figsub{font-size:13px;color:var(--ink-3);margin:0 0 14px}
+
+/* ---------- 步骤 ---------- */
+.steps{counter-reset:s;margin:24px 0}
+.step{counter-increment:s;position:relative;padding:0 0 26px 64px;border-left:2px solid var(--line);margin-left:18px}
+.step:last-child{border-left-color:transparent;padding-bottom:4px}
+.step::before{content:counter(s);position:absolute;left:-19px;top:-4px;width:38px;height:38px;border-radius:50%;background:var(--ink);color:var(--brass-2);font-family:var(--grotesk);font-weight:700;font-size:16px;display:flex;align-items:center;justify-content:center;border:3px solid var(--paper)}
+.step h4{font-size:18px;margin:-4px 0 8px}
+.step p{font-size:15px;color:var(--ink-2);margin:0 0 8px}
+.step .micro{font-family:var(--mono);font-size:12px;color:var(--ink-3);background:var(--paper-2);border-radius:7px;padding:8px 12px;line-height:1.65;display:block}
+
+/* ---------- 战例卡 ---------- */
+.case-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.case{background:var(--card);border:1px solid var(--line);border-radius:13px;padding:18px 20px;box-shadow:var(--shadow)}
+.case .ch{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:6px}
+.case .nm{font-family:var(--serif);font-weight:700;font-size:17px}
+.case .dt{font-family:var(--mono);font-size:10.5px;color:var(--ink-3);white-space:nowrap;padding-top:5px}
+.case .meta{font-family:var(--mono);font-size:11.5px;color:var(--ink-2);line-height:1.7;margin:8px 0 10px}
+.case .meta .k{color:var(--ink-3)}
+.case .out{font-size:13.5px;line-height:1.6;color:var(--ink-2);border-top:1px solid var(--line);padding-top:10px}
+.case svg{width:100%;height:auto;display:block;margin:6px 0 4px}
+
+/* ---------- 速查卡 ---------- */
+.cheat{background:var(--ink);color:#E9E3D2;border-radius:16px;padding:30px 30px 26px;margin:24px 0;box-shadow:var(--shadow)}
+.cheat h3{color:#fff;font-size:20px;margin:0 0 4px}
+.cheat .cs{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--brass-2);margin-bottom:22px}
+.cheat .row{display:grid;grid-template-columns:1fr;gap:0;border-top:1px solid rgba(255,255,255,.12);padding:14px 0}
+.cheat .row:first-of-type{border-top:none}
+.cheat .rk{font-family:var(--sans);font-weight:700;font-size:14.5px;color:#fff;margin-bottom:4px}
+.cheat .rv{font-family:var(--mono);font-size:13.5px;color:#B9C7BF;line-height:1.7}
+.cheat .rv .hl{color:var(--brass-2);font-weight:700}
+
+/* ---------- 术语 ---------- */
+.gloss{display:grid;grid-template-columns:repeat(2,1fr);gap:2px 28px}
+.gl{padding:13px 0;border-top:1px solid var(--line)}
+.gl dt{font-weight:700;font-size:15px;color:var(--ink);font-family:var(--sans)}
+.gl dt .en{font-family:var(--mono);font-size:11px;color:var(--brass);font-weight:400;margin-left:7px;letter-spacing:.02em}
+.gl dd{margin:4px 0 0;font-size:13.5px;color:var(--ink-2);line-height:1.6}
+
+/* ---------- 来源 ---------- */
+.src-list{font-family:var(--mono);font-size:12px;line-height:1.55;color:var(--ink-2)}
+.src-list .s{padding:9px 0;border-top:1px solid var(--line);display:flex;gap:12px}
+.src-list .s:first-child{border-top:none}
+.src-list .si{color:var(--brass);font-weight:700;flex-shrink:0}
+.src-list .sp{color:var(--ink-3)}
+.badge1{color:var(--brass);border:1px solid rgba(169,124,44,.4);border-radius:4px;padding:0 5px;font-size:10px;font-weight:700}
+.badge2{color:var(--ink-3);border:1px solid var(--line-strong);border-radius:4px;padding:0 5px;font-size:10px}
+
+/* ---------- 免责/页脚 ---------- */
+.disc{background:var(--ox-tint);border:1px solid rgba(150,58,43,.3);border-radius:13px;padding:22px 24px;margin:30px 0 0;font-size:13.5px;line-height:1.7;color:var(--ink-2)}
+.disc b{color:var(--ox)}
+footer{padding:40px 0 60px;border-top:1px solid var(--line);text-align:center}
+footer .fl{font-family:var(--mono);font-size:11px;letter-spacing:.04em;color:var(--ink-3);line-height:1.9}
+footer .fl b{color:var(--brass)}
+
+/* ---------- 杂项 ---------- */
+.divider-dot{text-align:center;color:var(--line-strong);font-size:14px;letter-spacing:1em;margin:6px 0 0}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.pill-list{list-style:none;padding:0;margin:14px 0}
+.pill-list li{padding:11px 0 11px 30px;position:relative;border-top:1px solid var(--line);font-size:15.5px;line-height:1.6}
+.pill-list li:first-child{border-top:none}
+.pill-list li::before{content:"";position:absolute;left:4px;top:19px;width:9px;height:9px;border-radius:50%;background:var(--brass);box-shadow:0 0 0 4px var(--brass-tint)}
+.ox-list li::before{background:var(--ox);box-shadow:0 0 0 4px var(--ox-tint)}
+.inline-k{font-family:var(--mono);font-size:.88em;background:var(--paper-2);border:1px solid var(--line);border-radius:5px;padding:1px 6px;color:var(--ink)}
+
+@media (max-width:720px){
+  body{font-size:16px}
+  .find-grid,.case-grid,.gloss,.two-col,.cheat .row{grid-template-columns:1fr}
+  .cheat .row{grid-template-columns:1fr}
+  .gl{border-top:1px solid var(--line)}
+  .step{padding-left:54px}
+  .sec-head{gap:10px}
+  .bluf,.box,.callout,.cheat,.fig{padding-left:18px;padding-right:18px}
+}
+@media (prefers-reduced-motion:no-preference){
+  .reveal{opacity:0;transform:translateY(14px);animation:rise .7s cubic-bezier(.2,.7,.2,1) forwards}
+  @keyframes rise{to{opacity:1;transform:none}}
+  .draw{stroke-dasharray:1400;stroke-dashoffset:1400;animation:draw 1.6s ease forwards .3s}
+  @keyframes draw{to{stroke-dashoffset:0}}
+}
+:focus-visible{outline:2px solid var(--brass);outline-offset:3px}
+::selection{background:var(--brass);color:#fff}
+</style>
+</head>
+<body>
+
+<div class="topbar"><div class="wrap">
+  <span>调研报告 · <b>L3 深度尽调</b></span>
+  <span>段永平 · 卖期权方法论</span>
+</div></div>
+
+<!-- ============ 封面 ============ -->
+<header class="cover wrap">
+  <div class="eyebrow reveal">投资方法拆解 · 教学手册</div>
+  <h1 class="reveal">卖期权，<br>像开一家保险公司</h1>
+  <div class="sub-zh reveal">段永平的"卖 put"完全操作手册：从底层逻辑、定价计算，到下单与持仓管理</div>
+
+  <p class="thesis reveal">段永平没有什么"期权策略"。他只有一套纪律——<b>在看得懂的好公司、不高不低的价位、用闲钱、绝不上杠杆</b>——而"卖 put"只是这套纪律的执行工具。学会它，你买股票就多了一种方式：<b>拿着现金、收着利息、在心仪的价位挂一张会付你钱的限价买单</b>。跌了，以折扣价接到想要的资产；没跌，白赚一笔保费。两种结局都满意，才是它成立的前提。</p>
+
+  <div class="meta-row reveal">
+    <span class="chip"><b>深度</b> L3 · 穷尽式</span>
+    <span class="chip"><b>视角</b> 中立教学 + 本人复盘 + 强制反方</span>
+    <span class="chip"><b>主线</b> 美股期权（附 A 股／港股差异）</span>
+    <span class="chip"><b>报告日期</b> 2026-06-27</span>
+    <span class="chip warn">价格数据时点见各处标注 · 期权价格随行情变动</span>
+  </div>
+</header>
+
+<!-- ============ BLUF ============ -->
+<section class="wrap">
+  <div class="sec-head">
+    <span class="sec-no">00</span>
+    <div><span class="kicker">Bottom Line Up Front</span><h2>先给判断：五句话看懂全局</h2></div>
+  </div>
+  <div class="bluf reveal">
+    <span class="tag">核心结论</span>
+    <ol>
+      <li><b>本质不是赚权利金，是"替自己挂限价买单"。</b>段永平卖 put 的标的，全是他本就深研、愿意长期持有的公司（苹果、腾讯、拼多多……）。行权价 = 他愿意接货的价。跌破就接货建仓，没跌破就赚保费——两种结局他都要。这是价值投资的延伸，不是套利赌局。</li>
+      <li><b>稳定年化约 12%–18%，靠的是三层收益叠加，而非期权本身"印钞"。</b>权利金收益 ＋ 抵押现金的国债/货基利息 ＋（可选）回购隐含的折价。把"卖 put"当成无风险高息工具来抄，是最常见的误读。</li>
+      <li><b>他不爆仓的唯一原因是四条铁律。</b>只卖看得懂的公司、用足额现金担保、绝不上杠杆、控制总仓位。散户复制翻车，几乎都是破了其中一条——尤其是上了 margin，或卖了自己根本不敢长期持有的标的。</li>
+      <li><b>最大的真实代价不是亏钱，是"踏空"。</b>他 2025 年 6 月卖的苹果 <span class="inline-k">$195</span> put 到期作废，白赚 <span class="num">$144 万</span>；但苹果一路涨到 <span class="num">$283</span>（2026-06-26 收盘），他再没接回这批股票。<b>蝇头保费，换走了一次大机会</b>——这正是他反复警告"特别便宜时别卖 put"的原因。</li>
+      <li><b>对你的含义：值得长期掌握，但它放大的是你的"商业判断力"，不是替代它。</b>先在 1–2 只你真懂、真敢以行权价长期持有的标的上，用小仓位、足额现金、最小 1 张合约，亲历"作废 / 接货 / 移仓"三种结局，再谈放大。</li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============ 关键发现 ============ -->
+<section class="wrap">
+  <div class="sec-head">
+    <span class="sec-no">01</span>
+    <div><span class="kicker">Key Findings · 每条配真实数据</span><h2>六个用数字说话的事实</h2></div>
+  </div>
+  <p class="lead" style="margin-bottom:24px">以下全部来自段永平本人在雪球（ID：大道无形我有型）公开晒出的成交截图与发言，可交叉验证。金额、张数、行权价为一手数据；年化口径见后文拆解。</p>
+
+  <div class="find-grid">
+    <div class="find reveal">
+      <div class="lbl">苹果 · 2025-06</div>
+      <div class="big">$144<span class="unit">万 权利金</span></div>
+      <p>卖出 <span class="num">999</span> 张 AAPL <span class="inline-k">$195</span> put（2026-01-16 到期），他自算年化约 <strong>18%</strong>。到期时苹果远在 $195 上方 → 期权作废、全额留下保费、未接货。</p>
+      <div class="src">来源：雪球晒单 · 证券时报/天天基金 2025-06-16</div>
+    </div>
+    <div class="find reveal">
+      <div class="lbl">阿里巴巴 · 2023-12</div>
+      <div class="big">≈18%<span class="unit">年化（合计口径）</span></div>
+      <p>卖 <span class="num">1199</span> 张 BABA <span class="inline-k">$70</span> put（2025-01 到期），收 <span class="num">$103.7 万</span>，备足现金 <span class="num">$735.6 万</span>。权利金年化 14.1% ＋ 国债 5.25%。嘉信账户。</p>
+      <div class="src">来源：雪球晒单 · 知乎案例复盘 2023-12</div>
+    </div>
+    <div class="find reveal">
+      <div class="lbl">拼多多 · 2022-01</div>
+      <div class="big">$343<span class="unit">万 净收</span></div>
+      <p>卖 <span class="num">7000</span> 张 PDD <span class="inline-k">$50</span> put，权利金 <span class="num">$4.9</span>/股。到期未跌破 $45.1 → 期权作废，约合人民币 <span class="num">¥2186 万</span>。</p>
+      <div class="src">来源：东方财富复盘 2025/2026</div>
+    </div>
+    <div class="find reveal">
+      <div class="lbl">英伟达 · Buy-Write · 2025</div>
+      <div class="big">$92.52<span class="unit">每股净成本</span></div>
+      <p>买 <span class="num">10 万</span>股 NVDA ＋ 卖 <span class="num">1000</span> 张 <span class="inline-k">$120</span> call（2026-03 到期）。$92.52–$120 之间稳赚价差；>$120 被 call 走、保留权利金；<$92.52 才亏。</p>
+      <div class="src">来源：雪球晒单 · 电商派复盘 2025</div>
+    </div>
+    <div class="find reveal">
+      <div class="lbl">泡泡玛特 · 2026-04 · 警示案例</div>
+      <div class="big">200<span class="unit">股/张（港股≠美股）</span></div>
+      <p>因港股 1 张 = 200 股（美股 = 100），他 <span class="num">22.5 万</span>张实际对应 <span class="num">4500 万</span>股、冻结 <span class="num">67.5 亿</span>港元。<strong>"幸亏卖的是 put"</strong>——到期收 156.8 > 150 作废，14 天净赚 <span class="num">1.575 亿</span>港元。</p>
+      <div class="src">来源：雪球 · 新浪/东方财富 2026-04~05</div>
+    </div>
+    <div class="find reveal">
+      <div class="lbl">规模佐证 · 长期</div>
+      <div class="big">80%<span class="unit">仓位 · &gt;$100 亿</span></div>
+      <p>段永平表示，他手里的苹果持仓一度高达组合的 <strong>80%</strong>、市值超 <span class="num">$100 亿</span>，<strong>"都是靠卖 put 买进来的"</strong>。这是该工具长期有效的最有力证据。</p>
+      <div class="src">来源：证券时报转述雪球发言 2025</div>
+    </div>
+  </div>
+
+  <div class="callout brass reveal" style="margin-top:22px">
+    <div class="ct">◆ 一句话定调</div>
+    <p>这些数字共同说明一件事：卖 put 对段永平是一台<strong>把"等好价"和"收利息"合二为一的建仓机器</strong>——大多数时候赚保费，偶尔以折扣价接到他求之不得的好资产。它的威力来自标的选得对，而非期权本身有魔法。</p>
+  </div>
+</section>
+<!-- ============ 第2节 本质 ============ -->
+<section class="wrap">
+  <div class="sec-head">
+    <span class="sec-no">02</span>
+    <div><span class="kicker">他到底在做什么 · 子问题一</span><h2>卖 put：开一家只赔"好资产"的保险公司</h2></div>
+  </div>
+
+  <p class="lead">先把动作说清楚。<strong>卖出看跌期权（Sell Put / 卖 put）</strong>，就是你作为卖方，收一笔<em>权利金（保费）</em>，同时承诺：在到期日，如果股价跌破约定的<em>行权价</em>，你必须按行权价买入这只股票（美股 1 张 = 100 股）。换句话说——</p>
+
+  <div class="callout brass reveal">
+    <div class="ct">◆ 两句话框架</div>
+    <p style="font-size:18px;margin-bottom:6px"><strong>① 它是一张"会付你钱的限价买单"。</strong>你想 $195 买苹果？普通限价单挂着不动、不涨息；卖 put 等于把这张买单挂出去，市场<strong>立刻先付你一笔保费</strong>。</p>
+    <p style="font-size:18px;margin:0"><strong>② 它是一家"只承保好资产"的保险公司。</strong>你收保费，承诺"股价跌破行权价就理赔（接货）"。只要你<strong>本来就愿意在这个价位买这只股票</strong>，理赔对你不是损失，而是低价建仓。</p>
+  </div>
+
+  <!-- 签名损益图 -->
+  <div class="fig reveal">
+    <p class="figttl">一张保单的损益结构（以苹果 $195 put 为例）</p>
+    <p class="figsub">横轴＝到期股价，纵轴＝每股损益。权利金 P = $14.45／股，行权价 K = $195。</p>
+    <svg viewBox="0 0 760 430" role="img" aria-label="短仓看跌期权损益曲线，三个区域：保费落袋、接货仍盈利、接货且账面亏损">
+      <defs>
+        <marker id="arr" markerWidth="9" markerHeight="9" refX="6" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#963A2B"/></marker>
+        <marker id="arrk" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#35514A"/></marker>
+      </defs>
+      <!-- 区域填充 -->
+      <polygon points="389,108 710,108 710,153 389,153" fill="rgba(169,124,44,.16)"/>
+      <polygon points="322,153 389,108 389,153" fill="rgba(169,124,44,.16)"/>
+      <polygon points="322,153 90,153 90,310" fill="rgba(150,58,43,.13)"/>
+      <!-- 网格虚线 -->
+      <line x1="90" y1="108" x2="710" y2="108" stroke="rgba(22,33,28,.1)" stroke-dasharray="3 5"/>
+      <!-- 零轴(x轴) -->
+      <line x1="90" y1="153" x2="724" y2="153" stroke="#35514A" stroke-width="1.5"/>
+      <polygon points="724,149 732,153 724,157" fill="#35514A"/>
+      <text x="700" y="172" font-family="Space Mono,monospace" font-size="12" fill="#6B7B72">到期股价 →</text>
+      <!-- y轴 -->
+      <line x1="90" y1="50" x2="90" y2="380" stroke="#35514A" stroke-width="1.5"/>
+      <text x="78" y="58" font-family="Space Mono,monospace" font-size="12" fill="#6B7B72" text-anchor="end">每股损益</text>
+      <!-- 行权价虚线 -->
+      <line x1="389" y1="108" x2="389" y2="375" stroke="rgba(22,33,28,.34)" stroke-dasharray="4 4"/>
+      <!-- 盈亏平衡虚线 -->
+      <line x1="322" y1="153" x2="322" y2="375" stroke="rgba(150,58,43,.5)" stroke-dasharray="4 4"/>
+      <!-- 损益线 -->
+      <path d="M710,108 L389,108 L90,310" fill="none" stroke="#16211C" stroke-width="3.4" stroke-linejoin="round" stroke-linecap="round" class="draw"/>
+      <!-- 续行箭头 -->
+      <line x1="120" y1="294.5" x2="70" y2="320" stroke="#963A2B" stroke-width="2.4" stroke-dasharray="5 4" marker-end="url(#arr)"/>
+      <!-- 拐点 -->
+      <circle cx="389" cy="108" r="5.5" fill="#A97C2C" stroke="#ECE6D8" stroke-width="2"/>
+      <circle cx="322" cy="153" r="5" fill="#963A2B" stroke="#ECE6D8" stroke-width="2"/>
+      <!-- 标注：平台 -->
+      <text x="560" y="100" font-family="Space Grotesk,sans-serif" font-size="15" font-weight="700" fill="#A97C2C" text-anchor="middle">+$14.45 / 股</text>
+      <text x="560" y="135" font-family="Noto Sans SC,sans-serif" font-size="13" fill="#35514A" text-anchor="middle">股价 ≥ $195：期权作废</text>
+      <text x="560" y="148" font-family="Noto Sans SC,sans-serif" font-size="11.5" fill="#6B7B72" text-anchor="middle" style="display:none"></text>
+      <!-- 标注：K -->
+      <text x="389" y="395" font-family="Space Mono,monospace" font-size="12" fill="#16211C" text-anchor="middle" font-weight="700">K=$195</text>
+      <text x="389" y="410" font-family="Noto Sans SC,sans-serif" font-size="11" fill="#6B7B72" text-anchor="middle">行权价</text>
+      <!-- 标注：盈亏平衡 -->
+      <text x="322" y="395" font-family="Space Mono,monospace" font-size="12" fill="#963A2B" text-anchor="middle" font-weight="700">$180.55</text>
+      <text x="322" y="410" font-family="Noto Sans SC,sans-serif" font-size="11" fill="#963A2B" text-anchor="middle">盈亏平衡=接货成本</text>
+      <!-- 标注：亏损区 -->
+      <text x="175" y="225" font-family="Noto Sans SC,sans-serif" font-size="13" fill="#963A2B" text-anchor="middle" font-weight="500">跌破 $180.55</text>
+      <text x="175" y="242" font-family="Noto Sans SC,sans-serif" font-size="11.5" fill="#963A2B" text-anchor="middle">账面亏损（但接到想要的资产）</text>
+    </svg>
+    <p class="figcap"><b>读图：</b>损益线在行权价右侧是一条<b>平台</b>（最多只赚到权利金）；左侧以 45° 下行。两个关键点——<b>行权价 $195</b>是"开始接货"的门槛；<b>$180.55（= 行权价 − 权利金）</b>才是真正的盈亏平衡，也是被接货后的<b>每股实际成本</b>。这条线一眼道破卖方的处境：<b>收益封顶、风险敞口向下延伸</b>（见第 6 节反方）。</p>
+  </div>
+
+  <h3 style="font-size:21px;margin:34px 0 10px">为什么这是"价值投资"，不是"赌权利金"？</h3>
+  <p>区别全在一个前提：<strong>你是否真的愿意以行权价长期持有这家公司</strong>。如果愿意，那么无论哪种结局，你都赢——这正是段永平把它玩成建仓机器的根基。他对此毫不含糊：</p>
+
+  <div class="quote reveal">"根本就没有所谓的'卖 put 的策略'！'卖 put 的策略'和卖苹果的 put 是两回事。千万别以为看到大道卖了苹果的 put 就以为找到发财术了。敢卖苹果的 put 是建立在对苹果的生意的了解之上的。不了解的公司千万别碰，你要是卖了乐视的 put 就血本无归了。"<span class="by">段永平 · 雪球</span></div>
+
+  <p>他还把这套动作的"心理作用"讲得很透——它解决的是价值投资者最常见的两难：<em>想买，又嫌不够便宜</em>。</p>
+
+  <div class="quote reveal">"我卖 put 的情况多是在自己喜欢的公司的价钱在不高不低的区间，手里又正好有点闲钱。想着 10 年后这个价钱也不贵，闲着也是闲着，于是就卖个 put，赚个年化十来个百分比的回报。特别便宜的时候最好别卖 put——因为很可能赚了一点蝇头小利而失去大机会。"<span class="by">段永平 · 雪球</span></div>
+
+  <!-- 保险公司流程图 -->
+  <div class="fig reveal">
+    <p class="figttl">"保险公司"模型：保费先到手，两种结局都满意</p>
+    <p class="figsub">卖出 put 的一刻就收到保费；到期日股价决定走哪条路。</p>
+    <svg viewBox="0 0 760 320" role="img" aria-label="卖put的两种结局流程图">
+      <!-- 起点 -->
+      <rect x="40" y="128" width="170" height="64" rx="12" fill="#16211C"/>
+      <text x="125" y="153" font-family="Noto Serif SC,serif" font-size="15" font-weight="700" fill="#fff" text-anchor="middle">卖出 put</text>
+      <text x="125" y="174" font-family="Space Mono,monospace" font-size="11.5" fill="#C8A24E" text-anchor="middle">立刻收到保费 P</text>
+      <!-- 箭头到分叉 -->
+      <line x1="210" y1="160" x2="270" y2="160" stroke="#35514A" stroke-width="2" marker-end="url(#arrk)"/>
+      <text x="318" y="150" font-family="Noto Sans SC,sans-serif" font-size="12" fill="#6B7B72" text-anchor="middle">到期日</text>
+      <text x="318" y="166" font-family="Noto Sans SC,sans-serif" font-size="12" fill="#6B7B72" text-anchor="middle">看股价</text>
+      <!-- 分叉线 -->
+      <path d="M366,160 C400,160 405,80 440,80" fill="none" stroke="#A97C2C" stroke-width="2" marker-end="url(#arrk2)"/>
+      <path d="M366,160 C400,160 405,240 440,240" fill="none" stroke="#963A2B" stroke-width="2" marker-end="url(#arrk3)"/>
+      <defs>
+        <marker id="arrk2" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#A97C2C"/></marker>
+        <marker id="arrk3" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#963A2B"/></marker>
+      </defs>
+      <!-- 结局A -->
+      <rect x="442" y="46" width="288" height="70" rx="12" fill="rgba(169,124,44,.14)" stroke="rgba(169,124,44,.5)"/>
+      <text x="462" y="72" font-family="Noto Serif SC,serif" font-size="14.5" font-weight="700" fill="#8a6420">股价 ≥ 行权价</text>
+      <text x="462" y="93" font-family="Noto Sans SC,sans-serif" font-size="13" fill="#35514A">期权作废 → 白赚全部保费 P</text>
+      <text x="462" y="109" font-family="Space Mono,monospace" font-size="11" fill="#A97C2C">收益率 ≈ 年化 10%–18%，可重复再卖</text>
+      <!-- 结局B -->
+      <rect x="442" y="204" width="288" height="70" rx="12" fill="rgba(150,58,43,.1)" stroke="rgba(150,58,43,.5)"/>
+      <text x="462" y="230" font-family="Noto Serif SC,serif" font-size="14.5" font-weight="700" fill="#963A2B">股价 &lt; 行权价</text>
+      <text x="462" y="251" font-family="Noto Sans SC,sans-serif" font-size="13" fill="#35514A">被行权 → 以行权价接货建仓</text>
+      <text x="462" y="267" font-family="Space Mono,monospace" font-size="11" fill="#963A2B">实际成本 = 行权价 − 保费（折价买到）</text>
+    </svg>
+    <p class="figcap"><b>关键：</b>两条路的终点，对一个"本来就想买这只股票"的人来说<b>都是可接受的</b>。这就是段永平说的"长短皆宜"。真正的风险不在这两条路本身，而在于<b>你选错了标的</b>——卖了不该长期持有的公司的 put（下方斜线会变成纯亏损），或<b>上了杠杆</b>（接货时拿不出现金被强平）。</p>
+  </div>
+</section>
+<!-- ============ 第3节 两块基石 ============ -->
+<section class="wrap">
+  <div class="sec-head">
+    <span class="sec-no">03</span>
+    <div><span class="kicker">两块基石与组合 · 子问题二</span><h2>CSP、备兑看涨，与"车轮"</h2></div>
+  </div>
+  <p class="lead">段永平的全部期权动作，本质只有两块积木，外加一个把它们串起来的循环。先各个击破。</p>
+
+  <div class="two-col" style="margin:24px 0">
+    <div class="box reveal" style="margin:0">
+      <h4>积木一 · 现金担保看跌（CSP）</h4>
+      <p style="font-size:15px;color:var(--ink-2)">Cash-Secured Put。<strong>卖出 put，同时在账户里留足"行权价 × 100 × 张数"的现金</strong>，确保被接货时一定付得起。这是段永平卖 put 的标准形态——他从不用 margin 裸卖。</p>
+      <ul class="pill-list" style="margin:10px 0 0">
+        <li><strong>目的：</strong>在心仪价位等待建仓，等待期间收保费 ＋ 现金吃国债利息。</li>
+        <li><strong>留的现金不是闲置：</strong>可买美国国债或货币基金，再用它充当保证金抵押物，接货时卖掉即可。</li>
+        <li><strong>段永平的话：</strong>"卖 put 有时候是想买又觉得不够便宜时的心理疗法。"</li>
+      </ul>
+    </div>
+    <div class="box reveal" style="margin:0">
+      <h4>积木二 · 备兑看涨（CC / Buy-Write）</h4>
+      <p style="font-size:15px;color:var(--ink-2)">Covered Call。<strong>持有正股的同时，卖出该股的看涨期权（call）</strong>，收一笔保费。若一买入正股就同时卖 call，叫 Buy-Write（备兑开仓）。这是 CSP 的"镜像"——一个管买入，一个管持有/卖出。</p>
+      <ul class="pill-list" style="margin:10px 0 0">
+        <li><strong>目的：</strong>持股期间增厚收益、降低成本；相当于给手里的股票"设一个愿意卖出的价"并先收钱。</li>
+        <li><strong>代价：</strong>放弃了行权价以上的超额涨幅（被 call 走）。</li>
+        <li><strong>段永平的话：</strong>"如果这个价位被 call 走了，我会说：I'll be back！"</li>
+      </ul>
+    </div>
+  </div>
+
+  <p>把两块积木<strong>首尾相接</strong>，就是英文社区常说的 <strong>The Wheel（车轮策略）</strong>：用卖 put 等待买入，接到货后改卖 call 等待卖出，被 call 走后再回到卖 put。段永平的英伟达操作就是活样本——他<strong>买入正股的同时卖 call（备兑），并在别处对同一逻辑卖 put</strong>，让仓位在"收保费"中循环。</p>
+
+  <!-- 车轮图 -->
+  <div class="fig reveal">
+    <p class="figttl">车轮策略：一台循环收保费的建仓/退出机器</p>
+    <p class="figsub">无论走到哪一步，每一圈都在收权利金。</p>
+    <svg viewBox="0 0 760 360" role="img" aria-label="车轮策略循环图">
+      <defs>
+        <marker id="aw" markerWidth="9" markerHeight="9" refX="5" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#35514A"/></marker>
+      </defs>
+      <!-- 中心 -->
+      <circle cx="380" cy="180" r="62" fill="#16211C"/>
+      <text x="380" y="172" font-family="Noto Serif SC,serif" font-size="17" font-weight="700" fill="#fff" text-anchor="middle">车轮</text>
+      <text x="380" y="196" font-family="Space Mono,monospace" font-size="11" fill="#C8A24E" text-anchor="middle">每圈收保费</text>
+      <!-- 节点：上 卖put -->
+      <rect x="290" y="22" width="180" height="58" rx="11" fill="rgba(169,124,44,.14)" stroke="rgba(169,124,44,.55)"/>
+      <text x="380" y="46" font-family="Noto Serif SC,serif" font-size="14.5" font-weight="700" fill="#8a6420" text-anchor="middle">① 卖出 put</text>
+      <text x="380" y="66" font-family="Noto Sans SC,sans-serif" font-size="11.5" fill="#35514A" text-anchor="middle">在想买的价位收保费、等接货</text>
+      <!-- 节点：右 接货 -->
+      <rect x="560" y="151" width="180" height="58" rx="11" fill="var(--card)" stroke="var(--line-strong)"/>
+      <text x="650" y="175" font-family="Noto Serif SC,serif" font-size="14.5" font-weight="700" fill="#16211C" text-anchor="middle">② 被接货</text>
+      <text x="650" y="195" font-family="Noto Sans SC,sans-serif" font-size="11.5" fill="#35514A" text-anchor="middle">以折价拿到正股</text>
+      <!-- 节点：下 卖call -->
+      <rect x="290" y="280" width="180" height="58" rx="11" fill="rgba(169,124,44,.14)" stroke="rgba(169,124,44,.55)"/>
+      <text x="380" y="304" font-family="Noto Serif SC,serif" font-size="14.5" font-weight="700" fill="#8a6420" text-anchor="middle">③ 卖出 call（备兑）</text>
+      <text x="380" y="324" font-family="Noto Sans SC,sans-serif" font-size="11.5" fill="#35514A" text-anchor="middle">持股期间收保费、等卖出</text>
+      <!-- 节点：左 被call走 -->
+      <rect x="20" y="151" width="180" height="58" rx="11" fill="var(--card)" stroke="var(--line-strong)"/>
+      <text x="110" y="175" font-family="Noto Serif SC,serif" font-size="14.5" font-weight="700" fill="#16211C" text-anchor="middle">④ 被 call 走</text>
+      <text x="110" y="195" font-family="Noto Sans SC,sans-serif" font-size="11.5" fill="#35514A" text-anchor="middle">获利了结、回到现金</text>
+      <!-- 循环箭头 -->
+      <path d="M470,58 A150 150 0 0 1 614 154" fill="none" stroke="#35514A" stroke-width="2" marker-end="url(#aw)"/>
+      <path d="M642,209 A150 150 0 0 1 470 305" fill="none" stroke="#35514A" stroke-width="2" marker-end="url(#aw)"/>
+      <path d="M290,305 A150 150 0 0 1 118 209" fill="none" stroke="#35514A" stroke-width="2" marker-end="url(#aw)"/>
+      <path d="M150,151 A150 150 0 0 1 290 56" fill="none" stroke="#35514A" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#aw)"/>
+      <!-- 未接货回流 -->
+      <text x="610" y="92" font-family="Noto Sans SC,sans-serif" font-size="10.5" fill="#A97C2C" transform="rotate(34 610 92)">跌破→接货</text>
+      <text x="150" y="96" font-family="Noto Sans SC,sans-serif" font-size="10.5" fill="#6B7B72" transform="rotate(-34 150 96)">没跌破→保费落袋，重卖put</text>
+    </svg>
+    <p class="figcap"><b>循环逻辑：</b>① 卖 put 没被接货 → 收保费，回到 ① 再卖（虚线回路，大多数时候停在这）。② 被接货 → 持有正股，转去 ③ 卖 call。③ 没被 call 走 → 收保费，回到 ③ 再卖。④ 被 call 走 → 获利了结，回到 ① 重新卖 put。<b>每一步都在收钱，且每一步的"被动结果"都是你事先愿意接受的。</b></p>
+  </div>
+
+  <div class="callout brass reveal">
+    <div class="ct">◆ 段永平怎么用这两块积木</div>
+    <p><strong>他不是机械跑车轮，而是按"价位贵贱"切换。</strong>价格特别便宜 → 直接买正股（别为蝇头保费踏空）；不高不低 → 卖 put 收保费等接货；持有的票涨到他愿意放手的价 → 卖 call（如英伟达 $120 call）。工具是死的，<strong>"当前价相对内在价值贵不贵"的判断是活的</strong>——这判断才是他真正的本事。</p>
+  </div>
+</section>
+<!-- ============ 第4节 计算 ============ -->
+<section class="wrap">
+  <div class="sec-head">
+    <span class="sec-no">04</span>
+    <div><span class="kicker">钱是怎么算出来的 · 子问题三 · 本手册的心脏</span><h2>定价直觉、希腊字母与五个核心公式</h2></div>
+  </div>
+  <p class="lead">这一节是工具的"刻度盘"。学完它，你能对任何一张 put 报价，30 秒内算出：接货成本、盈亏平衡、年化收益、要备多少现金、被接货概率。我们从权利金"由什么决定"讲起。</p>
+
+  <h3 style="font-size:21px;margin:30px 0 8px">一、权利金 = 内在价值 ＋ 时间价值</h3>
+  <p>你收到的每股保费 <span class="inline-k">P</span>，由两部分构成：</p>
+  <div class="formula reveal">
+    <span class="cap">权利金的拆解</span>
+    权利金 P　=　<span class="hl">内在价值</span>　+　<span class="hl">时间价值</span><br>
+    <span class="small">· 内在价值（看跌期权）= max(行权价 − 当前股价, 0)　→ 价外（股价 &gt; 行权价）时为 0</span><br>
+    <span class="small">· 时间价值 = 距到期越久、波动越大，越值钱；它会随时间一点点"融化"</span>
+  </div>
+  <p>段永平卖的多是<strong>价外（OTM）put</strong>——行权价低于当前股价，内在价值为 0，<strong>保费几乎全是时间价值</strong>。这意味着两件事：<em>只要股价别跌破行权价，到期时这部分时间价值会完整地变成他的利润</em>；而<em>波动越大（隐含波动率 IV 越高），同样的行权价能收到的保费越厚</em>——这就是为什么他爱在市场恐慌、暴跌时出手（4 月关税暴跌时他大举卖苹果、英伟达、台积电、腾讯的 put）。</p>
+
+  <div class="callout brass reveal">
+    <div class="ct">◆ 隐含波动率（IV）：卖方的"保费定价器"</div>
+    <p>IV 高 = 市场预期未来波动大 = 期权买方愿付更高保费。卖方在<strong>高 IV 时卖出</strong>（保费厚），赌的是"实际波动 ≤ 隐含波动"。代价见反方：IV 高往往正因为<strong>真有下跌风险</strong>，保费不是白给的。</p>
+  </div>
+
+  <h3 style="font-size:21px;margin:34px 0 8px">二、卖方必懂的四个希腊字母</h3>
+  <p>希腊字母衡量期权价格对各种因素的敏感度。对卖 put 的人，记住这四个就够，且重要性排序非常明确：</p>
+
+  <div class="tbl-wrap reveal">
+    <table>
+      <thead><tr><th style="width:90px">字母</th><th>对卖 put 的含义</th><th style="width:130px">是朋友还是敌人</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Theta θ</strong><br><span class="mono" style="font-size:11px;color:var(--ink-3)">时间衰减</span></td><td>时间价值每天自动减少的量。卖方是<strong>正 Theta</strong>——每过一天，你卖出的期权（你的负债）就贬值一点，差额归你。<strong>时间是卖方的地心引力。</strong></td><td><span class="tag-win">★ 最大的朋友</span></td></tr>
+        <tr><td><strong>Delta Δ</strong><br><span class="mono" style="font-size:11px;color:var(--ink-3)">方向敏感</span></td><td>期权价对股价变动的敏感度。对卖 put，<strong>|Delta| 近似"到期被行权的概率"</strong>。卖 Delta≈0.30 的 put ≈ 约 30% 概率被接货。<strong>选行权价，本质是选你能接受的接货概率。</strong></td><td><span class="mono" style="font-size:12px;color:var(--ink-2)">用来定行权价</span></td></tr>
+        <tr><td><strong>Gamma Γ</strong><br><span class="mono" style="font-size:11px;color:var(--ink-3)">加速度</span></td><td>Delta 变化的速度。<strong>临近到期、接近行权价时 Gamma 飙升</strong>——股价一跳，你的损益剧烈摆动。这是"跳空被深度接货"的数学来源。</td><td><span class="tag-loss">敌人（尾部风险）</span></td></tr>
+        <tr><td><strong>Vega ν</strong><br><span class="mono" style="font-size:11px;color:var(--ink-3)">波动敏感</span></td><td>对隐含波动率的敏感度。你卖出后若 IV 进一步飙升，未到期的 put 会出现<strong>账面浮亏</strong>（即便股价没怎么动）。持有到期则不受其最终影响。</td><td><span class="tag-loss">敌人（持有期波动）</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Theta 衰减图 -->
+  <div class="fig reveal">
+    <p class="figttl">Theta：时间价值如何"融化"——而且越临近到期化得越快</p>
+    <p class="figsub">横轴＝距到期天数（左远右近），纵轴＝剩余时间价值。曲线大致正比于 √剩余时间。</p>
+    <svg viewBox="0 0 720 360" role="img" aria-label="时间价值随到期临近加速衰减的曲线">
+      <!-- 加速区阴影 -->
+      <rect x="467" y="50" width="193" height="250" fill="rgba(169,124,44,.1)"/>
+      <!-- 轴 -->
+      <line x1="80" y1="300" x2="690" y2="300" stroke="#35514A" stroke-width="1.5"/>
+      <line x1="80" y1="40" x2="80" y2="300" stroke="#35514A" stroke-width="1.5"/>
+      <text x="74" y="50" font-family="Space Mono,monospace" font-size="11" fill="#6B7B72" text-anchor="end">时间价值</text>
+      <!-- 网格 -->
+      <line x1="80" y1="50" x2="660" y2="50" stroke="rgba(22,33,28,.08)" stroke-dasharray="3 5"/>
+      <line x1="80" y1="175" x2="660" y2="175" stroke="rgba(22,33,28,.08)" stroke-dasharray="3 5"/>
+      <!-- x刻度 -->
+      <text x="80" y="320" font-family="Space Mono,monospace" font-size="11" fill="#6B7B72" text-anchor="middle">90天</text>
+      <text x="370" y="320" font-family="Space Mono,monospace" font-size="11" fill="#6B7B72" text-anchor="middle">45天</text>
+      <text x="467" y="320" font-family="Space Mono,monospace" font-size="11" fill="#A97C2C" text-anchor="middle" font-weight="700">30天</text>
+      <text x="660" y="320" font-family="Space Mono,monospace" font-size="11" fill="#16211C" text-anchor="middle" font-weight="700">到期</text>
+      <!-- 曲线 -->
+      <path d="M80,50 C 200,72 240,88 273,96 C 340,116 410,140 467,156 C 512,174 548,188 570,202 C 602,222 632,258 660,300" fill="none" stroke="#16211C" stroke-width="3.2" stroke-linecap="round" class="draw"/>
+      <!-- 点 -->
+      <circle cx="467" cy="156" r="5" fill="#A97C2C" stroke="#F4EFE3" stroke-width="2"/>
+      <!-- 标注 -->
+      <text x="555" y="86" font-family="Noto Sans SC,sans-serif" font-size="13" font-weight="700" fill="#A97C2C" text-anchor="middle">最后 30 天</text>
+      <text x="555" y="104" font-family="Noto Sans SC,sans-serif" font-size="12" fill="#8a6420" text-anchor="middle">衰减加速 = 卖方收益最快</text>
+      <text x="210" y="150" font-family="Noto Sans SC,sans-serif" font-size="12" fill="#35514A">远月：化得慢，</text>
+      <text x="210" y="168" font-family="Noto Sans SC,sans-serif" font-size="12" fill="#35514A">但保费绝对值大、被接概率低</text>
+    </svg>
+    <p class="figcap"><b>两种打法的取舍：</b>追求"每日 Theta 效率"的卖方常选 <b>30–45 天</b>到期（衰减最快的甜区，到期后再滚动卖出）。<b>段永平偏好更远月</b>（数月甚至跨年，如苹果 7 个月、阿里 13 个月）——单笔保费绝对额更大、被行权概率更低、操作更省心，代价是资金占用时间更长、每日衰减更慢。没有标准答案，取决于你要"勤收快滚"还是"一劳久逸"。</p>
+  </div>
+
+  <h3 style="font-size:21px;margin:34px 0 8px">三、五个核心公式（背下来即可上手）</h3>
+  <div class="formula reveal">
+    <span class="cap">① 接货成本 = 盈亏平衡点</span>
+    被接货后每股实际成本　=　<span class="hl">行权价 K − 每股权利金 P</span><br>
+    <span class="small">这也是盈亏平衡点：到期股价正好等于它时，不赚不亏。苹果例：195 − 14.45 = <span style="color:#C8A24E">$180.55</span></span>
+  </div>
+  <div class="formula reveal">
+    <span class="cap">② 最大收益（期权作废）／③ 最大亏损（理论）</span>
+    最大收益　=　<span class="hl">P × 100 × 张数</span>　<span class="gt">（股价 ≥ K 时全额拿到）</span><br>
+    最大亏损　=　<span class="hl">(K − P) × 100 × 张数</span>　<span class="gt">（股价归零，但你换到了等量股票）</span>
+  </div>
+  <div class="formula reveal">
+    <span class="cap">④ 足额现金担保所需现金</span>
+    需备现金　=　<span class="hl">K × 100 × 张数 − 收到的总权利金</span><br>
+    <span class="small">阿里例：70 × 119,900 − 103.7万 = 839.3万 − 103.7万 = <span style="color:#C8A24E">$735.6 万</span>（段永平正是备了这个数）</span>
+  </div>
+  <div class="formula reveal">
+    <span class="cap">⑤ 年化收益率 —— 两种口径，务必分清</span>
+    <b style="color:#C8A24E">口径 A · 保守（押在行权价现金上的纯期权利息）</b><br>
+    年化 ≈ <span class="hl">[ P ÷ K ] × (365 ÷ 到期天数)</span><br>
+    <span class="small" style="margin:6px 0 14px">苹果例：14.45 ÷ 195 × (365÷214) ≈ 7.4% × 1.71 ≈ <span style="color:#C8A24E">12.6%</span>（仅权利金）</span>
+    <b style="color:#C8A24E">口径 B · 段永平式（押在"净接货成本"上 ＋ 现金本身吃的息）</b><br>
+    年化 ≈ <span class="hl">[ P ÷ (K − P) ] × (12 ÷ 到期月数) ＋ 抵押现金的国债利率</span>
+  </div>
+
+  <div class="callout ox reveal">
+    <div class="ct">▲ 口径差异：别把两个数字混着抄</div>
+    <p>口径 B 的分母更小（用 <span class="inline-k">K−P</span> 而非 <span class="inline-k">K</span>），又把<strong>现金本身的国债利息也并入同一个收益率</strong>，所以数字天然更大、更好看。这<strong>没有错</strong>，但它回答的是"我真正掏出去的钱的总回报"，<em>不是</em>"押在行权价上的纯期权收益率"。看到大佬说"年化 18%"，先问一句：<strong>分母是什么？含不含现金息？</strong>否则你会高估这台机器的"纯期权"能力。</p>
+  </div>
+
+  <h3 style="font-size:21px;margin:34px 0 8px">四、把段永平的苹果公式，逐项拆开</h3>
+  <p>2025 年 6 月他原话晒出：<span class="inline-k">14.45/（195-14.45) x12/7+0.043 = 18%</span>。这串看似神秘的算式，正是口径 B 的实例。逐项对应：</p>
+
+  <div class="tbl-wrap reveal">
+    <table>
+      <thead><tr><th style="width:140px">算式片段</th><th style="width:120px">数值</th><th>含义</th></tr></thead>
+      <tbody>
+        <tr><td class="mono">14.45</td><td><span class="num">$14.45</span></td><td>每股权利金 P（卖 999 张共收 $144 万 ÷ 99,900 股 ≈ 14.45）</td></tr>
+        <tr><td class="mono">195 − 14.45</td><td><span class="num">$180.55</span></td><td>净接货成本 = K − P，也是他眼中"真正掏出去的钱"，做分母</td></tr>
+        <tr><td class="mono">14.45 / 180.55</td><td><span class="num">8.00%</span></td><td>这 7 个月期间的<strong>期权区间收益率</strong></td></tr>
+        <tr><td class="mono">× 12 / 7</td><td><span class="num">×1.714</span></td><td>把 7 个月年化为 12 个月 → 8.00% × 1.714 = <strong>13.7%</strong></td></tr>
+        <tr><td class="mono">+ 0.043</td><td><span class="num">+4.3%</span></td><td>抵押现金买国债/货基的年化利息（钱没闲着）</td></tr>
+        <tr><td class="mono" style="color:var(--brass);font-weight:700">= 18%</td><td><span class="num" style="color:var(--brass)">18.0%</span></td><td><strong>13.7% ＋ 4.3% = 18.0%</strong>（合计口径年化）</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 三源收益拆解图 -->
+  <div class="fig reveal">
+    <p class="figttl">"年化 18%"是怎么叠出来的：三层收益拆解</p>
+    <p class="figsub">以苹果 $195 put 为例。第三层（回购隐含折价）为可选、视标的而定。</p>
+    <svg viewBox="0 0 720 220" role="img" aria-label="年化收益由权利金、国债利息、回购隐含三层叠加">
+      <!-- 刻度 -->
+      <line x1="60" y1="150" x2="680" y2="150" stroke="rgba(22,33,28,.2)"/>
+      <g font-family="Space Mono,monospace" font-size="10.5" fill="#6B7B72" text-anchor="middle">
+        <text x="60" y="170">0%</text><text x="216" y="170">5%</text><text x="372" y="170">10%</text><text x="528" y="170">15%</text><text x="640" y="170">18%+</text>
+      </g>
+      <!-- 条 (0%基准x=60，每1%=31.2px) -->
+      <!-- 权利金 13.7% -->
+      <rect x="60" y="70" width="427" height="58" rx="4" fill="#A97C2C"/>
+      <text x="273" y="96" font-family="Noto Sans SC,sans-serif" font-size="13" fill="#fff" text-anchor="middle" font-weight="700">权利金年化（口径B）</text>
+      <text x="273" y="115" font-family="Space Grotesk,sans-serif" font-size="14" fill="#fff" text-anchor="middle" font-weight="700">13.7%</text>
+      <!-- 国债 4.3% -->
+      <rect x="487" y="70" width="134" height="58" rx="4" fill="#35514A"/>
+      <text x="554" y="96" font-family="Noto Sans SC,sans-serif" font-size="12" fill="#fff" text-anchor="middle">现金·国债息</text>
+      <text x="554" y="115" font-family="Space Grotesk,sans-serif" font-size="14" fill="#fff" text-anchor="middle" font-weight="700">4.3%</text>
+      <!-- 回购可选 -->
+      <rect x="621" y="70" width="50" height="58" rx="4" fill="none" stroke="#A97C2C" stroke-dasharray="4 3"/>
+      <text x="646" y="100" font-family="Noto Sans SC,sans-serif" font-size="10" fill="#A97C2C" text-anchor="middle">回购</text>
+      <text x="646" y="114" font-family="Noto Sans SC,sans-serif" font-size="10" fill="#A97C2C" text-anchor="middle">隐含</text>
+      <!-- 合计 -->
+      <text x="370" y="40" font-family="Noto Serif SC,serif" font-size="16" font-weight="700" fill="#16211C" text-anchor="middle">≈ 年化 18%（前两层）+ 可选第三层</text>
+    </svg>
+    <p class="figcap"><b>第三层是什么？</b>有分析者指出，当行权价接近当前股价、且未来要以行权价买入时，相比"现在直接买"，延后买入并先收保费还隐含一层"以更划算节奏建仓"的收益。它不总存在、也难精确量化，<b>属于锦上添花，不应计入保守测算</b>。把它单列、用虚线，正是为了提醒你：<b>核心收益是前两层，第三层别当饭吃。</b></p>
+  </div>
+
+  <h3 style="font-size:21px;margin:34px 0 8px">五、完整算例：阿里巴巴 $70 put（2023-12，可逐步复现）</h3>
+  <div class="box reveal">
+    <p style="margin-bottom:10px"><strong>已知条件（段永平嘉信账户晒单）：</strong>当时 BABA 股价 $72.88；卖出 <span class="num">1199</span> 张 <span class="inline-k">$70</span> put，2025-01-17 到期（约 13 个月）；每张权利金 $865 → 每股 P = <span class="num">$8.65</span>；当时 1 年期美债 ≈ 5.25%。</p>
+    <div class="formula" style="margin:14px 0">
+      接货成本 / 盈亏平衡　=　70 − 8.65　=　<span class="hl">$61.35</span> / 股<br>
+      收到总权利金　=　8.65 × 100 × 1199　=　<span class="hl">$103.7 万</span><br>
+      需备现金　=　70 × 119,900 − 103.7万　=　<span class="hl">$735.6 万</span><br>
+      <span class="small" style="margin-top:8px;display:block">口径B年化 ≈ [103.7万 ÷ 735.6万] + 国债 = 14.1% + 5.25% ≈ <span style="color:#C8A24E">19.35% ≈ 18%（扣费后）</span></span>
+    </div>
+    <p style="margin:0;font-size:15px;color:var(--ink-2)"><strong>三种到期情形：</strong>① 股价 ≥ $70 → 期权作废，净赚 $103.7 万，资金回笼可再投。② $61.35 ≤ 股价 &lt; $70 → 接货，但加上保费仍不亏。③ 股价 &lt; $61.35 → 接货且账面亏损，但他拿到了想长期持有的阿里，且成本比直接 $72.88 买更低。三种结局，段永平都接受。</p>
+  </div>
+</section>
+<!-- ============ 第5节 SOP ============ -->
+<section class="wrap">
+  <div class="sec-head">
+    <span class="sec-no">05</span>
+    <div><span class="kicker">一笔交易怎么从头落地 · 子问题四</span><h2>下单 SOP：六步走完一张 put</h2></div>
+  </div>
+  <p class="lead">把前面的理念和公式，串成一条可重复执行的流水线。这是你日后真正动手时照着做的清单。</p>
+
+  <div class="steps reveal">
+    <div class="step">
+      <h4>选标的：只在"愿意以行权价长期持有"的名单里挑</h4>
+      <p>这是最重要也最容易被跳过的一步。问自己：如果到期被接货、且之后股价再腰斩，我会恐慌割肉，还是淡定加仓？只有答案是后者的公司，才进你的卖 put 名单。段永平名单上是苹果、腾讯、拼多多、伯克希尔——全是他研究到"看得懂十年后"的生意。</p>
+      <span class="micro">自检：① 我能讲清它怎么赚钱、护城河是什么吗？② 行权价对应的市值，我认为便宜还是合理？③ 我敢用这笔现金真的买下它吗？三个"是"才继续。</span>
+    </div>
+    <div class="step">
+      <h4>定行权价：用 Delta 选你能接受的"接货概率"</h4>
+      <p>行权价越低（越价外），保费越薄、被接货概率越低；越接近现价，保费越厚、越可能接货。用 <strong>|Delta|</strong> 量化：Delta≈0.30 ≈ 约 30% 概率到期价内。保守建仓常选 <strong>Delta 0.20–0.35</strong> 的价外档。核心原则：<strong>把行权价设在"即便被接货，你也由衷高兴"的价位</strong>。</p>
+      <span class="micro">段永平做法：苹果现价高位时卖 $195（明显价外），阿里 $72.88 时卖 $70（略价外）——都是"跌到这我正好想买"的价。</span>
+    </div>
+    <div class="step">
+      <h4>选到期日：在"勤收快滚"与"一劳久逸"间取舍</h4>
+      <p>30–45 天：Theta 衰减最快、单位时间收益效率高，但需频繁滚动、被短期波动接货概率高。数月～跨年：单笔保费绝对额大、被接货概率低、省心，但占款久、年化效率略低。<strong>段永平偏后者</strong>。新手可从 30–45 天起步，熟悉节奏后再拉长。</p>
+      <span class="micro">避雷：尽量避开横跨财报日的短期 put（财报是跳空高发点），除非你正是想在财报后的恐慌里以更厚保费接货。</span>
+    </div>
+    <div class="step">
+      <h4>算性价比：套用五个公式，过三道门槛</h4>
+      <p>下单前，用第 4 节公式算出：接货成本（K−P）、年化收益（两种口径）、需备现金。然后过三关：① 年化是否值得占用这笔现金（对标国债/货基的无风险利率，溢价够不够）？② 接货成本是不是你真心愿意的买入价？③ 这笔的名义市值，加上已有 put，是否仍在你能用现金全部接下的总额内？</p>
+      <span class="micro">门槛参考：若年化（保守口径A）还不显著高于无风险利率，多半不值得为这点溢价承担尾部风险——这时段永平会说"特别便宜就直接买，不够便宜就别勉强卖"。</span>
+    </div>
+    <div class="step">
+      <h4>下单：限价卖出，并立刻冻结/留足现金</h4>
+      <p>在券商期权界面选 <strong>Sell to Open（卖出开仓）+ Put</strong>，挂<strong>限价单</strong>（别用市价，期权买卖价差常较大），价格挂在买价(bid)与卖价(ask)之间试探成交。成交后，<strong>把"行权价×100×张数"的现金留出来不动</strong>（可买国债/货基吃息）。<strong>绝不动用 margin 去裸卖</strong>——这是段永平的第一红线。</p>
+      <span class="micro">现金担保 vs 裸卖：现金担保下，最坏不过"用早备好的钱买下你想要的股票"；裸卖+杠杆下，最坏是"暴跌时保证金不足被强平，亏损被锁定且放大"。两者天壤之别。</span>
+    </div>
+    <div class="step">
+      <h4>到期处理：作废 / 接货 / 移仓（Roll）三选一</h4>
+      <p><strong>作废</strong>（股价 ≥ 行权价）：保费全留，回到第 1 步再卖。<strong>接货</strong>（被行权）：欣然收下股票，可转入备兑卖 call（进入车轮）。<strong>移仓 Roll</strong>（想继续持有头寸、避免当下接货）：买回当前 put 同时卖出更晚到期/更低行权价的 put，常能净收一笔保费、把决策推后——但注意别把"移仓"变成"死扛一个看错的标的"。</p>
+      <span class="micro">美式期权可被提前行权（尤其临近除息或深度价内时），所以"留足现金"要全程保持，不能等到到期日才准备。</span>
+    </div>
+  </div>
+
+  <div class="callout brass reveal">
+    <div class="ct">◆ 一页纸记住整条流水线</div>
+    <p><strong>挑你敢长期持有的好公司 → 把行权价设在你乐意接货的价（Delta 0.2–0.35）→ 选到期日 → 算清接货成本/年化/备款 → 限价卖出并冻结现金、不上杠杆 → 到期作废就再卖、被接货就转备兑、想拖就移仓。</strong>循环往复，这就是工具的全部操作。</p>
+  </div>
+</section>
+<!-- ============ 第6节 战例 ============ -->
+<section class="wrap">
+  <div class="sec-head">
+    <span class="sec-no">06</span>
+    <div><span class="kicker">真实战例复盘 · 一手证据</span><h2>段永平的八张"保单"</h2></div>
+  </div>
+  <p class="lead">理论之外，看真账。以下全部来自他雪球公开晒单与发言（一手），辅以财经媒体复盘（二手，已标注）。每张卡片右上是时间，下方迷你图标出到期结局落在损益线的哪一段。</p>
+
+  <div class="case-grid" style="margin-top:24px">
+
+    <!-- 苹果 -->
+    <div class="case reveal">
+      <div class="ch"><span class="nm">苹果 AAPL · 卖 put</span><span class="dt">2025-06</span></div>
+      <div class="meta"><span class="k">行权价</span> $195　<span class="k">到期</span> 2026-01-16　<span class="k">张数</span> 999<br><span class="k">收保费</span> $144 万　<span class="k">自算年化</span> 18%</div>
+      <svg viewBox="0 0 280 100" aria-hidden="true">
+        <polygon points="160,34 262,34 262,56 160,56" fill="rgba(169,124,44,.16)"/><polygon points="94,56 160,34 160,56" fill="rgba(169,124,44,.16)"/><polygon points="22,56 94,56 22,80" fill="rgba(150,58,43,.12)"/>
+        <line x1="22" y1="56" x2="270" y2="56" stroke="#35514A" stroke-width="1.2"/>
+        <line x1="160" y1="20" x2="160" y2="90" stroke="rgba(22,33,28,.3)" stroke-dasharray="3 3"/>
+        <path d="M262,34 L160,34 L22,80" fill="none" stroke="#16211C" stroke-width="2.6" stroke-linejoin="round"/>
+        <circle cx="248" cy="34" r="5.5" fill="#A97C2C" stroke="#F4EFE3" stroke-width="2"/>
+        <text x="160" y="98" font-family="Space Mono,monospace" font-size="9.5" fill="#16211C" text-anchor="middle">K=195</text>
+        <text x="248" y="26" font-family="Space Mono,monospace" font-size="9.5" fill="#A97C2C" text-anchor="middle">到期≈283</text>
+      </svg>
+      <div class="out"><span class="tag-win">✓ 作废</span> 到期苹果远超 $195（现 $283），保费全留、未接货。<strong>但也错过了苹果从 $195 涨到 $283 的整段——这正是"踏空"成本。</strong></div>
+    </div>
+
+    <!-- 阿里 -->
+    <div class="case reveal">
+      <div class="ch"><span class="nm">阿里巴巴 BABA · 卖 put</span><span class="dt">2023-12</span></div>
+      <div class="meta"><span class="k">行权价</span> $70　<span class="k">到期</span> 2025-01-17　<span class="k">张数</span> 1199<br><span class="k">收保费</span> $103.7 万　<span class="k">备现金</span> $735.6 万</div>
+      <svg viewBox="0 0 280 100" aria-hidden="true">
+        <polygon points="160,34 262,34 262,56 160,56" fill="rgba(169,124,44,.16)"/><polygon points="94,56 160,34 160,56" fill="rgba(169,124,44,.16)"/><polygon points="22,56 94,56 22,80" fill="rgba(150,58,43,.12)"/>
+        <line x1="22" y1="56" x2="270" y2="56" stroke="#35514A" stroke-width="1.2"/>
+        <line x1="160" y1="20" x2="160" y2="90" stroke="rgba(22,33,28,.3)" stroke-dasharray="3 3"/>
+        <path d="M262,34 L160,34 L22,80" fill="none" stroke="#16211C" stroke-width="2.6" stroke-linejoin="round"/>
+        <circle cx="225" cy="34" r="5.5" fill="#A97C2C" stroke="#F4EFE3" stroke-width="2"/>
+        <text x="160" y="98" font-family="Space Mono,monospace" font-size="9.5" fill="#16211C" text-anchor="middle">K=70</text>
+        <text x="225" y="26" font-family="Space Mono,monospace" font-size="9.5" fill="#A97C2C" text-anchor="middle">到期&gt;70</text>
+      </svg>
+      <div class="out"><span class="tag-win">✓ 作废</span> 到期阿里在 $70 上方，期权失效。年化合计口径 ≈18%（权利金 14.1% + 国债 5.25%）。嘉信账户。</div>
+    </div>
+
+    <!-- 拼多多 -->
+    <div class="case reveal">
+      <div class="ch"><span class="nm">拼多多 PDD · 卖 put</span><span class="dt">2022-01</span></div>
+      <div class="meta"><span class="k">行权价</span> $50　<span class="k">保费</span> $4.9/股　<span class="k">张数</span> 7000<br><span class="k">盈亏平衡</span> $45.1　<span class="k">净收</span> $343 万（≈¥2186 万）</div>
+      <svg viewBox="0 0 280 100" aria-hidden="true">
+        <polygon points="160,34 262,34 262,56 160,56" fill="rgba(169,124,44,.16)"/><polygon points="94,56 160,34 160,56" fill="rgba(169,124,44,.16)"/><polygon points="22,56 94,56 22,80" fill="rgba(150,58,43,.12)"/>
+        <line x1="22" y1="56" x2="270" y2="56" stroke="#35514A" stroke-width="1.2"/>
+        <line x1="160" y1="20" x2="160" y2="90" stroke="rgba(22,33,28,.3)" stroke-dasharray="3 3"/>
+        <path d="M262,34 L160,34 L22,80" fill="none" stroke="#16211C" stroke-width="2.6" stroke-linejoin="round"/>
+        <circle cx="185" cy="34" r="5.5" fill="#A97C2C" stroke="#F4EFE3" stroke-width="2"/>
+        <text x="160" y="98" font-family="Space Mono,monospace" font-size="9.5" fill="#16211C" text-anchor="middle">K=50</text>
+      </svg>
+      <div class="out"><span class="tag-win">✓ 作废</span> 按公开复盘，到期未跌破盈亏平衡 $45.1，全额保费落袋。<span style="font-size:11px;color:var(--ink-3)">（二手复盘，到期日未在原帖明确）</span></div>
+    </div>
+
+    <!-- 英伟达 buy-write -->
+    <div class="case reveal">
+      <div class="ch"><span class="nm">英伟达 NVDA · Buy-Write</span><span class="dt">2025</span></div>
+      <div class="meta"><span class="k">操作</span> 买 10 万股 + 卖 $120 call<br><span class="k">到期</span> 2026-03-20　<span class="k">每股净成本</span> $92.52</div>
+      <svg viewBox="0 0 280 100" aria-hidden="true">
+        <line x1="22" y1="70" x2="270" y2="70" stroke="#35514A" stroke-width="1.2"/>
+        <line x1="190" y1="22" x2="190" y2="90" stroke="rgba(22,33,28,.3)" stroke-dasharray="3 3"/>
+        <line x1="70" y1="22" x2="70" y2="90" stroke="rgba(150,58,43,.45)" stroke-dasharray="3 3"/>
+        <!-- 备兑损益：左下亏，过净成本后升，到call行权价封顶 -->
+        <polygon points="70,70 190,34 262,34 262,70" fill="rgba(169,124,44,.16)"/>
+        <polygon points="22,84 70,70 70,84" fill="rgba(150,58,43,.12)"/>
+        <path d="M22,84 L190,34 L262,34" fill="none" stroke="#16211C" stroke-width="2.6" stroke-linejoin="round"/>
+        <text x="70" y="98" font-family="Space Mono,monospace" font-size="9" fill="#963A2B" text-anchor="middle">92.52</text>
+        <text x="190" y="98" font-family="Space Mono,monospace" font-size="9" fill="#16211C" text-anchor="middle">call=120</text>
+        <text x="225" y="30" font-family="Noto Sans SC,sans-serif" font-size="8.5" fill="#A97C2C" text-anchor="middle">收益封顶</text>
+      </svg>
+      <div class="out">$92.52–$120 之间稳赚价差 + 保费 + 股息；&gt;$120 被 call 走、保留权利金放弃超额；&lt;$92.52 才亏损。<strong>这是"持有端"工具，与卖 put 互补。</strong></div>
+    </div>
+
+    <!-- 新东方 -->
+    <div class="case reveal">
+      <div class="ch"><span class="nm">新东方 EDU · 卖 put</span><span class="dt">2021 末</span></div>
+      <div class="meta"><span class="k">背景</span> 双减政策、中概股暴跌、市值跌九成<br><span class="k">研究</span> 看了 4 小时俞敏洪采访后逆向出手</div>
+      <svg viewBox="0 0 280 100" aria-hidden="true">
+        <polygon points="160,34 262,34 262,56 160,56" fill="rgba(169,124,44,.16)"/><polygon points="94,56 160,34 160,56" fill="rgba(169,124,44,.16)"/><polygon points="22,56 94,56 22,80" fill="rgba(150,58,43,.12)"/>
+        <line x1="22" y1="56" x2="270" y2="56" stroke="#35514A" stroke-width="1.2"/>
+        <line x1="160" y1="20" x2="160" y2="90" stroke="rgba(22,33,28,.3)" stroke-dasharray="3 3"/>
+        <path d="M262,34 L160,34 L22,80" fill="none" stroke="#16211C" stroke-width="2.6" stroke-linejoin="round"/>
+        <circle cx="210" cy="34" r="5.5" fill="#A97C2C" stroke="#F4EFE3" stroke-width="2"/>
+        <text x="160" y="98" font-family="Space Mono,monospace" font-size="9.5" fill="#16211C" text-anchor="middle">行权价</text>
+      </svg>
+      <div class="out"><span class="tag-win">✓ 赚钱</span> 段永平："当时的结论是这人不会是空头说的那样，于是就进场卖了很多 put，赚了些钱。"<strong>典型"研究先行→恐慌中卖 put"。</strong></div>
+    </div>
+
+    <!-- 泡泡玛特 -->
+    <div class="case reveal">
+      <div class="ch"><span class="nm">泡泡玛特 · 卖 put · 警示</span><span class="dt">2026-04</span></div>
+      <div class="meta"><span class="k">行权价</span> 150 港元　<span class="k">合约</span> 22.5 万张<br><span class="k" style="color:var(--ox)">乌龙</span> 港股 1 张=200 股→实为 4500 万股</div>
+      <svg viewBox="0 0 280 100" aria-hidden="true">
+        <polygon points="160,34 262,34 262,56 160,56" fill="rgba(169,124,44,.16)"/><polygon points="94,56 160,34 160,56" fill="rgba(169,124,44,.16)"/><polygon points="22,56 94,56 22,80" fill="rgba(150,58,43,.12)"/>
+        <line x1="22" y1="56" x2="270" y2="56" stroke="#35514A" stroke-width="1.2"/>
+        <line x1="160" y1="20" x2="160" y2="90" stroke="rgba(22,33,28,.3)" stroke-dasharray="3 3"/>
+        <path d="M262,34 L160,34 L22,80" fill="none" stroke="#16211C" stroke-width="2.6" stroke-linejoin="round"/>
+        <circle cx="178" cy="34" r="5.5" fill="#A97C2C" stroke="#F4EFE3" stroke-width="2"/>
+        <text x="160" y="98" font-family="Space Mono,monospace" font-size="9.5" fill="#16211C" text-anchor="middle">K=150</text>
+        <text x="190" y="26" font-family="Space Mono,monospace" font-size="9" fill="#A97C2C" text-anchor="middle">156.8</text>
+      </svg>
+      <div class="out"><span class="tag-win">✓ 作废</span> 14 天净赚 <strong>1.575 亿港元</strong>（冻结 67.5 亿保证金）。但他自承记错合约乘数：<strong>"还好卖的是 put，不然就麻烦了。"</strong>规则细节会咬人。</div>
+    </div>
+
+    <!-- 英伟达 put -->
+    <div class="case reveal">
+      <div class="ch"><span class="nm">英伟达 NVDA · 卖 put</span><span class="dt">2025-02/03</span></div>
+      <div class="meta"><span class="k">行权价</span> $110　<span class="k">到期</span> 2025-03-14　<span class="k">张数</span> 1000<br><span class="k">收保费</span> $37 万　<span class="k">心态</span> "没完全看懂，但准备卖点"</div>
+      <svg viewBox="0 0 280 100" aria-hidden="true">
+        <polygon points="160,34 262,34 262,56 160,56" fill="rgba(169,124,44,.16)"/><polygon points="94,56 160,34 160,56" fill="rgba(169,124,44,.16)"/><polygon points="22,56 94,56 22,80" fill="rgba(150,58,43,.12)"/>
+        <line x1="22" y1="56" x2="270" y2="56" stroke="#35514A" stroke-width="1.2"/>
+        <line x1="160" y1="20" x2="160" y2="90" stroke="rgba(22,33,28,.3)" stroke-dasharray="3 3"/>
+        <path d="M262,34 L160,34 L22,80" fill="none" stroke="#16211C" stroke-width="2.6" stroke-linejoin="round"/>
+        <circle cx="205" cy="34" r="5.5" fill="#A97C2C" stroke="#F4EFE3" stroke-width="2"/>
+        <text x="160" y="98" font-family="Space Mono,monospace" font-size="9.5" fill="#16211C" text-anchor="middle">K=110</text>
+      </svg>
+      <div class="out"><span class="tag-win">✓ 作废</span> "卖 Delta 表达看多"的范例——他坦言没完全看懂英伟达，仍认为它"是个很不错的公司"，用卖 put 低风险表达观点。</div>
+    </div>
+
+    <!-- 伯克希尔 -->
+    <div class="case reveal">
+      <div class="ch"><span class="nm">伯克希尔 BRK.B · 卖 put</span><span class="dt">2025-08</span></div>
+      <div class="meta"><span class="k">背景</span> 伯克希尔股价罕见大跌时出手<br><span class="k">逻辑</span> "这个价格不贵了，应该比 S&amp;P500 合算"</div>
+      <svg viewBox="0 0 280 100" aria-hidden="true">
+        <polygon points="160,34 262,34 262,56 160,56" fill="rgba(169,124,44,.16)"/><polygon points="94,56 160,34 160,56" fill="rgba(169,124,44,.16)"/><polygon points="22,56 94,56 22,80" fill="rgba(150,58,43,.12)"/>
+        <line x1="22" y1="56" x2="270" y2="56" stroke="#35514A" stroke-width="1.2"/>
+        <line x1="160" y1="20" x2="160" y2="90" stroke="rgba(22,33,28,.3)" stroke-dasharray="3 3"/>
+        <path d="M262,34 L160,34 L22,80" fill="none" stroke="#16211C" stroke-width="2.6" stroke-linejoin="round"/>
+        <circle cx="215" cy="34" r="5.5" fill="#A97C2C" stroke="#F4EFE3" stroke-width="2"/>
+        <text x="160" y="98" font-family="Space Mono,monospace" font-size="9.5" fill="#16211C" text-anchor="middle">行权价</text>
+      </svg>
+      <div class="out">"希望买进来拿着"——再次印证核心：他卖 put 是<strong>真心想接货</strong>，把它当成在低位建仓优质资产的入口，而非纯赚保费。</div>
+    </div>
+
+  </div>
+
+  <div class="callout brass reveal" style="margin-top:22px">
+    <div class="ct">◆ 八张保单的共同基因</div>
+    <p>① 标的全是他<strong>深研、愿长期持有</strong>的公司；② 多在<strong>市场恐慌/暴跌、IV 高、保费厚</strong>时出手；③ 全部<strong>足额现金担保、不上杠杆</strong>；④ 绝大多数<strong>到期作废、白赚保费</strong>，偶尔接货也是他求之不得的。唯一的"事故"（泡泡玛特乌龙）也因"卖的是 put"而虚惊一场——再次说明<strong>方向选对 + 不加杠杆</strong>是这套打法的安全带。</p>
+  </div>
+</section>
+<!-- ============ 第7节 风险与反方 ============ -->
+<section class="wrap">
+  <div class="sec-head">
+    <span class="sec-no">07</span>
+    <div><span class="kicker">不确定性与最强反方 · 子问题五 · 必读</span><h2>这套打法最锋利的六把反刀</h2></div>
+  </div>
+  <p class="lead">一份诚实的手册，必须把反对意见讲到最强。下面不是"风险提示"式的免责套话，而是认真的对手论证——其中几条，段永平本人也认。读懂它们，比读懂公式更能保你不亏。</p>
+
+  <!-- 三策略对比图 -->
+  <div class="fig reveal">
+    <p class="figttl">同一笔钱的三条路：卖 put、直接买正股、持币——谁在什么行情赢？</p>
+    <p class="figsub">以苹果为例，参照买入价 $195，权利金 $14.45。横轴＝到期股价，纵轴＝每股损益。</p>
+    <svg viewBox="0 0 760 410" role="img" aria-label="卖put、买正股、持币三种策略在不同股价下的损益对比">
+      <!-- 踏空阴影 -->
+      <polygon points="372,210 681,64 681,211 372,211" fill="rgba(150,58,43,.1)"/>
+      <!-- 零轴 -->
+      <line x1="80" y1="240" x2="724" y2="240" stroke="#35514A" stroke-width="1.4"/>
+      <polygon points="724,236 732,240 724,244" fill="#35514A"/>
+      <text x="704" y="258" font-family="Space Mono,monospace" font-size="11" fill="#6B7B72">股价 →</text>
+      <line x1="80" y1="40" x2="80" y2="370" stroke="#35514A" stroke-width="1.4"/>
+      <text x="74" y="48" font-family="Space Mono,monospace" font-size="11" fill="#6B7B72" text-anchor="end">每股损益</text>
+      <!-- 关键竖线 -->
+      <line x1="311" y1="50" x2="311" y2="385" stroke="rgba(22,33,28,.28)" stroke-dasharray="4 4"/>
+      <text x="311" y="400" font-family="Space Mono,monospace" font-size="11" fill="#16211C" text-anchor="middle">$195 买入价</text>
+      <line x1="681" y1="50" x2="681" y2="385" stroke="rgba(150,58,43,.5)" stroke-dasharray="4 4"/>
+      <text x="681" y="400" font-family="Space Mono,monospace" font-size="11" fill="#963A2B" text-anchor="middle">$283 现价</text>
+      <!-- 持币线 -->
+      <line x1="80" y1="232" x2="710" y2="232" stroke="#6B7B72" stroke-width="2" stroke-dasharray="6 5"/>
+      <text x="150" y="226" font-family="Noto Sans SC,sans-serif" font-size="11.5" fill="#6B7B72">持币（吃国债息）</text>
+      <!-- 买正股线 -->
+      <line x1="80" y1="350" x2="710" y2="50" stroke="#963A2B" stroke-width="2.8"/>
+      <text x="600" y="78" font-family="Noto Sans SC,sans-serif" font-size="13" font-weight="700" fill="#963A2B">直接买正股</text>
+      <!-- 卖put线 -->
+      <path d="M80,321 L311,211 L710,211" fill="none" stroke="#A97C2C" stroke-width="3.4" stroke-linejoin="round"/>
+      <text x="430" y="202" font-family="Noto Sans SC,sans-serif" font-size="13" font-weight="700" fill="#A97C2C">卖 put（收益封顶 +$14.45）</text>
+      <!-- 踏空标注 -->
+      <text x="600" y="155" font-family="Noto Sans SC,sans-serif" font-size="12.5" fill="#963A2B" text-anchor="middle" font-weight="700">踏空差距 ≈ $74/股</text>
+      <line x1="681" y1="70" x2="681" y2="205" stroke="#963A2B" stroke-width="1" marker-start="url(#arr)" marker-end="url(#arr)" opacity=".6"/>
+    </svg>
+    <p class="figcap"><b>三种行情，三种赢家：</b>① <b>股价大涨</b>（&gt;$209）→ <b>直接买正股完胜</b>，卖 put 被封顶，差距随涨幅扩大（苹果到 $283 时差 $74/股）。② <b>股价小涨/横盘/小跌</b>（$180.55~$209）→ <b>卖 put 赢</b>，白赚保费。③ <b>股价大跌</b>（&lt;$180.55）→ <b>持币赢</b>，卖 put 与买正股都亏（put 因保费略少亏一点）。<b>卖 put 是"牺牲尾部大涨，换取中间区域的确定性收益"——它在震荡市最优，在单边大牛市最吃亏。</b></p>
+  </div>
+
+  <h3 style="font-size:20px;margin:30px 0 6px">反刀一 · 收益封顶，风险向下延伸——"在压路机前捡钢镚"</h3>
+  <p>卖 put 的盈亏极不对称：<strong>最多只赚到那点权利金，向下的亏损却能一直延伸到股价接近归零</strong>。华尔街对这类策略有个刻薄的比喻——<em>picking up pennies in front of a steamroller（在压路机前捡钢镚）</em>。平时一张张捡得很顺，<strong>一次黑天鹅，就能吞掉你多年累积的保费</strong>。卖方是在用"高胜率"交换"一旦输就输很大"。</p>
+
+  <h3 style="font-size:20px;margin:26px 0 6px">反刀二 · 你放弃了上涨，却留下了下跌</h3>
+  <p>如果你<strong>本就看好并愿意长期持有</strong>一家公司，那么在牛市里，<strong>直接买正股的回报远高于卖 put</strong>。卖 put 把你最看好的标的，在它大涨时挡在门外——上图的苹果就是活生生的代价：他想 $195 接货，结果苹果一路到 $283，他只拿到 $14.45 的保费，<strong>错过了 $74/股的涨幅</strong>。段永平自己最警惕的恰是这点："特别便宜的时候最好别卖 put，因为很可能赚了一点蝇头小利而失去大机会。"</p>
+
+  <h3 style="font-size:20px;margin:26px 0 6px">反刀三 · 期权是公允定价的，没有免费午餐</h3>
+  <p>"年化 18%"听起来像白捡，但<strong>权利金高，恰恰是因为隐含波动率高——市场认为它真有大跌的概率和幅度</strong>。你收到的厚保费，是承担对应尾部风险的<em>补偿</em>，不是市场的慷慨。从希腊字母看：<strong>你赚的每一分 Theta（时间价值），对应的都是你承担的 Gamma（跳空）与 Vega（波动飙升）风险</strong>。长期看，卖期权的超额收益主要来自"波动率风险溢价"——它真实存在，但绝非无风险，且会在最坏的时刻集中兑现亏损。</p>
+
+  <h3 style="font-size:20px;margin:26px 0 6px">反刀四 · 幸存者偏差与牛市偏差</h3>
+  <p>段永平的精彩战绩，大体发生在 <strong>2021–2026 这段以美股长牛为底色的时期</strong>。在持续上涨或快速反弹的市场里，卖 put 顺风顺水——跌破了也很快涨回来。但把<strong>同样的打法放到 2000–2002 互联网泡沫、2008 金融危机</strong>那种连续暴跌、反弹乏力的环境，你会被<strong>反复深度接货、账面长期巨亏、现金被一笔笔锁死</strong>，体验与现在天壤之别。我们看到的是赢家的晒单，<strong>没看到的是同期卖错标的、用错杠杆而离场的人</strong>。</p>
+
+  <h3 style="font-size:20px;margin:26px 0 6px">反刀五 · 他的 α 在"看懂生意"，不在期权技巧本身</h3>
+  <p>这是最根本、也最容易被忽略的一条，<strong>段永平本人反复强调</strong>："敢卖苹果的 put 是建立在对苹果的生意的了解之上的。"普通人最容易学走的是"卖 put"这个<em>动作</em>，最学不走的是背后<em>判断一家公司十年后还好不好</em>的能力。<strong>把工具用在自己根本不懂、不敢长期持有的标的上，正是亏损的高发区</strong>。期权放大的是你的判断力——判断对，放大收益；判断错，放大亏损。</p>
+
+  <h3 style="font-size:20px;margin:26px 0 6px">反刀六 · 规则细节会咬人</h3>
+  <p>港股/美股<strong>合约乘数不同</strong>（美股 1 张=100 股，港股泡泡玛特 1 张=200 股）、美式期权可被<strong>提前行权</strong>（尤其除息日前、深度价内时）、保证金口径与强平规则因券商而异……这些"小字"足以让人栽跟头。<strong>连段永平都栽过</strong>——泡泡玛特一口气卖成 4500 万股的乌龙，只因习惯了美股规则。散户更容易中招。</p>
+
+  <!-- 为什么散户爆段永平不爆 -->
+  <div class="callout ox reveal" style="margin-top:30px">
+    <div class="ct">▲ 核心追问：同样卖 put，为什么散户爆仓、段永平不爆？</div>
+    <p style="margin-bottom:12px">答案不在他更会算期权，而在<strong>他守住了四条铁律，而爆仓的人几乎都至少破了一条</strong>：</p>
+  </div>
+  <div class="tbl-wrap reveal">
+    <table>
+      <thead><tr><th style="width:150px">铁律</th><th>段永平</th><th>典型爆仓散户</th></tr></thead>
+      <tbody>
+        <tr><td><strong>① 只卖看得懂的</strong></td><td>只卖深研、愿长期持有的公司（苹果、腾讯…）</td><td>哪个 IV 高保费厚卖哪个，卖了根本不敢持有的票</td></tr>
+        <tr><td><strong>② 足额现金担保</strong></td><td>留足"行权价×100×张数"现金，可买国债吃息</td><td>只按保证金最低要求占款，接货时拿不出钱</td></tr>
+        <tr><td><strong>③ 绝不上杠杆</strong></td><td>"千万别用 margin"，最坏不过用闲钱买下想要的股票</td><td>用 margin 放大张数，暴跌触发追保、被强平、亏损锁定</td></tr>
+        <tr><td><strong>④ 控制总仓位</strong></td><td>名义敞口控制在能用现金全部接下的额度内</td><td>满仓卖 put，一波下跌就全面接货、资金链断裂</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p style="margin-top:18px"><strong>结论：</strong>卖 put 本身不是高风险，<strong>"卖 put ＋ 杠杆 ＋ 看不懂的标的 ＋ 满仓"才是</strong>。段永平的安全，来自纪律，不来自运气，也不来自期权技巧的高深。这也是你能真正复制的部分——<strong>纪律可学，商业判断需长期修炼</strong>。</p>
+</section>
+<!-- ============ 第8节 可执行清单 ============ -->
+<section class="wrap">
+  <div class="sec-head">
+    <span class="sec-no">08</span>
+    <div><span class="kicker">决策含义与行动 · 子问题六</span><h2>给你的可执行清单</h2></div>
+  </div>
+  <p class="lead">把工具真正握进手里。下面按"在哪做 → 怎么起步 → 守什么纪律 → 如何练手"四步给出落地清单。原则只有一句：<strong>先求不亏，再求收益；先小仓位跑通三种结局，再谈放大。</strong></p>
+
+  <h3 style="font-size:20px;margin:28px 0 8px">一、选市场与券商：期权门槛与可选标的</h3>
+  <div class="tbl-wrap reveal">
+    <table>
+      <thead><tr><th style="width:90px">市场</th><th>成熟度 / 可选标的</th><th>门槛与注意</th></tr></thead>
+      <tbody>
+        <tr><td><strong>美股</strong><br><span class="mono" style="font-size:11px;color:var(--brass)">最成熟</span></td><td>个股期权极丰富（苹果、英伟达等），流动性好、行权价/到期日密集。段永平的主战场。</td><td>需海外/国际券商账户（如盈透 IBKR、嘉信 Charles Schwab，或富途/老虎的海外版），并需相应的资金出入与<strong>税务安排</strong>。1 张=100 股。</td></tr>
+        <tr><td><strong>A 股</strong></td><td>有 50ETF、300ETF、500ETF 期权及少数个股期权（如部分蓝筹）。以 ETF 期权为主，个股选择有限。</td><td>门槛较高：通常需<strong>50 万元资产 + 知识测试 + 模拟/实盘经验</strong>等"三关"。合约单位与交割规则需逐一确认。</td></tr>
+        <tr><td><strong>港股</strong></td><td>可做主流港股期权（如腾讯、泡泡玛特等），但流动性与档位不及美股。</td><td><strong>务必核对合约乘数</strong>——并非都是 100 股（泡泡玛特 1 张=200 股）。段永平本人在此栽过乌龙。</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 style="font-size:20px;margin:28px 0 8px">二、起步参数：把第 4、5 节落成具体数字</h3>
+  <ul class="pill-list reveal">
+    <li><strong>标的：</strong>只选 <strong>1–2 只</strong>你真懂、真敢以行权价长期持有的公司。宁可看着别的"好机会"不动手，也不碰看不懂的。</li>
+    <li><strong>仓位：</strong>单笔用 <strong>全额现金担保</strong>（行权价×100×张数）。所有未平仓 put 的名义敞口之和，<strong>不超过你能用现金一次性全部接下的额度</strong>。</li>
+    <li><strong>行权价：</strong>选你"被接货也由衷高兴"的价，通常略<strong>价外</strong>，<strong>Delta 约 0.20–0.35</strong>（≈ 20%–35% 接货概率）。</li>
+    <li><strong>到期日：</strong>新手从 <strong>30–60 天</strong>起步（Theta 性价比与节奏感的平衡）；熟悉后可学段永平拉长到数月，换取更低接货概率与更省心。</li>
+    <li><strong>张数：</strong>从 <strong>1 张</strong>开始。1 张苹果 put 就意味着潜在接货 ≈ 行权价×100 的资金——先确认这笔现金你真备得起。</li>
+  </ul>
+
+  <h3 style="font-size:20px;margin:28px 0 8px">三、四条不可破的纪律（抄走这一段就够）</h3>
+  <div class="callout brass reveal">
+    <div class="ct">◆ 把它贴在下单界面旁</div>
+    <ul class="pill-list" style="margin:6px 0 0">
+      <li><strong>永不裸卖、永不上 margin。</strong>只用足额现金担保。最坏结果必须是"用早备好的钱，买下我本就想要的股票"。</li>
+      <li><strong>只卖看得懂、敢长期持有的标的。</strong>卖 put 名单 = 你的"愿意重仓买入"名单，不多一只。</li>
+      <li><strong>控总仓位。</strong>留足全部潜在接货所需现金，永远保有"再接一轮"的余力。</li>
+      <li><strong>特别便宜时直接买正股。</strong>别为蝇头保费，错过一次真正的大机会（牢记苹果 $74/股的踏空）。</li>
+    </ul>
+  </div>
+
+  <h3 style="font-size:20px;margin:28px 0 8px">四、演练路径：先跑通三种结局，再加仓</h3>
+  <div class="steps reveal" style="margin-top:14px">
+    <div class="step"><h4>纸面或最小仓起步</h4><p>先在模拟盘，或用最小 1 张真仓，完整跑一遍 SOP，建立"收保费—盯价—到期处理"的肌肉记忆。</p></div>
+    <div class="step"><h4>亲历"作废"</h4><p>体验一次到期作废、保费落袋、资金回笼后再卖一轮的完整闭环——这是 80% 时候会发生的结局。</p></div>
+    <div class="step"><h4>亲历"接货"与"移仓"</h4><p>主动或被动经历一次被接货（转入备兑卖 call），以及一次移仓 Roll，理解三种结局各自的手感与心态考验。</p></div>
+    <div class="step"><h4>复盘后再谈放大</h4><p>三种结局都亲历、且台账（权利金/占款/盈亏平衡/处理记录）清晰后，再考虑增加标的与张数。慢就是快。</p></div>
+  </div>
+
+  <div class="callout ox reveal">
+    <div class="ct">▲ 最后一句忠告</div>
+    <p>这套工具能让你的买入多一种"拿钱、收息、等好价"的从容，但它<strong>放大的是你的商业判断力，不是替代它</strong>。如果你对一家公司没有"跌一半我敢加仓"的底气，就别卖它的 put——无论保费多厚。<strong>把功夫下在看懂生意上，期权只是顺手的扳手。</strong></p>
+  </div>
+</section>
+<!-- ============ 附录 ============ -->
+<section class="wrap">
+  <div class="sec-head">
+    <span class="sec-no">附录</span>
+    <div><span class="kicker">Appendix · 随手查</span><h2>速查卡 · 术语表 · 来源</h2></div>
+  </div>
+
+  <!-- 速查卡 -->
+  <div class="cheat reveal">
+    <h3>计算速查卡</h3>
+    <div class="cs">把这五条记住，任何一张 put 报价都能秒算（P＝每股权利金，K＝行权价）</div>
+    <div class="row"><div><div class="rk">接货成本 = 盈亏平衡点</div><div class="rv">= <span class="hl">K − P</span>　被行权后每股实际成本，也是不赚不亏的股价</div></div></div>
+    <div class="row"><div><div class="rk">最大收益（期权作废）</div><div class="rv">= <span class="hl">P × 100 × 张数</span>　股价 ≥ K 时全额拿到</div></div></div>
+    <div class="row"><div><div class="rk">需备现金（足额担保）</div><div class="rv">= <span class="hl">K × 100 × 张数 − 总权利金</span>　这笔钱可买国债/货基吃息</div></div></div>
+    <div class="row"><div><div class="rk">年化 · 口径A（保守）</div><div class="rv">≈ <span class="hl">(P ÷ K) × (365 ÷ 到期天数)</span>　押在行权价现金上的纯期权利息</div></div></div>
+    <div class="row"><div><div class="rk">年化 · 口径B（段永平式）</div><div class="rv">≈ <span class="hl">(P ÷ (K−P)) × (12 ÷ 到期月数) + 国债利率</span>　含现金息，数字更大</div></div></div>
+    <div class="row"><div><div class="rk">行权价怎么选</div><div class="rv">用 <span class="hl">|Delta|≈ 接货概率</span>，常取 0.20–0.35 的价外档；设在"被接货也高兴"的价</div></div></div>
+  </div>
+
+  <!-- 术语表 -->
+  <h3 style="font-size:20px;margin:32px 0 6px">术语表</h3>
+  <div class="gloss">
+    <dl class="gl"><dt>看跌期权<span class="en">Put</span></dt><dd>赋予买方"以行权价卖出标的"的权利。卖方收保费，承担"被要求按行权价买入"的义务。</dd></dl>
+    <dl class="gl"><dt>看涨期权<span class="en">Call</span></dt><dd>赋予买方"以行权价买入标的"的权利。备兑里卖方收保费，承担"被要求按行权价卖出持股"的义务。</dd></dl>
+    <dl class="gl"><dt>现金担保看跌<span class="en">CSP</span></dt><dd>卖 put 同时留足全额现金，确保被接货付得起。段永平的标准形态。</dd></dl>
+    <dl class="gl"><dt>备兑看涨<span class="en">Covered Call</span></dt><dd>持有正股同时卖该股 call，增厚收益、设定愿意卖出的价。买入即卖叫 Buy-Write。</dd></dl>
+    <dl class="gl"><dt>车轮策略<span class="en">The Wheel</span></dt><dd>卖 put 等买入 → 接货后卖 call 等卖出 → 被 call 走后再卖 put 的循环收保费打法。</dd></dl>
+    <dl class="gl"><dt>权利金 / 保费<span class="en">Premium</span></dt><dd>期权买方付给卖方的价格。= 内在价值 + 时间价值。段永平口中的"保费"。</dd></dl>
+    <dl class="gl"><dt>行权价<span class="en">Strike</span></dt><dd>合约约定的买卖价格。卖 put 时 = 你愿意接货的价。</dd></dl>
+    <dl class="gl"><dt>价外<span class="en">OTM</span></dt><dd>对 put 而言指行权价低于现价，内在价值为 0，保费全是时间价值。</dd></dl>
+    <dl class="gl"><dt>隐含波动率<span class="en">IV</span></dt><dd>市场对未来波动的预期，决定保费厚薄。IV 高则保费厚——但往往因真有下跌风险。</dd></dl>
+    <dl class="gl"><dt>时间衰减<span class="en">Theta θ</span></dt><dd>时间价值每日的流失量。卖方为正 Theta，时间是卖方的朋友，临近到期衰减加速。</dd></dl>
+    <dl class="gl"><dt>方向敏感<span class="en">Delta Δ</span></dt><dd>期权价对股价的敏感度。卖 put 时 |Delta| 近似到期被行权的概率，用来定行权价。</dd></dl>
+    <dl class="gl"><dt>加速度 / 波动敏感<span class="en">Gamma / Vega</span></dt><dd>卖方的两个敌人：Gamma 是跳空风险来源（临近到期飙升），Vega 是 IV 飙升导致的持有期浮亏。</dd></dl>
+    <dl class="gl"><dt>移仓<span class="en">Roll</span></dt><dd>买回当前期权同时卖出更晚到期/不同行权价的新期权，把决策推后，常能净收一笔保费。</dd></dl>
+    <dl class="gl"><dt>裸卖 / 杠杆<span class="en">Naked / Margin</span></dt><dd>不留足现金、借券商钱放大头寸。段永平的第一红线，散户爆仓主因。</dd></dl>
+    <dl class="gl"><dt>合约乘数<span class="en">Multiplier</span></dt><dd>1 张合约对应的股数。美股=100，港股泡泡玛特=200。算钱前必须先确认。</dd></dl>
+    <dl class="gl"><dt>提前行权<span class="en">Early Exercise</span></dt><dd>美式期权可在到期前被行权（尤其除息前、深度价内时），故须全程留足现金。</dd></dl>
+  </div>
+
+  <!-- 来源清单 -->
+  <h3 style="font-size:20px;margin:32px 0 6px">来源清单</h3>
+  <p style="font-size:13.5px;color:var(--ink-3);margin-bottom:12px"><span class="badge1">一手</span> 段永平本人雪球（ID：大道无形我有型）晒单与发言　<span class="badge2">二手</span> 财经媒体复盘与解析（用于交叉印证，金额张数以一手为准）</p>
+  <div class="src-list">
+    <div class="s"><span class="si">01</span><div><span class="badge1">一手</span> 段永平 · 雪球账号"大道无形我有型"——苹果/阿里/英伟达/腾讯/伯克希尔/泡泡玛特卖 put 与备兑的成交截图及发言原文。</div></div>
+    <div class="s"><span class="si">02</span><div><span class="badge2">二手</span> 证券时报：《段永平，最新出手！》——苹果 $195 put、999 张、$144 万、年化 18% 原始算式。<span class="sp">2025-06-16</span></div></div>
+    <div class="s"><span class="si">03</span><div><span class="badge2">二手</span> 天天基金网 / 东方财富：段永平再晒持仓——苹果卖 put 及"不高不低区间"心法原话。<span class="sp">2025-06-16</span></div></div>
+    <div class="s"><span class="si">04</span><div><span class="badge2">二手</span> 知乎专栏：《案例学习 · 段永平卖 PUT 阿里巴巴》——$70 put、备现金 $735.6 万、国债抵押与三源收益拆解。<span class="sp">2023-12</span></div></div>
+    <div class="s"><span class="si">05</span><div><span class="badge2">二手</span> 东方财富 · 财富号：《段永平 14 天狂赚 1.5 亿！揭秘"卖 put"背后的价值投资智慧》——拼多多/新东方/伯克希尔/泡泡玛特战例与"卖 put 心法"。<span class="sp">2026-05-05</span></div></div>
+    <div class="s"><span class="si">06</span><div><span class="badge2">二手</span> 新浪财经 / 36氪：段永平泡泡玛特乌龙——港股 1 张=200 股、4500 万股、冻结 67.5 亿港元、"还好卖的是 put"。<span class="sp">2026-04-17</span></div></div>
+    <div class="s"><span class="si">07</span><div><span class="badge2">二手</span> 新浪财经：《想抄底英伟达别直接买，抄抄段永平的作业》——NVDA $110 put、1000 张、$37 万及风控要点。<span class="sp">2025-03-06</span></div></div>
+    <div class="s"><span class="si">08</span><div><span class="badge2">二手</span> 电商派 / 21 经济网：英伟达 Buy-Write（买 10 万股 + 卖 $120 call、净成本 $92.52）及"开保险公司"比喻溯源。<span class="sp">2025–2026</span></div></div>
+    <div class="s"><span class="si">09</span><div><span class="badge2">二手</span> Yahoo Finance / Morningstar / stockanalysis：苹果股价 $283.78（收盘）、历史高点 $300.93、近一年 +45%。<span class="sp">2026-06-26</span></div></div>
+  </div>
+
+  <!-- 免责声明 -->
+  <div class="disc reveal">
+    <p style="margin-bottom:8px"><b>投资风险免责声明</b></p>
+    <p style="margin-bottom:8px">本手册为<strong>投资方法的教育与研究性整理</strong>，不构成任何投资建议、要约或操作指引。我不是持牌投资顾问，文中任何标的、价位、策略均<strong>不应被视为买卖推荐</strong>。</p>
+    <p style="margin-bottom:8px">期权是<strong>高风险衍生品</strong>，卖出期权的潜在亏损可能远超所收权利金，并可能导致<strong>本金重大损失</strong>。历史业绩（包括段永平的公开战绩）<strong>不代表未来表现</strong>，且存在幸存者偏差。文中数据来自公开信息整理，可能存在误差或时效问题，期权价格随行情实时变动。</p>
+    <p style="margin:0">任何投资决策应建立在你<strong>独立的研究、自身风险承受能力与（如需要）持牌专业人士咨询</strong>之上，盈亏自负。</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p class="fl"><b>段永平卖期权完全操作手册</b><br>从"开保险公司"到可复用的交易工具 · L3 深度尽调<br>报告生成 2026-06-27 · 价格数据时点见正文标注 · 仅供研究学习</p>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>存储超级周期 · 为什么存储是 AI 时代最肥的一段 — 深度调研报告</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&family=Noto+Serif+SC:wght@500;700;900&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#17191C; --ink-2:#23262B; --ink-soft:#41464E;
+    --paper:#F7F3EC; --paper-2:#EFE9DD; --panel:#FBF8F2;
+    --line:#DCD4C4; --line-2:#C8BEA9;
+    --gold:#A8741A; --gold-2:#C8902A; --gold-bright:#E2A93C;
+    --heat:#C2401A; --heat-2:#E0552B;
+    --steel:#3E5A69; --steel-2:#6E8794;
+    --good:#2E6A4C;
+    --serif:"Noto Serif SC",serif;
+    --sans:"Noto Sans SC",system-ui,sans-serif;
+    --grot:"Space Grotesk",var(--sans);
+    --mono:"JetBrains Mono",ui-monospace,monospace;
+    --maxw:1080px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+  body{
+    background:var(--paper); color:var(--ink);
+    font-family:var(--sans); font-weight:400; line-height:1.78;
+    font-size:17px; letter-spacing:.005em;
+    -webkit-font-smoothing:antialiased; overflow-x:hidden;
+  }
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 28px}
+  .num{font-family:var(--grot); font-feature-settings:"tnum" 1; letter-spacing:-.01em}
+  .mono{font-family:var(--mono)}
+  em{font-style:normal; color:var(--heat); font-weight:500}
+  strong{font-weight:700}
+  a{color:var(--gold); text-decoration:none; border-bottom:1px solid var(--line-2)}
+
+  /* ---------- HERO ---------- */
+  .hero{background:var(--ink); color:var(--paper); position:relative; overflow:hidden;
+        border-bottom:3px solid var(--gold)}
+  .hero::before{content:""; position:absolute; inset:0;
+    background:radial-gradient(120% 90% at 82% 8%, rgba(226,169,60,.16), transparent 55%),
+               radial-gradient(90% 70% at 8% 100%, rgba(62,90,105,.30), transparent 60%);
+    pointer-events:none}
+  .hero .wrap{position:relative; padding-top:54px; padding-bottom:50px}
+  .eyebrow{font-family:var(--mono); font-size:12.5px; letter-spacing:.32em;
+    text-transform:uppercase; color:var(--gold-bright); font-weight:500}
+  .hero h1{font-family:var(--serif); font-weight:900; color:#fff;
+    font-size:clamp(40px,8.2vw,86px); line-height:.98; letter-spacing:-.01em;
+    margin:18px 0 0}
+  .hero h1 .en{display:block; font-family:var(--grot); font-weight:500;
+    font-size:clamp(15px,2.6vw,23px); letter-spacing:.06em; color:var(--steel-2);
+    margin-top:14px}
+  .lede{font-size:clamp(17px,2.4vw,21px); line-height:1.7; max-width:30em;
+    color:#E9E3D6; margin:26px 0 0; font-weight:400}
+  .lede b{color:var(--gold-bright); font-weight:500}
+  .hero-grid{display:grid; grid-template-columns:1.15fr .85fr; gap:40px; align-items:end}
+  .hero-fig{align-self:stretch; display:flex; align-items:flex-end; min-height:260px}
+  .hero-fig svg{width:100%; height:auto}
+  .stamp{font-family:var(--mono); font-size:11.5px; letter-spacing:.05em;
+    color:var(--steel-2); margin-top:34px; display:flex; gap:18px; flex-wrap:wrap;
+    border-top:1px solid rgba(255,255,255,.12); padding-top:16px}
+  .stamp b{color:#CFC8B8; font-weight:500}
+
+  /* ---------- SECTION SCAFFOLD ---------- */
+  section{padding:72px 0; border-bottom:1px solid var(--line)}
+  .kicker{font-family:var(--mono); font-size:12px; letter-spacing:.22em;
+    text-transform:uppercase; color:var(--gold); font-weight:500; display:flex;
+    align-items:center; gap:12px; margin-bottom:16px}
+  .kicker .lyr{font-family:var(--grot); font-weight:700; color:var(--ink);
+    background:var(--paper-2); border:1px solid var(--line-2);
+    width:34px; height:34px; display:grid; place-items:center; border-radius:3px;
+    font-size:14px; letter-spacing:0}
+  h2{font-family:var(--serif); font-weight:900; letter-spacing:-.01em;
+    font-size:clamp(27px,4.6vw,40px); line-height:1.12; margin-bottom:8px}
+  .sub{color:var(--ink-soft); font-size:clamp(16px,2vw,18.5px); max-width:46em;
+    margin-bottom:30px; line-height:1.7}
+  p{margin:0 0 17px; max-width:60ch}
+  p.wide{max-width:72ch}
+  .lead-p{font-size:18.5px}
+
+  /* tags 事实/推断/观点 */
+  .tag{font-family:var(--mono); font-size:10.5px; font-weight:500; letter-spacing:.04em;
+    padding:2px 7px; border-radius:3px; vertical-align:middle; margin-right:7px;
+    position:relative; top:-1px; white-space:nowrap}
+  .t-fact{background:rgba(62,90,105,.12); color:var(--steel); border:1px solid rgba(62,90,105,.3)}
+  .t-inf{background:rgba(168,116,26,.13); color:var(--gold); border:1px solid rgba(168,116,26,.32)}
+  .t-op{background:rgba(194,64,26,.1); color:var(--heat); border:1px solid rgba(194,64,26,.3)}
+
+  /* ---------- BLUF ---------- */
+  .bluf{background:var(--ink); color:var(--paper); border:none}
+  .bluf .kicker{color:var(--gold-bright)}
+  .bluf .kicker .lyr{background:var(--ink-2); border-color:#3a3f47; color:#fff}
+  .bluf h2{color:#fff}
+  .bluf-panel{border-left:3px solid var(--gold); padding:6px 0 6px 26px; margin:8px 0 38px}
+  .bluf-panel p{color:#EAE4D7; font-size:19px; line-height:1.72; max-width:62ch}
+  .bluf-panel p b{color:var(--gold-bright)}
+  .legend{display:flex; gap:10px; flex-wrap:wrap; font-family:var(--mono);
+    font-size:11px; color:var(--steel-2); margin-top:6px}
+  .legend span{display:inline-flex; align-items:center; gap:6px}
+  .legend i{width:9px; height:9px; border-radius:2px; display:inline-block}
+
+  .statgrid{display:grid; grid-template-columns:repeat(4,1fr); gap:1px;
+    background:#34383f; border:1px solid #34383f; border-radius:6px; overflow:hidden}
+  .stat{background:var(--ink-2); padding:24px 20px}
+  .stat .v{font-family:var(--grot); font-weight:700; font-size:clamp(30px,4.4vw,42px);
+    line-height:1; color:#fff; letter-spacing:-.02em}
+  .stat .v small{font-size:.5em; font-weight:500; color:var(--gold-bright); margin-left:3px}
+  .stat .v.heat{color:var(--heat-2)}
+  .stat .v.gold{color:var(--gold-bright)}
+  .stat .l{font-size:13.5px; color:#B9B2A2; line-height:1.45; margin-top:11px}
+  .stat .src{font-family:var(--mono); font-size:10px; color:#7c8089; margin-top:9px; letter-spacing:.02em}
+
+  /* ---------- charts / panels ---------- */
+  .panel{background:var(--panel); border:1px solid var(--line);
+    border-radius:8px; padding:30px 30px 26px; margin:30px 0}
+  .panel.tight{padding:24px}
+  .panel-h{font-family:var(--grot); font-weight:600; font-size:13px; letter-spacing:.12em;
+    text-transform:uppercase; color:var(--steel); margin-bottom:4px}
+  .panel-t{font-family:var(--serif); font-weight:700; font-size:21px; margin-bottom:20px;
+    line-height:1.25}
+  .cap{font-family:var(--mono); font-size:11.5px; color:var(--ink-soft);
+    margin-top:16px; line-height:1.6; letter-spacing:.01em}
+  .cap b{color:var(--steel); font-weight:500}
+
+  /* horizontal bar chart (CSS) */
+  .bars{display:flex; flex-direction:column; gap:14px; margin-top:4px}
+  .bar-row{display:grid; grid-template-columns:142px 1fr auto; align-items:center; gap:14px}
+  .bar-lab{font-size:14px; font-weight:500; line-height:1.25}
+  .bar-lab small{display:block; font-family:var(--mono); font-size:10.5px; color:var(--ink-soft); font-weight:400}
+  .bar-track{height:26px; background:var(--paper-2); border-radius:4px; overflow:hidden; position:relative}
+  .bar-fill{height:100%; border-radius:4px; transform-origin:left;
+    background:var(--steel); animation:grow 1.1s cubic-bezier(.2,.7,.2,1) both}
+  .bar-fill.g{background:linear-gradient(90deg,var(--gold),var(--gold-bright))}
+  .bar-fill.h{background:linear-gradient(90deg,var(--heat),var(--heat-2))}
+  .bar-fill.s{background:linear-gradient(90deg,#34505e,var(--steel-2))}
+  .bar-fill.gn{background:linear-gradient(90deg,#27593f,var(--good))}
+  .bar-val{font-family:var(--grot); font-weight:700; font-size:15px; min-width:54px; text-align:right}
+  @keyframes grow{from{transform:scaleX(.02)}to{transform:scaleX(1)}}
+
+  /* finding list */
+  .finds{counter-reset:f; margin-top:8px; border-top:1px solid var(--line)}
+  .find{display:grid; grid-template-columns:48px 1fr; gap:20px; padding:22px 0;
+    border-bottom:1px solid var(--line); align-items:start}
+  .find::before{counter-increment:f; content:"0" counter(f);
+    font-family:var(--grot); font-weight:700; font-size:19px; color:var(--gold)}
+  .find h4{font-family:var(--sans); font-weight:700; font-size:17.5px; margin-bottom:4px; line-height:1.4}
+  .find p{font-size:15.5px; color:var(--ink-soft); margin:0; max-width:64ch}
+  .find .big{font-family:var(--grot); font-weight:700; color:var(--heat); font-size:1em}
+
+  /* two-col */
+  .two{display:grid; grid-template-columns:1fr 1fr; gap:26px}
+  .two-3{display:grid; grid-template-columns:repeat(3,1fr); gap:18px}
+  .mini{background:var(--panel); border:1px solid var(--line); border-radius:7px; padding:22px}
+  .mini h5{font-family:var(--grot); font-weight:600; font-size:12px; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--steel); margin-bottom:10px}
+  .mini .mv{font-family:var(--grot); font-weight:700; font-size:25px; line-height:1.05; letter-spacing:-.01em}
+  .mini p{font-size:14px; color:var(--ink-soft); margin:8px 0 0}
+
+  /* timeline (HBM) */
+  .tl{display:grid; grid-template-columns:repeat(4,1fr); gap:0; margin-top:8px;
+    border-top:2px solid var(--ink); position:relative}
+  .tl-col{padding:20px 16px 4px; border-right:1px solid var(--line); position:relative}
+  .tl-col:last-child{border-right:none}
+  .tl-col::before{content:""; position:absolute; top:-7px; left:16px; width:12px; height:12px;
+    background:var(--paper); border:2px solid var(--ink); border-radius:50%}
+  .tl-col.now::before{background:var(--gold-bright); border-color:var(--gold)}
+  .tl-yr{font-family:var(--grot); font-weight:700; font-size:15px; color:var(--gold); letter-spacing:.02em}
+  .tl-gen{font-family:var(--grot); font-weight:700; font-size:20px; margin:3px 0 8px}
+  .tl-col ul{list-style:none; font-size:13px; color:var(--ink-soft); line-height:1.55}
+  .tl-col li{margin-bottom:5px; padding-left:11px; position:relative}
+  .tl-col li::before{content:"·"; position:absolute; left:2px; color:var(--steel-2)}
+
+  /* supply chain map */
+  .chain{display:grid; grid-template-columns:repeat(2,1fr); gap:14px; margin-top:8px}
+  .ch-card{background:var(--panel); border:1px solid var(--line); border-left:3px solid var(--steel);
+    border-radius:6px; padding:18px 20px}
+  .ch-card.hl{border-left-color:var(--gold)}
+  .ch-seg{font-family:var(--grot); font-weight:600; font-size:11px; letter-spacing:.08em;
+    text-transform:uppercase; color:var(--steel); display:flex; justify-content:space-between}
+  .ch-seg .badge{font-family:var(--mono); font-size:10px; color:var(--gold); border:1px solid var(--line-2);
+    padding:1px 6px; border-radius:3px; letter-spacing:0}
+  .ch-names{font-weight:700; font-size:16px; margin:8px 0 6px; line-height:1.45}
+  .ch-names .code{font-family:var(--mono); font-size:11px; color:var(--ink-soft); font-weight:400}
+  .ch-card p{font-size:13.5px; color:var(--ink-soft); margin:0; line-height:1.5}
+
+  /* callout / risk */
+  .callout{border:1px solid var(--line); border-radius:8px; padding:26px 28px; margin:26px 0;
+    background:var(--panel)}
+  .callout.warn{border-color:rgba(194,64,26,.35); background:linear-gradient(180deg,rgba(194,64,26,.05),transparent)}
+  .callout.gold{border-color:rgba(168,116,26,.4); background:linear-gradient(180deg,rgba(168,116,26,.06),transparent)}
+  .callout h4{font-family:var(--serif); font-weight:700; font-size:19px; margin-bottom:10px}
+  .callout.warn h4{color:var(--heat)}
+
+  /* bull-bear */
+  .bb{display:grid; grid-template-columns:1fr 1fr; gap:0; border:1px solid var(--line); border-radius:8px; overflow:hidden; margin-top:10px}
+  .bb-col{padding:26px 26px 22px}
+  .bb-bull{background:linear-gradient(180deg,rgba(46,106,76,.07),transparent)}
+  .bb-bear{background:linear-gradient(180deg,rgba(194,64,26,.06),transparent); border-left:1px solid var(--line)}
+  .bb-h{font-family:var(--grot); font-weight:700; font-size:13px; letter-spacing:.1em; text-transform:uppercase; margin-bottom:14px; display:flex; align-items:center; gap:8px}
+  .bb-bull .bb-h{color:var(--good)} .bb-bear .bb-h{color:var(--heat)}
+  .bb ul{list-style:none}
+  .bb li{font-size:14.5px; line-height:1.5; padding:8px 0 8px 18px; position:relative; border-bottom:1px dashed var(--line); color:var(--ink-soft)}
+  .bb li:last-child{border-bottom:none}
+  .bb li::before{position:absolute; left:0; top:8px; font-family:var(--grot); font-weight:700}
+  .bb-bull li::before{content:"+"; color:var(--good)}
+  .bb-bear li::before{content:"–"; color:var(--heat)}
+  .bb li b{color:var(--ink); font-weight:700}
+
+  /* watch signals */
+  .sig{display:grid; grid-template-columns:repeat(2,1fr); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:8px; overflow:hidden; margin-top:14px}
+  .sig-row{background:var(--panel); padding:18px 22px; display:grid; grid-template-columns:1fr auto; gap:14px; align-items:center}
+  .sig-row .t{font-size:14.5px; line-height:1.45}
+  .sig-row .t b{font-weight:700}
+  .sig-row .m{font-family:var(--mono); font-size:11px; color:var(--steel); text-align:right; line-height:1.4; min-width:96px}
+
+  /* sources */
+  .src-sec{background:var(--ink); color:var(--paper); border:none}
+  .src-sec .kicker{color:var(--gold-bright)}
+  .src-sec .kicker .lyr{background:var(--ink-2); border-color:#3a3f47; color:#fff}
+  .src-sec h2{color:#fff}
+  .srcgrid{display:grid; grid-template-columns:1fr 1fr; gap:30px; margin-top:20px}
+  .srccol h4{font-family:var(--grot); font-weight:600; font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:var(--gold-bright); margin-bottom:14px; padding-bottom:8px; border-bottom:1px solid rgba(255,255,255,.14)}
+  .srccol ul{list-style:none}
+  .srccol li{font-size:13.5px; color:#C9C2B3; padding:7px 0; border-bottom:1px dashed rgba(255,255,255,.1); line-height:1.5}
+  .srccol li b{color:#fff; font-weight:500}
+  .srccol li .d{font-family:var(--mono); font-size:10.5px; color:#82868f}
+
+  /* disclaimer / footer */
+  .disc{font-family:var(--mono); font-size:11.5px; color:var(--ink-soft); line-height:1.7;
+    background:var(--paper-2); border:1px solid var(--line); border-radius:6px; padding:20px 24px; margin-top:30px}
+  footer{padding:40px 0 60px; text-align:center}
+  footer .f-mark{font-family:var(--serif); font-weight:900; font-size:20px}
+  footer .f-meta{font-family:var(--mono); font-size:11px; color:var(--ink-soft); margin-top:10px; letter-spacing:.04em}
+
+  .pull{font-family:var(--serif); font-weight:700; font-size:clamp(21px,3.2vw,29px);
+    line-height:1.4; color:var(--ink); border-left:3px solid var(--heat); padding:4px 0 4px 24px; margin:34px 0; max-width:24em}
+  .pull em{color:var(--heat)}
+
+  /* responsive */
+  @media (max-width:860px){
+    body{font-size:16px}
+    .wrap{padding:0 20px}
+    .hero-grid{grid-template-columns:1fr; gap:26px}
+    .hero-fig{min-height:0; margin-top:6px}
+    .statgrid{grid-template-columns:1fr 1fr}
+    .two,.bb,.two-3,.sig{grid-template-columns:1fr}
+    .bb-bear{border-left:none; border-top:1px solid var(--line)}
+    .chain{grid-template-columns:1fr}
+    .tl{grid-template-columns:1fr 1fr}
+    .tl-col:nth-child(2){border-right:none}
+    .srcgrid{grid-template-columns:1fr; gap:18px}
+    .bar-row{grid-template-columns:108px 1fr auto; gap:10px}
+    section{padding:54px 0}
+  }
+  @media (max-width:480px){
+    .statgrid{grid-template-columns:1fr}
+    .tl{grid-template-columns:1fr}
+    .tl-col{border-right:none; border-bottom:1px solid var(--line)}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none!important; transition:none!important; scroll-behavior:auto!important}
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <div class="eyebrow">The Memory Supercycle · 2025–2028</div>
+        <h1>存储，<br>AI 的新石油
+          <span class="en">Why memory became the chokepoint — and the fattest link — of the AI build-out</span>
+        </h1>
+        <p class="lede">当 AI 把内存推上算力的咽喉，存储芯片在一年内从被当成「大宗商品」的配角，变成了半导体里 <b>定价权最强、利润率最高</b> 的一段。这一刻的稀缺，是被结构性重写过的。</p>
+        <div class="stamp">
+          <span>深度等级 <b>L3 · 深度尽调</b></span>
+          <span>数据截至 <b>2026年6月</b></span>
+          <span>视角 <b>中立综述 + 投资落脚（多空并陈）</b></span>
+        </div>
+      </div>
+      <div class="hero-fig" aria-hidden="true">
+        <!-- signature: HBM die-stack + surge -->
+        <svg viewBox="0 0 360 300" xmlns="http://www.w3.org/2000/svg" role="img">
+          <defs>
+            <linearGradient id="surge" x1="0" y1="1" x2="1" y2="0">
+              <stop offset="0" stop-color="#3E5A69" stop-opacity=".0"/>
+              <stop offset="1" stop-color="#E2A93C" stop-opacity=".35"/>
+            </linearGradient>
+            <linearGradient id="die" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#C8902A"/><stop offset="1" stop-color="#E2A93C"/>
+            </linearGradient>
+          </defs>
+          <!-- surge curve behind -->
+          <path d="M8 280 C120 270 175 250 215 150 C240 90 260 40 352 18 L352 292 L8 292 Z" fill="url(#surge)"/>
+          <path d="M8 280 C120 270 175 250 215 150 C240 90 260 40 352 18" fill="none" stroke="#E2A93C" stroke-width="2" opacity=".85"/>
+          <!-- base logic die -->
+          <g class="layer" style="--i:0">
+            <rect x="40" y="232" width="190" height="26" rx="2" fill="#3E5A69"/>
+            <rect x="40" y="232" width="190" height="26" rx="2" fill="none" stroke="#6E8794" stroke-width="1"/>
+            <text x="135" y="249" font-family="JetBrains Mono,monospace" font-size="9" fill="#CFD9DE" text-anchor="middle" letter-spacing="1">LOGIC BASE DIE · TSMC</text>
+          </g>
+          <!-- stacked dram dies -->
+          <g font-family="JetBrains Mono,monospace" font-size="8" fill="#1c1407" text-anchor="middle">
+            <g class="layer" style="--i:1"><rect x="48" y="206" width="174" height="22" rx="2" fill="url(#die)"/><text x="135" y="220">DRAM · 16-Hi</text></g>
+            <g class="layer" style="--i:2"><rect x="48" y="182" width="174" height="22" rx="2" fill="url(#die)" opacity=".95"/><text x="135" y="196">DRAM</text></g>
+            <g class="layer" style="--i:3"><rect x="48" y="158" width="174" height="22" rx="2" fill="url(#die)" opacity=".9"/><text x="135" y="172">DRAM</text></g>
+            <g class="layer" style="--i:4"><rect x="48" y="134" width="174" height="22" rx="2" fill="url(#die)" opacity=".85"/><text x="135" y="148">DRAM</text></g>
+            <g class="layer" style="--i:5"><rect x="48" y="110" width="174" height="22" rx="2" fill="url(#die)" opacity=".8"/><text x="135" y="124">DRAM</text></g>
+          </g>
+          <!-- TSV lines -->
+          <g stroke="#1c1407" stroke-width="1" opacity=".5">
+            <line x1="80" y1="112" x2="80" y2="228"/><line x1="135" y1="112" x2="135" y2="228"/><line x1="190" y1="112" x2="190" y2="228"/>
+          </g>
+          <!-- bandwidth arrow -->
+          <g class="layer" style="--i:6">
+            <line x1="235" y1="120" x2="312" y2="120" stroke="#E2A93C" stroke-width="2"/>
+            <path d="M312 120 l-8 -4 l0 8 z" fill="#E2A93C"/>
+            <text x="273" y="112" font-family="Space Grotesk,sans-serif" font-size="11" font-weight="700" fill="#E2A93C" text-anchor="middle">2 TB/s</text>
+            <text x="273" y="135" font-family="JetBrains Mono,monospace" font-size="8" fill="#9aa6ad" text-anchor="middle">HBM4 / stack</text>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ============ BLUF ============ -->
+<section class="bluf">
+  <div class="wrap">
+    <div class="kicker"><span class="lyr">★</span> 核心结论 · BLUF</div>
+    <h2>先给判断：存储已经不是周期，而是被 AI 重写过的稀缺资产</h2>
+    <div class="bluf-panel">
+      <p><b>① 这是真的，而且程度罕见。</b>到 2026 年中，存储进入被多家投行称为「堪比 1990 年代」的超级周期：DRAM 现货较一年前涨约 <b>170%</b>，DDR5 自 2025 年 9 月起翻了四倍，NAND 在 2025 年涨约 <b>246%</b>。SK 海力士一季度营业利润率冲到 <b>72%</b>——历史上第一次，造内存比英伟达（约 65%）还赚钱。</p>
+      <p><b>② 利润为什么极厚：量价齐升 × 寡头定价纪律 × 长协锁定。</b>三巨头主动「保利润、不保量」，把晶圆挤向 HBM，结果普通内存也跟着稀缺涨价；同时把产能用不可取消的多年长协锁给云厂商。美光最新季度毛利率近 <b>85%</b>、签下 <b>1000 亿美元</b>锁价订单——这是存储史上从未有过的能见度。</p>
+      <p><b>③ 关键关节在 HBM 和先进封装。</b>1 GB 的 HBM 要吃掉约 <b>4 倍</b>于普通 DRAM 的晶圆，且依赖 CoWoS 先进封装——这是一个「拧不动的供给阀门」。谁在 HBM4 上领先（SK 海力士约 53% 份额），谁就拿走最肥的利润。</p>
+      <p><b>④ 最大的不确定性是「持续多久」。</b>多数判断指向超级周期延续到 2027–2028，但存储有 40 年「繁荣→扩产→崩盘」的铁律。今天近 85% 的毛利，恰恰是历史上触发新增供给、随后见顶的典型信号。<em>这是一笔「AI 把周期变成结构」对赌「物理和竞争终将复刻周期」的交易。</em></p>
+    </div>
+    <div class="legend">
+      <span><i style="background:var(--steel)"></i> 全文标注：</span>
+      <span><i style="background:var(--steel)"></i> <span class="mono">事实</span> 可核实数据</span>
+      <span><i style="background:var(--gold)"></i> <span class="mono">推断</span> 基于证据的判断</span>
+      <span><i style="background:var(--heat)"></i> <span class="mono">观点</span> 分析师立场</span>
+    </div>
+
+    <div class="statgrid" style="margin-top:34px">
+      <div class="stat">
+        <div class="v heat">+497<small>%</small></div>
+        <div class="l">韩国海关 DRAM 出口均价同比涨幅，单价约 8.95 万美元/公斤——已被当成贵金属定价</div>
+        <div class="src">来源 Gartner / 韩国海关 · 2026年中</div>
+      </div>
+      <div class="stat">
+        <div class="v gold">72<small>%</small></div>
+        <div class="l">SK 海力士一季度营业利润率，创半导体行业历史纪录，高于英伟达</div>
+        <div class="src">来源 SK海力士 Q1'26 财报 · 2026/4</div>
+      </div>
+      <div class="stat">
+        <div class="v">~30<small>%</small></div>
+        <div class="l">2026 年存储占云厂商资本开支的比重，2023 年还只有约 8%，2027 年或近 50%</div>
+        <div class="src">来源 SemiAnalysis / CLSA · 2026</div>
+      </div>
+      <div class="stat">
+        <div class="v gold">11.6<small>×</small></div>
+        <div class="l">美光股价一年涨幅（约 $103→$1,200），市值破万亿美元</div>
+        <div class="src">来源 公开行情 · 2026/6/26</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ KEY FINDINGS ============ -->
+<section>
+  <div class="wrap">
+    <div class="kicker"><span class="lyr">✦</span> 关键发现 · 每条配数据</div>
+    <h2>七条最该记住的事实</h2>
+    <div class="finds">
+      <div class="find">
+        <div><h4>需求被结构性抬高，不是一次性脉冲</h4>
+        <p>AI 服务器的内存用量是普通服务器的 <span class="big">10–20 倍</span>；单颗英伟达 B200 配 192GB HBM3E，一台八卡机就要 1.5TB 以上 HBM。下一代 Rubin 单系统 HBM 高达 288GB。</p></div>
+      </div>
+      <div class="find">
+        <div><h4>HBM 在「物理层面」挤占普通内存</h4>
+        <p>每生产 1GB HBM 约消耗 <span class="big">4 倍</span>于普通 DRAM 的晶圆产能（堆叠 + 良率损耗），HBM 已吃掉约 <span class="big">23–25%</span> 的 DRAM 晶圆。这把通用内存的供给硬生生抽走。</p></div>
+      </div>
+      <div class="find">
+        <div><h4>供给侧是「三家寡头 + 保利润不保量」</h4>
+        <p>三星、SK 海力士、美光约占 DRAM <span class="big">70%</span>，明确表态不激进扩产、优先盈利。库存已降到约 <span class="big">3.3 周</span>（2018 年超级周期低位），新晶圆厂要到 2027–2028 才上量。</p></div>
+      </div>
+      <div class="find">
+        <div><h4>利润率创纪录，已反超晶圆代工龙头</h4>
+        <p>美光最新季度毛利率约 <span class="big">85%</span>、营收同比 +346%；三家原厂的毛利率已先后超过台积电。存储从「最不赚钱」变成「最赚钱」。</p></div>
+      </div>
+      <div class="find">
+        <div><h4>市场用「便宜的估值」表达不信任</h4>
+        <p>美光涨了 11 倍，前瞻市盈率却只有约 <span class="big">9–14 倍</span>（行业约 27 倍）。市场不是认为它便宜，而是认定这是周期顶、利润不可持续。这正是全部争议所在。</p></div>
+      </div>
+      <div class="find">
+        <div><h4>国产「存储双雄」同步资本化、技术补位</h4>
+        <p>长鑫一季度营收 508 亿元（+719%）、归母净利 <span class="big">+1688%</span>，冲刺科创板史上最大 IPO；长江存储 294 层 NAND 量产、启动上市辅导。两家都已移出美国 1260H 清单。</p></div>
+      </div>
+      <div class="find">
+        <div><h4>最强反方：40 年周期铁律仍在</h4>
+        <p>近 85% 的毛利历史上从未持续——它恰是吸引新增供给、随后崩盘的前兆。长鑫自己在招股书里也警示：上半年的暴增「存在不可持续风险」。</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ L1 DEMAND ============ -->
+<section>
+  <div class="wrap">
+    <div class="kicker"><span class="lyr">01</span> 为什么是现在 · 需求侧</div>
+    <h2>AI 撞上「内存墙」，把存储顶到了算力的咽喉</h2>
+    <p class="sub">过去算力的瓶颈被默认是「算得快不快」。但大模型训练与推理本质是搬运海量参数，瓶颈早已从「算」转向「喂数据」——也就是内存带宽和容量。这就是几十年前就被提出的「内存墙」（Memory Wall）：处理器越来越快，但喂给它的内存跟不上。</p>
+
+    <p class="lead-p wide"><span class="tag t-fact">事实</span>AI 加速器的性能越来越受限于内存带宽，而非算力本身。于是每一块 GPU 旁边都要堆上多颗 HBM，每一台 AI 服务器消耗的内存是传统服务器的 <em>10–20 倍</em>。这不是「多买一点」，而是一个数量级的跃迁。</p>
+
+    <div class="panel">
+      <div class="panel-h">资本开支结构 · 存储的角色翻转</div>
+      <div class="panel-t">当存储从「四舍五入的零头」变成「最贵的一行预算」</div>
+      <div class="bars">
+        <div class="bar-row"><div class="bar-lab">2023–24<small>HISTORICAL</small></div><div class="bar-track"><div class="bar-fill s" style="width:16%"></div></div><div class="bar-val">~8%</div></div>
+        <div class="bar-row"><div class="bar-lab">2026<small>FORECAST</small></div><div class="bar-track"><div class="bar-fill g" style="width:60%"></div></div><div class="bar-val">~30%</div></div>
+        <div class="bar-row"><div class="bar-lab">2027<small>FORECAST</small></div><div class="bar-track"><div class="bar-fill h" style="width:96%"></div></div><div class="bar-val">~48%</div></div>
+      </div>
+      <div class="cap"><b>读法：</b>存储占超大规模云厂商资本开支的比重。2026 年全球前五大云厂商资本开支预计超 <b>6000 亿美元</b>（同比 +36%），约 75% 投向 AI。若 2027 年存储真占到近一半，意味着单年约 <b>5000 亿美元</b>砸向 DRAM/HBM——相当于 2023 年全球半导体总收入的规模。<br>来源：SemiAnalysis、CLSA、Accuris（2026）。</div>
+    </div>
+
+    <div class="two-3">
+      <div class="mini"><h5>单机内存爆炸</h5><div class="mv">1.5 TB+</div><p>一台八卡 B200 服务器仅 HBM 就需 1.5TB 以上；Rubin 单系统 HBM 达 288GB。</p></div>
+      <div class="mini"><h5>HBM 需求增速</h5><div class="mv">+130% → +70%</div><p>HBM 需求 2025 年同比 +130%，2026 年预计再 +70%；TAM 从 2025 年约 350 亿增至 2028 年约 1000 亿美元。</p></div>
+      <div class="mini"><h5>企业级 SSD 接棒</h5><div class="mv">No.1</div><p>企业级 SSD 2026 年首次超过手机/PC，成为 NAND 第一大应用——推理与数据湖在吞噬存储。</p></div>
+    </div>
+
+    <p class="wide" style="margin-top:26px"><span class="tag t-inf">推断</span>这一点是「结构 vs 周期」之争的核心：需求不再来自消费电子的换机潮（短周期、易回落），而是嵌在多年期的基础设施扩张里。每建一座 AI 数据中心，都是一次性、工业规模的内存采购。<strong>云厂商用多年长协把未来产能提前锁死</strong>，本身就给了这轮行情过去周期从未有过的能见度。</p>
+  </div>
+</section>
+
+<!-- ============ L2 SUPPLY ============ -->
+<section>
+  <div class="wrap">
+    <div class="kicker"><span class="lyr">02</span> 为什么这么紧、这么贵 · 供给侧</div>
+    <h2>三家寡头、一个拧不动的阀门</h2>
+    <p class="sub">需求爆发不必然带来暴利——历史上每次需求好，厂商就疯狂扩产、把价格打崩。这一轮不同的根源在供给侧：行业只剩三家，它们选择了纪律，而 HBM 的物理特性又让产能无法快速转换。</p>
+
+    <div class="two">
+      <div>
+        <p><span class="tag t-fact">事实</span><strong>寡头格局 + 保利润不保量。</strong>DRAM 市场三星、SK 海力士、美光合计约占 70%。它们向投资者明确：不追求激进扩产，优先盈利。供给方主动「管理稀缺」，而非竞相解决稀缺。</p>
+        <p><span class="tag t-fact">事实</span><strong>库存见底、新产能滞后。</strong>主流厂商 DRAM 库存已降至约 3.3 周（追平 2018 年超级周期低位），部分仅 2 周。一座新晶圆厂从动工到放量要 4–5 年，美光爱达荷新厂要到 2027 年才投产。</p>
+      </div>
+      <div>
+        <div class="panel tight" style="margin:0">
+          <div class="panel-h">物理阀门 · HBM 的晶圆挤占效应</div>
+          <div class="panel-t" style="font-size:18px">为什么「钱也买不到」普通内存</div>
+          <!-- wafer reallocation svg -->
+          <svg viewBox="0 0 320 150" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto" aria-hidden="true">
+            <text x="0" y="14" font-family="JetBrains Mono,monospace" font-size="10" fill="#41464E">同一片晶圆产能：</text>
+            <!-- option A -->
+            <g>
+              <rect x="0" y="26" width="40" height="40" rx="3" fill="#3E5A69"/>
+              <rect x="46" y="26" width="40" height="40" rx="3" fill="#3E5A69"/>
+              <rect x="92" y="26" width="40" height="40" rx="3" fill="#3E5A69"/>
+              <rect x="138" y="26" width="40" height="40" rx="3" fill="#3E5A69"/>
+              <text x="0" y="82" font-family="Space Grotesk" font-size="12" font-weight="700" fill="#3E5A69">= 4 单位普通 DRAM</text>
+            </g>
+            <text x="220" y="50" font-family="Space Grotesk" font-size="26" font-weight="700" fill="#C2401A" text-anchor="middle">或</text>
+            <!-- option B -->
+            <g>
+              <rect x="262" y="22" width="48" height="9" rx="2" fill="#E2A93C"/>
+              <rect x="262" y="33" width="48" height="9" rx="2" fill="#D49B30"/>
+              <rect x="262" y="44" width="48" height="9" rx="2" fill="#C8902A"/>
+              <rect x="262" y="55" width="48" height="9" rx="2" fill="#3E5A69"/>
+              <text x="286" y="82" font-family="Space Grotesk" font-size="12" font-weight="700" fill="#A8741A" text-anchor="middle">1 单位 HBM</text>
+            </g>
+            <line x1="0" y1="104" x2="320" y2="104" stroke="#DCD4C4"/>
+            <text x="0" y="124" font-family="Noto Sans SC" font-size="11.5" fill="#41464E">每多产 1 份 HBM，就少 ~4 份普通内存。</text>
+            <text x="0" y="142" font-family="Noto Sans SC" font-size="11.5" fill="#41464E">且 HBM 还卡在 CoWoS 先进封装产能上。</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout warn">
+      <h4>零和游戏：每一片给 HBM 的晶圆，都是从手机和笔电里抢来的</h4>
+      <p class="wide" style="margin:0"><span class="tag t-fact">事实</span>这不是普通的供需错配，而是全球硅片产能的一次战略性重新分配。IDC 测算 2026 年 DRAM 供给增速仅约 16%（远低于历史常态），而数据中心可能吃掉全年约 70% 的内存产量。结果是消费电子被「挤到队尾」：1TB 移动固态硬盘从 2024 年的约 100 美元涨到 2026 年中的约 300 美元，2026 年全球智能手机产量预计下滑约 16%。</p>
+    </div>
+
+    <div class="pull"><span class="tag t-op" style="font-size:.5em">观点</span>过去存储是「产能一上就崩」；这一轮，<em>产能根本上不来</em>——这才是利润能站住的真正原因。</div>
+  </div>
+</section>
+
+<!-- ============ L3 PROFIT ============ -->
+<section>
+  <div class="wrap">
+    <div class="kicker"><span class="lyr">03</span> 利润为何极其丰厚 · 盈利</div>
+    <h2>量价齐升，遇上从未有过的定价纪律</h2>
+    <p class="sub">把需求侧（量爆发）和供给侧（价暴涨 + 不扩产）叠加，再加上长协把价格锁住——结果是存储原厂的利润率冲到了它们四十年历史里从未触及的高度，并且第一次反超了英伟达和台积电。</p>
+
+    <div class="panel">
+      <div class="panel-h">利润率对照 · 谁在赚最肥的钱（2026 上半年）</div>
+      <div class="panel-t">历史上第一次：造内存比造 GPU、比代工还赚钱</div>
+      <div class="bars">
+        <div class="bar-row"><div class="bar-lab">美光<small>MICRON · 毛利率</small></div><div class="bar-track"><div class="bar-fill g" style="width:99%"></div></div><div class="bar-val">~85%</div></div>
+        <div class="bar-row"><div class="bar-lab">SK 海力士<small>营业利润率</small></div><div class="bar-track"><div class="bar-fill g" style="width:84%"></div></div><div class="bar-val">72%</div></div>
+        <div class="bar-row"><div class="bar-lab">三星存储<small>营业利润率</small></div><div class="bar-track"><div class="bar-fill g" style="width:77%"></div></div><div class="bar-val">~66%</div></div>
+        <div class="bar-row"><div class="bar-lab">英伟达<small>NVIDIA · 营业利润率</small></div><div class="bar-track"><div class="bar-fill s" style="width:76%"></div></div><div class="bar-val">~65%</div></div>
+        <div class="bar-row"><div class="bar-lab">三星 HBM4<small>供英伟达 · 毛利率</small></div><div class="bar-track"><div class="bar-fill h" style="width:94%"></div></div><div class="bar-val">>80%</div></div>
+      </div>
+      <div class="cap"><b>注意口径不同：</b>美光为毛利率（约 85%），海力士/三星为营业利润率（已扣费用），不可直接横比，但都处于各自历史峰值。<br>来源：各公司 2026 财年季报（SK海力士 Q1'26、三星 Q1'26、美光 FY26 Q1–Q3）、TrendForce。</div>
+    </div>
+
+    <p class="lead-p wide"><span class="tag t-inf">推断</span>利润极厚的机制可以拆成三层叠乘：<strong>① 量价齐升</strong>——出货价（ASP）大涨而成本相对固定，晶圆厂建好后单片成本几乎不变，价格涨多少几乎全是利润；<strong>② 寡头定价纪律</strong>——三家心照不宣地控产保价，把利润而非份额放在第一位；<strong>③ 长协锁定</strong>——把未来产能用「不可取消」的多年合同卖给云厂商，既保价又给出能见度。</p>
+
+    <div class="two-3">
+      <div class="mini"><h5>美光最新季度</h5><div class="mv">+346%</div><p>FY26 Q3 营收同比 +346% 至约 415 亿美元，调整后 EPS 同比涨超 12 倍，均创单季历史新高。</p></div>
+      <div class="mini"><h5>锁价订单</h5><div class="mv">$1000 亿</div><p>美光已签下约 1000 亿美元、客户不可取消的多年长协——存储史上从未有过的收入能见度。</p></div>
+      <div class="mini"><h5>成本特性</h5><div class="mv">几乎固定</div><p>厂建好后单片成本基本不变。低谷期赔钱也得卖，高峰期则「拼命挣利润」——这一轮正处在后者。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ L4 TECH / HBM ============ -->
+<section>
+  <div class="wrap">
+    <div class="kicker"><span class="lyr">04</span> 技术关节点 · HBM 战场</div>
+    <h2>HBM4 之战：谁拿下英伟达，谁拿走利润</h2>
+    <p class="sub">这轮行情里，普通 DRAM/NAND 涨价是「水位」，HBM 才是「金矿」。HBM 是把多层 DRAM 裸片垂直堆叠、再以硅通孔（TSV）连到一颗逻辑基底之上的高带宽内存。它技术最难、单价最高、最依赖先进封装——也因此是三巨头真正的护城河所在。</p>
+
+    <div class="panel">
+      <div class="panel-h">技术路线 · HBM 世代演进</div>
+      <div class="panel-t">从 HBM3E 的「黄金标准」到 HBM4 的重新定义</div>
+      <div class="tl">
+        <div class="tl-col"><div class="tl-yr">2024–25</div><div class="tl-gen">HBM3E</div><ul><li>12/16 层堆叠</li><li>~1.2 TB/s 带宽</li><li>36–48GB / 堆栈</li><li>~$300 / 堆栈</li><li>当下 AI 服务器主力</li></ul></div>
+        <div class="tl-col now"><div class="tl-yr">2026 · 量产中</div><div class="tl-gen">HBM4</div><ul><li>2048-bit 接口（位宽翻倍）</li><li>1.5–2 TB/s / 堆栈</li><li>16 层、最高 64GB</li><li>~$500 / 堆栈（较 HBM3E 溢价约 20%）</li><li>配英伟达 Rubin</li></ul></div>
+        <div class="tl-col"><div class="tl-yr">2026–27</div><div class="tl-gen">HBM4E</div><ul><li>三星抢先送样（约 3.6 TB/s）</li><li>引入混合键合</li><li>20 层堆叠路线</li><li>晶圆需减薄至约 30μm</li></ul></div>
+        <div class="tl-col"><div class="tl-yr">2027+</div><div class="tl-gen">下一代</div><ul><li>定制化基底逻辑die</li><li>与 GPU 深度协同设计</li><li>「存内/近存计算」探索</li></ul></div>
+      </div>
+      <div class="cap">来源：JEDEC JESD270-4、SK海力士/三星/美光官方路线、PatSnap、SemiAnalysis（2026）。</div>
+    </div>
+
+    <div class="two">
+      <div>
+        <div class="panel tight" style="margin:0 0 18px">
+          <div class="panel-h">HBM 市场份额 · 2026</div>
+          <div class="bars" style="margin-top:14px">
+            <div class="bar-row"><div class="bar-lab">SK 海力士</div><div class="bar-track"><div class="bar-fill g" style="width:53%"></div></div><div class="bar-val">~53%</div></div>
+            <div class="bar-row"><div class="bar-lab">三星</div><div class="bar-track"><div class="bar-fill s" style="width:38%"></div></div><div class="bar-val">~38%</div></div>
+            <div class="bar-row"><div class="bar-lab">美光</div><div class="bar-track"><div class="bar-fill h" style="width:9%"></div></div><div class="bar-val">~8%</div></div>
+          </div>
+          <div class="cap" style="margin-top:12px">SK 海力士拿下英伟达 2026 年 HBM4 约三分之二的份额。来源：Silicon Analysts、行业整理。</div>
+        </div>
+      </div>
+      <div>
+        <p><span class="tag t-inf">推断</span><strong>护城河正从「技术代差」转向「制造良率 + 生态绑定」。</strong>SK 海力士靠自研 MR-MUF 封装工艺与英伟达多年的供应关系建立结构性领先；三星是全球唯一同时拥有先进逻辑代工、存储、先进封装的玩家，主打「交钥匙」方案、押注混合键合；美光以能效（约低 30%）和美国本土封装差异化，目标到 2026 年底拿下 20–25% 份额。</p>
+        <p><span class="tag t-fact">事实</span>HBM4 把位宽翻倍到 2048-bit，给布线带来「噩梦」，必须依赖台积电 CoWoS-L 这类先进封装——这又是一道独立于内存本身的供给瓶颈。SK 海力士、美光都把 HBM4 的逻辑基底交给台积电代工，与英伟达 GPU 同源调校。</p>
+      </div>
+    </div>
+
+    <div class="pull"><span class="tag t-op" style="font-size:.5em">观点</span>HBM 不只是更贵的内存，而是<em>内存与逻辑融合</em>的开端——存储正在从「配件」长成 AI 算力体系里和 GPU 平起平坐的主角。</div>
+  </div>
+</section>
+
+<!-- ============ L5 SUPPLY CHAIN ============ -->
+<section>
+  <div class="wrap">
+    <div class="kicker"><span class="lyr">05</span> 产业链与受益地图</div>
+    <h2>谁在受益：从全球三巨头到国产「双雄 + 一条链」</h2>
+    <p class="sub">这轮景气沿产业链层层传导：上游设备/材料（晶圆厂扩产）→ 中游原厂（量价齐升）→ 下游模组/封测/接口（涨价 + 库存增值）。对国内决策者，更有价值的是叠加「国产替代」这条独立主线。</p>
+
+    <h3 style="font-family:var(--grot);font-weight:600;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--steel);margin:8px 0 14px">A. 全球原厂 · 利润核心</h3>
+    <div class="two-3">
+      <div class="mini"><h5>SK 海力士 · KRX</h5><div class="mv">HBM 王者</div><p>HBM 份额约 53%，营业利润率 72%，股价一年约 +1000%。当前主动放缓 HBM4、收割 DDR5 高毛利。</p></div>
+      <div class="mini"><h5>三星 · KRX</h5><div class="mv">全能巨头</div><p>唯一逻辑+存储+封装一体；一季度利润 +756%，芯片利润涨 48 倍；HBM4E 抢先送样。</p></div>
+      <div class="mini"><h5>美光 · MU</h5><div class="mv">唯一美系</div><p>唯一美国 DRAM/NAND 原厂，毛利率约 85%，市值破万亿，2026 HBM 产能售罄。</p></div>
+    </div>
+
+    <h3 style="font-family:var(--grot);font-weight:600;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--steel);margin:34px 0 14px">B. 国产「存储双雄」· 国产替代主轴</h3>
+    <div class="two">
+      <div class="ch-card hl">
+        <div class="ch-seg">DRAM 龙头 <span class="badge">科创板过会 · 5/27</span></div>
+        <div class="ch-names">长鑫科技 / 长鑫存储 (CXMT)</div>
+        <p>国内规模最大、最先进的 DRAM 一体化企业，产能国内第一、全球第四。<b>2026 Q1 营收 508 亿元（+719%），归母净利 247.62 亿元（+1688%）</b>。拟募资 295 亿元（科创板史上最大），年底产能爬升至 30 万片/月，并启动 HBM 产线（2026 年底投产，HBM3 研发中）。DDR5 良率约 80%。</p>
+      </div>
+      <div class="ch-card hl">
+        <div class="ch-seg">3D NAND 龙头 <span class="badge">IPO 辅导 · 5/19</span></div>
+        <div class="ch-names">长江存储 (YMTC)</div>
+        <p>国产 NAND 闪存龙头，自研 Xtacking 4.0 架构。<b>294 层 3D NAND 已量产，正研发 300 层，层数逼近三星</b>。武汉三期已进入设备安装阶段，量产后全球份额有望升至 15% 以上。市场预估 IPO 估值约 3000 亿元。</p>
+      </div>
+    </div>
+    <p style="font-size:14px;color:var(--ink-soft);margin-top:14px"><span class="tag t-inf">推断</span>两家同步资本化、且双双移出美国 1260H 清单，叠加惠普/戴尔/华硕/宏碁开始导入长鑫 DRAM——「从备胎到潜在第四极」的窗口正在打开。但它们与三巨头在先进节点、资本开支、全球分销上的差距仍然显著。</p>
+
+    <h3 style="font-family:var(--grot);font-weight:600;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--steel);margin:34px 0 14px">C. A 股产业链 · 分环节受益地图</h3>
+    <div class="chain">
+      <div class="ch-card">
+        <div class="ch-seg">设计 · 涨价弹性最大</div>
+        <div class="ch-names">兆易创新 <span class="code">603986</span> · 北京君正 <span class="code">300223</span> · 东芯股份 <span class="code">688110</span></div>
+        <p>兆易 NOR Flash 全球第二、利基 DRAM 国内领先，与长鑫深度关联；北京君正车规存储隐形冠军。原厂退出利基市场→国产产品全线涨价。</p>
+      </div>
+      <div class="ch-card">
+        <div class="ch-seg">内存接口/配套 · 服务器放量核心</div>
+        <div class="ch-names">澜起科技 <span class="code">688008</span> · 聚辰股份 <span class="code">688123</span></div>
+        <p>澜起为全球内存接口（DDR5 RCD）龙头、市占率超 45%，HBM 控制器获英伟达认证；聚辰为 DDR5 SPD 全球第一。AI 服务器内存放量直接受益。</p>
+      </div>
+      <div class="ch-card hl">
+        <div class="ch-seg">模组/成品 · 涨价传导最直接</div>
+        <div class="ch-names">江波龙 <span class="code">301308</span> · 佰维存储 <span class="code">688525</span> · 德明利 <span class="code">001309</span> · 香农芯创 <span class="code">300475</span></div>
+        <p>国产模组「一个季度赚足一年利润」：江波龙 Q1 归母净利约 38.6 亿元（同比 +2644%）；佰维 2025 全年净利 +429%；香农芯创（海力士代理）Q1 净利预增超 6700%。</p>
+      </div>
+      <div class="ch-card">
+        <div class="ch-seg">封测 · HBM 关键环节</div>
+        <div class="ch-names">太极实业 <span class="code">600667</span> · 深科技 <span class="code">000021</span></div>
+        <p>太极旗下海太半导体为 SK 海力士提供 NAND/HBM 封装，具 16 层堆叠储备；深科技为国产存储封测龙头，服务长鑫/长江，HBM 封测小批量。</p>
+      </div>
+      <div class="ch-card">
+        <div class="ch-seg">设备 · 扩产 + 国产化双击</div>
+        <div class="ch-names">北方华创 <span class="code">002371</span> · 中微公司 <span class="code">688012</span> · 拓荆科技 <span class="code">688072</span></div>
+        <p>「两存」扩产直接拉动刻蚀/薄膜沉积/清洗/量测需求。SEMI 上调 2026 全球前道设备增速至 23.5%；国产设备份额从 2020 年 10% 升至 2025 年 26%，预计 2028 年达 40%。</p>
+      </div>
+      <div class="ch-card">
+        <div class="ch-seg">材料/零部件/洁净室</div>
+        <div class="ch-names">神工股份 · 雅克科技 · 沪硅产业 · 亚翔集成 · 柏诚股份</div>
+        <p>硅零部件、前驱体/特气、大硅片随扩产刚性放量；电子洁净室工程在扩产潮中直接受益。</p>
+      </div>
+    </div>
+    <div class="cap" style="margin-top:16px">来源：证券时报·数据宝、财联社、国盛证券/中信证券研报、东方财富/新浪财经产业链梳理（2026/1–6）。个股仅为产业链环节代表，<b>不分先后、不构成投资建议</b>，市值与股价动态变化。</div>
+  </div>
+</section>
+
+<!-- ============ L6 RISK / BEAR ============ -->
+<section>
+  <div class="wrap">
+    <div class="kicker"><span class="lyr">06</span> 能持续多久 · 风险与反方</div>
+    <h2>这是「AI 把周期变结构」对赌「周期终将复刻」</h2>
+    <p class="sub">即便结论清晰，反方义务要求给出最强的反对视角。存储是科技业里最可靠的周期股之一——四十年来「涨价→过度投资→供给泛滥→崩盘→血亏→重来」反复上演。教训只有一句：在存储行业，永远别轻信「这次不一样」。</p>
+
+    <div class="bb">
+      <div class="bb-col bb-bull">
+        <div class="bb-h">多头：这次结构变了</div>
+        <ul>
+          <li><b>需求是结构性的</b>：嵌在多年期 AI 基建里，而非消费换机潮。</li>
+          <li><b>供给上不来</b>：HBM 的 4 倍晶圆强度 + CoWoS 瓶颈 = 天然供给阀门，无法一键切换。</li>
+          <li><b>长协设了价格地板</b>：不可取消的多年合同把现货波动熨平，给出史上从未有的能见度。</li>
+          <li><b>HBM TAM 高增</b>：约 350 亿（2025）→ 1000 亿美元（2027/28），CAGR 约 40%。</li>
+          <li><b>紧张延续到 2027</b>：海力士已锁定 2026 HBM、美光售罄，新厂 2028 才上量。</li>
+        </ul>
+      </div>
+      <div class="bb-col bb-bear">
+        <div class="bb-h">空头：周期终将复刻</div>
+        <ul>
+          <li><b>近 85% 毛利是顶部信号</b>：历史上正是这种超额利润吸引新增供给、随后见顶。</li>
+          <li><b>三家同时大扩产</b>：三星/海力士/美光 + 长鑫/长江都在建厂，2028–29 可能转向过剩。</li>
+          <li><b>HBM 价格或在 2026 后回调</b>：竞争加剧 + 产能释放。</li>
+          <li><b>需求侧技术风险</b>：若推理端压缩算法（如内存压缩技术）降低单位算力的内存需求，缺口会被快速填平。</li>
+          <li><b>内部人减持</b>：美光高管减持约 2.5 亿美元、国产龙头高位套现——常被读作对估值的谨慎。</li>
+          <li><b>连原厂自己都警示</b>：长鑫招股书明言上半年暴增「存在不可持续风险」。</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout gold" style="margin-top:26px">
+      <h4>估值之谜：市场用「便宜」表达不信任</h4>
+      <p class="wide" style="margin:0"><span class="tag t-fact">事实</span>美光股价一年涨约 11 倍，但前瞻市盈率只有约 9–14 倍（半导体行业约 27 倍、英伟达约 25 倍），EV/EBITDA 约 6.5 倍（同业约 22.6 倍）。<span class="tag t-inf" style="margin-left:6px">推断</span>单位数的前瞻市盈率不是「便宜」的保证，而是市场在说：我认定这是周期顶、明年的盈利预期靠不住。<strong>整笔交易的胜负，就押在一件长协也无法证明的事上——能不能熬过一次下行而利润不塌。</strong></p>
+    </div>
+
+    <div class="callout">
+      <h4>该盯什么：几个会先变的信号</h4>
+      <div class="sig">
+        <div class="sig-row"><div class="t"><b>季度毛利率拐点</b>　原厂毛利率从峰值回落，是周期见顶最早的体温计。</div><div class="m">美光 FY26 Q4<br>9 月底</div></div>
+        <div class="sig-row"><div class="t"><b>合约价 / 现货价环比</b>　由「环比大涨」转「持平→回落」即趋势变化。</div><div class="m">TrendForce<br>逐季</div></div>
+        <div class="sig-row"><div class="t"><b>云厂商资本开支指引</b>　AI capex 一旦松动，需求侧逻辑首先动摇。</div><div class="m">四大云厂<br>财报季</div></div>
+        <div class="sig-row"><div class="t"><b>原厂库存周数</b>　从 2–3 周回升，意味供需开始转松。</div><div class="m">行业数据<br>逐季</div></div>
+        <div class="sig-row"><div class="t"><b>HBM4/4E 良率与扩产</b>　三星良率突破或集体扩产，是 HBM 价格回调前兆。</div><div class="m">行业跟踪</div></div>
+        <div class="sig-row"><div class="t"><b>国产「双雄」上市与放量</b>　长鑫/长江上市后扩产兑现，影响通用内存供给。</div><div class="m">2026 H2–2027</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DECISION ============ -->
+<section>
+  <div class="wrap">
+    <div class="kicker"><span class="lyr">→</span> 决策含义 · 怎么用</div>
+    <h2>对一位决策者，这意味着什么</h2>
+    <p class="sub">把上面的分析压成可操作的判断。以下为分析性框架，<strong>非个性化投资建议</strong>。</p>
+
+    <div class="finds">
+      <div class="find"><div><h4>把存储理解为「AI 基建的卖铲人」，而非可选消费电子</h4><p>只要 AI 资本开支不塌，存储原厂、HBM、先进封装、设备材料就是确定性受益的一段。判断这条赛道，先判断 AI capex 的持续性——后者是前者的总开关。</p></div></div>
+      <div class="find"><div><h4>分清「赚利润的」与「赚估值重估的」</h4><p>全球原厂（海力士/美光/三星）赚的是利润兑现，但股价已计入大量预期，向上空间取决于「周期能否变结构」；国产链（双雄 + 设备材料）多了一层「国产替代渗透率提升」的独立 β，与全球周期不完全同步。</p></div></div>
+      <div class="find"><div><h4>位置感比方向感更重要</h4><p>方向（高景气）已是共识、price-in 程度高。真正的风险不在「会不会好」，而在「已经好到什么程度、还能好多久」。在毛利率近峰值时入场，是历史上存储投资者最容易受伤的时点。</p></div></div>
+      <div class="find"><div><h4>用信号管理仓位，而不是用信仰</h4><p>把上一节的「该盯什么」做成一张监控表（毛利率拐点 / 合约价环比 / capex 指引 / 库存周数）。这是一个由具体数据驱动、可以被证伪的判断，而非一个只能持有信仰的故事。</p></div></div>
+    </div>
+
+    <div class="callout warn" style="margin-top:30px">
+      <h4>一句话收尾</h4>
+      <p class="wide" style="margin:0"><span class="tag t-op">观点</span>存储此刻之所以重要且利润极厚，是因为 AI 同时做到了「把需求抬高一个数量级」和「让供给在物理上拧不动」，再叠加三家寡头的定价纪律。这一组合是真实且罕见的。<strong>但它的可持续性是一个开放问题</strong>——值得参与，更值得用纪律和信号去管理，而不是把「这次不一样」当成结论。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SOURCES ============ -->
+<section class="src-sec">
+  <div class="wrap">
+    <div class="kicker"><span class="lyr">§</span> 证据与来源 · 分一手/二手</div>
+    <h2>来源与时点</h2>
+    <p style="color:#C9C2B3;max-width:60ch">本报告以一手资料（原厂财报/招股书、行业机构、投行）优先，二手财经媒体交叉验证。会变信息（价格/财报/份额）均标注数据时点，主要集中于 2026 年 1–6 月。</p>
+    <div class="srcgrid">
+      <div class="srccol">
+        <h4>一手 / 机构</h4>
+        <ul>
+          <li><b>SK海力士 Q1'26 财报</b>（营业利润率 72%）<span class="d"> · 2026/4</span></li>
+          <li><b>三星电子 Q1'26 财报</b>（利润 +756%、HBM4 毛利 >80%）<span class="d"> · 2026/4</span></li>
+          <li><b>美光 FY26 Q1–Q3 财报</b>（毛利率→85%、$1000 亿长协）<span class="d"> · 2025/12–2026/6</span></li>
+          <li><b>长鑫科技科创板招股书</b>（Q1 营收 508 亿、净利 +1688%、风险提示）<span class="d"> · 2026/5</span></li>
+          <li><b>IDC</b> 半导体/存储市场预测（DRAM 2026 营收 $418.6B）<span class="d"> · 2026/4</span></li>
+          <li><b>TrendForce</b> 合约价/份额预测<span class="d"> · 2026 逐季</span></li>
+          <li><b>Gartner</b>（2026 DRAM +125%、NAND +234%）<span class="d"> · 2026/6</span></li>
+          <li><b>SemiAnalysis / CLSA</b>（存储占 capex 比重）<span class="d"> · 2026</span></li>
+          <li><b>JEDEC JESD270-4</b> HBM4 标准<span class="d"> · 2024/12</span></li>
+          <li><b>SEMI</b> 全球前道设备（WFE）展望<span class="d"> · 2026/6</span></li>
+        </ul>
+      </div>
+      <div class="srccol">
+        <h4>二手 / 财经媒体</h4>
+        <ul>
+          <li><b>CNBC</b>（存储股单周 +30%、windfall gains）<span class="d"> · 2026/5</span></li>
+          <li><b>Tom's Hardware</b>（数据中心吃 70% 内存、Nvidia VVP 定价）<span class="d"> · 2026</span></li>
+          <li><b>Blocks&Files / EE Times / Avnet</b>（超级周期、弹性分层）<span class="d"> · 2026</span></li>
+          <li><b>财新 / 澎湃 / 证券时报 / 财联社</b>（国产双雄 IPO、产业链）<span class="d"> · 2026/5</span></li>
+          <li><b>21财经 / 证券市场周刊</b>（A股存储龙头、设备链）<span class="d"> · 2026/6</span></li>
+          <li><b>PatSnap / Silicon Analysts</b>（HBM 路线与份额）<span class="d"> · 2026/3–6</span></li>
+          <li><b>TheStreet / 24/7 Wall St / TIKR</b>（估值多空）<span class="d"> · 2026/5–6</span></li>
+          <li><b>Sourceability / Utmel / Accuris</b>（涨价时间线、采购）<span class="d"> · 2026</span></li>
+        </ul>
+      </div>
+    </div>
+    <div style="margin-top:24px;font-family:var(--mono);font-size:11px;color:#82868f;line-height:1.7">注：不同机构对「市场规模/份额/价格涨幅」口径与时点不一（如 IDC 与 WSTS 对全年半导体总额估计不同），文中已分别标注来源，读者可据此进一步核实。报告未引用任何来源的原文表述，均为基于公开信息的转述与归纳。</div>
+  </div>
+</section>
+
+<!-- ============ DISCLAIMER + FOOTER ============ -->
+<section style="border-bottom:none;padding-bottom:0">
+  <div class="wrap">
+    <div class="disc">
+      <strong style="color:var(--heat)">免责声明 ·</strong> 本报告由 AI 调研分析师基于公开信息整理生成，仅供研究与决策参考，<strong>不构成任何投资、法律或税务建议</strong>，亦不构成对任何证券的买卖要约。文中个股仅为产业链环节代表，排序不分先后。半导体存储为强周期行业，价格、财报、份额、估值均动态变化且波动剧烈，过往表现不代表未来。所有数据时点截至 2026 年 6 月，使用前请独立核实并结合自身风险承受能力判断。投资有风险，入市需谨慎。
+    </div>
+  </div>
+  <footer>
+    <div class="wrap">
+      <div class="f-mark">存储 · 超级周期</div>
+      <div class="f-meta">L3 深度尽调报告 · 数据截至 2026年6月 · 中立综述 + 投资落脚</div>
+    </div>
+  </footer>
+</section>
+
+<script>
+  // 克制的载入动画：die-stack 逐层浮现（尊重 reduced-motion）
+  (function(){
+    if(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var layers = document.querySelectorAll('.hero-fig .layer');
+    layers.forEach(function(el,i){
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(8px)';
+      el.style.transition = 'opacity .5s ease, transform .5s ease';
+      el.style.transitionDelay = (0.12 + i*0.09) + 's';
+    });
+    requestAnimationFrame(function(){
+      requestAnimationFrame(function(){
+        layers.forEach(function(el){ el.style.opacity='1'; el.style.transform='translateY(0)'; });
+      });
+    });
+  })();
+</script>
+</body>
+</html>

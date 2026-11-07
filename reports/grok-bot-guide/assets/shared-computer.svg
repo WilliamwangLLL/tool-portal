@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 340" role="img" aria-labelledby="t">
+  <title id="t">所有 Bot 共用一台云电脑</title>
+  
+<style>
+  .p { fill: #fffaf1; }
+  .ink { fill: #1a1611; }
+  .muted { fill: #6a5f52; }
+  .stroke { stroke: #c4b59a; fill: none; }
+  .box { fill: #fffaf1; stroke: #c4b59a; }
+  .cin { fill: #b1321a; }
+  .pine { fill: #245848; }
+  .gold { fill: #9a7428; }
+  .cinb { fill: #f3ddd6; stroke: #b1321a; }
+  .pineb { fill: #d7ebe2; stroke: #245848; }
+  .goldb { fill: #f3e6c4; stroke: #9a7428; }
+  .soft { fill: #f3eee4; stroke: #d8cdbb; }
+  text { font-family: "Noto Sans SC", "PingFang SC", "Hiragino Sans GB", sans-serif; }
+  @media (prefers-color-scheme: dark) {
+    .p { fill: #1c1914; }
+    .ink { fill: #f3eadc; }
+    .muted { fill: #b3a693; }
+    .stroke { stroke: #5a5044; }
+    .box { fill: #1c1914; stroke: #5a5044; }
+    .cin { fill: #e06a4c; }
+    .pine { fill: #7ec9ae; }
+    .gold { fill: #e0c078; }
+    .cinb { fill: #3a221c; stroke: #e06a4c; }
+    .pineb { fill: #1b322b; stroke: #7ec9ae; }
+    .goldb { fill: #332a16; stroke: #e0c078; }
+    .soft { fill: #13110e; stroke: #3a342b; }
+  }
+</style>
+
+  <rect class="p" width="720" height="340"/>
+  <rect class="goldb" x="70" y="190" width="580" height="118" rx="16" stroke-width="2"/>
+  <text class="gold" x="360" y="228" text-anchor="middle" font-size="16" font-weight="700">一台共享云电脑 · 属于你的账号，不属于某一个 Bot</text>
+  <text class="muted" x="360" y="256" text-anchor="middle" font-size="13">文件 · 浏览器登录 · 会话 Cookie · 命令行凭证</text>
+  <text class="cin" x="360" y="284" text-anchor="middle" font-size="13">这不是安全边界。一个 Bot 放进去的东西，别的 Bot 也能用。</text>
+  <rect class="cinb" x="70" y="36" width="160" height="96" rx="12" stroke-width="1.6"/>
+  <text class="ink" x="150" y="78" text-anchor="middle" font-size="15" font-weight="700">Bot A 屏幕</text>
+  <text class="muted" x="150" y="102" text-anchor="middle" font-size="12">一次一个电脑任务</text>
+  <rect class="pineb" x="280" y="36" width="160" height="96" rx="12" stroke-width="1.6"/>
+  <text class="ink" x="360" y="78" text-anchor="middle" font-size="15" font-weight="700">Bot B 屏幕</text>
+  <text class="muted" x="360" y="102" text-anchor="middle" font-size="12">可并行，但共电脑</text>
+  <rect class="goldb" x="490" y="36" width="160" height="96" rx="12" stroke-width="1.6"/>
+  <text class="ink" x="570" y="78" text-anchor="middle" font-size="15" font-weight="700">Bot C 屏幕</text>
+  <text class="muted" x="570" y="102" text-anchor="middle" font-size="12">自己的画面，同一台机</text>
+  <path class="stroke" d="M150 132 V190 M360 132 V190 M570 132 V190" stroke-width="1.6"/>
+</svg>

@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026 国庆 · 全家包栋度假分析报告</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    background:#0e1216; color:#e9e6de;
+    font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;
+    line-height:1.75; padding-bottom:80px;
+  }
+  .wrap { max-width:980px; margin:0 auto; padding:0 22px; }
+  header.hero {
+    text-align:center; padding:72px 22px 48px;
+    background:radial-gradient(ellipse at 50% 0%, #1c2530 0%, #0e1216 70%);
+    border-bottom:1px solid #262d36;
+  }
+  .kicker { color:#d4a94e; letter-spacing:6px; font-size:13px; text-transform:uppercase; }
+  h1 { font-family:"Songti SC","STSong",serif; font-size:38px; margin:14px 0 10px; font-weight:700; }
+  .sub { color:#9aa3ad; font-size:15px; max-width:640px; margin:0 auto; }
+  .facts { display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-top:26px; }
+  .fact { background:#171d24; border:1px solid #2a323c; border-radius:999px; padding:7px 18px; font-size:13px; color:#c8cdd3; }
+  .fact b { color:#d4a94e; font-weight:600; }
+
+  h2.section {
+    font-family:"Songti SC","STSong",serif; font-size:26px; margin:64px 0 8px;
+    padding-left:14px; border-left:4px solid #d4a94e;
+  }
+  .section-sub { color:#9aa3ad; font-size:14px; margin-bottom:24px; padding-left:18px; }
+
+  .dest { background:#141a21; border:1px solid #242c36; border-radius:16px; overflow:hidden; margin-bottom:36px; }
+  .dest img { width:100%; height:340px; object-fit:cover; display:block; }
+  .dest-body { padding:28px 30px 30px; }
+  .dest-head { display:flex; align-items:baseline; justify-content:space-between; flex-wrap:wrap; gap:8px; }
+  .dest-head h3 { font-family:"Songti SC","STSong",serif; font-size:24px; }
+  .rank { color:#0e1216; background:#d4a94e; font-size:12px; font-weight:700; border-radius:6px; padding:3px 10px; }
+  .rank.silver { background:#b8c0c9; }
+  .rank.bronze { background:#c98d5f; }
+  .rank.fourth { background:#7d8894; }
+  .why { margin:14px 0 6px; font-size:15px; color:#d7d3c8; }
+  .tags { display:flex; flex-wrap:wrap; gap:8px; margin:12px 0 20px; }
+  .tag { font-size:12px; color:#a8e0c0; background:rgba(80,180,130,.12); border:1px solid rgba(80,180,130,.3); border-radius:6px; padding:2px 10px; }
+
+  table { width:100%; border-collapse:collapse; font-size:13.5px; margin:6px 0 8px; }
+  th, td { padding:9px 10px; text-align:left; border-bottom:1px solid #242c36; }
+  th { color:#d4a94e; font-weight:600; font-size:12.5px; letter-spacing:1px; white-space:nowrap; }
+  td { color:#c3c9d0; }
+  tr:hover td { background:rgba(212,169,78,.04); }
+  .tbl-title { font-size:13px; color:#8b939d; letter-spacing:2px; margin:22px 0 8px; }
+
+  .stay { background:#0f141a; border:1px solid #28313c; border-radius:12px; padding:20px 22px; margin-top:16px; }
+  .stay-top { display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:8px; }
+  .stay-top h4 { font-size:17.5px; color:#f0ede4; }
+  .platform { font-size:12px; color:#8b939d; }
+  .price { color:#e8b64c; font-size:20px; font-weight:700; }
+  .price small { color:#8b939d; font-size:12px; font-weight:400; }
+  .stay p { font-size:14px; color:#b9bfc7; margin:8px 0 10px; }
+  .specs { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:14px; }
+  .spec { font-size:12px; color:#c8cdd3; background:#1a2129; border:1px solid #2c3540; border-radius:6px; padding:3px 10px; }
+  .btn {
+    display:inline-block; background:#d4a94e; color:#14100a; font-weight:700; font-size:14px;
+    text-decoration:none; border-radius:8px; padding:10px 26px; transition:.2s;
+  }
+  .btn:hover { background:#e8c06a; }
+  .btn.ghost { background:transparent; border:1px solid #d4a94e; color:#d4a94e; margin-left:10px; }
+  .btn.ghost:hover { background:rgba(212,169,78,.1); }
+
+  .verdict { background:linear-gradient(135deg,#1a1410,#141a21); border:1px solid #4a3a1e; border-radius:14px; padding:26px 30px; margin-top:14px; }
+  .verdict h3 { color:#e8b64c; font-size:19px; margin-bottom:10px; }
+  .verdict p, .verdict li { font-size:14.5px; color:#d0ccc0; }
+  .verdict ol { padding-left:20px; }
+  .verdict li { margin-bottom:8px; }
+
+  .checklist { background:#141a21; border:1px solid #242c36; border-radius:14px; padding:26px 30px; }
+  .checklist li { font-size:14.5px; color:#c9cfd6; margin-bottom:10px; list-style:none; padding-left:26px; position:relative; }
+  .checklist li::before { content:"✓"; position:absolute; left:0; color:#d4a94e; font-weight:700; }
+  footer { text-align:center; color:#6d757e; font-size:12.5px; margin-top:56px; line-height:2; }
+  .note { font-size:12.5px; color:#7d858e; margin-top:6px; }
+  @media (max-width:640px){ .dest img{height:220px;} h1{font-size:28px;} .btn.ghost{margin-left:0;margin-top:10px;} }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="kicker">2026 国庆 · 四家庭包栋度假</div>
+  <h1>全家包栋度假分析报告</h1>
+  <p class="sub">不看景点 · 不挤人潮 · 一大家子住在一起 —— 山水之间，麻将火锅，把酒言欢</p>
+  <div class="facts">
+    <span class="fact">出行：<b>4 个家庭 · 每家 1 娃（约 12 人）</b></span>
+    <span class="fact">假期：<b>10月1日–7日（7天）</b></span>
+    <span class="fact">出发地：<b>北京 / 成都 / 深圳 / 呼和浩特 / 南京</b></span>
+    <span class="fact">诉求：<b>小众 · 山清水秀 · 包栋同住</b></span>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- ============ 选型逻辑 ============ -->
+  <h2 class="section">一、选型逻辑</h2>
+  <p class="section-sub">五地分散出发，如何选一个人人都方便的"中间点"</p>
+  <p style="font-size:15px;color:#c9cfd6;">
+    四个家庭从五个城市出发，地理上横跨南北。筛选目的地时用了四条硬标准：
+    <b style="color:#d4a94e;">① 交通均衡</b>——任何一家人都不至于太折腾；
+    <b style="color:#d4a94e;">② 包栋供给</b>——有能住下 12 人的整栋房源，且带麻将/KTV/大厨房；
+    <b style="color:#d4a94e;">③ 山水环境</b>——开窗见山水，而不是看人海；
+    <b style="color:#d4a94e;">④ 国庆人流</b>——避开热门景区核心圈，住进去就"与世隔绝"。
+    去年是大连的海，今年建议换成<b style="color:#d4a94e;">山</b>——十月正是南方山区最好的季节。
+  </p>
+
+  <!-- ============ 目的地 1：皖南黟县 ============ -->
+  <h2 class="section">二、候选目的地详析</h2>
+  <p class="section-sub">共 4 个候选，按综合推荐度排序</p>
+
+  <div class="dest">
+    <img src="https://workbuddy-space-static.codebuddy.work/image/7Chwc3oFQORkj3uowTxOcC.png" alt="皖南徽州秋色">
+    <div class="dest-body">
+      <div class="dest-head">
+        <h3>① 安徽 · 皖南黟县（黄山脚下）</h3>
+        <span class="rank">综合推荐 No.1</span>
+      </div>
+      <p class="why"><b style="color:#e8b64c;">推荐理由：</b>五地出发的"最大公约数"。南京高铁 2 小时内直达，北京高铁直达黄山北；徽派院落本身就是"包栋"文化的发源地，白墙黛瓦、天井鱼塘，十月初稻田金黄、秋意初显。关键是——<b>不住宏村西递景区里，住外围村子，安静程度四个候选里最高</b>，而包栋价格却是江浙的一半。徽菜（臭鳜鱼、毛豆腐、笋衣烧肉）天然适合一大家子围桌吃饭，很多院子还带柴火灶。</p>
+      <div class="tags">
+        <span class="tag">徽派独栋院落</span><span class="tag">十月稻田金黄</span><span class="tag">人流最少</span><span class="tag">性价比之王</span><span class="tag">徽菜管够</span>
+      </div>
+
+      <div class="tbl-title">五地抵达方式（国庆参考）</div>
+      <table>
+        <tr><th>出发地</th><th>方式</th><th>耗时</th><th>说明</th></tr>
+        <tr><td>南京</td><td>高铁 → 黄山北/黟县东</td><td>约 1.5–2 小时</td><td>最方便，二等座约 ¥150</td></tr>
+        <tr><td>北京</td><td>高铁 → 黄山北</td><td>约 5.5–6 小时</td><td>直达，二等座约 ¥550–650</td></tr>
+        <tr><td>深圳</td><td>飞黄山屯溪 / 高铁</td><td>飞行约 2h / 高铁约 7.5h</td><td>国庆机票建议早订</td></tr>
+        <tr><td>成都</td><td>飞黄山（部分中转）或飞合肥转高铁</td><td>约 4–5 小时（含中转）</td><td>也可高铁约 9h</td></tr>
+        <tr><td>呼和浩特</td><td>飞合肥/杭州 → 转高铁</td><td>约 5–6 小时（含中转）</td><td>全程最折腾的一家，但可接受</td></tr>
+      </table>
+      <p class="note">黄山北站/黟县东站到民宿车程 20–60 分钟，民宿普遍可安排接站。</p>
+
+      <div class="stay">
+        <div class="stay-top">
+          <h4>云栖深筑 · 徽州院落度假民宿（整院）</h4>
+          <span class="platform">携程 · 黟县碧阳镇深冲村</span>
+        </div>
+        <div class="price">实时价以携程为准 <small>· 整院 10 间房，可容纳 26 人（你们 12 人非常宽裕）</small></div>
+        <p>竹海间的徽派独栋院落，白墙黛瓦、榫卯天井。11 米挑高大厅可容纳全家聚会，配品茶区、棋牌、家庭影院；<b>独立厨房 + 独立餐厅包房可定制徽菜</b>，还有近 100㎡ 观景露台。全屋地暖 + 智能卫浴，允许做饭、允许办派对（23:00 后需安静）。可体验挖笋、摘茶、炒制茶叶。</p>
+        <div class="specs">
+          <span class="spec">10 房 · 可住 26 人</span><span class="spec">棋牌室</span><span class="spec">家庭影院</span><span class="spec">独立厨房/徽菜定制</span><span class="spec">100㎡ 观景露台</span><span class="spec">儿童免费加床政策友好</span>
+        </div>
+        <a class="btn" href="https://hotels.ctrip.com/hotels/133417741.html" target="_blank">去携程预订 →</a>
+      </div>
+
+      <div class="stay">
+        <div class="stay-top">
+          <h4>零柒号公馆精品民宿（守拙园景区店·整栋包栋）</h4>
+          <span class="platform">携程 · 黟县碧阳镇赤岭村 · 评分 4.9</span>
+        </div>
+        <div class="price">实时价以携程为准 <small>· 整栋包栋，适合家庭/团建</small></div>
+        <p>紧邻陶渊明故居守拙园，推窗即徽州田园，晚上非常安静，早起躺在床上看日出。<b>柴火灶做饭 + 自助烧烤</b>是招牌——亲手烹制农家味，傍晚围炉小聚，烟火气拉满，和去年大连别墅的氛围一模一样。老板娘做得一手好菜（小炒仔鸡、笋衣烧肉评价极高）。免费停车充足，近西递、宏村、南屏。</p>
+        <div class="specs">
+          <span class="spec">整栋包栋</span><span class="spec">柴火灶</span><span class="spec">自助烧烤</span><span class="spec">棋牌室</span><span class="spec">花园</span><span class="spec">评分 4.9（41 条点评）</span>
+        </div>
+        <a class="btn" href="https://hotels.ctrip.com/international/105591426.html" target="_blank">去携程预订 →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ 目的地 2：桐庐 ============ -->
+  <div class="dest">
+    <img src="https://workbuddy-space-static.codebuddy.work/image/sON6FjHz0GIpQFOn2AU6HF.png" alt="富春江山水">
+    <div class="dest-body">
+      <div class="dest-head">
+        <h3>② 浙江 · 桐庐（富春江畔）</h3>
+        <span class="rank silver">综合推荐 No.2</span>
+      </div>
+      <p class="why"><b style="color:#e8b64c;">推荐理由：</b>《富春山居图》实景地，"奇山异水，天下独绝"。交通是四个候选里最便利的——杭州是全国性枢纽，五个城市飞/高铁到杭州都很顺，落地后 1 小时到桐庐。芦茨村、富春江镇一带包栋民宿产业最成熟，KTV、麻将室、江景露台几乎是标配。<b>短板：国庆江浙沪本地客流大，包栋价格比皖南贵 50% 以上，好房源要抢。</b></p>
+      <div class="tags">
+        <span class="tag">富春山居图实景</span><span class="tag">交通最便利</span><span class="tag">包栋产业成熟</span><span class="tag">江景露台</span>
+      </div>
+
+      <div class="tbl-title">五地抵达方式（国庆参考）</div>
+      <table>
+        <tr><th>出发地</th><th>方式</th><th>耗时</th><th>说明</th></tr>
+        <tr><td>南京</td><td>高铁 → 杭州东/桐庐站</td><td>约 1.5–2.5 小时</td><td>二等座约 ¥120–200</td></tr>
+        <tr><td>北京</td><td>高铁 → 杭州东</td><td>约 5–6 小时</td><td>或飞杭州约 2h</td></tr>
+        <tr><td>深圳</td><td>飞杭州</td><td>约 2 小时</td><td>高铁约 7h 可选</td></tr>
+        <tr><td>成都</td><td>飞杭州</td><td>约 2.5 小时</td><td>航班密集</td></tr>
+        <tr><td>呼和浩特</td><td>飞杭州（有直飞）</td><td>约 2 小时 10 分</td><td>比去黟县顺</td></tr>
+      </table>
+      <p class="note">杭州东/机场到桐庐民宿约 1–1.5 小时车程；部分高铁直达桐庐站，房东多可接站。</p>
+
+      <div class="stay">
+        <div class="stay-top">
+          <h4>倚江山居 · 富春江景联排别墅（整栋）</h4>
+          <span class="platform">木鸟民宿 · 桐庐富春江街道</span>
+        </div>
+        <div class="price">¥1,986 <small>/ 晚（整栋 · 日历显示 9 月均价，国庆以实时为准）</small></div>
+        <p>306㎡ 江景别墅，6 室 6 卫 10 张床可住 12 人——和你们的人数严丝合缝。<b>负一楼独立 KTV + 家庭影院 + 独立麻将室</b>，二楼露台看山水，一楼厨房可自助烹饪（房东可提供食材），出门就是富春江游步道和钓鱼台。小区 24 小时安保、免费停车，坐高铁来房东免费接站。</p>
+        <div class="specs">
+          <span class="spec">6 室 10 床 · 住 12 人</span><span class="spec">KTV</span><span class="spec">家庭影院</span><span class="spec">独立麻将室</span><span class="spec">江景露台</span><span class="spec">免费接站</span>
+        </div>
+        <a class="btn" href="https://m.muniao.com/h5room/1009925.html" target="_blank">去木鸟预订 →</a>
+      </div>
+
+      <div class="stay">
+        <div class="stay-top">
+          <h4>桐庐花庐精品民宿 · 六室包栋</h4>
+          <span class="platform">木鸟民宿 · 桐庐富春江镇芦茨深坑村</span>
+        </div>
+        <div class="price">¥5,000 <small>/ 晚（整栋 · 平日参考价，国庆以实时为准）</small></div>
+        <p>芦茨村是富春江畔最有名的"民宿村"，四面环山、村口就是江。四季满花庭院 + 复古民国设计，6 室 7 床可住 12 人，配<b>麻将机、卡拉 OK、游戏机、花园、观景露台</b>。村子本身安静，晚上只有虫鸣江水声。适合想要"颜值更高、更有设计感"的一家人。</p>
+        <div class="specs">
+          <span class="spec">6 室 7 床 · 住 12 人</span><span class="spec">麻将机</span><span class="spec">卡拉 OK</span><span class="spec">花园庭院</span><span class="spec">观景露台</span><span class="spec">芦茨村江边</span>
+        </div>
+        <a class="btn" href="https://m.muniao.com/h5room/1089128.html" target="_blank">去木鸟预订 →</a>
+        <a class="btn ghost" href="https://hotels.corporatetravel.ctrip.com/hotels/67088284.html" target="_blank">高端备选：Cloud9云外（12房24人·泳池温泉）→</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ 目的地 3：阳朔 ============ -->
+  <div class="dest">
+    <img src="https://workbuddy-space-static.codebuddy.work/image/7m41Zz6aTwl43XspgfbA7u.png" alt="阳朔遇龙河">
+    <div class="dest-body">
+      <div class="dest-head">
+        <h3>③ 广西 · 阳朔（遇龙河畔）</h3>
+        <span class="rank bronze">综合推荐 No.3</span>
+      </div>
+      <p class="why"><b style="color:#e8b64c;">推荐理由：</b>山水天花板，"桂林山水甲天下，阳朔山水甲桂林"。遇龙河被称为"小漓江"，比漓江更秀气安静。对<b>深圳家庭极其友好</b>（高铁 3 小时直达阳朔站），北方三家飞桂林也可接受。十月的遇龙河稻田金黄、水位正好，包栋价格是四个候选里最低的。<b>短板：西街一带国庆人多，务必选遇龙河沿线村子（骥马村、朝阳村），远离县城。</b></p>
+      <div class="tags">
+        <span class="tag">山水天花板</span><span class="tag">深圳高铁 3h</span><span class="tag">包栋最便宜</span><span class="tag">稻田金黄</span>
+      </div>
+
+      <div class="tbl-title">五地抵达方式（国庆参考）</div>
+      <table>
+        <tr><th>出发地</th><th>方式</th><th>耗时</th><th>说明</th></tr>
+        <tr><td>深圳</td><td>高铁 → 阳朔站</td><td>约 3 小时</td><td>最方便，二等座约 ¥250</td></tr>
+        <tr><td>成都</td><td>飞桂林两江机场</td><td>约 1.5–2 小时</td><td>或高铁约 6.5h</td></tr>
+        <tr><td>北京</td><td>飞桂林</td><td>约 3 小时</td><td>国庆机票较高，早订</td></tr>
+        <tr><td>南京</td><td>飞桂林</td><td>约 2 小时</td><td>直飞航班可选</td></tr>
+        <tr><td>呼和浩特</td><td>飞桂林（多需中转）</td><td>约 5–7 小时</td><td>全程最远的一家</td></tr>
+      </table>
+      <p class="note">桂林机场/阳朔高铁站 → 遇龙河民宿约 40–80 分钟车程。</p>
+
+      <div class="stay">
+        <div class="stay-top">
+          <h4>遇龙河整栋民宿 · 8 室 8 卫</h4>
+          <span class="platform">木鸟民宿 · 阳朔骥马村枫木坪（近十里画廊）</span>
+        </div>
+        <div class="price">¥1,429 <small>/ 晚（整栋 · 9 月日历价，国庆以实时为准）</small></div>
+        <p>300㎡ 自建独栋，8 室 8 卫 14 张床可住 19 人——四个家庭每家两间都用不完。位置在骥马村，近遇龙河、十里画廊，但村子里很安静。配<b>麻将机、桌面游戏、花园、全套厨具</b>（燃气灶、电磁炉、电饭煲、微波炉俱全），免费停车。100% 好评率，房东接待家庭团经验丰富。人均算下来一晚不到 ¥120，性价比四个候选里最高。</p>
+        <div class="specs">
+          <span class="spec">8 室 14 床 · 住 19 人</span><span class="spec">麻将机</span><span class="spec">全套厨房</span><span class="spec">花园</span><span class="spec">免费停车</span><span class="spec">100% 好评</span>
+        </div>
+        <a class="btn" href="https://m.muniao.com/h5room/1063901.html" target="_blank">去木鸟预订 →</a>
+        <a class="btn ghost" href="https://www.tujia.com/yangshuo_gongyu/" target="_blank">途家看更多阳朔整栋 →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ 目的地 4：张家界 ============ -->
+  <div class="dest">
+    <img src="https://workbuddy-space-static.codebuddy.work/image/2gbTDFgyrKVgNzcrWoKk6U.png" alt="张家界峰林">
+    <div class="dest-body">
+      <div class="dest-head">
+        <h3>④ 湖南 · 张家界（武陵源）</h3>
+        <span class="rank fourth">综合推荐 No.4</span>
+      </div>
+      <p class="why"><b style="color:#e8b64c;">推荐理由：</b>砂岩峰林是四个候选里最震撼的景观，武陵源城区包栋别墅供给充足、带 KTV 厨房的房源多，价格适中。成都、深圳、北京、南京均有直飞或便利中转。<b>短板明显：国庆张家界是全国顶流景区，虽然你们不逛景点，但进出武陵源的道路、餐饮配套都会拥挤，"安静感"打折</b>——适合纯宅在别墅里、完全不出门的玩法。</p>
+      <div class="tags">
+        <span class="tag">峰林震撼</span><span class="tag">别墅供给多</span><span class="tag">直飞便利</span><span class="tag">国庆人流大</span>
+      </div>
+
+      <div class="tbl-title">五地抵达方式（国庆参考）</div>
+      <table>
+        <tr><th>出发地</th><th>方式</th><th>耗时</th><th>说明</th></tr>
+        <tr><td>成都</td><td>飞张家界荷花机场</td><td>约 1.5 小时</td><td>最方便</td></tr>
+        <tr><td>深圳</td><td>飞张家界</td><td>约 2 小时</td><td>直飞可选</td></tr>
+        <tr><td>北京</td><td>飞张家界</td><td>约 2.5 小时</td><td>直飞可选</td></tr>
+        <tr><td>南京</td><td>飞张家界</td><td>约 1.5–2 小时</td><td>直飞/中转可选</td></tr>
+        <tr><td>呼和浩特</td><td>飞张家界（中转）</td><td>约 5–6 小时</td><td>全程最远</td></tr>
+      </table>
+      <p class="note">机场 → 武陵源城区约 40–50 分钟车程。</p>
+
+      <div class="stay">
+        <div class="stay-top">
+          <h4>麦田居 · 独栋庭院别墅</h4>
+          <span class="platform">木鸟民宿 · 武陵源城区（铂尔曼酒店旁）</span>
+        </div>
+        <div class="price">¥3,588 <small>/ 晚（整栋 · 参考价，国庆以实时为准）</small></div>
+        <p>240㎡ 独栋庭院别墅，5 卧 5 床宜住 10 人（你们 12 人需和房东确认加床/儿童同睡）。配<b>卡拉 OK、音响设备、全套厨房</b>（基础调料齐备，10 分钟车程内有菜市场）、花园和观景露台。四木精选房源，位置在武陵源城区，补给方便又闹中取静。</p>
+        <div class="specs">
+          <span class="spec">5 卧 · 宜住 10 人</span><span class="spec">卡拉 OK</span><span class="spec">厨房+调料</span><span class="spec">花园庭院</span><span class="spec">观景露台</span>
+        </div>
+        <a class="btn" href="https://m.muniao.com/h5room/1343831.html" target="_blank">去木鸟预订 →</a>
+      </div>
+
+      <div class="stay">
+        <div class="stay-top">
+          <h4>小巷 66 号民宿 · 整栋</h4>
+          <span class="platform">木鸟民宿 · 武陵源军地坪</span>
+        </div>
+        <div class="price">¥898 <small>/ 晚（整栋 · 平日参考价，国庆以实时为准）</small></div>
+        <p>450㎡ 独栋原生态民居，5 室 6 床宜住 10 人，大中小三个客厅 + 阳光花房，"想热闹，就在大厅开派对"。老板自营专用停车场免费停车，还能帮忙规划路线、代订优惠门票，有机会和土家阿哥小酌一杯。价格极其实惠。</p>
+        <div class="specs">
+          <span class="spec">5 室 · 宜住 10 人</span><span class="spec">三个客厅</span><span class="spec">阳光花房</span><span class="spec">免费停车</span><span class="spec">门票代订</span>
+        </div>
+        <a class="btn" href="https://m.muniao.com/h5room/60659.html" target="_blank">去木鸟预订 →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ 对比总表 ============ -->
+  <h2 class="section">三、四地横向对比</h2>
+  <p class="section-sub">打分基于：五地交通均衡性 / 山水环境 / 国庆安静度 / 包栋价格 / 房源匹配度（住 12 人 + 麻将 KTV 厨房）</p>
+  <table>
+    <tr><th>目的地</th><th>交通均衡</th><th>山水环境</th><th>国庆安静度</th><th>包栋价格/晚</th><th>12人匹配房源</th><th>综合</th></tr>
+    <tr><td>皖南黟县</td><td>★★★★</td><td>★★★★</td><td>★★★★★</td><td>约 ¥2,500–5,000</td><td>充足（可住 26 人的院子都有）</td><td><b style="color:#e8b64c;">★★★★★</b></td></tr>
+    <tr><td>浙江桐庐</td><td>★★★★★</td><td>★★★★</td><td>★★★</td><td>约 ¥2,000–5,000</td><td>充足</td><td><b style="color:#e8b64c;">★★★★</b></td></tr>
+    <tr><td>桂林阳朔</td><td>★★★</td><td>★★★★★</td><td>★★★★（选对村子）</td><td>约 ¥1,400–3,500</td><td>充足</td><td><b style="color:#e8b64c;">★★★★</b></td></tr>
+    <tr><td>张家界</td><td>★★★★</td><td>★★★★★</td><td>★★</td><td>约 ¥900–3,600</td><td>一般（多为宜住 10 人）</td><td><b style="color:#e8b64c;">★★★</b></td></tr>
+  </table>
+
+  <!-- ============ 最终建议 ============ -->
+  <h2 class="section">四、最终建议</h2>
+  <div class="verdict">
+    <h3>首选皖南黟县，备选桐庐，山水优先选阳朔</h3>
+    <ol>
+      <li><b>如果全家的投票权在"安静 + 吃住体验"上 → 选皖南黟县。</b>云栖深筑整院（10 房住 26 人，徽菜厨房 + 棋牌影院 + 观景露台）几乎是为你们这个局量身定做的；南京 2 小时、北京 6 小时直达，只有呼和浩特一家需要中转。四家人平摊，一晚人均约 ¥200–400。</li>
+      <li><b>如果更看重"谁都别折腾" → 选桐庐。</b>杭州枢纽对五个城市都友好，倚江山居 6 室 12 人、KTV 麻将影院一应俱全，¥1,986/晚的价格四家人摊下来一晚人均才 ¥165。代价是国庆江浙沪人多，进村出村可能堵车。</li>
+      <li><b>如果想要"开窗就是明信片" → 选阳朔。</b>遇龙河的山水是天花板，¥1,429/晚的 8 室大宅性价比无敌，深圳家庭最舒服。北方三家飞桂林即可。</li>
+      <li><b>张家界排第四</b>，不是不好，而是国庆的张家界"安静"这项不及格——除非全家铁了心七天不出别墅门。</li>
+    </ol>
+  </div>
+
+  <!-- ============ 预订清单 ============ -->
+  <h2 class="section">五、下单前核对清单</h2>
+  <p class="section-sub">国庆包栋是稀缺资源，建议本周内完成预订（9 月中旬是最后窗口期）</p>
+  <div class="checklist">
+    <ul>
+      <li><b>人数床型先定死</b>：8 大 4 小共 12 人，确认每家是否有独立房间、孩子跟谁睡，按"整栋可住人数 ≥12 + 床型"筛。</li>
+      <li><b>问清三件事</b>：麻将桌有没有、KTV 晚上能唱到几点（部分民宿 22:00/23:00 后要求安静）、厨房能不能炒大菜/用柴火灶。</li>
+      <li><b>确认停车</b>：自驾家庭问清免费停车位数量。</li>
+      <li><b>看清退改</b>：国庆房源多为"入住前 1–3 天不可退"或扣 50%，付定金前截图留存。</li>
+      <li><b>大交通同步订</b>：高铁票 9 月 16 日起售 10 月 1 日车票（提前 15 天），机票现在就可以锁。</li>
+      <li><b>火锅烧烤食材</b>：提前问房东能否代购/提供厨具炭火，到了先去镇上菜市场大采购一趟，后面几天就不用出门了。</li>
+    </ul>
+  </div>
+
+  <footer>
+    报告生成时间：2026 年 9 月 10 日 · 价格为当日平台显示参考价，国庆实时价与库存以预订页为准<br>
+    目的地配图为 AI 生成的意境示意图，真实环境以房源照片为准 · 预订跳转至携程 / 木鸟 / 途家官方页面
+  </footer>
+
+</div>
+</body>
+</html>

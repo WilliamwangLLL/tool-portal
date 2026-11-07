@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>像内部高手一样用 AI · Anthropic 研究员与工程师的进阶方法论</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Noto+Serif+SC:wght@500;700;900&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#E8EAE4;
+  --paper-2:#EFF0EB;
+  --card:#F4F5F1;
+  --ink:#14201E;
+  --ink-soft:#46524F;
+  --ink-faint:#7C857F;
+  --line:rgba(20,32,30,.14);
+  --line-strong:rgba(20,32,30,.30);
+  --teal:#0E6A60;
+  --teal-deep:#0A4A44;
+  --amber:#BE6A12;
+  --amber-soft:#E9A03B;
+  --brick:#A6432C;
+  --paper-dark:#13201D;
+  --shadow:0 1px 0 rgba(20,32,30,.05),0 18px 40px -28px rgba(10,40,36,.45);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:"Noto Sans SC",system-ui,sans-serif;
+  font-weight:400;line-height:1.72;letter-spacing:.005em;
+  font-feature-settings:"kern" 1;
+  -webkit-font-smoothing:antialiased;
+  background-image:
+    linear-gradient(var(--line) 1px,transparent 1px),
+    linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:38px 38px;
+  background-position:-1px -1px;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:0 26px}
+.mono{font-family:"JetBrains Mono",monospace}
+.gk{font-family:"Space Grotesk",sans-serif}
+.serif{font-family:"Noto Serif SC",serif}
+
+/* ---------- eyebrow / labels ---------- */
+.eyebrow{
+  font-family:"JetBrains Mono",monospace;font-size:11.5px;font-weight:500;
+  letter-spacing:.22em;text-transform:uppercase;color:var(--teal);
+  display:inline-flex;align-items:center;gap:9px;
+}
+.eyebrow::before{content:"";width:22px;height:1.5px;background:var(--teal);display:inline-block}
+
+/* ---------- top bar ---------- */
+.topbar{
+  border-bottom:1px solid var(--line-strong);background:rgba(232,234,228,.86);
+  backdrop-filter:blur(8px);position:sticky;top:0;z-index:40;
+}
+.topbar .wrap{display:flex;justify-content:space-between;align-items:center;height:50px}
+.topbar .id{font-family:"JetBrains Mono",monospace;font-size:11.5px;letter-spacing:.12em;color:var(--ink-soft)}
+.topbar .id b{color:var(--ink);font-weight:700}
+.topbar .meta{font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--ink-faint);letter-spacing:.08em}
+.dotpulse{width:7px;height:7px;border-radius:50%;background:var(--amber);display:inline-block;margin-right:7px;vertical-align:middle;box-shadow:0 0 0 0 rgba(190,106,18,.5);animation:pulse 2.4s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(190,106,18,.45)}70%{box-shadow:0 0 0 7px rgba(190,106,18,0)}100%{box-shadow:0 0 0 0 rgba(190,106,18,0)}}
+
+/* ---------- HERO ---------- */
+.hero{padding:74px 0 38px;position:relative}
+.hero .eyebrow{margin-bottom:26px}
+.htitle{
+  font-family:"Noto Serif SC",serif;font-weight:900;
+  font-size:clamp(33px,6.4vw,68px);line-height:1.04;letter-spacing:-.01em;
+  margin:0 0 8px;
+}
+.htitle .hl{color:var(--teal);position:relative;white-space:nowrap}
+.htitle .am{color:var(--amber)}
+.hsub{
+  font-size:clamp(15px,2.1vw,19px);color:var(--ink-soft);max-width:62ch;
+  margin:22px 0 0;line-height:1.75;font-weight:400;
+}
+.hsub b{color:var(--ink);font-weight:700}
+.hmetarow{
+  display:flex;flex-wrap:wrap;gap:10px 26px;margin-top:30px;
+  font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--ink-faint);letter-spacing:.04em;
+}
+.hmetarow span b{color:var(--teal);font-weight:700}
+
+/* signature hero diagram: two mindsets */
+.signature{
+  margin-top:48px;border:1px solid var(--line-strong);border-radius:3px;
+  background:var(--paper-2);overflow:hidden;box-shadow:var(--shadow);
+}
+.sig-head{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:11px 18px;border-bottom:1px solid var(--line);
+  font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);
+}
+.sig-grid{display:grid;grid-template-columns:1fr 1fr}
+.sig-cell{padding:26px 24px 30px}
+.sig-cell.left{border-right:1px solid var(--line)}
+.sig-tag{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px}
+.sig-cell.left .sig-tag{color:var(--brick)}
+.sig-cell.right .sig-tag{color:var(--teal)}
+.sig-h{font-family:"Noto Serif SC",serif;font-weight:700;font-size:clamp(18px,2.5vw,23px);line-height:1.25;margin:0 0 14px}
+.sig-desc{font-size:13.5px;color:var(--ink-soft);line-height:1.6;margin:0}
+.horses{margin-top:18px;line-height:1}
+.horse-row{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
+.horse{font-size:15px;opacity:.9}
+.car{font-size:30px}
+
+@media(max-width:680px){
+  .sig-grid{grid-template-columns:1fr}
+  .sig-cell.left{border-right:none;border-bottom:1px solid var(--line)}
+}
+
+/* ---------- stat band ---------- */
+.band{background:var(--paper-dark);color:#E8EAE4;margin-top:54px;border-top:1px solid #000;border-bottom:1px solid #000}
+.band .wrap{padding:40px 26px 36px}
+.band .eyebrow{color:var(--amber-soft)}
+.band .eyebrow::before{background:var(--amber-soft)}
+.band-title{font-family:"Noto Serif SC",serif;font-weight:700;font-size:clamp(20px,3vw,27px);margin:16px 0 6px;color:#F2F3EE}
+.band-note{font-size:13px;color:#9FB0AB;margin:0 0 28px;font-family:"JetBrains Mono",monospace;letter-spacing:.03em}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.1)}
+.stat{background:var(--paper-dark);padding:22px 20px 20px}
+.stat .num{font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:clamp(30px,5vw,46px);line-height:1;color:#fff;letter-spacing:-.02em}
+.stat .num .u{font-size:.42em;color:var(--amber-soft);font-weight:600;margin-left:3px}
+.stat .lab{font-size:12.5px;color:#B7C5C0;margin-top:10px;line-height:1.45}
+.stat .src{font-family:"JetBrains Mono",monospace;font-size:9.5px;color:#6E817C;margin-top:9px;letter-spacing:.06em}
+@media(max-width:680px){.stats{grid-template-columns:1fr 1fr}}
+@media(max-width:430px){.stats{grid-template-columns:1fr}}
+
+/* ---------- BLUF ---------- */
+.bluf{padding:62px 0 8px}
+.bluf-card{
+  border-left:3px solid var(--amber);background:var(--card);
+  padding:30px 32px 32px;border-radius:0 3px 3px 0;box-shadow:var(--shadow);
+}
+.bluf-card .eyebrow{color:var(--amber);margin-bottom:18px}
+.bluf-card .eyebrow::before{background:var(--amber)}
+.bluf-lead{font-family:"Noto Serif SC",serif;font-weight:700;font-size:clamp(19px,2.7vw,25px);line-height:1.45;margin:0 0 20px;letter-spacing:-.005em}
+.bluf-lead .u{color:var(--teal)}
+.bluf-card p{font-size:15px;color:var(--ink-soft);margin:0 0 14px;line-height:1.78}
+.bluf-card p:last-child{margin-bottom:0}
+.bluf-card b{color:var(--ink);font-weight:700}
+
+/* ---------- section scaffold ---------- */
+section.major{padding:58px 0 14px;scroll-margin-top:60px}
+.sec-head{display:flex;align-items:baseline;gap:16px;border-bottom:1px solid var(--line-strong);padding-bottom:16px;margin-bottom:30px}
+.sec-no{font-family:"JetBrains Mono",monospace;font-weight:700;font-size:13px;color:var(--amber);letter-spacing:.06em;flex-shrink:0;padding-top:4px}
+.sec-tt{flex:1}
+.sec-tt h2{font-family:"Noto Serif SC",serif;font-weight:900;font-size:clamp(23px,3.6vw,34px);line-height:1.12;margin:0;letter-spacing:-.01em}
+.sec-tt .sub{font-size:13.5px;color:var(--ink-faint);margin-top:8px;font-family:"JetBrains Mono",monospace;letter-spacing:.02em}
+
+p.body{font-size:15px;color:var(--ink-soft);line-height:1.82;margin:0 0 18px;max-width:74ch}
+p.body b{color:var(--ink);font-weight:600}
+.lead-in{font-size:16.5px;color:var(--ink);max-width:74ch;line-height:1.8;margin:0 0 24px}
+.lead-in b{color:var(--teal);font-weight:700}
+
+/* source tag */
+.s{font-family:"JetBrains Mono",monospace;font-size:10px;color:var(--teal);vertical-align:super;font-weight:500;letter-spacing:.02em;padding:0 1px}
+
+/* ---------- two-mindset altitude diagram (svg holder) ---------- */
+.figure{margin:30px 0 34px;border:1px solid var(--line);border-radius:3px;background:var(--paper-2);box-shadow:var(--shadow);overflow:hidden}
+.fig-head{padding:12px 18px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px}
+.fig-head .t{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);font-weight:500}
+.fig-head .n{font-family:"JetBrains Mono",monospace;font-size:10px;color:var(--ink-faint);letter-spacing:.08em}
+.fig-body{padding:24px 22px}
+.fig-cap{padding:0 22px 18px;font-size:12.5px;color:var(--ink-faint);line-height:1.6}
+.fig-cap b{color:var(--ink-soft)}
+svg{display:block;max-width:100%;height:auto}
+
+/* ---------- technique cards ---------- */
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:8px 0 26px}
+.tcard{border:1px solid var(--line);background:var(--card);border-radius:3px;padding:22px 22px 20px;position:relative;transition:transform .25s,box-shadow .25s}
+.tcard:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+.tcard .k{font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.1em;color:var(--amber);font-weight:500;text-transform:uppercase}
+.tcard h4{font-family:"Noto Sans SC",sans-serif;font-weight:700;font-size:17px;margin:9px 0 9px;line-height:1.3;color:var(--ink)}
+.tcard p{font-size:13.5px;color:var(--ink-soft);line-height:1.62;margin:0}
+.tcard p b{color:var(--ink);font-weight:600}
+.tcard .insider{margin-top:12px;padding-top:11px;border-top:1px dashed var(--line);font-size:12px;color:var(--teal-deep);line-height:1.55}
+.tcard .insider b{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);display:block;margin-bottom:3px}
+@media(max-width:680px){.cards{grid-template-columns:1fr}}
+
+/* prompt before/after */
+.codecompare{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:18px 0 26px}
+.codebox{border:1px solid var(--line);border-radius:3px;overflow:hidden;background:var(--paper-dark)}
+.codebox .ch{padding:9px 14px;font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;border-bottom:1px solid rgba(255,255,255,.1)}
+.codebox.bad .ch{color:var(--amber-soft);background:rgba(166,67,44,.18)}
+.codebox.good .ch{color:#7FD8C6;background:rgba(14,106,96,.22)}
+.codebox pre{margin:0;padding:15px 14px;font-family:"JetBrains Mono",monospace;font-size:11.5px;line-height:1.65;color:#D7DCD7;white-space:pre-wrap;word-break:break-word}
+.codebox .cm{color:#7E8B86}
+.codebox .tag{color:var(--amber-soft)}
+@media(max-width:680px){.codecompare{grid-template-columns:1fr}}
+
+/* delegation checklist */
+.deleg{border:1px solid var(--line-strong);border-radius:3px;overflow:hidden;margin:8px 0 24px;background:var(--card)}
+.deleg-row{display:grid;grid-template-columns:34px 1fr;gap:0;border-bottom:1px solid var(--line)}
+.deleg-row:last-child{border-bottom:none}
+.deleg-row .mark{display:flex;align-items:center;justify-content:center;font-family:"JetBrains Mono",monospace;font-weight:700;font-size:13px;border-right:1px solid var(--line)}
+.deleg-row.yes .mark{background:rgba(14,106,96,.12);color:var(--teal)}
+.deleg-row.no .mark{background:rgba(166,67,44,.1);color:var(--brick)}
+.deleg-row .txt{padding:14px 18px}
+.deleg-row .txt h5{font-size:14.5px;font-weight:700;margin:0 0 4px;color:var(--ink)}
+.deleg-row .txt p{font-size:12.5px;color:var(--ink-soft);margin:0;line-height:1.55}
+.deleg-split{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:8px 0 24px}
+@media(max-width:680px){.deleg-split{grid-template-columns:1fr}}
+.deleg-h{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;padding:11px 14px;font-weight:600}
+.deleg-yes .deleg-h{color:var(--teal);background:rgba(14,106,96,.1)}
+.deleg-no .deleg-h{color:var(--brick);background:rgba(166,67,44,.08)}
+
+/* callout / quote */
+.quote{border-left:3px solid var(--teal);padding:6px 0 6px 22px;margin:26px 0;max-width:70ch}
+.quote p{font-family:"Noto Serif SC",serif;font-weight:500;font-size:clamp(17px,2.4vw,21px);line-height:1.5;color:var(--ink);margin:0 0 10px;font-style:italic}
+.quote cite{font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--ink-faint);letter-spacing:.04em;font-style:normal}
+
+/* warning cards (overrated) */
+.warn{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:8px 0 24px}
+.wcard{border:1px solid var(--line);border-left:3px solid var(--brick);background:var(--card);border-radius:0 3px 3px 0;padding:20px 22px}
+.wcard .k{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--brick);font-weight:600}
+.wcard h4{font-size:16px;font-weight:700;margin:8px 0 8px;line-height:1.3}
+.wcard p{font-size:13px;color:var(--ink-soft);line-height:1.6;margin:0}
+.wcard p b{color:var(--ink)}
+@media(max-width:680px){.warn{grid-template-columns:1fr}}
+
+/* action / ROI */
+.prio{border:1px solid var(--line-strong);border-radius:3px;overflow:hidden;margin:10px 0 22px}
+.prio-row{display:grid;grid-template-columns:48px 1fr;border-bottom:1px solid var(--line);background:var(--card)}
+.prio-row:last-child{border-bottom:none}
+.prio-row .rank{display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--paper-dark);color:#fff;font-family:"Space Grotesk",sans-serif;font-weight:700}
+.prio-row .rank .n{font-size:19px;line-height:1}
+.prio-row .rank .l{font-family:"JetBrains Mono",monospace;font-size:8px;color:var(--amber-soft);letter-spacing:.05em;margin-top:3px}
+.prio-row .body2{padding:16px 20px}
+.prio-row .body2 h5{font-size:15.5px;font-weight:700;margin:0 0 5px;color:var(--ink)}
+.prio-row .body2 h5 .tag2{font-family:"JetBrains Mono",monospace;font-size:9.5px;font-weight:500;letter-spacing:.06em;color:var(--teal);background:rgba(14,106,96,.1);padding:2px 7px;border-radius:2px;margin-left:8px;vertical-align:middle}
+.prio-row .body2 p{font-size:13px;color:var(--ink-soft);line-height:1.6;margin:0}
+.prio-row .body2 p b{color:var(--ink)}
+
+/* sources */
+.sources{display:grid;grid-template-columns:1fr 1fr;gap:30px;margin-top:14px}
+@media(max-width:680px){.sources{grid-template-columns:1fr}}
+.src-col h4{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);border-bottom:1px solid var(--line-strong);padding-bottom:8px;margin:0 0 14px}
+.src-col.sec h4{color:var(--amber)}
+.src-item{margin-bottom:15px;font-size:12.5px;line-height:1.5}
+.src-item .ref{font-family:"JetBrains Mono",monospace;font-weight:700;color:var(--ink);margin-right:6px}
+.src-item .ti{color:var(--ink);font-weight:600}
+.src-item .dt{color:var(--ink-faint);font-family:"JetBrains Mono",monospace;font-size:10.5px;display:block;margin-top:2px;letter-spacing:.03em}
+
+/* appendix cheat sheet */
+.cheat{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:10px}
+@media(max-width:680px){.cheat{grid-template-columns:1fr}}
+.cheat-col{border:1px solid var(--line);border-radius:3px;background:var(--card);padding:20px 22px}
+.cheat-col h4{font-size:14px;font-weight:700;margin:0 0 12px;display:flex;align-items:center;gap:8px}
+.cheat-col h4 .ico{font-family:"JetBrains Mono",monospace;font-size:11px;color:#fff;background:var(--teal);width:20px;height:20px;border-radius:3px;display:inline-flex;align-items:center;justify-content:center;font-weight:700}
+.cheat-col ul{margin:0;padding:0;list-style:none}
+.cheat-col li{font-size:12.8px;color:var(--ink-soft);padding:7px 0 7px 18px;border-bottom:1px dashed var(--line);position:relative;line-height:1.5}
+.cheat-col li:last-child{border-bottom:none}
+.cheat-col li::before{content:"→";position:absolute;left:0;color:var(--amber);font-family:"JetBrains Mono",monospace;font-size:11px}
+.cheat-col li b{color:var(--ink);font-weight:600}
+
+/* disclaimer footer */
+.disc{margin-top:50px;border-top:1px solid var(--line-strong);padding:28px 0 64px;font-size:11.5px;color:var(--ink-faint);line-height:1.7;font-family:"JetBrains Mono",monospace;letter-spacing:.02em}
+.disc b{color:var(--ink-soft)}
+.foot-mark{font-family:"Noto Serif SC",serif;font-weight:900;font-size:15px;color:var(--ink);letter-spacing:.02em;margin-bottom:8px;display:block}
+
+hr.div{border:none;border-top:1px solid var(--line);margin:34px 0}
+.inline-meter{display:inline-block;width:120px;height:7px;background:rgba(20,32,30,.12);border-radius:4px;vertical-align:middle;margin:0 8px;position:relative;overflow:hidden}
+.inline-meter i{position:absolute;left:0;top:0;height:100%;background:var(--teal);border-radius:4px}
+
+@media (prefers-reduced-motion: reduce){
+  *{animation:none!important;transition:none!important}
+}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="wrap">
+    <div class="id"><span class="dotpulse"></span><b>调研档案</b> · INSIDER-AI / 进阶用法</div>
+    <div class="meta">L3 深度尽调 · 2026-06-27</div>
+  </div>
+</div>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">来自 Anthropic 内部的视角 · 研究员 / 工程师如何用 Claude</div>
+    <h1 class="htitle">普通人把 AI 当<span class="am">"更快的车"</span>，<br>高手把它当成<span class="hl">"被管理的智能体团队"</span></h1>
+    <p class="hsub">真正拉开差距的，从来不是更花哨的 Prompt 指令，而是一套<b>内部人默认、外部人陌生</b>的心智模型与工作流：把每一次交互当成"上下文工程"，把注意力当成可耗尽的预算，把自己从"提问者"升级为"一群 Claude 的管理者"。本报告从 Anthropic 官方一手研究、Claude Code 创造者访谈与各业务团队实战手册中，提炼可直接复用的进阶方法。</p>
+    <div class="hmetarow">
+      <span>样本 · <b>132 名工程师/研究员</b></span>
+      <span>访谈 · <b>53 场深访</b></span>
+      <span>行为数据 · <b>200,000 条使用记录</b></span>
+      <span>视角 · <b>中立综述 + 反方</b></span>
+    </div>
+
+    <!-- SIGNATURE FIGURE: two mindsets -->
+    <div class="signature">
+      <div class="sig-head"><span>核心分野 · 两种心智模型</span><span class="mono">FIG.00</span></div>
+      <div class="sig-grid">
+        <div class="sig-cell left">
+          <div class="sig-tag">普通用户的默认假设</div>
+          <h3 class="sig-h">一台更快的车</h3>
+          <p class="sig-desc">把模型当成"一个聪明实例"，一次提问、一次回答、追求"一把梭一次到位"（one-shot）。串行、被动、把 AI 当搜索引擎或代笔。</p>
+          <div class="horses"><div class="car">🚗</div></div>
+        </div>
+        <div class="sig-cell right">
+          <div class="sig-tag">内部高手的实际做法</div>
+          <h3 class="sig-h">一千匹马</h3>
+          <p class="sig-desc">同时跑多个实例，各自探索不同思路；用规划、子代理、上下文管理把任务拆解、并行、交叉验证。把"产出"的瓶颈从"自己动手"换成"管理与审阅"。</p>
+          <div class="horses"><div class="horse-row">
+            <span class="horse">🐎</span><span class="horse">🐎</span><span class="horse">🐎</span><span class="horse">🐎</span><span class="horse">🐎</span><span class="horse">🐎</span><span class="horse">🐎</span><span class="horse">🐎</span><span class="horse">🐎</span><span class="horse">🐎</span><span class="horse">🐎</span><span class="horse">🐎</span><span class="horse">🐎</span><span class="horse">🐎</span><span class="horse">🐎</span><span class="horse">🐎</span><span class="horse">🐎</span><span class="horse">🐎</span>
+          </div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- STAT BAND -->
+<div class="band">
+  <div class="wrap">
+    <div class="eyebrow">硬数据 · Anthropic 内部实测（2025）</div>
+    <h2 class="band-title">不是"感觉变快了"，是有量化口径的跃迁</h2>
+    <p class="band-note">来源 [A1]「How AI Is Transforming Work at Anthropic」, Anthropic Societal Impacts, 2025-12-02。口径见文末来源。</p>
+    <div class="stats">
+      <div class="stat"><div class="num">59<span class="u">%</span></div><div class="lab">员工日常工作中使用 Claude 的占比（一年前为 28%）</div><div class="src">SELF-REPORT · 132 人</div></div>
+      <div class="stat"><div class="num">+50<span class="u">%</span></div><div class="lab">平均自评生产力提升（一年前为 +20%），约两倍增幅</div><div class="src">SELF-REPORT</div></div>
+      <div class="stat"><div class="num">14<span class="u">%</span></div><div class="lab">"超级用户"：生产力提升超过 100%，把方法用到极致的少数</div><div class="src">POWER USERS</div></div>
+      <div class="stat"><div class="num">21.2</div><div class="lab">Claude Code 单次自主连续工具调用数（半年前仅 9.8），+116%</div><div class="src">200K 记录</div></div>
+      <div class="stat"><div class="num">27<span class="u">%</span></div><div class="lab">"没有 AI 就根本不会去做"的增量工作（仪表盘、探索、补全工具）</div><div class="src">NEW WORK</div></div>
+      <div class="stat"><div class="num">0–20<span class="u">%</span></div><div class="lab">能"完全放手交给 AI"的工作占比——多数仍需人来监督与验证</div><div class="src">FULL DELEGATION</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- BLUF -->
+<section class="bluf">
+  <div class="wrap">
+    <div class="bluf-card">
+      <div class="eyebrow">核心结论 · BLUF</div>
+      <p class="bluf-lead">内部高手的进阶，几乎全部发生在<span class="u">三个普通用户看不到的层面</span>：心智模型、上下文工程、智能体编排——而不是"咒语式"的 Prompt 技巧。</p>
+      <p><b>① 心智模型先变，效率才会变。</b>普通人追求"一次问对"；内部人默认"迭代 + 并行 + 管理"。最贵的认知升级是：把自己从"向 AI 提问的人"，重新定位成"一群 Claude 的管理者与审阅者"，并据此重排工作流。一位研究员的原话是，与其要一台更快的车，不如拥有<b>一千匹马</b>去同时试很多想法。<span class="s">[A1]</span></p>
+      <p><b>② 上下文 = 有限的"注意力预算"，必须像工程一样经营。</b>Anthropic 已把焦点从 "Prompt Engineering" 升级为 "<b>Context Engineering（上下文工程）</b>"：找到"信号最高、数量最少"的那批 token。会变长的对话会"注意力衰减"（context rot），所以高手主动做压缩、外部笔记、子代理隔离，而不是把所有东西塞进一个窗口。<span class="s">[A2]</span></p>
+      <p><b>③ Agentic 用法（Claude Code / Cowork）才是内外差距最大的地方。</b>外部人多把它当"写代码工具"；内部的律师用它搭电话转接系统、市场团队几秒生成上百条广告、数据科学家不懂 JS 也能做可视化。关键招式如<b>规划模式、子代理互相挑刺、stop hook 强制收尾、并行迁移</b>，外部几乎无人系统使用。<span class="s">[A3]</span><span class="s">[S1]</span></p>
+      <p><b>④ 但要去掉幻觉。</b>同样来自内部：Claude Code 首次全自动尝试只有约 <b>1/3 成功率</b>；让审阅子代理"找问题"它一定会找出问题，盲目照改会过度工程化；在熟悉的大型代码库里，开发者常<b>高估</b> AI 带来的提速。把方法用对，远比用得多重要。<span class="s">[S3]</span><span class="s">[A1]</span></p>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 01 -->
+<section class="major" id="s1">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-no">§01</div>
+      <div class="sec-tt"><h2>内部人与普通人的根本差异：心智模型</h2><div class="sub">MENTAL MODELS · 工具相同，假设不同，结果天差地别</div></div>
+    </div>
+
+    <p class="lead-in">同样一个 Claude，普通人和内部高手用出来的差距，<b>90% 来自使用前的假设</b>，而不是指令本身。下面四组心智模型，是内部人默认、外部人陌生的"操作系统"。</p>
+
+    <div class="cards">
+      <div class="tcard">
+        <div class="k">MODEL 01</div>
+        <h4>从"问答"到"管理一群 Claude"</h4>
+        <p>内部工程师把自己重新定义为 <b>"AI 智能体的管理者"</b>——有人常态化同时挂着多个实例，把工作重心从"亲手写"转向"为 1 个、5 个甚至 100 个 Claude 的产出负责"。约 70% 的角色已从"写新代码"变成"审阅与修订"。</p>
+        <div class="insider"><b>外部人不知道</b>把任务当"可并行的工单流"派发，而不是排队等一个回答。</div>
+      </div>
+      <div class="tcard">
+        <div class="k">MODEL 02</div>
+        <h4>一千匹马，而不是一台快车</h4>
+        <p>不要把"更强的模型"想成"更快的同一个实例"。高手会<b>并行起多个 Claude，各自走不同解法</b>，再挑最好的——广度本身带来创造力。一个想法不确定时，就同时试五种，而非纠结选哪一种。</p>
+        <div class="insider"><b>怎么落地</b>多开几个对话/会话分头试不同 prompt 或方案，几分钟后比对结果。</div>
+      </div>
+      <div class="tcard">
+        <div class="k">MODEL 03</div>
+        <h4>"合适的高度"：别太死也别太空</h4>
+        <p>给 AI 的指令要落在 <b>Goldilocks 区间</b>：一端是把复杂逻辑写死（脆弱、难维护），另一端是含糊的高层口号（模型抓不到信号）。正确做法是给足"强启发式"，但留出让模型自己发挥的空间。</p>
+        <div class="insider"><b>反直觉</b>用"深入思考一下这个问题"往往比一步步硬性规定，效果更好。</div>
+      </div>
+      <div class="tcard">
+        <div class="k">MODEL 04</div>
+        <h4>选对模型：你知道要什么吗？</h4>
+        <p>Cowork 负责人的启发式：<b>问题清晰、范围明确 → 用 Sonnet；连自己想要什么都说不清、需要 AI 帮你厘清 → 用 Opus</b>。"给我画个带户型的平面图"是 Sonnet 活；"帮我想清楚怎么安排我的人生"是 Opus 活。</p>
+        <div class="insider"><b>对应你的栈</b>日常驱动用快/省的模型，战略性、开放性问题才上最强模型——和你的路由策略一致。</div>
+      </div>
+    </div>
+
+    <!-- ALTITUDE FIGURE -->
+    <div class="figure">
+      <div class="fig-head"><span class="t">"合适的高度" · 系统指令的两种失败模式</span><span class="n">FIG.01 / SOURCE A2</span></div>
+      <div class="fig-body">
+        <svg viewBox="0 0 900 230" role="img" aria-label="系统提示词的合适高度示意图">
+          <defs>
+            <linearGradient id="grad1" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#A6432C"/>
+              <stop offset="0.5" stop-color="#0E6A60"/>
+              <stop offset="1" stop-color="#BE6A12"/>
+            </linearGradient>
+          </defs>
+          <!-- baseline -->
+          <line x1="60" y1="150" x2="840" y2="150" stroke="url(#grad1)" stroke-width="3"/>
+          <!-- left end -->
+          <circle cx="80" cy="150" r="7" fill="#A6432C"/>
+          <text x="80" y="185" text-anchor="middle" font-family="JetBrains Mono" font-size="13" font-weight="700" fill="#A6432C">太死</text>
+          <text x="80" y="205" text-anchor="middle" font-family="Noto Sans SC" font-size="12" fill="#46524F">硬编码 if-else</text>
+          <text x="80" y="221" text-anchor="middle" font-family="Noto Sans SC" font-size="11" fill="#7C857F">脆弱·难维护</text>
+          <!-- sweet spot -->
+          <rect x="370" y="92" width="160" height="58" rx="4" fill="#0E6A60" opacity="0.12"/>
+          <circle cx="450" cy="150" r="9" fill="#0E6A60"/>
+          <text x="450" y="80" text-anchor="middle" font-family="Noto Serif SC" font-size="16" font-weight="700" fill="#0A4A44">最佳高度</text>
+          <text x="450" y="178" text-anchor="middle" font-family="JetBrains Mono" font-size="11" font-weight="700" fill="#0E6A60">GOLDILOCKS</text>
+          <text x="450" y="200" text-anchor="middle" font-family="Noto Sans SC" font-size="12" fill="#46524F">给足强启发式</text>
+          <text x="450" y="216" text-anchor="middle" font-family="Noto Sans SC" font-size="11" fill="#7C857F">+ 留出发挥空间</text>
+          <!-- right end -->
+          <circle cx="820" cy="150" r="7" fill="#BE6A12"/>
+          <text x="820" y="185" text-anchor="middle" font-family="JetBrains Mono" font-size="13" font-weight="700" fill="#BE6A12">太空</text>
+          <text x="820" y="205" text-anchor="middle" font-family="Noto Sans SC" font-size="12" fill="#46524F">含糊高层口号</text>
+          <text x="820" y="221" text-anchor="middle" font-family="Noto Sans SC" font-size="11" fill="#7C857F">模型抓不到信号</text>
+          <!-- arrows -->
+          <text x="220" y="135" text-anchor="middle" font-family="Noto Sans SC" font-size="11" fill="#7C857F">← 越具体越脆弱</text>
+          <text x="680" y="135" text-anchor="middle" font-family="Noto Sans SC" font-size="11" fill="#7C857F">越笼统越失控 →</text>
+        </svg>
+      </div>
+      <div class="fig-cap"><b>读法：</b>多数人要么把规则写死（左），要么只丢一句"帮我写好点"（右）。内部经验是瞄准中间——清楚到能指挥行为，又灵活到让模型用自己的推理补全。模型越强，越往右松手。</div>
+    </div>
+
+    <div class="quote">
+      <p>"把超强模型想成单一实例，就像追求一台更快的车。但拥有一千匹马，能让你同时去试很多想法。"</p>
+      <cite>— Anthropic 一位研究员，转引自 [A1]</cite>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 02 -->
+<section class="major" id="s2">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-no">§02</div>
+      <div class="sec-tt"><h2>对话层：官方推荐、却少有人真用的进阶技巧</h2><div class="sub">PROMPTING · 不是咒语，是结构化沟通</div></div>
+    </div>
+
+    <p class="lead-in">这些技巧 Anthropic 官方文档都写了，但<b>外部用户的实际使用率极低</b>。它们的共同点：把"随口聊"升级为"有结构、可预期"的沟通。</p>
+
+    <div class="cards">
+      <div class="tcard">
+        <div class="k">技巧 A</div>
+        <h4>用 XML / 标签切分上下文</h4>
+        <p>Claude 是<b>专门训练过识别 XML 结构</b>的。把指令、数据、示例、输出要求用 <span class="mono">&lt;instructions&gt;</span> <span class="mono">&lt;data&gt;</span> 等标签分区，能显著减少"它把资料当指令、把例子当正文"的混淆。标签名没有标准，看得懂即可。</p>
+        <div class="insider"><b>适用</b>长资料 + 多类型内容 + 需要稳定输出格式时，收益最大。</div>
+      </div>
+      <div class="tcard">
+        <div class="k">技巧 B</div>
+        <h4>预填回答（Prefill）锁定格式</h4>
+        <p>在 API 里可以<b>替模型"开个头"</b>——直接写下回答的前几个字（如 <span class="mono">&lt;thinking&gt;</span> 或 <span class="mono">{</span>），它会顺着往下接。这是强制跳过寒暄、锁定 JSON / 特定格式最有效的手段之一。</p>
+        <div class="insider"><b>对你的栈</b>做结构化抽取、批量数据管线时，prefill 比反复叮嘱"只输出 JSON"更可靠。</div>
+      </div>
+      <div class="tcard">
+        <div class="k">技巧 C</div>
+        <h4>Extended Thinking 取代手写 CoT</h4>
+        <p>过去要手动写"一步步想"，现在<b>扩展思考已自动化结构化推理</b>，官方认为通常优于手写思维链。诀窍：从最小思考预算起步、逐步加码；思考过程用英文、最终答案可用中文；并检查思考是否跑偏。</p>
+        <div class="insider"><b>反直觉</b>给"深入思考"这种高层指令，常比详细规定步骤更好——让它自己惊艳你。</div>
+      </div>
+      <div class="tcard">
+        <div class="k">技巧 D</div>
+        <h4>少而精的"标杆示例"，而非堆边界</h4>
+        <p>很多人把所有 edge case 罗列进 prompt，官方<b>明确不推荐</b>。正确做法是给几个<b>多样、典型、规范</b>的示例——对模型而言，"示例就是胜过千言的图片"。</p>
+        <div class="insider"><b>常见错误</b>用 20 条特例去描述规则，不如 3 条好示例画出"对的样子"。</div>
+      </div>
+      <div class="tcard">
+        <div class="k">技巧 E</div>
+        <h4>解释"为什么"，给约束动机</h4>
+        <p>新一代模型遵循指令空前精确。告诉它约束背后的原因（如"<b>这段会被语音朗读，所以不要用省略号</b>"），比单纯下命令效果好得多——它能据此推广到你没明说的同类情况。</p>
+        <div class="insider"><b>动词要硬</b>想让它直接动手就说"做这些修改"，而不是"你能不能建议一些改动"。</div>
+      </div>
+      <div class="tcard">
+        <div class="k">技巧 F</div>
+        <h4>让 Claude 写给 Claude 的 Prompt</h4>
+        <p>把"写好提示词"本身交给模型：用官方的 <b>Prompt Improver</b>，或直接让 Claude 基于你的目标起草、再迭代。先建立"成功长什么样 + 怎么测"，再让它优化——这就是"元提示"。</p>
+        <div class="insider"><b>省时</b>与其自己憋完美 prompt，不如让它产出几版你来挑、来改。</div>
+      </div>
+    </div>
+
+    <p class="body" style="margin-top:6px"><b>把抽象变具体——同一个需求，两种写法的差距：</b></p>
+    <div class="codecompare">
+      <div class="codebox bad">
+        <div class="ch">✕ 普通写法 · 模糊</div>
+<pre><span class="cm"># 一句话甩过去</span>
+帮我分析一下这份用户调研，
+写个总结。</pre>
+      </div>
+      <div class="codebox good">
+        <div class="ch">✓ 进阶写法 · 结构化</div>
+<pre><span class="tag">&lt;role&gt;</span>资深用户研究员<span class="tag">&lt;/role&gt;</span>
+<span class="tag">&lt;data&gt;</span>{粘贴调研原文}<span class="tag">&lt;/data&gt;</span>
+<span class="tag">&lt;task&gt;</span>
+深入思考后，按"结论先行"
+输出：1)3条关键发现(各配数据)
+2)最强的反对解读 3)2个待验证项
+<span class="cm"># 给动机：这份要给 CEO 拍板用</span>
+<span class="tag">&lt;/task&gt;</span>
+<span class="tag">&lt;format&gt;</span>中文·不超过400字<span class="tag">&lt;/format&gt;</span></pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 03 -->
+<section class="major" id="s3">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-no">§03</div>
+      <div class="sec-tt"><h2>Agentic 层：内部差距最大的"暗招"</h2><div class="sub">CLAUDE CODE / COWORK · 不只是写代码，是自动化整条工作流</div></div>
+    </div>
+
+    <p class="lead-in">这是内外差距<b>最悬殊</b>的一层。外部人把 Claude Code 当 IDE 插件；内部人把它当"能自己动手的通用智能体"——而且非工程岗用得同样狠。</p>
+
+    <p class="body"><b>先看内部到底拿它干什么（多数会让你意外）：</b>法务团队搭了"电话树"系统帮同事找对的律师；增长市场团队用两个专用子代理，几分钟生成上百条符合严格字数限制（标题 30 字符、描述 90 字符）的广告变体，还做了 Figma 插件一次批量产出 100 个版本；数据基础设施团队在 K8s 集群宕机时，把仪表盘<b>截图</b>喂给它，被一步步引导到"Pod IP 耗尽"的根因并拿到修复命令，绕过了网络专家；不懂代码的财务同事，只用自然语言描述"查这个看板→跑这些查询→产出 Excel"，它就把整条流程跑完。<span class="s">[A3]</span></p>
+
+    <div class="cards">
+      <div class="tcard">
+        <div class="k">招式 01</div>
+        <h4>别想"一把梭"——先开规划模式</h4>
+        <p>新手以为 Claude Code 能 one-shot 一切，<b>并不现实</b>。复杂任务先切到 <b>Plan Mode</b>，让它把步骤列清、与你对齐方案，再动手写——成功率能翻一到两倍。</p>
+        <div class="insider"><b>来自创造者</b>Boris Cherny：复杂任务先规划、再执行，是最高 ROI 的一步。</div>
+      </div>
+      <div class="tcard">
+        <div class="k">招式 02</div>
+        <h4>让子代理"互相挑刺"</h4>
+        <p>代码评审命令一次<b>并行起多个子代理</b>：一个查风格、一个翻项目历史、一个抓 bug。第一轮会有真问题也有误报，于是再起 5 个专门"挑前面结论的毛病"——最后只留真问题，几乎没有误报。</p>
+        <div class="insider"><b>精髓</b>对抗式多代理 = 用一组 AI 去校验另一组 AI 的结论。</div>
+      </div>
+      <div class="tcard">
+        <div class="k">招式 03</div>
+        <h4>Stop Hook：不干完不准停</h4>
+        <p>设一个"收尾钩子"：当它想把控制权交还给你时，<b>自动跑测试套件</b>，只要有测试没过，就回去让它继续修、继续测。"你可以让模型一直跑到事情真正做完为止。"</p>
+        <div class="insider"><b>本质</b>把"验收标准"写成自动闸门，逼模型自洽闭环。</div>
+      </div>
+      <div class="tcard">
+        <div class="k">招式 04</div>
+        <h4>团队共享 settings.json</h4>
+        <p>把配置文件放进代码库：<b>预批准常用命令</b>（让它不再为日常操作反复请示）、<b>拉黑危险操作</b>（绝不可碰的文件）。全队继承同一套合理默认，而不是各配各的。</p>
+        <div class="insider"><b>类比你的栈</b>等同于给 Agent 写一份团队级的"权限+规范"基线。</div>
+      </div>
+      <div class="tcard">
+        <div class="k">招式 05</div>
+        <h4>并行子代理跑"无聊的迁移"</h4>
+        <p>大规模迁移（换测试框架、框架升级）这类<b>易验证、纯体力</b>的活，让主代理先列 to-do，再派子代理并行处理。有工程师每月在这类迁移上花掉 $1,000+ 的额度——因为它真的省人。</p>
+        <div class="insider"><b>判据</b>输出容易自动验证的任务，最适合放手并行。</div>
+      </div>
+      <div class="tcard">
+        <div class="k">招式 06</div>
+        <h4>自定义斜杠命令 + MCP 管访问</h4>
+        <p>把高频工作流封装成 <b>/斜杠命令</b>（安全团队贡献了整个仓库一半的自定义命令）。涉及敏感数据时，用 <b>MCP server</b> 而非直接 CLI，以便对"Claude 能访问什么"做日志与权限控制。</p>
+        <div class="insider"><b>沉淀</b>把"重复做的事"固化成命令/技能，是从"会用"到"高效"的分水岭。</div>
+      </div>
+    </div>
+
+    <div class="figure">
+      <div class="fig-head"><span class="t">自主性增长 · Claude Code 越来越"敢放手"</span><span class="n">FIG.02 / SOURCE A1</span></div>
+      <div class="fig-body">
+        <svg viewBox="0 0 900 260" role="img" aria-label="Claude Code 自主性增长对比图">
+          <!-- axis labels -->
+          <text x="40" y="28" font-family="JetBrains Mono" font-size="11" fill="#7C857F" letter-spacing="1">2025-02  →  2025-08（半年）</text>
+          <!-- metric 1: tool calls -->
+          <text x="40" y="70" font-family="Noto Sans SC" font-size="13" font-weight="700" fill="#14201E">单次自主连续工具调用</text>
+          <rect x="300" y="58" width="80" height="18" fill="#9FB0AB" opacity="0.5"/>
+          <text x="388" y="72" font-family="Space Grotesk" font-size="13" font-weight="700" fill="#46524F">9.8</text>
+          <rect x="300" y="58" width="0" height="18" fill="#0E6A60"><animate attributeName="width" from="0" to="430" dur="1.1s" fill="freeze"/></rect>
+          <rect x="300" y="58" width="430" height="18" fill="none"/>
+          <text x="745" y="72" font-family="Space Grotesk" font-size="15" font-weight="700" fill="#0E6A60">21.2</text>
+          <text x="820" y="72" font-family="JetBrains Mono" font-size="11" font-weight="700" fill="#BE6A12">+116%</text>
+          <!-- metric 2: complexity -->
+          <text x="40" y="130" font-family="Noto Sans SC" font-size="13" font-weight="700" fill="#14201E">任务复杂度（1–5 分）</text>
+          <rect x="300" y="118" width="206" height="18" fill="#9FB0AB" opacity="0.5"/>
+          <text x="514" y="132" font-family="Space Grotesk" font-size="13" font-weight="700" fill="#46524F">3.2</text>
+          <rect x="300" y="118" width="0" height="18" fill="#0E6A60"><animate attributeName="width" from="0" to="245" dur="1.1s" fill="freeze"/></rect>
+          <text x="555" y="132" font-family="Space Grotesk" font-size="15" font-weight="700" fill="#0E6A60">3.8</text>
+          <!-- metric 3: human turns -->
+          <text x="40" y="190" font-family="Noto Sans SC" font-size="13" font-weight="700" fill="#14201E">每任务所需人工介入轮次</text>
+          <rect x="300" y="178" width="248" height="18" fill="#9FB0AB" opacity="0.5"/>
+          <text x="556" y="192" font-family="Space Grotesk" font-size="13" font-weight="700" fill="#46524F">6.2</text>
+          <rect x="300" y="178" width="164" height="18" fill="#BE6A12"/>
+          <text x="472" y="192" font-family="Space Grotesk" font-size="15" font-weight="700" fill="#BE6A12">4.1</text>
+          <text x="600" y="192" font-family="JetBrains Mono" font-size="11" font-weight="700" fill="#A6432C">−33%</text>
+          <!-- divider -->
+          <line x1="40" y1="222" x2="860" y2="222" stroke="rgba(20,32,30,.14)"/>
+          <text x="40" y="246" font-family="Noto Sans SC" font-size="12" fill="#46524F">趋势：能做的任务更难、更自主，需要的人工越来越少——但"完全放手"仍是少数。</text>
+        </svg>
+      </div>
+      <div class="fig-cap"><b>含义：</b>"自主性"在半年内显著提升——这意味着你越早建立"派发 + 验收"的工作流，复利越大。但同一份研究也提醒：能完全无监督交付的工作仍只占 0–20%。</div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 04 -->
+<section class="major" id="s4">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-no">§04</div>
+      <div class="sec-tt"><h2>上下文工程：把"注意力"当成预算来经营</h2><div class="sub">CONTEXT ENGINEERING · 从"写好提示"到"管好整个上下文状态"</div></div>
+    </div>
+
+    <p class="lead-in">这是 Anthropic 内部最新、也最被外部低估的范式升级。一句话：<b>找到信号最高、数量最少的那批 token</b>，因为模型的注意力是会被耗尽的有限资源。</p>
+
+    <p class="body"><b>为什么重要：</b>研究显示存在 "<b>context rot</b>（上下文衰减）"——上下文里的 token 越多，模型从中准确回忆信息的能力越下降。这不是断崖，而是一条逐渐变陡的下坡：模型在长上下文里依然能干，但检索精度与长程推理会打折。所以"把所有资料一股脑塞进窗口"是反模式。<span class="s">[A2]</span></p>
+
+    <div class="figure">
+      <div class="fig-head"><span class="t">上下文衰减 · 注意力是会耗尽的预算（示意）</span><span class="n">FIG.03 / 概念图 · SOURCE A2</span></div>
+      <div class="fig-body">
+        <svg viewBox="0 0 900 280" role="img" aria-label="上下文长度与回忆准确率关系示意曲线">
+          <!-- axes -->
+          <line x1="70" y1="40" x2="70" y2="230" stroke="#46524F" stroke-width="1.5"/>
+          <line x1="70" y1="230" x2="850" y2="230" stroke="#46524F" stroke-width="1.5"/>
+          <text x="62" y="36" text-anchor="end" font-family="JetBrains Mono" font-size="10" fill="#7C857F">高</text>
+          <text x="62" y="230" text-anchor="end" font-family="JetBrains Mono" font-size="10" fill="#7C857F">低</text>
+          <text x="30" y="140" text-anchor="middle" font-family="Noto Sans SC" font-size="12" fill="#46524F" transform="rotate(-90 30 140)">回忆 / 推理精度</text>
+          <text x="460" y="262" text-anchor="middle" font-family="Noto Sans SC" font-size="12" fill="#46524F">上下文 token 数量 →</text>
+          <!-- curve -->
+          <path d="M70,62 C260,70 380,92 520,140 C640,182 740,212 850,222" fill="none" stroke="#0E6A60" stroke-width="3"/>
+          <!-- danger zone -->
+          <rect x="560" y="40" width="290" height="190" fill="#A6432C" opacity="0.06"/>
+          <text x="705" y="60" text-anchor="middle" font-family="JetBrains Mono" font-size="11" font-weight="700" fill="#A6432C" letter-spacing="1">衰减加剧区</text>
+          <!-- sweet zone -->
+          <rect x="70" y="40" width="220" height="190" fill="#0E6A60" opacity="0.06"/>
+          <text x="180" y="60" text-anchor="middle" font-family="JetBrains Mono" font-size="11" font-weight="700" fill="#0E6A60" letter-spacing="1">高信号区</text>
+          <!-- markers -->
+          <circle cx="160" cy="66" r="5" fill="#0E6A60"/>
+          <circle cx="700" cy="200" r="5" fill="#A6432C"/>
+          <text x="180" y="92" font-family="Noto Sans SC" font-size="11" fill="#46524F">精炼 · 高信号</text>
+          <text x="700" y="226" text-anchor="middle" font-family="Noto Sans SC" font-size="11" fill="#A6432C">塞满 · 噪声多</text>
+        </svg>
+      </div>
+      <div class="fig-cap"><b>示意而非精确测量。</b>Anthropic 强调这是"性能梯度"而非硬断崖。实践结论一致：上下文要"信息充分但尽量紧凑"，而不是越长越好。</div>
+    </div>
+
+    <p class="body"><b>内部用来对抗衰减的三件套（长任务必备）：</b></p>
+
+    <div class="cards">
+      <div class="tcard">
+        <div class="k">武器 01</div>
+        <h4>压缩（Compaction）</h4>
+        <p>对话快到窗口上限时，<b>把历史摘要成高保真的精华，再开一个新窗口续上</b>。Claude Code 就是这么做的：保留架构决策、未解 bug、关键实现，丢掉冗余的工具输出，再带上最近访问的 5 个文件继续。</p>
+        <div class="insider"><b>最轻量的一招</b>清掉深层历史里早已用过的工具调用结果——它不需要再看一遍原始返回。</div>
+      </div>
+      <div class="tcard">
+        <div class="k">武器 02</div>
+        <h4>结构化笔记（外部记忆）</h4>
+        <p>让 Agent <b>把笔记写到上下文窗口之外的文件</b>（如 NOTES.md、to-do 列表），需要时再读回来。"Claude 玩宝可梦"靠这招在上千步里维持目标、地图与战术记忆，窗口重置后读回笔记继续打。</p>
+        <div class="insider"><b>对你的栈</b>这正是 QMD / SOUL.md / USER.md 这类外部记忆文件的底层逻辑。</div>
+      </div>
+      <div class="tcard">
+        <div class="k">武器 03</div>
+        <h4>子代理架构（隔离上下文）</h4>
+        <p>不让一个 Agent 扛全程，而是<b>派专门子代理处理聚焦子任务、各自用干净窗口</b>。子代理可能烧掉几万 token 深挖，但只回传 1,000–2,000 token 的提炼结论。主代理负责统筹与综合。</p>
+        <div class="insider"><b>研究实测</b>多代理架构在复杂研究任务上显著优于单代理。</div>
+      </div>
+    </div>
+
+    <p class="body" style="margin-top:4px"><b>还有一条心法叫"按需取用"（just-in-time）：</b>不要预先把所有数据灌进去，而是<b>保留轻量指针</b>（文件路径、查询、链接），运行时用工具动态加载——就像人类不背下整本书，而是靠文件系统、收件箱、书签按需检索。Claude Code 对大数据库就这么做：写定向查询、存结果、用 <span class="mono">head</span>/<span class="mono">tail</span> 分析，从不把整个数据对象塞进上下文。<span class="s">[A2]</span></p>
+  </div>
+</section>
+
+<!-- SECTION 05 -->
+<section class="major" id="s5">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-no">§05</div>
+      <div class="sec-tt"><h2>研究员的日常习惯：什么交给 AI，什么留给自己</h2><div class="sub">DELEGATION · 高手的判断力，藏在"不用 AI"的那部分</div></div>
+    </div>
+
+    <p class="lead-in">内部研究最有价值的发现之一：高手不是"什么都丢给 AI"，而是发展出一套<b>清晰的委派直觉</b>。用错地方，反而更慢（外部 METR 研究也证实：在熟悉的大代码库里，开发者常高估 AI 提速）。</p>
+
+    <p class="body"><b>该交给 AI 的任务，符合这几条特征——</b></p>
+    <div class="deleg">
+      <div class="deleg-row yes"><div class="mark">✓</div><div class="txt"><h5>低上下文 + 低复杂度</h5><p>你了解不多、但整体也不难的事（如不熟的 Git/Linux 操作、不熟语言的小脚本）。</p></div></div>
+      <div class="deleg-row yes"><div class="mark">✓</div><div class="txt"><h5>容易验证</h5><p>"验证成本 ≪ 创造成本"时最香——一眼能看出对错，就放心交。</p></div></div>
+      <div class="deleg-row yes"><div class="mark">✓</div><div class="txt"><h5>定义清晰 / 自包含</h5><p>子模块与系统其余部分充分解耦时，让它先试一版。</p></div></div>
+      <div class="deleg-row yes"><div class="mark">✓</div><div class="txt"><h5>质量要求不极端</h5><p>一次性的调试代码、探索性研究代码，直接交。</p></div></div>
+      <div class="deleg-row yes"><div class="mark">✓</div><div class="txt"><h5>重复 / 无聊</h5><p>"我越想亲手做的任务，越不会用 AI"——阻力越大、越该开个对话起步。</p></div></div>
+      <div class="deleg-row yes"><div class="mark">✓</div><div class="txt"><h5>"说"比"做"快</h5><p>但反过来：预计 10 分钟内能搞定、或交代清楚成本太高（cold start）的，自己做更快。</p></div></div>
+    </div>
+
+    <div class="deleg-split">
+      <div class="deleg-yes">
+        <div class="deleg-h">放手交给 AI</div>
+        <div class="tcard" style="border-radius:0 0 3px 3px;border-top:none">
+          <p style="font-size:13px;color:var(--ink-soft);line-height:1.7">新功能开发、调试、跨语言改写、补测试、写文档、做可视化、踩不熟的领域、"补全你记忆/熟悉度空白"的查证。一位后端工程师靠迭代让 Claude 做出了"自己绝对做不出、还按时交付"的复杂 UI，设计师惊呼"这是你做的？"——"不，是 Claude 做的，我只是给了提示。"</p>
+        </div>
+      </div>
+      <div class="deleg-no">
+        <div class="deleg-h">留给自己</div>
+        <div class="tcard" style="border-radius:0 0 3px 3px;border-top:none;border-left-color:var(--brick)">
+          <p style="font-size:13px;color:var(--ink-soft);line-height:1.7"><b>高层与战略思考、需要组织背景与"品味"的设计决策</b>。研究数据里，设计/规划正是生产力提升最小的一类。一位安全工程师警告：模型曾给出"危险地聪明"的方案——只有有经验的人才看得出它有问题。这条边界在随模型变强而不断重新协商。</p>
+        </div>
+      </div>
+    </div>
+
+    <p class="body"><b>三个可直接抄的研究员习惯：</b><br>
+    <b>① 并行探索：</b>同一问题同时挂多个实例走不同解法，再挑最优——把"试错"并行化。<br>
+    <b>② 把它当"加速学习器"：</b>踩新领域时让 Claude 当专家、给你选项与该研究的方向；一位员工说"学东西/变得有效的速度彻底变了，天花板像是被打碎了"。<br>
+    <b>③ 刻意保持手感：</b>正因为依赖会让技能退化（"监督悖论"——监督 AI 恰恰需要那些可能退化的技能），有人会<b>偶尔故意不让 Claude 做</b>它明明能做的题，以保持锋利。</p>
+  </div>
+</section>
+
+<!-- SECTION 06 -->
+<section class="major" id="s6">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-no">§06</div>
+      <div class="sec-tt"><h2>反方视角：哪些"高级技巧"其实被高估</h2><div class="sub">THE OTHER SIDE · 用对，比用多重要</div></div>
+    </div>
+
+    <p class="lead-in">结论再清晰，也要给最强的反对意见。以下几条同样来自内部一手观察——它们能帮你<b>避开把方法用成玄学</b>的坑。</p>
+
+    <div class="warn">
+      <div class="wcard">
+        <div class="k">CAVEAT 01</div>
+        <h4>"全自动一次成功"是幻觉</h4>
+        <p>内部 RL 工程团队的数据：Claude Code <b>首次全自动尝试只有约 1/3 成功率</b>。把它当"按一下就交付"会反复翻车——真正的工作流是"派发 → 检查 → 迭代"。</p>
+      </div>
+      <div class="wcard">
+        <div class="k">CAVEAT 02</div>
+        <h4>"让它找问题"必然找到问题</h4>
+        <p>你让审阅子代理"挑毛病"，它<b>一定会报一堆</b>——即使代码本就没问题。盲目照单全改会导致<b>过度工程化</b>：多余抽象、防御式代码、为不可能的情况写测试。要明确只修"影响正确性/需求"的，其余当可选。</p>
+      </div>
+      <div class="wcard">
+        <div class="k">CAVEAT 03</div>
+        <h4>在你熟悉的领域，AI 常被高估</h4>
+        <p>外部 METR 研究：经验丰富的开发者在<b>高度熟悉</b>的代码库里，<b>高估</b>了 AI 带来的提速。内部委派标准恰好印证——熟悉、复杂、隐性知识多的场景，自己做可能更快。</p>
+      </div>
+      <div class="wcard">
+        <div class="k">CAVEAT 04</div>
+        <h4>"厨房水槽"式会话会拖垮质量</h4>
+        <p>官方点名的常见错误：一个会话里先问 A，又插一个无关的 B，再回去做 A。<b>上下文被污染，输出变差</b>。正确做法是一个会话一个聚焦目标，新任务就开新窗口。</p>
+      </div>
+      <div class="wcard">
+        <div class="k">CAVEAT 05</div>
+        <h4>格式技巧的边际收益在递减</h4>
+        <p>XML 标签、精确分区在<b>复杂、多类型内容</b>时仍有用，但官方也直言：随着模型变强，<b>提示词的精确格式正变得不那么关键</b>。别把精力过度花在"咒语调参"上，重心应是上下文与任务设计。</p>
+      </div>
+      <div class="wcard">
+        <div class="k">CAVEAT 06</div>
+        <h4>技能退化是真实代价</h4>
+        <p>"产出太容易，就越来越难静下心真正学会一件事。"过度委派会让<b>深层技能与"顺带学到的"系统理解</b>一起流失——而这恰恰是你日后<b>审阅 AI</b> 所依赖的能力。这是效率的隐性账单。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 07 -->
+<section class="major" id="s7">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-no">§07</div>
+      <div class="sec-tt"><h2>决策含义 · 给你的采纳优先级</h2><div class="sub">FOR 磊哥 / 开开华彩 · 按 ROI 与上手成本排序</div></div>
+    </div>
+
+    <p class="lead-in">结合你已有的 AI 栈（OpenClaw / 多模型路由 / QMD 记忆 / 飞书 Agent）与业务场景（开开华彩在线 + 项目二线下获客），下面是<b>从高 ROI / 低成本到战略性投入</b>的落地顺序。</p>
+
+    <!-- ROI matrix -->
+    <div class="figure">
+      <div class="fig-head"><span class="t">技巧矩阵 · 能力提升 × 上手成本</span><span class="n">FIG.04 / 综合判断</span></div>
+      <div class="fig-body">
+        <svg viewBox="0 0 900 420" role="img" aria-label="技巧的能力提升与上手成本散点矩阵">
+          <!-- quadrant bg -->
+          <rect x="70" y="30" width="390" height="170" fill="#0E6A60" opacity="0.07"/>
+          <rect x="460" y="30" width="390" height="170" fill="#BE6A12" opacity="0.06"/>
+          <rect x="70" y="200" width="390" height="170" fill="#9FB0AB" opacity="0.07"/>
+          <rect x="460" y="200" width="390" height="170" fill="#A6432C" opacity="0.05"/>
+          <!-- axes -->
+          <line x1="70" y1="200" x2="850" y2="200" stroke="#46524F" stroke-width="1.5"/>
+          <line x1="460" y1="30" x2="460" y2="370" stroke="#46524F" stroke-width="1.5"/>
+          <!-- axis labels -->
+          <text x="80" y="48" font-family="JetBrains Mono" font-size="11" font-weight="700" fill="#0E6A60">⬑ 立刻就做（高收益·易上手）</text>
+          <text x="640" y="48" font-family="JetBrains Mono" font-size="11" font-weight="700" fill="#BE6A12">战略投入（高收益·需搭建）⬏</text>
+          <text x="640" y="390" text-anchor="end" font-family="JetBrains Mono" font-size="10" fill="#A6432C">按需即可</text>
+          <text x="460" y="406" text-anchor="middle" font-family="Noto Sans SC" font-size="12" fill="#46524F">上手成本 →</text>
+          <text x="48" y="200" text-anchor="middle" font-family="Noto Sans SC" font-size="12" fill="#46524F" transform="rotate(-90 48 200)">能力提升 ↑</text>
+          <!-- points: high impact / low cost -->
+          <g font-family="Noto Sans SC" font-size="11.5" fill="#14201E">
+            <circle cx="150" cy="80" r="7" fill="#0E6A60"/><text x="164" y="84">委派直觉（什么交/什么留）</text>
+            <circle cx="180" cy="120" r="7" fill="#0E6A60"/><text x="194" y="124">规划模式 + 迭代心态</text>
+            <circle cx="150" cy="160" r="7" fill="#0E6A60"/><text x="164" y="164">模型路由（已在做）</text>
+            <circle cx="300" cy="100" r="7" fill="#0E6A60"/><text x="314" y="104">结构化 Prompt / XML</text>
+            <circle cx="320" cy="150" r="7" fill="#0E6A60"/><text x="334" y="154">并行多实例探索</text>
+          </g>
+          <!-- high impact / high cost -->
+          <g font-family="Noto Sans SC" font-size="11.5" fill="#14201E">
+            <circle cx="560" cy="75" r="7" fill="#BE6A12"/><text x="574" y="79">子代理对抗式编排</text>
+            <circle cx="620" cy="120" r="7" fill="#BE6A12"/><text x="634" y="124">上下文工程三件套</text>
+            <circle cx="560" cy="165" r="7" fill="#BE6A12"/><text x="574" y="169">自定义命令/技能库</text>
+            <circle cx="690" cy="95" r="7" fill="#BE6A12"/><text x="704" y="99">业务流程自动化(项目二)</text>
+          </g>
+          <!-- low impact -->
+          <g font-family="Noto Sans SC" font-size="11" fill="#7C857F">
+            <circle cx="200" cy="300" r="6" fill="#9FB0AB"/><text x="214" y="304">prefill 锁格式</text>
+            <circle cx="640" cy="320" r="6" fill="#9FB0AB"/><text x="654" y="324">极致"咒语"调参</text>
+          </g>
+        </svg>
+      </div>
+      <div class="fig-cap"><b>读法：</b>左上角"立刻就做"是认知/习惯类，几乎零搭建成本、收益最大；右上角是需要你投入搭建（但对项目二自动化潜力巨大）的工程化方向；右下角的"咒语调参"性价比最低，别陷进去。</div>
+    </div>
+
+    <div class="prio">
+      <div class="prio-row">
+        <div class="rank"><span class="n">1</span><span class="l">本周</span></div>
+        <div class="body2"><h5>把"委派直觉 + 规划模式"变成默认动作<span class="tag2">零成本·最高ROI</span></h5><p>用 §05 的六条判据筛任务：易验证、自包含、重复无聊的先交，战略与"品味"留给自己；复杂任务一律先让模型出方案再执行。<b>这一条带来的提升，超过任何 Prompt 技巧。</b></p></div>
+      </div>
+      <div class="prio-row">
+        <div class="rank"><span class="n">2</span><span class="l">本周</span></div>
+        <div class="body2"><h5>升级你的记忆文件为"上下文工程"<span class="tag2">贴合现有栈</span></h5><p>你已有 SOUL.md / USER.md / QMD——按 §04 原则审一遍：是不是"信号最高、数量最少"？把长资料改成"按需取用"（指针 + 动态加载），给长任务加结构化笔记（NOTES.md）与压缩策略，对抗上下文衰减。</p></div>
+      </div>
+      <div class="prio-row">
+        <div class="rank"><span class="n">3</span><span class="l">两周</span></div>
+        <div class="body2"><h5>对高复杂决策跑"并行多实例 + 对抗式校验"<span class="tag2">提质</span></h5><p>战略类问题（如项目二选址/合伙人筛选/内容选题），同时起多个实例走不同框架，再让一组实例去"挑另一组结论的毛病"。把你最强的模型用在"帮你想清楚要什么"，日常用快/省模型——这正是 Sonnet/Opus 的分工逻辑。</p></div>
+      </div>
+      <div class="prio-row">
+        <div class="rank"><span class="n">4</span><span class="l">一月</span></div>
+        <div class="body2"><h5>把项目二的重复流程封装成"斜杠命令/技能"<span class="tag2">复利·需搭建</span></h5><p>对标内部市场团队"几分钟生成上百条广告变体"：把你高频的运营动作（线下合伙人话术批量生成、内容批量改写、数据看板→周报）固化成可复用命令/子代理流水线。"线下捞人"的素材生产可被规模化自动化。</p></div>
+      </div>
+      <div class="prio-row">
+        <div class="rank"><span class="n">5</span><span class="l">持续</span></div>
+        <div class="body2"><h5>建立"验收闸门"与刻意手感<span class="tag2">护栏</span></h5><p>给自动化流程设 stop-hook 式的自动验收（跑完自检不过就回去重做）；同时保留对关键产出的人工审阅——并警惕监督悖论，别让自己丧失判断"危险地聪明"的方案的能力。</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOURCES -->
+<section class="major" id="src">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-no">§08</div>
+      <div class="sec-tt"><h2>证据与来源</h2><div class="sub">SOURCES · 一手（Anthropic 官方）/ 二手 · 含时间</div></div>
+    </div>
+    <div class="sources">
+      <div class="src-col">
+        <h4>一手 · Anthropic 官方</h4>
+        <div class="src-item"><span class="ref">[A1]</span><span class="ti">How AI Is Transforming Work at Anthropic</span><span class="dt">Anthropic Societal Impacts · 2025-12-02 · 132 人问卷 / 53 访谈 / 200K 使用记录</span></div>
+        <div class="src-item"><span class="ref">[A2]</span><span class="ti">Effective context engineering for AI agents</span><span class="dt">Anthropic Engineering（Applied AI Team）· 2025-09-29</span></div>
+        <div class="src-item"><span class="ref">[A3]</span><span class="ti">How Anthropic teams use Claude Code（10 团队手册）</span><span class="dt">Anthropic · 2025-07-24</span></div>
+        <div class="src-item"><span class="ref">[A4]</span><span class="ti">Best practices for Claude Code（官方文档）</span><span class="dt">code.claude.com/docs · 持续更新</span></div>
+        <div class="src-item"><span class="ref">[A5]</span><span class="ti">How people ask Claude for personal guidance</span><span class="dt">Anthropic · 2026-04-30（佐证非编码场景占比）</span></div>
+      </div>
+      <div class="src-col sec">
+        <h4>二手 · 访谈 / 解读</h4>
+        <div class="src-item"><span class="ref">[S1]</span><span class="ti">How to Use Claude Code Like the People Who Built It（Cat Wu & Boris Cherny 访谈）</span><span class="dt">Every · AI &amp; I 播客 · 2025-10-29</span></div>
+        <div class="src-item"><span class="ref">[S2]</span><span class="ti">How I AI：Claude Cowork 工程负责人 Felix Rieseberg</span><span class="dt">Lenny's Newsletter · 2026-05-25（模型选择启发式）</span></div>
+        <div class="src-item"><span class="ref">[S3]</span><span class="ti">How Anthropic engineering teams use Claude Code every day</span><span class="dt">Codingscape 分析 · 2025-12-30（含 1/3 成功率等)</span></div>
+        <div class="src-item"><span class="ref">[S4]</span><span class="ti">Claude's Context Engineering Secrets</span><span class="dt">Bojie Li · 2025-12（上下文工程解读）</span></div>
+        <div class="src-item" style="color:var(--ink-faint)"><span class="dt">说明：所有量化数据均标注口径与时间，均为 Anthropic 自报内部样本，存在自评偏差（详见 [A1] 局限性章节）。本报告为方法论综述，非投资/法律建议。</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- APPENDIX -->
+<section class="major" id="cheat">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-no">§09</div>
+      <div class="sec-tt"><h2>附录 · 一页速查清单</h2><div class="sub">CHEAT SHEET · 可截图常看</div></div>
+    </div>
+    <div class="cheat">
+      <div class="cheat-col">
+        <h4><span class="ico">M</span>心智（每次都先想）</h4>
+        <ul>
+          <li>我是<b>管理者</b>，不是提问者——能否并行派发？</li>
+          <li>这是 <b>Sonnet 活</b>（范围清晰）还是 <b>Opus 活</b>（帮我想清楚）？</li>
+          <li>这任务<b>易验证 / 重复 / 自包含</b>吗？→ 交。<b>战略 / 品味</b>？→ 自己来。</li>
+          <li>预计 &lt;10 分钟能做完？→ 别折腾 AI 了。</li>
+        </ul>
+      </div>
+      <div class="cheat-col">
+        <h4><span class="ico">P</span>对话（写好一次性需求）</h4>
+        <ul>
+          <li>用 <b>&lt;标签&gt;</b> 分开"指令 / 资料 / 示例 / 格式"。</li>
+          <li>给 <b>3 个好示例</b>，而不是 20 条特例。</li>
+          <li>说清<b>为什么</b>（约束动机）+ 用<b>硬动词</b>"去做"。</li>
+          <li>复杂题加"<b>深入思考</b>"，别一步步规定死。</li>
+        </ul>
+      </div>
+      <div class="cheat-col">
+        <h4><span class="ico">A</span>Agentic（自动化流程）</h4>
+        <ul>
+          <li>复杂任务<b>先规划再执行</b>，别想一把梭。</li>
+          <li>评审让<b>子代理互相挑刺</b>，只修影响正确性的。</li>
+          <li>设<b>验收闸门</b>：自检不过就回去重做。</li>
+          <li>把<b>高频流程</b>固化成命令 / 子代理流水线。</li>
+        </ul>
+      </div>
+      <div class="cheat-col">
+        <h4><span class="ico">C</span>上下文（经营注意力）</h4>
+        <ul>
+          <li><b>信号最高、数量最少</b>——不是越长越好。</li>
+          <li>长任务三件套：<b>压缩 · 外部笔记 · 子代理隔离</b>。</li>
+          <li>大数据<b>按需取用</b>（存指针，动态加载）。</li>
+          <li>一个会话<b>一个目标</b>，别"厨房水槽"。</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DISCLAIMER FOOTER -->
+<div class="wrap">
+  <div class="disc">
+    <span class="foot-mark">调研档案 · INSIDER-AI</span>
+    本报告由专属调研分析师生成 · 深度等级 L3 · 数据截至 2026-06-27。<br>
+    所有量化指标均来自 Anthropic 公开的内部研究与官方文档，已标注来源编号与时间；自报数据存在偏差，请结合 [A1] 局限性章节理解。<br>
+    <b>本文为 AI 使用方法论综述，不构成任何投资、法律或税务建议。</b>「事实 / 推断 / 观点」已在正文中以表述方式区分：硬数据=事实；"对你的建议"=基于你业务背景的推断。
+  </div>
+</div>
+
+</body>
+</html>

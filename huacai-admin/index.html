@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>华彩同城 · 运营后台</title>
+<style>
+  :root {
+    --primary: #1677FF;
+    --warn: #FF7D00;
+    --danger: #F5222D;
+    --success: #52C41A;
+    --bg: #F5F7FA;
+    --text: #333;
+    --muted: #999;
+    --border: #EEE;
+    --card: #fff;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, "PingFang SC", "Segoe UI", sans-serif; background: var(--bg); color: var(--text); font-size: 14px; }
+  a { color: var(--primary); text-decoration: none; }
+  button { cursor: pointer; font: inherit; }
+
+  /* Layout */
+  .app { display: flex; min-height: 100vh; }
+  .sidebar { width: 220px; background: #001529; color: #fff; flex-shrink: 0; }
+  .sidebar .logo { padding: 20px; font-size: 20px; font-weight: 700; border-bottom: 1px solid #112a41; }
+  .sidebar nav a { display: flex; align-items: center; gap: 10px; padding: 14px 22px; color: rgba(255,255,255,0.75); font-size: 14px; border-left: 3px solid transparent; }
+  .sidebar nav a:hover, .sidebar nav a.active { background: #002140; color: #fff; border-left-color: var(--primary); }
+  .sidebar .badge { margin-left: auto; background: var(--danger); color: #fff; border-radius: 10px; padding: 0 8px; font-size: 11px; }
+  .main { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+  .topbar { height: 56px; background: #fff; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; padding: 0 24px; }
+  .topbar .title { font-size: 18px; font-weight: 600; }
+  .topbar .user { color: #666; }
+  .topbar .user button { margin-left: 12px; background: transparent; border: 1px solid #ddd; padding: 4px 12px; border-radius: 4px; }
+  .content { padding: 24px; flex: 1; overflow: auto; }
+
+  /* Cards */
+  .card { background: var(--card); border-radius: 8px; padding: 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); margin-bottom: 20px; }
+  .card-title { font-size: 16px; font-weight: 600; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center; }
+
+  /* Stat cards */
+  .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .stat { background: #fff; border-radius: 8px; padding: 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+  .stat .num { font-size: 32px; font-weight: 700; color: var(--primary); }
+  .stat .lbl { color: var(--muted); font-size: 13px; margin-top: 4px; }
+  .stat.warn .num { color: var(--warn); }
+  .stat.danger .num { color: var(--danger); }
+
+  /* Tables */
+  table { width: 100%; border-collapse: collapse; }
+  th, td { padding: 12px; text-align: left; border-bottom: 1px solid var(--border); font-size: 13px; }
+  th { background: #FAFAFA; font-weight: 600; color: #555; }
+  tr:hover td { background: #F5F9FF; }
+
+  /* Tags */
+  .tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 12px; }
+  .tag.pending { background: #FFF7E6; color: var(--warn); }
+  .tag.ok { background: #E6FFE6; color: var(--success); }
+  .tag.rej { background: #FFECEC; color: var(--danger); }
+  .tag.off { background: #F3F5F8; color: var(--muted); }
+
+  /* Buttons */
+  .btn { padding: 6px 14px; border-radius: 4px; border: 1px solid #ddd; background: #fff; font-size: 13px; }
+  .btn.primary { background: var(--primary); border-color: var(--primary); color: #fff; }
+  .btn.danger { background: var(--danger); border-color: var(--danger); color: #fff; }
+  .btn.ghost { border: 1px solid #ddd; background: #fff; }
+  .btn + .btn { margin-left: 8px; }
+
+  /* Form */
+  input[type=text], input[type=password], input[type=number], textarea, select {
+    padding: 8px 12px; border: 1px solid #ddd; border-radius: 4px; font: inherit; width: 100%;
+  }
+  .field { margin-bottom: 16px; }
+  .field label { display: block; margin-bottom: 6px; color: #555; font-size: 13px; }
+
+  /* Login */
+  .login-bg { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #1677FF 0%, #4A9EFF 100%); }
+  .login-box { background: #fff; padding: 40px; border-radius: 12px; width: 400px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); }
+  .login-box h1 { margin: 0 0 8px; color: var(--primary); }
+  .login-box .sub { color: var(--muted); margin-bottom: 30px; font-size: 13px; }
+
+  /* Modal */
+  .modal-mask { position: fixed; inset: 0; background: rgba(0,0,0,0.45); display: flex; align-items: center; justify-content: center; z-index: 100; }
+  .modal { background: #fff; border-radius: 8px; width: 480px; max-height: 80vh; overflow: auto; }
+  .modal-head { padding: 16px 20px; border-bottom: 1px solid var(--border); font-weight: 600; }
+  .modal-body { padding: 20px; }
+  .modal-foot { padding: 14px 20px; border-top: 1px solid var(--border); text-align: right; }
+
+  /* Utility */
+  .row { display: flex; gap: 8px; align-items: center; }
+  .spacer { flex: 1; }
+  .empty { text-align: center; padding: 80px 0; color: var(--muted); }
+  .search-row { display: flex; gap: 10px; margin-bottom: 14px; }
+  .search-row input, .search-row select { max-width: 200px; }
+  .pagination { display: flex; gap: 8px; justify-content: flex-end; margin-top: 16px; }
+  .pagination button { padding: 4px 12px; border: 1px solid #ddd; background: #fff; border-radius: 4px; }
+  .pagination button.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+  .avatar-xs { width: 28px; height: 28px; border-radius: 50%; object-fit: cover; }
+  .logo-sm { width: 40px; height: 40px; border-radius: 6px; object-fit: cover; background: #eee; vertical-align: middle; }
+  .toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); padding: 10px 20px; border-radius: 6px; color: #fff; z-index: 200; font-size: 14px; }
+  .toast.success { background: var(--success); }
+  .toast.error { background: var(--danger); }
+</style>
+</head>
+<body>
+
+<!-- 登录页 -->
+<div id="login-page" class="login-bg" style="display:none;">
+  <div class="login-box">
+    <h1>华彩同城运营后台</h1>
+    <div class="sub">请使用管理员账号登录</div>
+    <div class="field">
+      <label>账号</label>
+      <input type="text" id="login-username" autocomplete="username" />
+    </div>
+    <div class="field">
+      <label>密码</label>
+      <input type="password" id="login-password" autocomplete="current-password" />
+    </div>
+    <button class="btn primary" style="width:100%; padding:10px;" onclick="doLogin()">登录</button>
+  </div>
+</div>
+
+<!-- 主应用 -->
+<div id="app" class="app" style="display:none;">
+  <aside class="sidebar">
+    <div class="logo">⚡ 华彩同城后台</div>
+    <nav>
+      <a href="#" data-view="overview" class="active">📊 数据概览</a>
+      <a href="#" data-view="clubs">🏢 俱乐部审核 <span class="badge" id="badge-clubs" style="display:none;">0</span></a>
+      <a href="#" data-view="activities">🎯 活动审核 <span class="badge" id="badge-activities" style="display:none;">0</span></a>
+      <a href="#" data-view="withdrawals">💰 提现审批 <span class="badge" id="badge-withdrawals" style="display:none;">0</span></a>
+      <a href="#" data-view="users">👤 用户管理</a>
+      <a href="#" data-view="ads">🎨 广告位</a>
+      <a href="#" data-view="report">📈 数据分析</a>
+    </nav>
+  </aside>
+  <div class="main">
+    <div class="topbar">
+      <div class="title" id="view-title">数据概览</div>
+      <div class="user">
+        <span id="admin-username">-</span>
+        <button onclick="logout()">退出</button>
+      </div>
+    </div>
+    <div class="content" id="content"></div>
+  </div>
+</div>
+
+<script src="./app.js"></script>
+</body>
+</html>

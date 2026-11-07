@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>第一个 Bot · Grok Bot 教程</title>
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body data-page="03">
+  <a class="skip" href="#main">跳到正文</a>
+  <header class="topbar">
+    <button class="nav-toggle" type="button" aria-controls="course-nav" aria-expanded="false">课程目录</button>
+    <a class="brand" href="../index.html" style="margin:0;font-size:1rem">Grok Bot 教程</a>
+  </header>
+  <div class="layout">
+    <aside class="sidebar" id="course-nav">
+      <a class="brand" href="../index.html">Grok Bot 教程</a>
+      <p class="brand-sub">能上班的命名同事</p>
+      <div class="nav-group">课程</div>
+      <nav><a href="../index.html"><span class="n">00</span><span>学习路径</span></a><a href="01-what-is.html"><span class="n">01</span><span>这是什么</span></a><a href="02-install.html"><span class="n">02</span><span>安装与登录</span></a><a href="03-first-bot.html" class="current"><span class="n">03</span><span>第一个 Bot</span></a><a href="04-multiple-bots.html"><span class="n">04</span><span>多个 Bot</span></a><a href="05-manage-bots.html"><span class="n">05</span><span>管理 Bot</span></a><a href="06-computer.html"><span class="n">06</span><span>云电脑</span></a><a href="07-skills-routines.html"><span class="n">07</span><span>Skill 与 Routine</span></a><a href="08-settings.html"><span class="n">08</span><span>设置与通知</span></a><a href="09-approvals.html"><span class="n">09</span><span>审批与安全</span></a><a href="10-practice.html"><span class="n">10</span><span>练习课</span></a><a href="11-faq.html"><span class="n">11</span><span>FAQ + 小抄</span></a></nav>
+      <div class="nav-group">官方</div>
+      <nav>
+        <a href="https://docs.x.ai/grok-bot/overview"><span class="n">↗</span><span>文档总览</span></a>
+        <a href="https://x.ai/bot"><span class="n">↗</span><span>下载 App</span></a>
+      </nav>
+    </aside>
+    <div>
+      <main id="main" class="main">
+        <p class="kicker">第 03 课</p>
+        <h1>第一个 Bot 与五件套指令</h1>
+        <p class="lead">岗位写清楚，任务写完整。模糊的「帮我看看」会得到模糊的忙乱。</p>
+        
+<figure class="diagram">
+  <img src="../assets/prompt-formula.svg" alt="任务五件套：Outcome、Sources、Constraints、Deliverable、Review">
+  <figcaption>五件套：做成什么、去哪找、不能做什么、交什么、何时停给你看。</figcaption>
+</figure>
+
+<h2>创建第一个 Bot</h2>
+<ol class="steps">
+  <li>侧边栏选 <strong>New</strong>，或按 <kbd>Cmd/Ctrl</kbd>+<kbd>N</kbd>。</li>
+  <li>在 New chat 里选 <strong>Create new agent</strong>。</li>
+  <li>Grok Bot 会创建一个名为 <strong>New Agent</strong> 的 Bot 并打开它。</li>
+  <li>打开 <strong>Bot actions → Edit Profile</strong>，设置名字、title、description、头像。</li>
+  <li>用一件具体的事开始对话。</li>
+</ol>
+<p>也可以从 <strong>Meet a future teammate</strong> 选一个建议同事，或选 Create your own。账号上限：<strong>Bot + 群聊合计 50 个</strong>。</p>
+<p>已有 Bot 也可以建议或创建更专注的新同事。若你想保持编制很小，先开口确认再批量新建。</p>
+
+<h2>身份：短名字 + 一个主职 + 工作方式</h2>
+<p>岗位要可操作，不要「万能助手」。官方示例：</p>
+<div class="prompt">
+  <p class="label">Bot 简介模板</p>
+  <button class="copy" type="button" data-copy="#p-profile">复制</button>
+  <pre id="p-profile">Name: Piper
+Job: Product performance
+Description: 用我们的可观测性工具调查产品表现问题。保留链接和截图，把证据和假说分开，先回报影响最大的问题。永远不要改生产设置。</pre>
+</div>
+<p>description 写<strong>长期为真</strong>的规则；具体任务写在对话里。</p>
+<ul class="clean">
+  <li>Description：「未经审批不要发外部消息。」</li>
+  <li>Message：「给这十二个账号起草跟进。」</li>
+</ul>
+
+<h2>任务五件套</h2>
+<ol class="steps">
+  <li><strong>Outcome</strong>：做成什么？</li>
+  <li><strong>Sources</strong>：哪些应用、网站、文件、对话作数？</li>
+  <li><strong>Constraints</strong>：必须避开或先问你的事？</li>
+  <li><strong>Deliverable</strong>：交回来的成品是什么？</li>
+  <li><strong>Review point</strong>：何时停下给你看？</li>
+</ol>
+<div class="grid-2">
+  <div class="pair bad">
+    <div class="tag">坏请求</div>
+    <h3>帮我看看邮件</h3>
+    <p>没有成品，没有边界，没有停点。Bot 只能猜你要摘要、要回复、还是要归档。</p>
+  </div>
+  <div class="pair good">
+    <div class="tag">好请求</div>
+    <h3>五件套写全</h3>
+    <p>目标、来源、禁区、交付物、审批点都写上。你决策，Bot 执行。</p>
+  </div>
+</div>
+<div class="prompt">
+  <p class="label">把「帮我看看邮件」改成五件套</p>
+  <button class="copy" type="button" data-copy="#p-mail">复制</button>
+  <pre id="p-mail">Outcome：找出今天需要我回复的客户邮件。
+Sources：只看工作邮箱收件箱，今天到达的邮件；忽略内部 newsletter。
+Constraints：不要发送、不要归档、不要标已读以外的操作。不确定是否客户来信时列成待确认，不要猜测。
+Deliverable：一张表：发件人、主题、一句话要点、建议回复方向、紧急程度。
+Review point：表做好就停。任何回复草稿先给我审，未经允许不得发送。</pre>
+</div>
+
+<h2>两个官方推荐的第一任务</h2>
+<p>五分钟、不需要连接器或网站登录：附上文档，然后发：</p>
+<div class="prompt">
+  <p class="label">文档摘要</p>
+  <button class="copy" type="button" data-copy="#p-doc">复制</button>
+  <pre id="p-doc">把这份文档总结成 5 条要点。另开一节列出每一个日期、决策和未决问题。每一项注明页码或章节。不要改源文件。</pre>
+</div>
+<p>然后试一件在你工具里的活：</p>
+<div class="prompt">
+  <p class="label">分析对比（需要仪表盘登录时再接管）</p>
+  <button class="copy" type="button" data-copy="#p-analytics">复制</button>
+  <pre id="p-analytics">打开我们的分析仪表盘，对比本周与过去 4 周的新用户激活。指出最大的步骤级变化，并起草一份简短调查计划，附上相关图表链接。不要改任何仪表盘。若需要登录，请让我来登录。</pre>
+</div>
+
+<h2>composer 小习惯</h2>
+<p>在输入框：<code>@</code> 可附上 Bot、群、Routine、连接器；<code>/</code> 引用已保存的 Skill。第一课先会打字就够。</p>
+<div class="callout pine">
+  <p class="label">练习</p>
+  <p>现在就创建 Bot，用文档摘要任务跑一遍。改格式时把偏好说成「以后都这样」：例如「以后的周报：五条要点、来源链接内联、最后一节叫 Decisions needed。」</p>
+</div>
+
+<h2>本课核对</h2>
+<div class="check-card">
+  <ul class="checks">
+    <li><label><input type="checkbox"> 已用 New → Create new agent 建好 Bot，并 Edit Profile</label></li>
+    <li><label><input type="checkbox"> description 里写了至少一条审批边界</label></li>
+    <li><label><input type="checkbox"> 发出过一条含五件套的任务</label></li>
+    <li><label><input type="checkbox"> 完成过文档 5 条摘要，且未改源文件</label></li>
+  </ul>
+</div>
+
+        <nav class="pager"><a href="02-install.html"><span class="dir">上一课</span><span class="to">安装与登录</span></a><a href="04-multiple-bots.html" style="text-align:right"><span class="dir">下一课</span><span class="to">多个 Bot</span></a></nav>
+      </main>
+      <footer class="footer">
+        <p>界面以你的 App 当前版本为准。本教程只收录官方文档与课程说明里的路径；若按钮文案不同，以当前界面为准，并查阅 <a href="https://docs.x.ai/grok-bot/overview">Grok Bot 官方文档</a>。</p>
+        <p>Grok Bot 是 xAI / Cursor 产品，不是 grok.com 聊天窗口。产品词保持英文：Grok Bot、Bot、Cursor、Plugins、Auto-review、Skill、Routine。</p>
+      </footer>
+    </div>
+  </div>
+  <script src="../js/app.js"></script>
+</body>
+</html>

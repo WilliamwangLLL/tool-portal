@@ -1,0 +1,497 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Ccircle cx=%2216%22 cy=%2216%22 r=%2210%22 fill=%22%23ffbf4d%22/%3E%3C/svg%3E">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}[hidden]{display:none!important}.backlink{display:inline-block;font-size:13px;color:#8e98b8;text-decoration:none;margin-bottom:-12px}.backlink:hover{color:#ffe6a3}</style>
+<title>我的点亮中国</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;900&family=Noto+Sans+SC:wght@400;500;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* 夜景地图：走过的城市像夜里的灯一样亮起，没去过的城市是暗处的空心标记；三条自驾线用不同颜色的航线穿过 */
+:root{
+  color-scheme:dark;
+  --bg:#090d1a; --panel:#10172a; --panel-2:#151e36; --line:#26314f;
+  --land:#141c33; --land-edge:#2b3758; --prov-edge:#4a5a86;
+  --fg:#eaeefa; --muted:#8e98b8; --dim:#5d6889;
+  --lit:#ffbf4d; --lit-hot:#ffe6a3; --lit-deep:#c97a14;
+  --ra:#4fd6c9; --rb:#ff7b69; --rc:#ae93ff;
+  --f-display:"Noto Serif SC","Songti SC",serif;
+  --f-body:"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;
+  --f-num:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:15px;line-height:1.6}
+.wrap{max-width:1240px;margin:0 auto;padding-block:28px 56px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:grid;gap:28px}
+h1,h2,h3{text-wrap:balance;margin:0}
+.head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px 32px}
+.head h1{font-family:var(--f-display);font-weight:900;font-size:clamp(30px,5vw,52px);letter-spacing:.04em;line-height:1.1}
+.head h1 em{font-style:normal;color:var(--lit);text-shadow:0 0 18px rgba(255,191,77,.55)}
+.head p{margin:6px 0 0;color:var(--muted);max-width:52ch}
+.stats{display:flex;gap:28px;flex-wrap:wrap}
+.stat b{display:block;font-family:var(--f-num);font-size:clamp(28px,4vw,40px);line-height:1;color:var(--lit-hot);font-variant-numeric:tabular-nums}
+.stat span{font-size:12px;color:var(--muted);letter-spacing:.08em}
+.stat.dim b{color:var(--fg)}
+
+.stage{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:20px;align-items:start}
+@media (max-width:900px){.stage{grid-template-columns:1fr}}
+.mapbox{position:relative;background:radial-gradient(120% 90% at 55% 40%,#121a33 0%,var(--bg) 70%);border:1px solid var(--line);border-radius:14px;overflow:hidden;touch-action:none}
+#map{display:block;width:100%;height:auto;cursor:grab}
+#map:active{cursor:grabbing}
+.tabs{position:absolute;top:12px;left:12px;right:12px;display:flex;flex-wrap:wrap;gap:6px;pointer-events:none}
+.tabs button{pointer-events:auto;font:500 13px var(--f-body);color:var(--fg);background:rgba(16,23,42,.85);border:1px solid var(--line);border-radius:999px;padding:5px 12px;cursor:pointer;backdrop-filter:blur(6px);display:flex;align-items:center;gap:6px}
+.tabs button i{width:9px;height:9px;border-radius:50%;background:var(--c,var(--lit))}
+.tabs button[aria-pressed="true"]{border-color:var(--c,var(--lit));box-shadow:0 0 0 1px var(--c,var(--lit)) inset;background:rgba(30,40,70,.92)}
+.tabs button:focus-visible,.chip:focus-visible,.rcard:focus-visible,.zoombtns button:focus-visible,.sim:focus-visible{outline:2px solid var(--lit-hot);outline-offset:2px}
+.legend{position:absolute;left:12px;bottom:12px;display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12px;color:var(--muted);background:rgba(9,13,26,.75);padding:6px 10px;border-radius:8px;max-width:calc(100% - 90px)}
+.legend span{display:flex;align-items:center;gap:6px}
+.sw{width:14px;height:10px;border-radius:2px;display:inline-block}
+.sw.lit{background:var(--lit);box-shadow:0 0 8px var(--lit)}
+.sw.un{background:var(--land);border:1px dashed var(--muted)}
+.sw.tg{background:transparent;border:1.5px solid var(--ra)}
+.zoombtns{position:absolute;right:12px;bottom:12px;display:flex;flex-direction:column;gap:4px}
+.zoombtns button{width:34px;height:34px;border-radius:8px;border:1px solid var(--line);background:rgba(16,23,42,.9);color:var(--fg);font:500 18px var(--f-num);cursor:pointer}
+.hint{position:absolute;right:56px;bottom:16px;font-size:11px;color:var(--dim)}
+@media (max-width:560px){.hint{display:none}}
+#tip{position:fixed;pointer-events:none;z-index:9;background:rgba(12,17,32,.95);border:1px solid var(--line);border-radius:8px;padding:6px 10px;font-size:13px;line-height:1.45;max-width:240px;opacity:0;transition:opacity .12s}
+#tip b{font-weight:700}
+#tip small{display:block;color:var(--muted)}
+
+/* map layers */
+.city{stroke:var(--land-edge);stroke-width:calc(.5px / var(--k,1));transition:fill .6s}
+.city.un{fill:var(--land)}
+.city.lit{fill:url(#litGrad)}
+.city.hover{stroke:var(--fg);stroke-width:calc(1.4px / var(--k,1))}
+.city.tg{fill:var(--rc-fill);stroke:var(--rc-col);stroke-width:calc(1.2px / var(--k,1));animation:pulse 1.8s ease-in-out infinite}
+.city.tg.done{fill:url(#litGrad);animation:flash 1s ease-out 1}
+.glow path{fill:var(--lit);opacity:.55}
+.prov{fill:none;stroke:var(--prov-edge);stroke-width:calc(.9px / var(--k,1));pointer-events:none}
+.jd{fill:none;stroke:var(--prov-edge);stroke-width:calc(1.2px / var(--k,1));pointer-events:none}
+.mk-un{fill:none;stroke:var(--muted);stroke-width:calc(.8px / var(--k,1));pointer-events:none;opacity:.8}
+.mk-lit{fill:var(--lit-hot);pointer-events:none}
+.lbl{font-family:var(--f-body);font-size:calc(10px / var(--k,1));text-anchor:middle;pointer-events:none;paint-order:stroke;stroke:var(--bg);stroke-width:calc(2.6px / var(--k,1));transition:opacity .25s}
+.lbl.l{fill:var(--lit-hot);font-weight:500}
+.lbl.u{fill:var(--muted)}
+.lbl.off{opacity:0}
+.route{fill:none;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}
+.route.base{stroke-width:calc(2.6px / var(--k,1));opacity:.95}
+.route.ants{stroke-width:calc(2.6px / var(--k,1));stroke-dasharray:.1 9;stroke:#fff;opacity:.85;animation:ants 1.4s linear infinite}
+.route.faint{opacity:.45}
+.stop circle{stroke:var(--bg);stroke-width:calc(1.4px / var(--k,1))}
+.stop text.num{font:700 calc(9px / var(--k,1)) var(--f-num);fill:var(--bg);text-anchor:middle;dominant-baseline:central}
+.slbl{font:700 calc(11px / var(--k,1)) var(--f-body);paint-order:stroke;stroke:var(--bg);stroke-width:calc(3px / var(--k,1));pointer-events:none}
+@keyframes pulse{50%{fill-opacity:.35}}
+@keyframes flash{0%{filter:brightness(2.4)}100%{filter:none}}
+@keyframes ants{to{stroke-dashoffset:-18}}
+@media (prefers-reduced-motion:reduce){.city.tg,.route.ants,.city.tg.done{animation:none}}
+
+/* side panel */
+.side{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px;display:grid;gap:14px;min-width:0}
+.side h2{font-family:var(--f-display);font-size:22px;font-weight:900;display:flex;align-items:center;gap:10px}
+.side h2 i{width:12px;height:12px;border-radius:50%;background:var(--c)}
+.side .meta{display:flex;flex-wrap:wrap;gap:6px 16px;color:var(--muted);font-size:13px}
+.side .meta b{color:var(--fg);font-family:var(--f-num);font-weight:500}
+.itin{list-style:none;margin:0;padding:0;display:grid;gap:2px;max-height:520px;overflow:auto}
+.itin li{display:grid;grid-template-columns:26px 1fr auto;gap:8px;align-items:start;padding:7px 4px;border-bottom:1px dashed var(--line);cursor:pointer;border-radius:6px}
+.itin li:hover{background:var(--panel-2)}
+.itin .no{font:500 12px var(--f-num);width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:var(--panel-2);color:var(--muted);margin-top:1px}
+.itin li.new .no{background:var(--c);color:var(--bg)}
+.itin .nm{font-weight:700}
+.itin .nt{display:block;font-size:12px;color:var(--muted)}
+.itin .km{font:500 12px var(--f-num);color:var(--dim);white-space:nowrap;padding-top:3px}
+.tag{font-size:11px;padding:0 6px;border-radius:4px;margin-left:6px;vertical-align:1px}
+.tag.new{color:var(--bg);background:var(--c)}
+.tag.old{color:var(--lit);border:1px solid rgba(255,191,77,.45)}
+.sim{font:700 14px var(--f-body);border:0;border-radius:10px;padding:10px 14px;background:var(--c);color:var(--bg);cursor:pointer}
+.sim[aria-pressed="true"]{background:transparent;color:var(--c);box-shadow:0 0 0 1.5px var(--c) inset}
+.note{font-size:12px;color:var(--muted);margin:0}
+.gl{display:block;text-align:right;font:500 11px var(--f-body);color:var(--c);text-decoration:none;margin-top:2px}
+.guide{display:block;text-align:center;font:700 14px var(--f-body);color:var(--c);border:1.5px solid var(--c);border-radius:10px;padding:9px 12px;text-decoration:none}
+.gl:hover,.guide:hover{filter:brightness(1.25)}
+.cd{font:700 15px var(--f-body);color:var(--bg);background:var(--c);border-radius:10px;padding:8px 12px}
+.cd b{font-family:var(--f-num);font-size:20px}
+.days{list-style:none;margin:0;padding:0;display:grid;gap:6px;max-height:560px;overflow:auto}
+.days li{display:grid;grid-template-columns:52px 1fr auto;gap:10px;padding:9px 8px;border:1px solid var(--line);border-radius:10px;cursor:pointer;background:var(--panel-2)}
+.days li:hover{border-color:var(--c)}
+.days li.past{opacity:.45}
+.days li.today{border:2px solid var(--c);box-shadow:0 0 14px color-mix(in srgb,var(--c) 45%,transparent)}
+.days li.show{border:1.5px dashed var(--c);background:transparent}
+.days .dd{display:grid;justify-items:center;align-content:start;line-height:1.2}
+.days .dd b{font:500 16px var(--f-num);color:var(--c)}
+.days .dd span{font-size:12px;color:var(--muted)}
+.days .dd em{font-style:normal;font-size:11px;color:var(--bg);background:var(--c);border-radius:4px;padding:0 5px;margin-top:3px}
+.days .dt{font-weight:700;font-size:14px}
+.chips{display:flex;flex-wrap:wrap;gap:4px;margin-top:5px}
+.ch{font-size:12px;color:var(--c);border:1px solid var(--c);border-radius:20px;padding:1px 8px;text-decoration:none}
+.days .dk{font:500 12px var(--f-num);color:var(--dim);text-align:right;white-space:nowrap;display:grid;align-content:start;gap:3px}
+.days .dk span{font-family:var(--f-body);color:var(--muted)}
+
+
+/* routes compare */
+.sec h2{font-family:var(--f-display);font-weight:900;font-size:clamp(22px,3vw,28px);margin-bottom:12px}
+.sec>p{margin:-4px 0 14px;color:var(--muted)}
+.rgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+.rcard{text-align:left;font:inherit;color:inherit;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px;cursor:pointer;display:grid;gap:10px;align-content:start;border-top:3px solid var(--c)}
+.rcard[aria-pressed="true"]{box-shadow:0 0 0 1px var(--c) inset;background:var(--panel-2)}
+.rcard h3{font-family:var(--f-display);font-size:19px;font-weight:900}
+.rcard .meta{font-size:13px;color:var(--muted)}
+.rcard .meta b{color:var(--c);font-family:var(--f-num);font-size:18px}
+.seq{display:flex;flex-wrap:wrap;gap:4px 2px;align-items:center;font-size:13px}
+.seq span{padding:1px 6px;border-radius:4px;color:var(--muted)}
+.seq span.n{color:var(--bg);background:var(--c);font-weight:700}
+.seq em{font-style:normal;color:var(--dim);font-size:11px}
+
+/* provinces */
+.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+.pcard{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:grid;gap:8px;min-width:0}
+.pcard header{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.pcard h3{font-size:15px;font-weight:700}
+.pcard .ct{font:500 13px var(--f-num);color:var(--muted)}
+.pcard .ct b{color:var(--lit-hot);font-weight:500}
+.bar{height:5px;border-radius:3px;background:var(--line);overflow:hidden}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--lit-deep),var(--lit));box-shadow:0 0 8px var(--lit)}
+.chips{display:flex;flex-wrap:wrap;gap:4px}
+.chip{font:12px var(--f-body);color:var(--muted);background:transparent;border:1px dashed var(--dim);border-radius:5px;padding:1px 6px;cursor:pointer}
+.chip:hover{color:var(--fg);border-color:var(--muted)}
+.chip.lit{color:var(--lit-hot);border:1px solid rgba(255,191,77,.35);background:rgba(255,191,77,.07)}
+.chip.rt{border-style:solid;border-color:var(--c);color:var(--c)}
+.pcard.full{border-color:rgba(255,191,77,.45)}
+.pcard.full h3::after{content:" 全亮";font-size:11px;color:var(--lit)}
+.foot{font-size:12px;color:var(--dim)}
+#loading{position:absolute;inset:0;display:grid;place-items:center;color:var(--muted);font-size:14px}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <a class="backlink" href="/my/">← 磊哥的工具箱</a>
+  <header class="head">
+    <div>
+      <h1>我的<em>点亮</em>中国</h1>
+      <p>数据对照高德地图「我的足迹世界 · 点亮城市」截图更新（2026-11-01）：黄标＝首次点亮，蓝标＝再次到达。亮着的是去过的城市，暗处的空心圈是还没去过的城市。山西 11 市、河北 11 市已全部点亮。</p>
+    </div>
+    <div class="stats">
+      <div class="stat"><b id="sLit">158</b><span>已点亮城市</span></div>
+      <div class="stat dim"><b id="sUn">—</b><span>还没去过</span></div>
+      <div class="stat dim"><b id="sFull">—</b><span>全亮的省级区</span></div>
+    </div>
+  </header>
+
+  <div class="stage">
+    <div class="mapbox" id="mapbox">
+      <svg id="map" viewBox="0 0 1000 830" role="img" aria-label="中国地级城市点亮地图">
+        <defs>
+          <radialGradient id="litGrad" cx="50%" cy="45%" r="70%">
+            <stop offset="0" stop-color="#ffe6a3"/><stop offset=".55" stop-color="#ffbf4d"/><stop offset="1" stop-color="#d98a1c"/>
+          </radialGradient>
+          <filter id="blur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="6"/></filter>
+        </defs>
+      </svg>
+      <div id="loading">正在铺开地图…</div>
+      <div class="tabs" id="tabs" role="group" aria-label="选择路线"></div>
+      <div class="legend">
+        <span><i class="sw lit"></i>已点亮</span>
+        <span><i class="sw un"></i>未去过</span>
+        <span><i class="sw tg" id="lgTg"></i>路线上待点亮</span>
+      </div>
+      <div class="hint">滚轮 / 双指缩放，拖动平移</div>
+      <div class="zoombtns"><button id="zin" aria-label="放大">+</button><button id="zout" aria-label="缩小">−</button><button id="zreset" aria-label="回到全国" style="font-size:12px">全</button></div>
+    </div>
+    <aside class="side" id="side" aria-live="polite"></aside>
+  </div>
+
+  <section class="sec">
+    <h2>自驾环线</h2>
+    <p>E 线是刚走完的 2026 秋山西行实录；A / B / C / D 是后续可走的规划线。实心色块是这条线上还能新点亮的城市，灰字是已经点亮、顺路经过的城市。</p>
+    <div class="rgrid" id="rgrid"></div>
+  </section>
+
+  <section class="sec">
+    <h2>各省点亮进度</h2>
+    <p>金色是去过的城市，虚线框是没去过的城市。点任意城市名，地图会飞过去。</p>
+    <div class="pgrid" id="pgrid"></div>
+  </section>
+  <p class="foot">边界数据：阿里云 DataV 行政区划（地级）。里程为城市间直线距离 × 1.25 的估算，实际以导航为准。新疆的新星市、白杨市在边界数据中暂无独立区域，只在列表里列出；台湾省按整省显示。</p>
+</div>
+<div id="tip"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<script>
+const ORDER=['北京','天津','上海','重庆','香港','澳门','台湾','河北','山西','内蒙古','辽宁','吉林','黑龙江','江苏','浙江','安徽','福建','江西','山东','河南','湖北','湖南','广东','广西','海南','四川','贵州','云南','西藏','陕西','甘肃','青海','宁夏','新疆'];
+const EXTRA_UN={'新疆':['新星市','白杨市']};
+const ROUTES=[
+ {id:'E',name:'2026 秋 · 山西行（已完成）',c:'#ff5fa2',km:3130,days:'10-23 → 10-31',
+  done:true,
+  intro:'已走完。9 天自驾翻太行进山西、过黄河到陕豫、经上党冀南回京；高德黄标首次点亮 17 座（含回程沧州），山西与河北全部点亮。详细图文见游山河。',
+  concert:'2026-11-01',
+  plan:[
+   ['2026-10-23','北京 → 石家庄','晚上到，住石家庄市区',330,'石家庄',['石家庄']],
+   ['2026-10-24','石家庄 → 娘子关 → 平遥','翻太行进山西；下午娘子关，晚上《又见平遥》；首次点亮阳泉、晋中',260,'平遥',['阳泉','晋中']],
+   ['2026-10-25','平遥古城 → 晋祠 → 太原','古城与晋祠，晚上住太原；首次点亮太原',100,'太原',['太原']],
+   ['2026-10-26','太原 → 应县木塔 → 太原','木塔看完回太原；路过点亮吕梁、忻州、朔州',460,'太原',['吕梁','忻州','朔州']],
+   ['2026-10-27','山西博物院 → 洪洞','上午博物院，下午南下住洪洞；首次点亮临汾',230,'洪洞',['临汾']],
+   ['2026-10-28','广胜寺 → 壶口 → 过河 → 韩城','壶口东岸点亮延安，晚上住韩城（渭南）',250,'韩城',['延安']],
+   ['2026-10-29','韩城 → 关帝庙、盐湖 → 三门峡','龙门回山西；首次点亮运城、三门峡',250,'三门峡',['运城','三门峡']],
+   ['2026-10-30','三门峡 → 济源 → 焦作 → 皇城相府 → 长治','路过点亮济源、焦作；晋城、长治首次点亮',430,'长治',['济源','焦作','晋城','长治']],
+   ['2026-10-31','长治 → 邢台 → 衡水 → 沧州 → 北京','回程首次点亮邢台、衡水、沧州，河北全亮',670,'北京',['邢台','衡水','沧州']],
+   ['2026-11-01','演唱会','回京后机动日',0,'',[]]],
+  stops:[['北京',0,''],['石家庄',330,'10-23 晚到 · 住市区'],['阳泉',104,'10-24 娘子关 · 首次点亮'],['晋中',96,'10-24 平遥 · 首次点亮'],['太原',30,'10-25 晋祠 · 首次点亮'],['吕梁',30,'10-26 路过点亮',[112.20,37.58]],['忻州',100,'10-26 路过点亮'],['朔州',131,'10-26 应县木塔 · 首次点亮'],['太原',230,'10-26 晚回太原'],['临汾',230,'10-27 洪洞 · 首次点亮',[111.67,36.25]],['延安',150,'10-28 壶口东岸 · 首次点亮',[110.15,36.30]],['渭南',130,'10-28 住韩城'],['运城',150,'10-29 关帝庙、盐湖 · 首次点亮'],['三门峡',40,'10-29 首次点亮'],['济源',165,'10-30 路过点亮'],['焦作',76,'10-30 路过点亮'],['晋城',58,'10-30 皇城相府 · 首次点亮'],['长治',101,'10-30 首次点亮'],['邢台',198,'10-31 首次点亮'],['衡水',158,'10-31 首次点亮'],['沧州',120,'10-31 首次点亮'],['北京',200,'10-31 到京']]},
+ {id:'D',name:'石家庄起步大环线',c:'#5fb3ff',km:3250,days:'13–17 天',
+  intro:'规划线。E 线已把山西、河北点亮；这条线剩余新点亮主要在豫北与鲁西（濮阳、聊城、德州、滨州等），城市手册仍可用。',
+  stops:[['北京',0,''],['石家庄',329,'先到这里 · 正定古城、赵州桥'],['阳泉',105,'娘子关'],['晋中',94,'平遥古城、王家大院'],['太原',33,'晋祠、山西博物院'],['忻州',79,'五台山、雁门关'],['朔州',131,'应县木塔'],['吕梁',288,'碛口古镇、黄河'],['临汾',203,'壶口瀑布'],['运城',159,'解州关帝庙、盐湖'],['三门峡',43,'天鹅湖、虢国博物馆'],['济源',165,'王屋山、小浪底'],['焦作',76,'云台山'],['晋城',58,'皇城相府'],['长治',103,'太行山大峡谷'],['邢台',196,'崆山白云洞'],['濮阳',191,'戚城遗址、中华第一龙'],['聊城',145,'东昌湖、光岳楼'],['衡水',181,'衡水湖'],['德州',87,'德州扒鸡'],['滨州',178,'魏氏庄园'],['沧州',178,'吴桥杂技、铁狮子'],['北京',227,'京沪高速返京']]},
+ {id:'A',name:'山西环线',c:'#4fd6c9',km:2300,days:'6–7 天',
+  intro:'山西 11 市已在 E 线全部点亮。这条线可作复游参考：晋北古建、晋中大院、晋南黄河一路串起来。',
+  stops:[['北京',0,''],['张家口',201,'京张高速出关'],['大同',193,'云冈石窟、古城墙'],['朔州',140,'应县木塔'],['忻州',131,'五台山、雁门关'],['太原',79,'晋祠、山西博物院'],['吕梁',163,'碛口古镇、黄河'],['临汾',203,'壶口瀑布'],['运城',159,'解州关帝庙、盐湖'],['晋城',219,'皇城相府'],['长治',103,'太行山大峡谷'],['晋中',211,'平遥古城、王家大院'],['阳泉',94,'娘子关'],['北京',416,'京昆—京港澳返京']]},
+ {id:'B',name:'冀鲁胶东环线',c:'#ff7b69',km:2750,days:'6–7 天',
+  intro:'河北已全亮。这条线还剩山东未点亮城市（滨州、烟台、威海、日照、菏泽、聊城、德州等），胶东看海、鲁西吃美食。',
+  stops:[['北京',0,''],['沧州',227,'吴桥杂技、铁狮子'],['滨州',178,'魏氏庄园'],['烟台',384,'蓬莱阁、养马岛'],['威海',74,'刘公岛、成山头'],['青岛',279,'顺路歇脚'],['日照',132,'万平口海滨'],['菏泽',460,'曹州牡丹园'],['聊城',180,'东昌湖、光岳楼'],['德州',141,'德州扒鸡'],['衡水',87,'衡水湖'],['邢台',159,'崆山白云洞'],['北京',444,'京港澳高速返京']]},
+ {id:'C',name:'辽宁东蒙环线',c:'#ae93ff',km:2400,days:'5–6 天',
+  intro:'辽宁剩下 5 座 + 内蒙古赤峰、通辽。鸭绿江边看对岸，本溪千山赏红叶。10 月底塞外早晚已到零下。',
+  stops:[['北京',0,''],['承德',220,'顺路经过避暑山庄'],['赤峰',206,'克什克腾、阿斯哈图石林'],['通辽',392,'大青沟'],['沈阳',284,'顺路歇脚'],['抚顺',56,'赫图阿拉城'],['本溪',84,'本溪水洞'],['丹东',175,'鸭绿江断桥'],['鞍山',201,'千山'],['辽阳',29,'辽阳白塔'],['锦州',215,'顺路歇脚'],['北京',527,'京哈高速返京']]}
+];
+const shortName=n=>n.replace(/(蒙古|藏族|羌族|彝族|回族|土家族|苗族|侗族|布依族|哈尼族|壮族|傣族|景颇族|傈僳族|白族|哈萨克|柯尔克孜|黎族|朝鲜族).*自治(州|县)$/,'').replace(/(市|地区|盟|林区|特别行政区)$/,'');
+
+const W=1000,H=830;
+const svg=d3.select('#map');
+const root=svg.append('g').attr('id','root');
+const gGlow=root.append('g').attr('class','glow').attr('filter','url(#blur)');
+const gCity=root.append('g');
+const gProv=root.append('g');
+const gMk=root.append('g');
+const gRoute=root.append('g');
+const gLbl=root.append('g');
+const gStop=root.append('g');
+let K=1, active='ALL', simulated=false, cities=[], byName={}, path, proj, baseLit=0;
+
+const tip=document.getElementById('tip');
+function showTip(e,html){tip.innerHTML=html;tip.style.opacity=1;const x=Math.min(e.clientX+14,innerWidth-250);tip.style.left=x+'px';tip.style.top=(e.clientY+14)+'px'}
+function hideTip(){tip.style.opacity=0}
+
+fetch('mapdata.json?v=3').then(r=>r.json()).then(init).catch(err=>{console.error(err);const l=document.getElementById('loading');if(l)l.textContent='地图数据没能加载，请刷新重试。'});
+
+function init(data){
+  document.getElementById('loading').remove();
+  // 个别区域环向与 d3 球面约定相反时会被当成"整个地球减去它"，这里逐块翻正
+  [...data.cities.features,...data.provs.features].forEach(f=>{const g=f.geometry;
+    (g.type==='Polygon'?[g.coordinates]:g.type==='MultiPolygon'?g.coordinates:[]).forEach(p=>{if(d3.geoArea({type:'Polygon',coordinates:p})>2*Math.PI)p.forEach(r=>r.reverse())})});
+  proj=d3.geoConicEqualArea().parallels([25,47]).rotate([-105,0]).fitExtent([[14,56],[W-14,H-14]],data.provs);
+  path=d3.geoPath(proj);
+  cities=data.cities.features;
+  baseLit=cities.filter(f=>f.properties.l).length;
+  document.getElementById('sLit').textContent=baseLit;
+  cities.forEach(f=>{const p=f.properties;p.s=shortName(p.n);p.xy=proj(p.c);byName[p.s]=byName[p.s]||f});
+  byName['北京']=cities.find(f=>f.properties.n==='北京');
+
+  gGlow.selectAll('path').data(cities.filter(f=>f.properties.l)).join('path').attr('d',path);
+  gCity.selectAll('path').data(cities).join('path')
+    .attr('class',d=>'city '+(d.properties.l?'lit':'un')).attr('d',path)
+    .on('pointermove',function(e,d){d3.select(this).classed('hover',true).raise();showTip(e,tipHtml(d))})
+    .on('pointerleave',function(){d3.select(this).classed('hover',false);hideTip()});
+  gProv.selectAll('path').data(data.provs.features).join('path').attr('class','prov').attr('d',path);
+  if(data.jd) gProv.append('path').datum(data.jd).attr('class','jd').attr('d',path);
+
+  gMk.selectAll('circle').data(cities.filter(f=>f.properties.n!=='台湾')).join('circle')
+    .attr('class',d=>d.properties.l?'mk-lit':'mk-un')
+    .attr('cx',d=>d.properties.xy[0]).attr('cy',d=>d.properties.xy[1]);
+  gLbl.selectAll('text').data(cities).join('text')
+    .attr('class',d=>'lbl '+(d.properties.l?'l':'u'))
+    .attr('x',d=>d.properties.xy[0]).attr('y',d=>d.properties.xy[1]-4)
+    .text(d=>d.properties.s);
+
+  // stats
+  const full=ORDER.filter(p=>{const cs=cities.filter(f=>f.properties.p===p);return p!=='台湾'&&cs.length&&cs.every(f=>f.properties.l)}).length;
+  const totalUn=cities.filter(f=>!f.properties.l&&f.properties.n!=='台湾').length+20+2; // 台湾按高德 20 个市县计，另加新疆新星、白杨
+  document.getElementById('sUn').textContent=totalUn;
+  document.getElementById('sFull').textContent=full;
+
+  buildTabs();buildCards();buildProvs();
+  setupZoom();
+  select(ROUTES.some(r=>r.id===location.hash.slice(1))?location.hash.slice(1):'ALL');
+}
+
+function routeOf(name){return ROUTES.filter(r=>r.stops.some(s=>s[0]===name&&!byName[name].properties.l))}
+function tipHtml(d){
+  const p=d.properties;
+  let s=p.l?'<span style="color:var(--lit)">已点亮</span>':'还没去过';
+  if(p.n==='台湾') s='高德记 20 个市县，均未点亮';
+  const rs=p.l?[]:ROUTES.filter(r=>r.stops.some(x=>x[0]===p.s));
+  if(rs.length) s+=`<small>走「${rs.map(r=>r.name).join('、')}」可点亮</small>`;
+  return `<b>${p.n}</b> · ${p.p}<small>${s}</small>`;
+}
+
+/* zoom */
+let zoom;
+function setupZoom(){
+  zoom=d3.zoom().scaleExtent([1,14]).translateExtent([[-100,-100],[W+100,H+100]])
+    .on('zoom',e=>{root.attr('transform',e.transform);K=e.transform.k;applyK()});
+  svg.call(zoom).on('dblclick.zoom',null);
+  document.getElementById('zin').onclick=()=>svg.transition().duration(350).call(zoom.scaleBy,1.6);
+  document.getElementById('zout').onclick=()=>svg.transition().duration(350).call(zoom.scaleBy,1/1.6);
+  document.getElementById('zreset').onclick=()=>svg.transition().duration(600).call(zoom.transform,d3.zoomIdentity);
+}
+// KK = 地图缩放 × 视框到屏幕的比例，让圆点、字号、线宽在任何屏宽下都是真实像素大小
+function applyK(){
+  const KK=K*(svg.node().getBoundingClientRect().width||W)/W;
+  root.style('--k',KK);
+  gGlow.style('opacity',K<1.8?1:K<3.5?.35:0);
+  gMk.selectAll('circle').attr('r',d=>(d.properties.l?1.6:2.4)/KK);
+  gStop.selectAll('circle').attr('r',8/KK);
+  gLbl.selectAll('text').attr('y',d=>d.properties.xy[1]-5/KK)
+    .classed('off',d=>{const p=d.properties;if(stopSet.has(p.s))return true;return p.l?K<2.2:K<3.2});
+  gStop.selectAll('text.slbl').attr('dx',11/KK).attr('dy',4/KK);
+}
+addEventListener('resize',()=>{if(path)applyK()});
+function flyTo(feats,maxK=7){
+  const b=path.bounds({type:'FeatureCollection',features:feats});
+  const dx=b[1][0]-b[0][0],dy=b[1][1]-b[0][1],cx=(b[0][0]+b[1][0])/2,cy=(b[0][1]+b[1][1])/2;
+  const k=Math.max(1,Math.min(maxK,.8/Math.max(dx/W,dy/H)));
+  svg.transition().duration(900).call(zoom.transform,d3.zoomIdentity.translate(W/2,H/2+20).scale(k).translate(-cx,-cy));
+}
+
+/* routes */
+let stopSet=new Set();
+function buildTabs(){
+  const t=document.getElementById('tabs');
+  const items=[{id:'ALL',name:'全部路线',c:'#ffbf4d'},...ROUTES];
+  t.innerHTML=items.map(r=>`<button data-r="${r.id}" style="--c:${r.c}" aria-pressed="false"><i></i>${r.id==='ALL'?'':r.id+' · '}${r.name}</button>`).join('');
+  t.onclick=e=>{const b=e.target.closest('button');if(b)select(b.dataset.r)};
+}
+function lineFor(r){return {type:'LineString',coordinates:r.stops.map(s=>s[3]||byName[s[0]].properties.c)}}
+function select(id,fly=true){
+  if(simulated) countTo(baseLit);
+  active=id;simulated=false;
+  document.querySelectorAll('#tabs button,.rcard').forEach(b=>b.setAttribute('aria-pressed',String((b.dataset.r)===id)));
+  const rs=id==='ALL'?ROUTES:ROUTES.filter(r=>r.id===id);
+  const r0=rs.length===1?rs[0]:null;
+  // target cities
+  const tg=new Map();rs.forEach(r=>r.stops.forEach(s=>{if(!byName[s[0]].properties.l)tg.set(s[0],r.c)}));
+  document.getElementById('lgTg').style.borderColor=r0?r0.c:'#fff';
+  gCity.selectAll('path').classed('tg',d=>tg.has(d.properties.s)).classed('done',false)
+    .style('--rc-col',d=>tg.get(d.properties.s)||null).style('--rc-fill',d=>tg.has(d.properties.s)?tg.get(d.properties.s)+'66':null);
+  // lines
+  gRoute.selectAll('*').remove();
+  rs.forEach(r=>{
+    const p=gRoute.append('path').datum(lineFor(r)).attr('class','route base').attr('stroke',r.c).attr('d',path);
+    if(r0){
+      const len=p.node().getTotalLength();
+      p.attr('stroke-dasharray',len).attr('stroke-dashoffset',len).transition().duration(1800).ease(d3.easeCubicInOut).attr('stroke-dashoffset',0)
+       .on('end',()=>{p.attr('stroke-dasharray',null);gRoute.append('path').datum(lineFor(r)).attr('class','route ants').attr('d',path)});
+    }
+  });
+  // stops
+  gStop.selectAll('*').remove();stopSet=new Set();
+  if(r0){
+    const seen=new Set();let n=0;
+    r0.stops.forEach((s,i)=>{
+      if(seen.has(s[0]))return;seen.add(s[0]);stopSet.add(s[0]);
+      const f=byName[s[0]],[x,y]=s[3]?proj(s[3]):f.properties.xy,isNew=!f.properties.l;
+      const g=gStop.append('g').attr('class','stop').attr('transform',`translate(${x},${y})`);
+      g.append('circle').attr('fill',isNew?r0.c:'#ffe6a3');
+      g.append('text').attr('class','num').text(s[0]==='北京'?'起':++n);
+      g.append('text').attr('class','slbl').style('fill',isNew?r0.c:'#ffe6a3').text(r0.plan&&s[0]!=='北京'?s[0]+' '+s[2].slice(0,5).replace('-','/'):s[0]);
+    });
+  }
+  applyK();
+  renderSide(r0);
+  if(fly){ if(r0) flyTo(r0.stops.map(s=>byName[s[0]])); else svg.transition().duration(700).call(zoom.transform,d3.zoomIdentity); }
+}
+
+function renderSide(r){
+  const el=document.getElementById('side');
+  if(!r){
+    el.style.setProperty('--c','var(--lit)');
+    const tot=new Set(ROUTES.flatMap(r=>r.stops.map(s=>s[0]).filter(n=>!byName[n].properties.l))).size;
+    el.innerHTML=`<h2><i></i>这次去哪儿点亮</h2>
+      <p class="note" style="font-size:14px;color:var(--fg)">E 线「2026 秋 · 山西行」已走完：高德黄标新点亮 17 座，山西与河北全亮。下面 A / B / C / D 是后续规划；卡片上的 +N 是按<em>当前</em>点亮状态还能新点亮的座数（重叠已扣除）。规划线全走完大约还能 +${tot} 座。</p>
+      <ul class="itin">${ROUTES.map(r=>`<li data-r="${r.id}" style="--c:${r.c}" class="${r.done?'':'new'}"><span class="no">${r.id}</span><span><span class="nm">${r.name}</span><span class="nt">${r.stops.filter((s,i)=>i&&i<r.stops.length-1).map(s=>s[0]).join(' · ')}</span></span><span class="km">${r.done?'已完成':('+'+newCount(r)+' 座')}</span></li>`).join('')}</ul>
+      <p class="note">点「E」看已完成行程逐日；点 D / A / B / C 或下方卡片看后续规划。</p>`;
+    el.querySelector('.itin').onclick=e=>{const li=e.target.closest('li');if(li)select(li.dataset.r)};
+    return;
+  }
+  el.style.setProperty('--c',r.c);
+  if(r.plan) return renderPlan(el,r);
+  const nc=newCount(r);
+  el.innerHTML=`<h2><i></i>${r.id} · ${r.name}</h2>
+    <div class="meta"><span>新点亮 <b>${nc}</b> 座</span><span>约 <b>${r.km.toLocaleString()}</b> km</span><span><b>${r.days}</b></span></div>
+    <p class="note" style="color:var(--fg);font-size:13.5px">${r.intro}</p>
+    <ol class="itin">${r.stops.map((s,i)=>{const f=byName[s[0]],isNew=!f.properties.l;const last=i===r.stops.length-1;
+      return `<li class="${isNew?'new':''}" data-c="${s[0]}"><span class="no">${i===0?'起':last?'终':i}</span><span><span class="nm">${s[0]}</span>${i===0||last?'':isNew?'<span class="tag new">新点亮</span>':'<span class="tag old">已点亮</span>'}<span class="nt">${s[2]}</span></span><span class="km">${s[1]?s[1]+' km':''}${r.id==='D'&&i>0&&!last?`<a class="gl" href="guide.html#c${i}" onclick="event.stopPropagation()">手册</a>`:''}</span></li>`}).join('')}</ol>${r.id==='D'?'<a class="guide" href="guide.html">打开 D 线城市手册：21 座城市详细介绍 →</a>':''}
+    <button class="sim" id="sim" aria-pressed="false">模拟走完：点亮 +${nc} 座</button>`;
+  el.querySelector('.itin').onclick=e=>{const li=e.target.closest('li');if(li){const f=byName[li.dataset.c];flyTo([f],8)}};
+  document.getElementById('sim').onclick=e=>{
+    simulated=!simulated;e.currentTarget.setAttribute('aria-pressed',simulated);
+    e.currentTarget.textContent=simulated?'还原成现在的样子':`模拟走完：点亮 +${nc} 座`;
+    gCity.selectAll('path.tg').classed('done',simulated);
+    countTo(simulated?baseLit+nc:baseLit);
+  };
+}
+const WK='日一二三四五六';
+function bjToday(){return new Date(Date.now()+8*3600e3).toISOString().slice(0,10)}
+function dIdx(name){const d=ROUTES.find(r=>r.id==='D');return d.stops.findIndex(s=>s[0]===name)}
+function renderPlan(el,r){
+  const nc=newCount(r),today=bjToday();
+  const left=Math.round((Date.parse(r.concert)-Date.parse(today))/864e5);
+  const cd=r.done?'行程已完成':(left>0?`距离演唱会还有 <b>${left}</b> 天`:left===0?'<b>就是今天！</b>':'演唱会已经过去');
+  const metaLit=r.done?`<span>此行黄标 <b>17</b> 座</span><span>约 <b>${r.km.toLocaleString()}</b> km</span><span><b>已完成</b></span>`:`<span>新点亮 <b>${nc}</b> 座</span><span>约 <b>${r.km.toLocaleString()}</b> km</span><span><b>9</b> 天车程 + 1 天机动</span>`;
+  el.innerHTML=`<h2><i></i>${r.id} · ${r.name}</h2>
+    <div class="cd">${r.done?'✅ 已走完 · ':''}🎤 11-1 演唱会 · ${cd}</div>
+    <div class="meta">${metaLit}</div>
+    <p class="note" style="color:var(--fg);font-size:13.5px">${r.intro}</p>
+    <ol class="days">${r.plan.map((d,i)=>{const last=i===r.plan.length-1;
+      const st=d[0]<today?'past':d[0]===today?'today':'';
+      return `<li class="${st} ${last?'show':''}" data-i="${i}">
+        <div class="dd"><b>${d[0].slice(5)}</b><span>周${WK[new Date(d[0]+'T12:00:00Z').getUTCDay()]}</span>${st==='today'?'<em>今天</em>':''}</div>
+        <div class="dc"><div class="dt">${last?'🎤 ':''}${d[1]}</div><div class="nt">${d[2]}</div>
+          ${d[5].length?`<div class="chips">${d[5].map(c=>dIdx(c)>0?`<a class="ch" href="guide.html#c${dIdx(c)}" onclick="event.stopPropagation()">✦ ${c}</a>`:`<span class="ch">✦ ${c}</span>`).join('')}</div>`:''}</div>
+        <div class="dk">${d[3]?d[3]+' km':''}${d[4]?`<span>住 ${d[4]}</span>`:''}</div></li>`}).join('')}</ol>
+    <p class="note">粉色城市名点开是城市手册；点某一天，地图飞到那天要去的城市。里程是直线 × 1.25 估算，以导航为准。</p>
+    <a class="guide" href="shanxi.html">读《表里山河》：山西全景长文 →</a>
+    <a class="guide" href="/youshanhe/" style="margin-top:8px">打开游山河图鉴 →</a>
+    ${r.done?'':`<button class="sim" id="sim" aria-pressed="false">模拟走完：点亮 +${nc} 座</button>`}`;
+  el.querySelector('.days').onclick=e=>{const li=e.target.closest('li');if(!li)return;const cs=r.plan[li.dataset.i][5];if(cs.length)flyTo(cs.map(c=>byName[c]),8)};
+  const tl=el.querySelector('li.today');if(tl)tl.scrollIntoView({block:'nearest'});
+  const sim=document.getElementById('sim');
+  if(sim) sim.onclick=e=>{
+    simulated=!simulated;e.currentTarget.setAttribute('aria-pressed',simulated);
+    e.currentTarget.textContent=simulated?'还原成现在的样子':`模拟走完：点亮 +${nc} 座`;
+    gCity.selectAll('path.tg').classed('done',simulated);
+    countTo(simulated?baseLit+nc:baseLit);
+  };
+}
+function newCount(r){return new Set(r.stops.map(s=>s[0]).filter(n=>!byName[n].properties.l)).size}
+function countTo(v){const el=document.getElementById('sLit'),un=document.getElementById('sUn');const from=+el.textContent;d3.select(el).transition().duration(900).tween('t',()=>{const i=d3.interpolateRound(from,v);return t=>{const x=i(t);el.textContent=x;un.textContent=391-x}})}
+
+function buildCards(){
+  const g=document.getElementById('rgrid');
+  g.innerHTML=ROUTES.map(r=>{const nc=newCount(r);const meta=r.done?`<b>已完成</b> · 黄标 17 座 · ${r.days}`:`<b>+${nc}</b> 座 · 约 ${r.km.toLocaleString()} km · ${r.days}`;
+    return `<button class="rcard" data-r="${r.id}" style="--c:${r.c}" aria-pressed="false">
+    <h3>${r.id} · ${r.name}</h3>
+    <div class="meta">${meta}</div>
+    <div class="seq">${r.stops.map((s,i)=>`${i?'<em>→</em>':''}<span class="${byName[s[0]].properties.l?'':'n'}">${s[0]}</span>`).join('')}</div></button>`}).join('');
+  g.onclick=e=>{const b=e.target.closest('.rcard');if(b){select(b.dataset.r);document.getElementById('mapbox').scrollIntoView({behavior:'smooth',block:'start'})}};
+}
+
+function buildProvs(){
+  const routeCity={};ROUTES.forEach(r=>r.stops.forEach(s=>{if(!byName[s[0]].properties.l)routeCity[s[0]]=r.c}));
+  const html=ORDER.map(p=>{
+    const cs=cities.filter(f=>f.properties.p===p);
+    let lit=cs.filter(f=>f.properties.l), un=cs.filter(f=>!f.properties.l);
+    let total=cs.length+(EXTRA_UN[p]||[]).length;
+    if(p==='台湾') total=20;
+    const pct=lit.length/total*100;
+    const chips=[...lit.map(f=>`<button class="chip lit" data-n="${f.properties.n}">${f.properties.s}</button>`),
+      ...(p==='台湾'?['<span class="chip" style="cursor:default">20 个市县均未去过</span>']:un.map(f=>{const c=routeCity[f.properties.s];return `<button class="chip${c?' rt':''}" ${c?`style="--c:${c}"`:''} data-n="${f.properties.n}">${f.properties.s}</button>`})),
+      ...(EXTRA_UN[p]||[]).map(n=>`<span class="chip" style="cursor:default">${shortName(n)}</span>`)].join('');
+    return `<div class="pcard${lit.length===total?' full':''}"><header><h3>${p}</h3><span class="ct"><b>${lit.length}</b> / ${total}</span></header><div class="bar"><i style="width:${pct}%"></i></div><div class="chips">${chips}</div></div>`;
+  }).join('');
+  const g=document.getElementById('pgrid');g.innerHTML=html;
+  g.onclick=e=>{const b=e.target.closest('button.chip');if(!b)return;const f=cities.find(x=>x.properties.n===b.dataset.n);
+    document.getElementById('mapbox').scrollIntoView({behavior:'smooth',block:'start'});
+    flyTo([f],f.properties.p.length&&['北京','天津','上海','重庆','香港','澳门'].includes(f.properties.p)?6:9);
+    const sel=gCity.selectAll('path').filter(d=>d===f).classed('hover',true).raise();setTimeout(()=>sel.classed('hover',false),2400)};
+}
+</script>
+
+</body>
+</html>

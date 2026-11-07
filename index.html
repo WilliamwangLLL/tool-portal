@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="data:,">
     <title>磊哥的工具箱 | Tool Portal</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -161,91 +162,58 @@
             <h1>磊哥的工具箱</h1>
             <p class="subtitle">一站式访问所有工具和项目</p>
             <div class="stats">
-                <div class="stat"><div class="stat-value" id="toolCount" data-target="0">0</div><div class="stat-label">工具数量</div></div>
+                <div class="stat"><div class="stat-value" id="toolCount" data-target="0">0</div><div class="stat-label">公开入口</div></div>
                 <div class="stat"><div class="stat-value" id="categoryCount" data-target="0">0</div><div class="stat-label">分类</div></div>
                 <div class="stat"><div class="stat-value">100%</div><div class="stat-label">在线率</div></div>
             </div>
         </header>
         <div class="section">
+            <h2 class="section-title">🔥 最新调研</h2>
+            <div class="grid">
+                <!-- auto-report-latest:100 -->
+                <div class="card" onclick="window.open('reports/100/', '_blank')">
+                    <div class="card-icon">📚</div>
+                    <h3 class="card-title">世界名著 100 · 环球文学全景导览</h3>
+                    <p class="card-desc">100部跨越十三个文化区域、约二十七个世纪的世界文学经典：每部配原创版画徽记、深度导读与‘为什么值得读’。</p>
+                    <div class="card-meta"><span class="tag tag-research">最新调研</span><span class="tag tag-tool">知识项目</span></div>
+                    <a href="reports/100/" target="_blank" class="card-link">阅读报告 →</a>
+                </div>
+                <!-- /auto-report-latest:100 -->
+                <div class="card" onclick="window.open('reports/research-claude-ai-20260627-anthropic/', '_blank')">
+                    <div class="card-icon">🤖</div>
+                    <h3 class="card-title">像内部高手一样用 AI · Anthropic 研究员与工程师的进阶方法论</h3>
+                    <p class="card-desc">把 Prompt、上下文工程、并行智能体和团队级 AI 工作流拆成一套可复用的方法论。</p>
+                    <div class="card-meta"><span class="tag tag-research">最新调研</span><span class="tag tag-tool">AI 方法论</span></div>
+                    <a href="reports/research-claude-ai-20260627-anthropic/" target="_blank" class="card-link">阅读报告 →</a>
+                </div>
+                <div class="card" onclick="window.open('reports/starlink-report-1-77/', '_blank')">
+                    <div class="card-icon">🛰️</div>
+                    <h3 class="card-title">星链 Starlink 全景调研 · 从一句话到 1.77 万亿</h3>
+                    <p class="card-desc">覆盖 Starlink 的历史、技术、商业化、竞争格局和 SpaceX 估值叙事。</p>
+                    <div class="card-meta"><span class="tag tag-research">最新调研</span><span class="tag tag-business">航天通信</span></div>
+                    <a href="reports/starlink-report-1-77/" target="_blank" class="card-link">阅读报告 →</a>
+                </div>
+                <div class="card" onclick="window.open('reports/20260627/', '_blank')">
+                    <div class="card-icon">📈</div>
+                    <h3 class="card-title">段永平卖期权完全操作手册 · 从&quot;开保险公司&quot;到可复用的交易工具</h3>
+                    <p class="card-desc">把卖 put 的底层逻辑、纪律边界、风险约束和操作流程整理成可执行手册。</p>
+                    <div class="card-meta"><span class="tag tag-research">最新调研</span><span class="tag tag-business">投资工具</span></div>
+                    <a href="reports/20260627/" target="_blank" class="card-link">阅读报告 →</a>
+                </div>
+            </div>
+        </div>
+        <div class="section">
             <h2 class="section-title">📊 商业工具</h2>
             <div class="grid">
-                <div class="card" onclick="window.open('/huacai-dashboard/', '_blank')">
-                    <div class="card-icon">📈</div>
-                    <h3 class="card-title">华彩作战指挥仪表盘</h3>
-                    <p class="card-desc">双口径利润模型、敏感性分析、战略杠杆分析。支持 S2→S5 阶段化定价和续报率模拟。</p>
-                    <div class="card-meta"><span class="tag tag-business">商业分析</span><span class="tag tag-tool">财务建模</span></div>
-                    <a href="/huacai-dashboard/" target="_blank" class="card-link">打开工具 →</a>
+                <!-- business-tools-collapsed -->
+                <div class="card" onclick="window.open('business/', '_blank')">
+                    <div class="card-icon">🌐</div>
+                    <h3 class="card-title">商业工具</h3>
+                    <p class="card-desc">集中收纳可以公开体验的测评、手册和实用商业工具；个人后台与定向分享项目不会出现在公开页面。</p>
+                    <div class="card-meta"><span class="tag tag-business">公开工具</span><span class="tag tag-tool">可直接访问</span></div>
+                    <a href="business/" target="_blank" class="card-link">进入商业工具 →</a>
                 </div>
-                <div class="card" onclick="window.open('/huacai-settlement/', '_blank')">
-                    <div class="card-icon">💰</div>
-                    <h3 class="card-title">华彩内部结算仪表盘</h3>
-                    <p class="card-desc">团队结算比例计算工具。核心公式：结算比例 = 续报率 + 阶段补贴。支持 2980/1880 两种课程。</p>
-                    <div class="card-meta"><span class="tag tag-business">团队管理</span><span class="tag tag-tool">绩效核算</span></div>
-                    <a href="/huacai-settlement/" target="_blank" class="card-link">打开工具 →</a>
-                </div>
-                <div class="card" onclick="window.open('/openclaw-manual/', '_blank')">
-                    <div class="card-icon">🧠</div>
-                    <h3 class="card-title">OpenClaw 实战手册</h3>
-                    <p class="card-desc">从"为什么选它"到"怎么省钱用好它"，一本彻底搞懂 AI Agent 的实操指南。包含省钱模型选择和10个实战场景。</p>
-                    <div class="card-meta"><span class="tag tag-business">AI 工具</span><span class="tag tag-tool">效率提升</span></div>
-                    <a href="/openclaw-manual/" target="_blank" class="card-link">阅读手册 →</a>
-                </div>
-                <div class="card" onclick="window.open('/cohort/', '_blank')">
-                    <div class="card-icon">🎯</div>
-                    <h3 class="card-title">Cohort 利润分析仪表盘</h3>
-                    <p class="card-desc">单 Cohort 现金+确认收入利润分析。支持建模预测与实际复盘，含经营驾驶舱、参数影响力分析、利润率提升路径预测。</p>
-                    <div class="card-meta"><span class="tag tag-business">商业分析</span><span class="tag tag-tool">财务建模</span></div>
-                    <a href="/cohort/" target="_blank" class="card-link">打开工具 →</a>
-                </div>
-                <div class="card" onclick="window.open('/cohort/ops_login.html', '_blank')">
-                    <div class="card-icon">📋</div>
-                    <h3 class="card-title">AI 管理驾驶舱</h3>
-                    <p class="card-desc">面向管理层的经营驾驶舱。支持多人协作、班级数据填报、二讲业绩榜单、趋势曲线、AI经营分析和财务测算。</p>
-                    <div class="card-meta"><span class="tag tag-business">经营管理</span><span class="tag tag-tool">数据看板</span></div>
-                    <a href="/cohort/ops_login.html" target="_blank" class="card-link">打开工具 →</a>
-                </div>
-                <div class="card" onclick="window.open('/huacai-admin/', '_blank')">
-                    <div class="card-icon">🛠</div>
-                    <h3 class="card-title">同城运营后台</h3>
-                    <p class="card-desc">华彩同城小程序的运营管理后台。支持商家、订单、活动和用户运营管理。</p>
-                    <div class="card-meta"><span class="tag tag-business">华彩同城</span><span class="tag tag-tool">运营后台</span></div>
-                    <a href="/huacai-admin/" target="_blank" class="card-link">打开工具 →</a>
-                </div>
-                <div class="card" onclick="window.open('https://kkhc.fun/', '_blank')">
-                    <div class="card-icon">🎤</div>
-                    <h3 class="card-title">黄金歌曲匹配测评</h3>
-                    <p class="card-desc">在线声乐体验课前测评。5 步找到你的黄金歌曲方向，唱 10 秒提交给老师，课后领取适合你嗓音的歌名、歌词和练法。</p>
-                    <div class="card-meta"><span class="tag tag-business">开开华彩</span><span class="tag tag-tool">声乐测评</span></div>
-                    <a href="https://kkhc.fun/" target="_blank" class="card-link">打开测评 →</a>
-                </div>
-                <div class="card" onclick="window.open('https://kkhc.fun/admin', '_blank')">
-                    <div class="card-icon">🎚️</div>
-                    <h3 class="card-title">黄金歌曲匹配测评后台</h3>
-                    <p class="card-desc">黄金歌曲匹配测评的管理后台。用于查看学员提交、歌曲方向匹配、老师分配和数据看板。</p>
-                    <div class="card-meta"><span class="tag tag-business">开开华彩</span><span class="tag tag-tool">管理后台</span></div>
-                    <a href="https://kkhc.fun/admin" target="_blank" class="card-link">打开后台 →</a>
-                </div>
-                <div class="card" onclick="window.open('/kkhc/', '_blank')">
-                    <div class="card-icon">📱</div>
-                    <h3 class="card-title">主理人测评</h3>
-                    <p class="card-desc">16 道题、8 分钟出报告，基于 7 维能力模型，用于商务客户触达和画像生成。</p>
-                    <div class="card-meta"><span class="tag tag-business">客户工具</span><span class="tag tag-tool">测评报告</span></div>
-                    <a href="/kkhc/" target="_blank" class="card-link">打开工具 →</a>
-                </div>
-                <div class="card" onclick="window.open('/kkhc/admin/login/', '_blank')">
-                    <div class="card-icon">🔐</div>
-                    <h3 class="card-title">主理人测评后台</h3>
-                    <p class="card-desc">开开华彩 H5 测评的管理后台。用于查看测评线索、增长看板、商务经理分配、账号权限和案例库维护。</p>
-                    <div class="card-meta"><span class="tag tag-business">开开华彩</span><span class="tag tag-tool">管理后台</span></div>
-                    <a href="/kkhc/admin/login/" target="_blank" class="card-link">打开后台 →</a>
-                </div>
-                <div class="card" onclick="window.open('https://haoyunlai.fun/sales/', '_blank')">
-                    <div class="card-icon">⚔️</div>
-                    <h3 class="card-title">销售作战大盘</h3>
-                    <p class="card-desc">5元课包 → 980进阶课 → 29800同城主理人全链路销售指挥系统。漏斗大盘、名单池分配、销售工作台、成交登记，手机端已适配。</p>
-                    <div class="card-meta"><span class="tag tag-business">开开华彩</span><span class="tag tag-tool">销售管理</span></div>
-                    <a href="https://haoyunlai.fun/sales/" target="_blank" class="card-link">打开大盘 →</a>
-                </div>
+                <!-- /business-tools-collapsed -->
             </div>
         </div>
 
@@ -276,6 +244,15 @@
         <div class="section">
             <h2 class="section-title">🏢 公司调研</h2>
             <div class="grid">
+                <!-- auto-report:tesla-optimus-progress -->
+                <div class="card" onclick="window.open('reports/tesla-optimus-progress/', '_blank')">
+                    <div class="card-icon">🤖</div>
+                    <h3 class="card-title">特斯拉人形机器人 Optimus 进展</h3>
+                    <p class="card-desc">Gen1→Gen2→2.5/Gen3 代际、Fremont 早期量产与对外交付时间线；区分官方宣称、演示所见与可能跳票的产量/售价口径。</p>
+                    <div class="card-meta"><span class="tag tag-research">公司调研</span><span class="tag tag-tool">机器人</span></div>
+                    <a href="reports/tesla-optimus-progress/" target="_blank" class="card-link">阅读报告 →</a>
+                </div>
+                <!-- /auto-report:tesla-optimus-progress -->
                 <div class="card" onclick="window.open('reports/micron/', '_blank')">
                     <div class="card-icon">💾</div>
                     <h3 class="card-title">美光 Micron 全景研究</h3>
@@ -290,7 +267,68 @@
                     <div class="card-meta"><span class="tag tag-research">公司调研</span><span class="tag tag-tool">AI产业</span></div>
                     <a href="reports/global-ai-models/index.html" target="_blank" class="card-link">阅读报告 →</a>
                 </div>
-            </div>
+                <div class="card" onclick="window.open('reports/online-education-2026-07/', '_blank')">
+                    <div class="card-icon">🎓</div>
+                    <h3 class="card-title">中国在线教育行业调研报告 · 2026年7月</h3>
+                    <p class="card-desc">覆盖好未来、乐读、希望学、猿辅导、高途和作业帮，梳理双减后的业绩分化、AI 学习机竞争、行业结构与银发教育机会。</p>
+                    <div class="card-meta"><span class="tag tag-research">行业调研</span><span class="tag tag-tool">在线教育</span></div>
+                    <a href="reports/online-education-2026-07/" target="_blank" class="card-link">阅读报告 →</a>
+                </div>
+                            <!-- auto-report:apple-price-impact-aapl -->
+                <div class="card" onclick="window.open('reports/apple-price-impact-aapl/', '_blank')">
+                    <div class="card-icon">🍎</div>
+                    <h3 class="card-title">苹果涨价后的 AAPL 投资影响研究</h3>
+                    <p class="card-desc">Investor research memo · June 2026</p>
+                    <div class="card-meta"><span class="tag tag-research">公司调研</span><span class="tag tag-business">投资研究</span></div>
+                    <a href="reports/apple-price-impact-aapl/" target="_blank" class="card-link">阅读报告 →</a>
+                </div>
+                <!-- /auto-report:apple-price-impact-aapl -->
+                <!-- auto-report:musk-twitter-x-reform -->
+                <div class="card" onclick="window.open('reports/musk-twitter-x-reform/', '_blank')">
+                    <div class="card-icon">𝕏</div>
+                    <h3 class="card-title">马斯克接手 Twitter 后的激进改革与 X 现状研究</h3>
+                    <p class="card-desc">Deep Research Report · Public data through June 28, 2026</p>
+                    <div class="card-meta"><span class="tag tag-research">公司调研</span><span class="tag tag-business">平台转型</span></div>
+                    <a href="reports/musk-twitter-x-reform/" target="_blank" class="card-link">阅读报告 →</a>
+                </div>
+                <!-- /auto-report:musk-twitter-x-reform -->
+                <!-- auto-report:apple-aapl-1-3-year-outlook -->
+                <div class="card" onclick="window.open('reports/apple-aapl-1-3-year-outlook/', '_blank')">
+                    <div class="card-icon">🍎</div>
+                    <h3 class="card-title">苹果 AAPL · 未来 1–3 年股价走势与持有决策 | 深度研究</h3>
+                    <p class="card-desc">一句话结论：苹果仍是一台 高质量复利机器 ，但当前估值偏满。短期遭遇一次 真实却大概率是暂时 的内存涨价毛利冲击；AI 与中国是真实但正在收敛的风险； 首款折叠屏 iPhone 是未来 18 个月最大的看涨催化剂。1–3 年的结局，取…</p>
+                    <div class="card-meta"><span class="tag tag-research">公司调研</span><span class="tag tag-business">投资研究</span></div>
+                    <a href="reports/apple-aapl-1-3-year-outlook/" target="_blank" class="card-link">阅读报告 →</a>
+                </div>
+                <!-- /auto-report:apple-aapl-1-3-year-outlook -->
+                <!-- auto-report:research-claude-ai-20260627-anthropic -->
+                <div class="card" onclick="window.open('reports/research-claude-ai-20260627-anthropic/', '_blank')">
+                    <div class="card-icon">📄</div>
+                    <h3 class="card-title">像内部高手一样用 AI · Anthropic 研究员与工程师的进阶方法论</h3>
+                    <p class="card-desc">真正拉开差距的，从来不是更花哨的 Prompt 指令，而是一套 内部人默认、外部人陌生 的心智模型与工作流：把每一次交互当成&quot;上下文工程&quot;，把注意力当成可耗尽的预算，把自己从&quot;提问者&quot;升级为&quot;一群 Claude 的管理者&quot;。本报告从…</p>
+                    <div class="card-meta"><span class="tag tag-research">调研报告</span><span class="tag tag-tool">综合分析</span></div>
+                    <a href="reports/research-claude-ai-20260627-anthropic/" target="_blank" class="card-link">阅读报告 →</a>
+                </div>
+                <!-- /auto-report:research-claude-ai-20260627-anthropic -->
+                <!-- auto-report:20260627 -->
+                <div class="card" onclick="window.open('reports/20260627/', '_blank')">
+                    <div class="card-icon">🍎</div>
+                    <h3 class="card-title">段永平卖期权完全操作手册 · 从&quot;开保险公司&quot;到可复用的交易工具</h3>
+                    <p class="card-desc">段永平没有什么&quot;期权策略&quot;。他只有一套纪律—— 在看得懂的好公司、不高不低的价位、用闲钱、绝不上杠杆 ——而&quot;卖 put&quot;只是这套纪律的执行工具。学会它，你买股票就多了一种方式： 拿着现金、收着利息、在心仪的价位挂一张会付你钱的限价买…</p>
+                    <div class="card-meta"><span class="tag tag-research">公司调研</span><span class="tag tag-business">投资研究</span></div>
+                    <a href="reports/20260627/" target="_blank" class="card-link">阅读报告 →</a>
+                </div>
+                <!-- /auto-report:20260627 -->
+                <!-- auto-report:deep-20260628-ai -->
+                <div class="card" onclick="window.open('reports/deep-20260628-ai/', '_blank')">
+                    <div class="card-icon">💾</div>
+                    <h3 class="card-title">存储超级周期 · 为什么存储是 AI 时代最肥的一段 — 深度调研报告</h3>
+                    <p class="card-desc">当 AI 把内存推上算力的咽喉，存储芯片在一年内从被当成「大宗商品」的配角，变成了半导体里 定价权最强、利润率最高 的一段。这一刻的稀缺，是被结构性重写过的。</p>
+                    <div class="card-meta"><span class="tag tag-research">公司调研</span><span class="tag tag-business">半导体</span></div>
+                    <a href="reports/deep-20260628-ai/" target="_blank" class="card-link">阅读报告 →</a>
+                </div>
+                <!-- /auto-report:deep-20260628-ai -->
+</div>
         </div>
         <div class="section">
             <h2 class="section-title">👥 社群调研</h2>
@@ -309,11 +347,77 @@
                     <div class="card-meta"><span class="tag tag-research">获客方案</span><span class="tag tag-tool">短视频转化</span></div>
                     <a href="reports/middle-senior-life-tools-acquisition/" target="_blank" class="card-link">阅读报告 →</a>
                 </div>
-            </div>
+                            <!-- auto-report:starlink-report-1-77 -->
+                <div class="card" onclick="window.open('reports/starlink-report-1-77/', '_blank')">
+                    <div class="card-icon">💃</div>
+                    <h3 class="card-title">星链 Starlink 全景调研 · 从一句话到 1.77 万亿</h3>
+                    <p class="card-desc">2015 年，马斯克在西雅图说要&quot;在太空重建互联网&quot;。十一年后，它成了人类史上 最大的卫星星座 、 增长最快的消费互联网服务 ，并在 2026 年 6 月推动 SpaceX 完成 史上最大 IPO 。这是一份覆盖历史、技术、现状、竞争…</p>
+                    <div class="card-meta"><span class="tag tag-research">社群调研</span><span class="tag tag-tool">活动设计</span></div>
+                    <a href="reports/starlink-report-1-77/" target="_blank" class="card-link">阅读报告 →</a>
+                </div>
+                <!-- /auto-report:starlink-report-1-77 -->
+</div>
         </div>
         <div class="section">
             <h2 class="section-title">📚 知识项目</h2>
             <div class="grid">
+                <div class="card" onclick="window.open('/my/reports/china-footprint-map/', '_blank')">
+                    <div class="card-icon">🗺️</div>
+                    <h3 class="card-title">我的点亮中国</h3>
+                    <p class="card-desc">按地级市点亮走过的城市（现 158 座，山西与河北已全亮）；2026 秋山西行已写入地图，还可看后续自驾环线还能新点亮哪些城。</p>
+                    <div class="card-meta"><span class="tag tag-tool">足迹地图</span><span class="tag tag-research">自驾路线</span></div>
+                    <a href="/my/reports/china-footprint-map/" target="_blank" class="card-link">打开地图 →</a>
+                </div>
+                <div class="card" onclick="window.open('/youshanhe/', '_blank')">
+                    <div class="card-icon">🏔️</div>
+                    <h3 class="card-title">游山河</h3>
+                    <p class="card-desc">山西秋行图鉴：晋祠、平遥、应县木塔到皇城相府等深度长文，带时间线、逐点看与实用信息。</p>
+                    <div class="card-meta"><span class="tag tag-tool">行旅图鉴</span><span class="tag tag-research">山西</span></div>
+                    <a href="/youshanhe/" target="_blank" class="card-link">打开图鉴 →</a>
+                </div>
+
+                <div class="card" onclick="window.open('/my/silver-observer/', '_blank')">
+                    <div class="card-icon">银</div>
+                    <h3 class="card-title">银发观察</h3>
+                    <p class="card-desc">面向银发行业创业者、从业者与主理人，阅读行业动态、经营案例和编辑选读，按领域搜索并收藏。</p>
+                    <div class="card-meta"><span class="tag tag-tool">银发行业</span><span class="tag tag-research">行业情报</span></div>
+                    <a href="/my/silver-observer/" target="_blank" class="card-link">进入银发观察 →</a>
+                </div>
+                <div class="card" onclick="window.open('/my/pi-digit-explorer/', '_blank')">
+                    <div class="card-icon">π</div>
+                    <h3 class="card-title">圆周率数字搜索器</h3>
+                    <p class="card-desc">输入最多 15 位数字，在圆周率前 10 亿位中寻找首次出现的位置，查看数位坐标和高亮片段。</p>
+                    <div class="card-meta"><span class="tag tag-tool">数学探索</span><span class="tag tag-research">10 亿位</span></div>
+                    <a href="/my/pi-digit-explorer/" target="_blank" class="card-link">寻找数字 →</a>
+                </div>
+                <div class="card" onclick="window.open('/my/songjian-home/', '_blank')">
+                    <div class="card-icon">🏡</div>
+                    <h3 class="card-title">松间 · 家居空间探索</h3>
+                    <p class="card-desc">探索一套没有天花板的精细住宅：六个房间、33 组家具，支持室内漫游、材质与线框切换、昼夜灯光，以及一键平面图。</p>
+                    <div class="card-meta"><span class="tag tag-tool">3D 互动</span><span class="tag tag-research">家居探索</span></div>
+                    <a href="/my/songjian-home/" target="_blank" class="card-link">进入家居 →</a>
+                </div>
+                <div class="card" onclick="window.open('/my/lunar-rover/', '_blank')">
+                    <div class="card-icon">🌙</div>
+                    <h3 class="card-title">月面漫游 · SELENE</h3>
+                    <p class="card-desc">近距离观察六轮探测车缓缓驶过月面，探索车轮、太阳能板与仪器细节；自由旋转、缩放、平移，在三维月球环境中漫游。</p>
+                    <div class="card-meta"><span class="tag tag-tool">3D 互动</span><span class="tag tag-research">月面探索</span></div>
+                    <a href="/my/lunar-rover/" target="_blank" class="card-link">开始漫游 →</a>
+                </div>
+                <div class="card" onclick="window.open('/my/manhattan-atlas/', '_blank')">
+                    <div class="card-icon">🏙️</div>
+                    <h3 class="card-title">曼哈顿 3D 城市 · ISLE</h3>
+                    <p class="card-desc">把城市微缩景观放进浏览器：自由环绕 5,948 栋建筑与五座地标，点选高亮、独立查看，在白昼、日落与夜色间探索曼哈顿。</p>
+                    <div class="card-meta"><span class="tag tag-tool">3D 互动</span><span class="tag tag-research">城市探索</span></div>
+                    <a href="/my/manhattan-atlas/" target="_blank" class="card-link">进入城市 →</a>
+                </div>
+                <div class="card" onclick="window.open('reports/grok-bot-guide/', '_blank')">
+                    <div class="card-icon">🤖</div>
+                    <h3 class="card-title">Grok Bot 使用教程</h3>
+                    <p class="card-desc">给一位能上班的同事写说明书：从安装登录、第一个 Bot，到云电脑、Skill、Routine 与审批。</p>
+                    <div class="card-meta"><span class="tag tag-tool">知识项目</span><span class="tag tag-research">教程</span></div>
+                    <a href="reports/grok-bot-guide/" target="_blank" class="card-link">打开教程 →</a>
+                </div>
                 <div class="card" onclick="window.open('/mao-legacy/', '_blank')">
                     <div class="card-icon">🏛️</div>
                     <h3 class="card-title">毛泽东历史功过 v1</h3>
@@ -328,7 +432,16 @@
                     <div class="card-meta"><span class="tag tag-history">历史</span><span class="tag tag-tool">教育</span></div>
                     <a href="/mao-legacy-v2/" target="_blank" class="card-link">访问网站 →</a>
                 </div>
-            </div>
+                            <!-- auto-report:100 -->
+                <div class="card" onclick="window.open('reports/100/', '_blank')">
+                    <div class="card-icon">📚</div>
+                    <h3 class="card-title">世界名著 100 · 环球文学全景导览</h3>
+                    <p class="card-desc">100部跨越十三个文化区域、约二十七个世纪的世界文学经典：每部配原创版画徽记、深度导读与‘为什么值得读’。</p>
+                    <div class="card-meta"><span class="tag tag-history">知识研究</span><span class="tag tag-tool">教育</span></div>
+                    <a href="reports/100/" target="_blank" class="card-link">阅读报告 →</a>
+                </div>
+                <!-- /auto-report:100 -->
+</div>
         </div>
 
         <footer>

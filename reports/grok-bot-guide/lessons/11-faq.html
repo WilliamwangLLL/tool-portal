@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FAQ + 小抄 · Grok Bot 教程</title>
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body data-page="11">
+  <a class="skip" href="#main">跳到正文</a>
+  <header class="topbar">
+    <button class="nav-toggle" type="button" aria-controls="course-nav" aria-expanded="false">课程目录</button>
+    <a class="brand" href="../index.html" style="margin:0;font-size:1rem">Grok Bot 教程</a>
+  </header>
+  <div class="layout">
+    <aside class="sidebar" id="course-nav">
+      <a class="brand" href="../index.html">Grok Bot 教程</a>
+      <p class="brand-sub">能上班的命名同事</p>
+      <div class="nav-group">课程</div>
+      <nav><a href="../index.html"><span class="n">00</span><span>学习路径</span></a><a href="01-what-is.html"><span class="n">01</span><span>这是什么</span></a><a href="02-install.html"><span class="n">02</span><span>安装与登录</span></a><a href="03-first-bot.html"><span class="n">03</span><span>第一个 Bot</span></a><a href="04-multiple-bots.html"><span class="n">04</span><span>多个 Bot</span></a><a href="05-manage-bots.html"><span class="n">05</span><span>管理 Bot</span></a><a href="06-computer.html"><span class="n">06</span><span>云电脑</span></a><a href="07-skills-routines.html"><span class="n">07</span><span>Skill 与 Routine</span></a><a href="08-settings.html"><span class="n">08</span><span>设置与通知</span></a><a href="09-approvals.html"><span class="n">09</span><span>审批与安全</span></a><a href="10-practice.html"><span class="n">10</span><span>练习课</span></a><a href="11-faq.html" class="current"><span class="n">11</span><span>FAQ + 小抄</span></a></nav>
+      <div class="nav-group">官方</div>
+      <nav>
+        <a href="https://docs.x.ai/grok-bot/overview"><span class="n">↗</span><span>文档总览</span></a>
+        <a href="https://x.ai/bot"><span class="n">↗</span><span>下载 App</span></a>
+      </nav>
+    </aside>
+    <div>
+      <main id="main" class="main">
+        <p class="kicker">第 11 课</p>
+        <h1>FAQ 和一页小抄</h1>
+        <p class="lead">卡住先看这一页。按钮文案若对不上，以你当前版本界面为准，并打开官方文档。</p>
+        
+<h2>FAQ</h2>
+<h3>在哪跟 Grok Bot 说话？</h3>
+<p>macOS / Windows 桌面 App，或 iOS 伴侣 App。同一批 Bot 和对话会在已登录设备间同步。</p>
+<h3>合上笔记本它还干活吗？</h3>
+<p>会。工作在云电脑上。关 App、合笔记本、锁屏 iPhone，都不会停掉后台回合或 Routine。</p>
+<h3>我的 Bot 共用一台电脑吗？</h3>
+<p>是。每个 Bot 用同一台持久云电脑，共享文件、浏览器会话和登录。电脑按用户分配，不按 Bot。不要把分开的 Bot 当安全边界。</p>
+<h3>几个 Bot 能同时干活吗？</h3>
+<p>能。它们可以并行推理、用连接器、处理文件、互相协调。每个 Bot 有自己的屏幕；一个 Bot 在自己的屏幕上一次只能跑一个电脑操作任务。</p>
+<h3>Bot 记得什么？</h3>
+<p>稳定偏好、角色上下文、先前工作的摘要。对话和学到的角色与其他 Bot 分开；共享文件、浏览器会话、群消息和直接交接可以在它们之间搬上下文。重大决策请它查当前源，不要只靠记忆。</p>
+<h3>能用任意网站吗？</h3>
+<p>许多基于浏览器的工具可以，包括没有专用连接器的服务。站点仍可能拦截自动化、要求重新登录、弹出 CAPTCHA 或要真人确认。这些步骤应交给你，而不是绕过。有连接器就优先用连接器。</p>
+<h3>哪些动作需要我审批？</h3>
+<p>取决于工具、动作风险，以及（若已启用）你的 Auto-review 规则。敏感或重大动作会停下。密码、两步验证、CAPTCHA 等走电脑接管。把长期边界写进 Bot description，并为发送、发布、删除、购买、改生产加上窄的 Require Approval 规则。</p>
+<h3>数据和隐私？</h3>
+<p>使用 Cursor 认证和账号数据设置。训练退出遵循适用的 Cursor 设置。需要云存储，不支持 Legacy Privacy Mode。所有 Bot 都能访问分配给你账号的那台云电脑。细节见官方 <a href="https://docs.x.ai/grok-bot/approvals-security-and-privacy">Approvals, security, and privacy</a>。</p>
+<h3>多少钱？</h3>
+<p>视账号和套餐而定。合格套餐：SuperGrok Plus / Heavy，Cursor Pro+ / Ultra，Cursor Teams Standard / Premium。订阅含每周用量；符合条件的账号可加按需用量（按模型和 token 成本计）。同时有 Cursor 和 SuperGrok 时，用用量更多的那一份。以 <a href="https://x.ai/bot">x.ai/bot</a> 或 Cursor 定价为准。企业客户联系 Cursor 客户团队。这里不编造价格。</p>
+<h3>团队和企业能用吗？</h3>
+<p>自助的 Cursor Teams Standard 和 Premium 席位包含 Grok Bot。企业访问在逐步开放。可用性与管理控件因组织而异。</p>
+<h3>支持哪些平台？</h3>
+<p>macOS Apple silicon 与 Intel；Windows x64 与 Arm64；iPhone iOS 18+。Linux 桌面、Android、iPad 在初始发布时不支持。</p>
+<h3>Skill 和 Routine 有什么差别？</h3>
+<p>Skill 描述怎么做。Routine 把流程交给某一个 Bot，并告诉它何时跑（日程或事件）。先在一次性真任务上测 Skill，再变成 Routine。</p>
+<h3>能演示给 Bot 看吗？</h3>
+<p>当 Teach a task 可用时，从电脑画面录一段浏览器流程，Bot 会做成草稿 Skill 供你审和测。可能分批开放，录制上限约十分钟，不录麦克风。没有入口就请 Bot 根据刚做完的任务保存 Skill。</p>
+<h3>能分享 Bot 吗？</h3>
+<p>能。复制公开链接。对方在 x.ai 预览并添加副本。他们得不到你的电脑、登录或聊天。链接会暴露配置，先去掉秘密。加入即接受第三方 bot 条款。</p>
+<h3>删除 Bot 会怎样？</h3>
+<p>去掉该 Bot 的 profile、对话和 routines。因为电脑是共享的，文件和登录可能还在。以后可能还要用，就 Hide。</p>
+<p class="meta">FAQ 依据官方文档整理。官方 FAQ 页标注上次更新：2026-08-22。</p>
+
+<h2>一页小抄</h2>
+<div class="cheat">
+  <section>
+    <h3>打开什么</h3>
+    <p>设置：左下角账号按钮，或 <kbd>Cmd/Ctrl</kbd>+<kbd>,</kbd>，或命令面板 <code>Open settings</code>。</p>
+    <p>Bot 面板：点标题名字，或 <kbd>Cmd</kbd>+<kbd>Shift</kbd>+<kbd>I</kbd>，或 View conversation details。</p>
+    <p>新建：<kbd>Cmd/Ctrl</kbd>+<kbd>N</kbd> → Create new agent。</p>
+  </section>
+  <section>
+    <h3>五件套</h3>
+    <p>Outcome · Sources · Constraints · Deliverable · Review。你决策，Bot 执行。</p>
+  </section>
+  <section>
+    <h3>Composer</h3>
+    <p><code>@</code> Bot / 群 / Routine / 连接器。 <code>/</code> Skill。</p>
+  </section>
+  <section>
+    <h3>电脑</h3>
+    <p>全体 Bot 一台云电脑。屏幕分开，登录不分家。Update Agent Computer 优先于 Reset。Check for Updates 只更新 App。本机执行默认 Ask every time，建议 Never allowed。</p>
+  </section>
+  <section>
+    <h3>Skill / Routine</h3>
+    <p>Skill = 怎么做。Routine = 哪个 Bot + 何时。Test run 是真干活。每 Bot 50 条 Routine，保留 20 次运行。删 Bot 会删它的 Routine。Hide 不会暂停 Routine。</p>
+  </section>
+  <section>
+    <h3>必须审批</h3>
+    <p>发送 · 发布 · 删除 · 购买 · 改生产。Require Approval 压过 Always Allow。审批不撤销已完成工作。密码走接管，不进聊天。</p>
+  </section>
+  <section>
+    <h3>编制</h3>
+    <p>一个稳定岗位一个 Bot。群聊只为可见交接。上限 50（Bot + 群聊）。分享是配置副本，先去掉秘密。</p>
+  </section>
+  <section>
+    <h3>官方</h3>
+    <p><a href="https://docs.x.ai/grok-bot/overview">总览</a> · <a href="https://docs.x.ai/grok-bot/get-started">入门</a> · <a href="https://docs.x.ai/grok-bot/bots">管理 Bot</a> · <a href="https://docs.x.ai/grok-bot/computer-and-apps">电脑</a> · <a href="https://docs.x.ai/grok-bot/skills-routines-and-automations">Skill / Routine</a> · <a href="https://docs.x.ai/grok-bot/settings-and-notifications">设置</a> · <a href="https://docs.x.ai/grok-bot/approvals-security-and-privacy">审批</a> · <a href="https://docs.x.ai/grok-bot/faq">FAQ</a> · <a href="https://x.ai/bot">下载</a></p>
+  </section>
+</div>
+
+        <nav class="pager"><a href="10-practice.html"><span class="dir">上一课</span><span class="to">练习课</span></a><a href="../index.html" style="text-align:right"><span class="dir">下一课</span><span class="to">回学习路径</span></a></nav>
+      </main>
+      <footer class="footer">
+        <p>界面以你的 App 当前版本为准。本教程只收录官方文档与课程说明里的路径；若按钮文案不同，以当前界面为准，并查阅 <a href="https://docs.x.ai/grok-bot/overview">Grok Bot 官方文档</a>。</p>
+        <p>Grok Bot 是 xAI / Cursor 产品，不是 grok.com 聊天窗口。产品词保持英文：Grok Bot、Bot、Cursor、Plugins、Auto-review、Skill、Routine。</p>
+      </footer>
+    </div>
+  </div>
+  <script src="../js/app.js"></script>
+</body>
+</html>

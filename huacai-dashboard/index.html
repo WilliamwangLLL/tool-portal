@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>华彩 · 作战指挥仪表盘 v3</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700;800&display=swap');
+:root{--fb:'Noto Sans SC',system-ui,sans-serif;--fm:'JetBrains Mono',monospace;--bg:#0a0e1a;--card:rgba(255,255,255,.03);--border:rgba(255,255,255,.06);--dim:#5a6478;--label:#8892a4;--txt:#e2e8f0}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--fb);background:var(--bg);color:var(--txt);overflow-x:hidden;font-size:13px}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1);border-radius:3px}
+input[type=range]{-webkit-appearance:none;appearance:none;background:rgba(255,255,255,.08);border-radius:4px;outline:none;height:4px;width:100%;cursor:pointer}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border-radius:50%;cursor:pointer;border:2px solid #fff;box-shadow:0 0 6px rgba(0,0,0,.4)}
+.fb{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:10px 12px;margin-top:8px;font-size:11px;line-height:1.7}
+.fb .fl{color:#fbbf24;font-family:var(--fm);font-weight:600;font-size:11px}
+.fb .fd{color:#6b7994;font-size:11px}
+.fb .fv{color:#93c5fd;font-family:var(--fm);font-weight:700}
+.fb .fr{color:#34d399;font-family:var(--fm);font-weight:800;font-size:12px}
+.fb .fn{color:#f87171;font-family:var(--fm);font-weight:800;font-size:12px}
+.xbtn{cursor:pointer;user-select:none;display:inline-flex;align-items:center;gap:4px;font-size:10px;color:#60a5fa;font-weight:700;padding:3px 8px;border-radius:4px;background:rgba(96,165,250,.1);border:1px solid rgba(96,165,250,.2);transition:all .2s}
+.xbtn:hover{background:rgba(96,165,250,.2)}
+.tag{display:inline-block;padding:1px 6px;border-radius:3px;font-size:9px;font-weight:700;font-family:var(--fm)}
+.tab-btn{cursor:pointer;padding:6px 14px;border-radius:8px;font-size:12px;font-weight:700;border:1px solid transparent;transition:all .2s;user-select:none}
+.tab-active{background:rgba(96,165,250,.15);border-color:rgba(96,165,250,.3);color:#93c5fd}
+.tab-inactive{background:transparent;border-color:rgba(255,255,255,.08);color:#6b7994}
+.strat-card{border-radius:12px;padding:18px;border:1px solid var(--border);margin-bottom:12px}
+.diff-tag{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:800;font-family:var(--fm)}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script>
+const{useState,useMemo,useCallback,createElement:h}=React;
+
+// ═══ MODEL ENGINE ═══
+function runModel(p){
+  const blendedCAC=p.cacPaid*(1-p.mgmRatio)+p.cacMgm*p.mgmRatio;
+  const teamMonthlyCost=p.serviceTeacherSalary*p.serviceTeacherCount+p.assistantSalary;
+  const monthlyCostPS=teamMonthlyCost/p.teamCapacity;
+  const aiCostMonth=p.aiCostPerUse*p.aiUsesPerMonth;
+  const stages=[
+    {name:"S2",price:p.priceS2,period:p.periodS2},
+    {name:"S3",price:p.priceS3,period:p.periodS3},
+    {name:"S4",price:p.priceS4,period:p.periodS4},
+    {name:"S5",price:p.priceS5,period:p.periodS5}
+  ];
+  const renewals=[1,p.renewalS2toS3,p.renewalS3toS4,p.renewalS4toS5];
+  let cum=p.initialStudents,totalRev=0,totalSvc=0,totalAI=0,totalCAC=0,totalMo=0;
+  // 12-month trackers
+  let rev12=0,svc12=0,ai12=0,cac12=0,mo12=0;
+  const details=[];
+  let monthAccum=0;
+  for(let i=0;i<stages.length;i++){
+    const s=stages[i];
+    const prev=cum;
+    if(i>0)cum=Math.round(cum*renewals[i]);
+    const rev=cum*s.price;
+    const svc=cum*monthlyCostPS*s.period;
+    const ai=cum*aiCostMonth*s.period;
+    const cac=i===0?cum*blendedCAC:0;
+    const cost=svc+ai+cac;
+    const profit=rev-cost;
+    const margin=rev>0?(profit/rev)*100:0;
+    // 12-month: how much of this stage fits in 12 months
+    const monthStart=monthAccum;
+    const monthEnd=monthAccum+s.period;
+    let ratio12=1;
+    if(monthStart>=12){ratio12=0}
+    else if(monthEnd>12){ratio12=(12-monthStart)/s.period}
+    const stageRev12=rev*ratio12;
+    const stageSvc12=svc*ratio12;
+    const stageAi12=ai*ratio12;
+    const stageCac12=cac; // CAC always paid upfront
+    rev12+=stageRev12;svc12+=stageSvc12;ai12+=stageAi12;
+    if(ratio12>0)cac12+=stageCac12;
+    const stageCost12=stageSvc12+stageAi12+(ratio12>0?stageCac12:0);
+    const stageProfit12=stageRev12-stageCost12;
+    mo12=Math.min(12,monthEnd);
+    totalRev+=rev;totalSvc+=svc;totalAI+=ai;totalCAC+=cac;totalMo+=s.period;
+    monthAccum=monthEnd;
+    details.push({...s,idx:i,students:cum,prevStudents:i>0?prev:null,renewalRate:i>0?renewals[i]:null,revenue:rev,serviceCost:svc,aiCost:ai,cac,totalCost:cost,profit,margin,
+      ratio12,revenue12:stageRev12,serviceCost12:stageSvc12,aiCost12:stageAi12,cac12:ratio12>0?stageCac12:0,totalCost12:stageCost12,profit12:stageProfit12,
+      monthStart,monthEnd,monthlyRevPS:s.price/s.period,monthlyCostPS:monthlyCostPS+aiCostMonth,monthlyProfit:profit/s.period});
+  }
+  const totalCost=totalSvc+totalAI+totalCAC;
+  const totalProfit=totalRev-totalCost;
+  const profitMargin=totalRev>0?(totalProfit/totalRev)*100:0;
+  const totalCost12=svc12+ai12+cac12;
+  const totalProfit12=rev12-totalCost12;
+  const profitMargin12=rev12>0?(totalProfit12/rev12)*100:0;
+  const ltv=details.reduce((s,d)=>s+d.revenue/p.initialStudents,0);
+  const ltvCac=blendedCAC>0?ltv/blendedCAC:0;
+  const payback=totalProfit>0?(totalCAC/(totalProfit/totalMo)):999;
+  const teamsNeeded=Math.ceil(p.initialStudents/p.teamCapacity);
+  return{stageDetails:details,totalRevenue:totalRev,totalServiceCost:totalSvc,totalAICost:totalAI,totalCAC,totalCost,totalProfit,profitMargin,totalMonths:totalMo,
+    totalRevenue12:rev12,totalServiceCost12:svc12,totalAICost12:ai12,totalCAC12:cac12,totalCost12,totalProfit12,profitMargin12,months12:Math.min(12,totalMo),
+    blendedCAC,monthlyCostPS,aiCostMonth,teamMonthlyCost,ltv,ltvCacRatio:ltvCac,paybackMonths:payback,teamsNeeded};
+}
+
+const f=n=>Math.round(n).toLocaleString("zh-CN");
+const fw=n=>{if(Math.abs(n)>=1e8)return(n/1e8).toFixed(2)+"亿";if(Math.abs(n)>=1e4)return(n/1e4).toFixed(1)+"万";return f(n)};
+const fm=n=>n.toFixed(1)+"%";
+const fc=n=>n.toFixed(2);
+
+// ═══ COMPONENTS ═══
+function ParamInput({label,value,onChange,min,max,step,unit,hint,accent="#60a5fa"}){
+  const[ed,setEd]=useState(false);const[ev,setEv]=useState(String(value));
+  const blur=()=>{setEd(false);let v=parseFloat(ev);if(isNaN(v))v=value;if(min!=null)v=Math.max(min,v);if(max!=null)v=Math.min(max,v);onChange(v);setEv(String(v))};
+  return h("div",{style:{marginBottom:13}},
+    h("div",{style:{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:4}},
+      h("span",{style:{fontSize:11.5,color:"#8892a4",fontWeight:600}},label),
+      h("div",{style:{display:"flex",alignItems:"baseline",gap:3}},
+        ed?h("input",{autoFocus:true,value:ev,onChange:e=>setEv(e.target.value),onBlur:blur,onKeyDown:e=>{if(e.key==="Enter")blur();if(e.key==="Escape"){setEd(false);setEv(String(value))}},style:{width:70,fontSize:16,fontWeight:800,color:accent,background:"rgba(255,255,255,.08)",border:"1px solid "+accent,borderRadius:5,textAlign:"right",padding:"2px 5px",fontFamily:"var(--fm)",outline:"none"}}):
+        h("span",{onClick:()=>{setEd(true);setEv(String(value))},style:{fontSize:16,fontWeight:800,color:accent,fontFamily:"var(--fm)",cursor:"text",borderBottom:"1px dashed "+accent+"44"}},f(value)),
+        unit&&h("span",{style:{fontSize:10,color:"#5a6478"}},unit)))
+    ,h("input",{type:"range",min,max,step,value,onChange:e=>{const v=parseFloat(e.target.value);onChange(v);setEv(String(v))},style:{accentColor:accent}}),
+    hint&&h("div",{style:{fontSize:9.5,color:"#4a5568",marginTop:2,fontStyle:"italic"}},hint));
+}
+function PctInput(props){return h(ParamInput,{...props,value:Math.round(props.value*100),unit:"%",onChange:v=>props.onChange(v/100)})}
+
+function Formula({lines}){
+  return h("div",{className:"fb"},lines.map((l,i)=>{
+    if(l.type==="label")return h("div",{key:i,className:"fl",style:{marginTop:i>0?6:0}},l.text);
+    if(l.type==="calc")return h("div",{key:i,style:{paddingLeft:8}},h("span",{className:"fd"},l.desc+" = "),h("span",{className:"fv"},l.formula));
+    if(l.type==="result")return h("div",{key:i,style:{paddingLeft:8,marginTop:1}},h("span",{className:"fd"},"= "),h("span",{className:l.negative?"fn":"fr"},l.value));
+    if(l.type==="divider")return h("div",{key:i,style:{borderTop:"1px solid rgba(255,255,255,.06)",margin:"5px 0"}});
+    if(l.type==="note")return h("div",{key:i,style:{fontSize:10,color:"#5a6478",fontStyle:"italic",paddingLeft:8,marginTop:2}},l.text);
+    return null;
+  }));
+}
+
+function KPICardFull({label,value,color,icon,formulaLines,sub}){
+  const[sh,setSh]=useState(false);
+  return h("div",{style:{background:"rgba(15,20,35,.6)",borderRadius:14,padding:"14px 13px",border:"1px solid "+color+"22",position:"relative",overflow:"hidden"}},
+    h("div",{style:{position:"absolute",top:-20,right:-20,width:70,height:70,background:"radial-gradient(circle,"+color+"15,transparent 70%)"}}),
+    h("div",{style:{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:4}},
+      h("div",{style:{fontSize:11,color:"#6b7994",fontWeight:600}},icon&&h("span",{style:{marginRight:3}},icon),label),
+      formulaLines&&h("span",{onClick:()=>setSh(!sh),style:{cursor:"pointer",fontSize:9,color:"#60a5fa",opacity:.7,fontWeight:600}},sh?"收起":"公式")),
+    h("div",{style:{fontSize:22,fontWeight:900,color,fontFamily:"var(--fm)",lineHeight:1.1,marginBottom:3}},value),
+    sub&&h("div",{style:{fontSize:10,color:"#5a6478"}},sub),
+    sh&&formulaLines&&h(Formula,{lines:formulaLines}));
+}
+
+// Stage Card
+function StageCard({s,params,result,isFirst,mode}){
+  const is12=mode==="12m";
+  const rev=is12?s.revenue12:s.revenue;
+  const svc=is12?s.serviceCost12:s.serviceCost;
+  const aiC=is12?s.aiCost12:s.aiCost;
+  const cacV=is12?s.cac12:s.cac;
+  const cost=is12?s.totalCost12:s.totalCost;
+  const profit=is12?s.profit12:s.profit;
+  const margin=rev>0?(profit/rev)*100:0;
+  const clr=profit>=0?"#34d399":"#f87171";
+  const[sd,setSd]=useState(false);
+  const inWindow=is12?s.ratio12>0:true;
+  const partialTag=is12&&s.ratio12>0&&s.ratio12<1;
+
+  const revLines=[];
+  if(!isFirst){
+    revLines.push({type:"label",text:"📊 学员来源"},{type:"calc",desc:"上阶段人数 × 续报率",formula:f(s.prevStudents)+" × "+(s.renewalRate*100).toFixed(0)+"%"},{type:"result",value:f(s.students)+" 人"},{type:"note",text:"流失 "+f(s.prevStudents-s.students)+" 人"},{type:"divider"});
+  }
+  revLines.push({type:"label",text:"📥 收入"});
+  if(is12&&s.ratio12<1&&s.ratio12>0){
+    revLines.push({type:"note",text:"本阶段仅 "+(s.ratio12*s.period).toFixed(1)+" 个月落在12个月窗口内（占比"+(s.ratio12*100).toFixed(0)+"%）"});
+    revLines.push({type:"calc",desc:"全额收入 × 窗口占比",formula:f(Math.round(s.revenue))+" × "+(s.ratio12*100).toFixed(0)+"%"});
+  } else {
+    revLines.push({type:"calc",desc:f(s.students)+"人 × "+f(s.price)+"元",formula:f(Math.round(rev))+"元"});
+  }
+  revLines.push({type:"result",value:f(Math.round(rev))+" 元"});
+
+  const costLines=[];
+  if(isFirst){
+    costLines.push({type:"label",text:"📢 获客成本"},{type:"calc",desc:"混合CAC × 人数",formula:f(Math.round(result.blendedCAC))+" × "+f(s.students)},{type:"result",value:f(Math.round(cacV))+" 元"},{type:"divider"});
+  }
+  costLines.push({type:"label",text:"👥 人力成本"},{type:"calc",desc:"单生月成本 × 人数 × "+(is12&&s.ratio12<1?(s.ratio12*s.period).toFixed(1):s.period)+"月",formula:fc(result.monthlyCostPS)+" × "+f(s.students)+" × "+(is12&&s.ratio12<1?(s.ratio12*s.period).toFixed(1):s.period)},{type:"result",value:f(Math.round(svc))+" 元"},
+    {type:"divider"},{type:"label",text:"🤖 AI成本"},{type:"calc",desc:fc(result.aiCostMonth)+"元/月 × "+f(s.students)+"人 × "+(is12&&s.ratio12<1?(s.ratio12*s.period).toFixed(1):s.period)+"月",formula:f(Math.round(aiC))+"元"},{type:"result",value:f(Math.round(aiC))+" 元"});
+
+  const profitLines=[{type:"label",text:"💰 利润"},{type:"calc",desc:"收入 - 成本",formula:f(Math.round(rev))+" - "+f(Math.round(cost))},{type:"result",value:f(Math.round(profit))+" 元",negative:profit<0},{type:"calc",desc:"利润率",formula:fm(margin)},{type:"result",value:fm(margin),negative:margin<0}];
+
+  if(!inWindow) return h("div",{style:{background:"rgba(255,255,255,.02)",borderRadius:12,padding:"14px 16px",border:"1px dashed rgba(255,255,255,.08)",opacity:.5}},
+    h("div",{style:{display:"flex",alignItems:"center",gap:8}},
+      h("span",{style:{fontSize:16,fontWeight:900,color:"#5a6478",fontFamily:"var(--fm)"}},s.name),
+      h("span",{className:"tag",style:{background:"rgba(255,255,255,.05)",color:"#5a6478"}},"超出12个月窗口"),
+      h("span",{style:{fontSize:11,color:"#4a5568"}},"第"+s.monthStart+"~"+s.monthEnd+"月，不计入12个月口径"))
+  );
+
+  return h("div",{style:{background:"var(--card)",borderRadius:14,border:"1px solid "+clr+"22",overflow:"hidden"}},
+    h("div",{style:{padding:"12px 16px",display:"flex",justifyContent:"space-between",alignItems:"center",borderBottom:"1px solid rgba(255,255,255,.04)",background:profit>=0?"rgba(52,211,153,.03)":"rgba(248,113,113,.03)"}},
+      h("div",{style:{display:"flex",alignItems:"center",gap:8}},
+        h("div",{style:{fontSize:18,fontWeight:900,color:clr,fontFamily:"var(--fm)"}},s.name),
+        h("span",{className:"tag",style:{background:profit>=0?"#10b98120":"#ef444420",color:clr}},profit>=0?"盈利":"亏损"),
+        partialTag&&h("span",{className:"tag",style:{background:"#f59e0b20",color:"#fbbf24"}},"部分计入("+(s.ratio12*100).toFixed(0)+"%)"),
+        h("span",{style:{fontSize:11,color:"var(--label)"}},f(s.students)+"人 · 第"+s.monthStart+"~"+s.monthEnd+"月 · "+f(s.price)+"元")),
+      h("div",{style:{textAlign:"right"}},
+        h("div",{style:{fontSize:18,fontWeight:900,color:clr,fontFamily:"var(--fm)"}},fw(profit)),
+        h("div",{style:{fontSize:10,color:"var(--dim)"}},"利润率 "+fm(margin)))),
+    h("div",{style:{display:"grid",gridTemplateColumns:"1fr 1fr 1fr 1fr",borderBottom:"1px solid rgba(255,255,255,.04)"}},
+      [{l:"收入",v:fw(rev),c:"#3b82f6"},{l:"人力成本",v:fw(svc),c:"#f59e0b"},{l:"AI成本",v:fw(aiC),c:"#8b5cf6"},{l:"获客成本",v:isFirst?fw(cacV):"—",c:"#ef4444"}].map((m,i)=>
+        h("div",{key:i,style:{padding:"9px 12px",borderRight:i<3?"1px solid rgba(255,255,255,.04)":"none"}},
+          h("div",{style:{fontSize:10,color:"var(--dim)",marginBottom:2}},m.l),
+          h("div",{style:{fontSize:14,fontWeight:800,color:m.c,fontFamily:"var(--fm)"}},m.v)))),
+    h("div",{style:{padding:"9px 14px"}},
+      h("div",{className:"xbtn",onClick:()=>setSd(!sd)},h("span",{style:{transform:sd?"rotate(90deg)":"rotate(0)",transition:"transform .2s",display:"inline-block"}},"▶"),sd?"收起计算过程":"展开完整计算过程"),
+      sd&&h("div",{style:{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:8,marginTop:8}},
+        h("div",null,h(Formula,{lines:revLines})),h("div",null,h(Formula,{lines:costLines})),h("div",null,h(Formula,{lines:profitLines})))));
+}
+
+// Sensitivity Tornado
+function MiniTornado({bp,result}){
+  const vars=[
+    {name:"续报率(S2→S3)",key:"renewalS2toS3",lo:.30,hi:.70,fmt:v=>(v*100).toFixed(0)+"%"},
+    {name:"续报率(S3→S4)",key:"renewalS3toS4",lo:.30,hi:.70,fmt:v=>(v*100).toFixed(0)+"%"},
+    {name:"续报率(S4→S5)",key:"renewalS4toS5",lo:.30,hi:.70,fmt:v=>(v*100).toFixed(0)+"%"},
+    {name:"付费CAC",key:"cacPaid",lo:2000,hi:5000,fmt:v=>f(v)+"元"},
+    {name:"MGM占比",key:"mgmRatio",lo:.1,hi:.8,fmt:v=>(v*100).toFixed(0)+"%"},
+    {name:"战队服务人数",key:"teamCapacity",lo:800,hi:1600,fmt:v=>v+"人"},
+    {name:"S4定价",key:"priceS4",lo:2980,hi:5980,fmt:v=>f(v)+"元"},
+    {name:"S5定价",key:"priceS5",lo:3980,hi:6980,fmt:v=>f(v)+"元"},
+    {name:"S2服务周期",key:"periodS2",lo:2,hi:6,fmt:v=>v+"月"}
+  ];
+  const baseProfit=result.totalProfit12;
+  const data=vars.map(v=>{const loP=runModel({...bp,[v.key]:v.lo}).totalProfit12;const hiP=runModel({...bp,[v.key]:v.hi}).totalProfit12;return{...v,loP,hiP,spread:Math.abs(hiP-loP)}}).sort((a,b)=>b.spread-a.spread);
+  const maxS=data[0]?.spread||1;
+  const colors=["#ef4444","#f97316","#f59e0b","#84cc16","#22d3ee","#3b82f6","#6366f1","#a855f7","#ec4899"];
+  return h("div",null,data.map((d,i)=>{
+    const minP=Math.min(d.loP,d.hiP),maxP=Math.max(d.loP,d.hiP),range=maxS*1.2,center=50;
+    const lp=center+((minP-baseProfit)/range)*100,rp=center+((maxP-baseProfit)/range)*100;
+    return h("div",{key:i,style:{marginBottom:8}},
+      h("div",{style:{display:"flex",justifyContent:"space-between",marginBottom:2}},
+        h("span",{style:{fontSize:11,color:"#8892a4",fontWeight:600}},d.name),
+        h("span",{style:{fontSize:11,color:colors[i%9],fontWeight:800,fontFamily:"var(--fm)"}},"Δ"+fw(d.spread))),
+      h("div",{style:{position:"relative",height:14,background:"rgba(255,255,255,.04)",borderRadius:3}},
+        h("div",{style:{position:"absolute",left:Math.max(0,lp)+"%",width:(Math.min(100,rp)-Math.max(0,lp))+"%",top:1,height:12,background:colors[i%9],borderRadius:3,opacity:.75,transition:"all .4s"}}),
+        h("div",{style:{position:"absolute",left:center+"%",top:0,height:"100%",width:1.5,background:"#e2e8f0",zIndex:5}})),
+      h("div",{style:{display:"flex",justifyContent:"space-between",marginTop:1}},
+        h("span",{style:{fontSize:9,color:"#5a6478"}},d.fmt(d.lo)+": "+fw(d.loP)),
+        h("span",{style:{fontSize:9,color:"#5a6478"}},d.fmt(d.hi)+": "+fw(d.hiP))));
+  }));
+}
+
+// Funnel
+function FunnelVisual({details,initial}){
+  return h("div",{style:{display:"flex",alignItems:"end",gap:6,height:90}},
+    details.map((s,i)=>{const ht=initial>0?(s.students/initial)*100:0;
+      return h("div",{key:i,style:{flex:1,display:"flex",flexDirection:"column",alignItems:"center",gap:3}},
+        h("span",{style:{fontSize:11,fontWeight:800,color:"#e2e8f0",fontFamily:"var(--fm)"}},f(s.students)),
+        h("div",{style:{width:"100%",height:Math.max(8,ht)+"%",background:s.profit>=0?"linear-gradient(180deg,#34d39966,#34d39922)":"linear-gradient(180deg,#f8717166,#f8717122)",border:"1px solid "+(s.profit>=0?"#34d39944":"#f8717144"),borderRadius:6,transition:"height .4s"}}),
+        h("span",{style:{fontSize:11,fontWeight:700,color:"#8892a4"}},s.name));}));
+}
+
+// Cost Breakdown
+function CostBreakdownFull({result,params,mode}){
+  const is12=mode==="12m";
+  const items=[
+    {label:"获客成本",value:is12?result.totalCAC12:result.totalCAC,color:"#ef4444"},
+    {label:"人力成本",value:is12?result.totalServiceCost12:result.totalServiceCost,color:"#f59e0b"},
+    {label:"AI成本",value:is12?result.totalAICost12:result.totalAICost,color:"#8b5cf6"}];
+  const total=items.reduce((s,i)=>s+i.value,0);
+  return h("div",null,
+    h("div",{style:{display:"flex",height:8,borderRadius:4,overflow:"hidden",marginBottom:10}},
+      items.map((it,i)=>h("div",{key:i,style:{width:(total>0?(it.value/total)*100:0)+"%",background:it.color,transition:"width .4s"}}))),
+    items.map((it,i)=>h("div",{key:i,style:{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"5px 0",borderBottom:"1px solid rgba(255,255,255,.04)"}},
+      h("div",{style:{display:"flex",alignItems:"center",gap:6}},
+        h("div",{style:{width:7,height:7,borderRadius:2,background:it.color}}),
+        h("span",{style:{fontSize:11.5,color:"#8892a4"}},it.label)),
+      h("div",{style:{display:"flex",alignItems:"baseline",gap:6}},
+        h("span",{style:{fontSize:14,fontWeight:700,color:"#e2e8f0",fontFamily:"var(--fm)"}},fw(it.value)),
+        h("span",{style:{fontSize:10,color:"var(--dim)",fontFamily:"var(--fm)"}},total>0?fm(it.value/total*100):"0%")))));
+}
+
+// ═══ STRATEGIC LEVER ANALYSIS ═══
+function LeverAnalysis({params,result}){
+  const target=1000000; // 100万
+  const baseProfit12=result.totalProfit12;
+  const targetProfit=baseProfit12+target;
+
+  // Binary search helper
+  function findThreshold(key,min,max,isPercent){
+    let lo=min,hi=max;
+    for(let i=0;i<50;i++){
+      const mid=(lo+hi)/2;
+      const r=runModel({...params,[key]:mid});
+      if(r.totalProfit12>=targetProfit)hi=mid;else lo=mid;
+    }
+    return(lo+hi)/2;
+  }
+
+  // 1. Renewal rate S2->S3
+  const renewalNeeded=findThreshold("renewalS2toS3",0,1,true);
+  const renewalDelta=renewalNeeded-params.renewalS2toS3;
+  const renewalFeasible=renewalNeeded<=0.85;
+
+  // 2. Service period (shorter = more profit due to faster turnover)
+  // Try reducing all periods equally
+  let periodNeeded=null;
+  for(let p=params.periodS2;p>=1;p-=0.5){
+    const r=runModel({...params,periodS2:Math.max(1,p),periodS3:Math.max(1,p),periodS4:Math.max(1,p),periodS5:Math.max(1,p)});
+    if(r.totalProfit12>=targetProfit){periodNeeded=p;break;}
+  }
+  // Also try increasing to see full range
+  let periodMax=null;
+  for(let p=params.periodS2;p<=12;p+=0.5){
+    const r=runModel({...params,periodS2:p,periodS3:p,periodS4:p,periodS5:p});
+    if(r.totalProfit12>=targetProfit){periodMax=p;break;}
+  }
+  const periodResult=periodNeeded||periodMax;
+  const periodDelta=periodResult?periodResult-params.periodS2:null;
+
+  // 3. Team capacity
+  const capNeeded=findThreshold("teamCapacity",400,3000,false);
+  const capDelta=capNeeded-params.teamCapacity;
+  const capFeasible=capNeeded<=2000;
+
+  const levers=[
+    {
+      rank:1,name:"续报率（S2→S3）",icon:"🔄",color:"#ef4444",
+      current:(params.renewalS2toS3*100).toFixed(0)+"%",
+      needed:renewalFeasible?(renewalNeeded*100).toFixed(1)+"%":"超出可行范围",
+      delta:renewalFeasible?"+"+(renewalDelta*100).toFixed(1)+"个百分点":"—",
+      feasible:renewalFeasible,
+      difficulty:renewalDelta<=0.1?"medium":renewalDelta<=0.2?"hard":"extreme",
+      diffLabel:renewalDelta<=0.1?"中等":renewalDelta<=0.2?"较难":"极难",
+      diffColor:renewalDelta<=0.1?"#f59e0b":renewalDelta<=0.2?"#f97316":"#ef4444",
+      explanation:[
+        "续报率是乘数效应：每多续费一个学员，不需要再花 CAC，是纯增量利润。",
+        "续报率从 "+((params.renewalS2toS3)*100).toFixed(0)+"% 提升到 "+(renewalFeasible?(renewalNeeded*100).toFixed(0)+"%":"N/A")+"，12个月内利润增加100万。",
+        "这意味着每 "+f(params.initialStudents)+" 个S2学员中，需要多留住 "+f(Math.round(renewalDelta*params.initialStudents))+" 人进入S3。",
+        "续报率的提升依赖于：教学体验满意度、社群归属感、阶段性成果感知。",
+        "核心动作：优化作业反馈（AI克隆音色）、打造结业音乐会仪式感、建立续费倒计时话术体系。"
+      ],
+      actionItems:["优化AI点评体验，让学员感受到\"老师在认真听我唱\"","S2结业前2周启动续费预热，用学员进步对比视频触发续费意愿","设计\"老学员专属福利\"，制造续费稀缺感","每周社群活跃度打卡，增强归属感"]
+    },
+    {
+      rank:2,name:"营期月数（服务周期）",icon:"📅",color:"#f59e0b",
+      current:params.periodS2+"个月",
+      needed:periodResult?periodResult.toFixed(1)+"个月":"无法仅靠缩短周期达成",
+      delta:periodDelta!=null?(periodDelta<0?periodDelta.toFixed(1):"+"+periodDelta.toFixed(1))+"个月":"—",
+      feasible:periodResult!=null&&periodResult>=1.5,
+      difficulty:periodResult&&Math.abs(periodDelta)<=1?"medium":"hard",
+      diffLabel:periodResult&&Math.abs(periodDelta)<=1?"中等":"较难",
+      diffColor:periodResult&&Math.abs(periodDelta)<=1?"#f59e0b":"#f97316",
+      explanation:[
+        "服务周期影响利润的逻辑是双向的：",
+        "→ 缩短周期：12个月内能跑更多轮次，更多学员进入高价阶段（S4/S5），资金回笼快。",
+        "→ 但过短会影响教学效果，降低续费率，得不偿失。",
+        "当前 "+params.periodS2+" 个月/期，"+(periodDelta!=null?"调整到 "+periodResult.toFixed(1)+" 个月可增加100万利润。":"仅靠调整周期难以达到目标。"),
+        "关键权衡：周期缩短必须同步验证续费率不下降，否则会适得其反。"
+      ],
+      actionItems:["先小范围测试2.5个月营期，对比续费率变化","确保缩短周期后教学大纲能闭环（核心歌曲闯关完整）","缩短周期 = 更快进入S3/S4，必须提前准备好衔接课程","财务上监控\"月均利润\"而非\"总利润\"来评估周期优劣"]
+    },
+    {
+      rank:3,name:"二讲老师带班人数（战队产能）",icon:"👥",color:"#6366f1",
+      current:f(params.teamCapacity)+"人",
+      needed:capFeasible?f(Math.round(capNeeded))+"人":"超出可行范围",
+      delta:capFeasible?"+"+(f(Math.round(capDelta)))+"人":"—",
+      feasible:capFeasible,
+      difficulty:capDelta<=200?"easy":capDelta<=500?"medium":"hard",
+      diffLabel:capDelta<=200?"较易":capDelta<=500?"中等":"较难",
+      diffColor:capDelta<=200?"#10b981":capDelta<=500?"#f59e0b":"#f97316",
+      explanation:[
+        "带班人数影响的是「单生服务成本」，属于加减法，不是乘法。",
+        "当前每战队服务 "+f(params.teamCapacity)+" 人，单生月成本 "+fc(result.monthlyCostPS)+" 元。",
+        capFeasible?"提升到 "+f(Math.round(capNeeded))+" 人后，单生月成本降至 "+fc(result.teamMonthlyCost/capNeeded)+" 元。":"即使拉满产能也无法仅靠这一项增加100万。",
+        "这是最容易执行的杠杆——通过合班、AI辅助减少人工作业量就能实现。",
+        "但天花板明显：人数拉到极限会影响服务质量和续费率。"
+      ],
+      actionItems:["通过合班确保每个战队保持80%以上满载率","AI自动化作业点评，释放二讲老师时间到客情维护","优化SOP，减少重复性工作（模板化回复、自动化督学提醒）","监控NPS分数，确保扩容不牺牲满意度"]
+    }
+  ];
+
+  // Sort by actual delta magnitude (which creates 100万 faster)
+  const sorted=[...levers].sort((a,b)=>{
+    if(a.feasible&&!b.feasible)return -1;
+    if(!a.feasible&&b.feasible)return 1;
+    return a.rank-b.rank;
+  });
+
+  return h("div",{style:{marginTop:8}},
+    // Header
+    h("div",{style:{background:"linear-gradient(135deg,rgba(245,158,11,.08),rgba(239,68,68,.05))",borderRadius:16,padding:"20px 24px",border:"1px solid rgba(245,158,11,.15)",marginBottom:16}},
+      h("div",{style:{display:"flex",justifyContent:"space-between",alignItems:"flex-start"}},
+        h("div",null,
+          h("h2",{style:{fontSize:20,fontWeight:900,color:"#f8fafc",margin:"0 0 6px 0"}},"🎯 利润增长100万：三大杠杆对比分析"),
+          h("p",{style:{fontSize:12,color:"#8892a4",margin:0}},"基准：12个月口径当前利润 ",h("span",{style:{color:"#f59e0b",fontWeight:800,fontFamily:"var(--fm)"}},fw(baseProfit12)),"，目标利润 ",h("span",{style:{color:"#34d399",fontWeight:800,fontFamily:"var(--fm)"}},fw(targetProfit)))),
+        h("div",{style:{textAlign:"right"}},
+          h("div",{style:{fontSize:11,color:"#6b7994"}},"增量目标"),
+          h("div",{style:{fontSize:28,fontWeight:900,color:"#f59e0b",fontFamily:"var(--fm)",lineHeight:1}},"+100万")))),
+
+    // Lever Cards
+    sorted.map((lv,idx)=>h("div",{key:idx,className:"strat-card",style:{background:lv.feasible?"rgba(255,255,255,.03)":"rgba(255,255,255,.015)",borderColor:lv.color+"22"}},
+      // Card Header
+      h("div",{style:{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:14}},
+        h("div",{style:{display:"flex",alignItems:"center",gap:10}},
+          h("div",{style:{width:32,height:32,borderRadius:8,background:lv.color+"20",display:"flex",alignItems:"center",justifyContent:"center",fontSize:16}},lv.icon),
+          h("div",null,
+            h("div",{style:{fontSize:15,fontWeight:800,color:"#f8fafc"}},
+              h("span",{style:{color:lv.color,fontFamily:"var(--fm)",marginRight:6}},"#"+(idx+1)),lv.name),
+            h("div",{style:{fontSize:11,color:"#6b7994"}},"当前值：",h("span",{style:{fontWeight:700,color:"#e2e8f0"}},lv.current)))),
+        h("div",{style:{textAlign:"right"}},
+          h("div",{className:"diff-tag",style:{background:lv.diffColor+"20",color:lv.diffColor}},
+            "落地难度："+lv.diffLabel),
+          h("div",{style:{fontSize:11,color:"#6b7994",marginTop:4}},"需调整至：",h("span",{style:{fontWeight:800,color:lv.color,fontFamily:"var(--fm)"}},lv.needed)))),
+
+      // Adjustment Visual
+      h("div",{style:{display:"grid",gridTemplateColumns:"1fr 40px 1fr 40px 1fr",alignItems:"center",gap:8,padding:"12px 16px",background:"rgba(255,255,255,.02)",borderRadius:10,marginBottom:14}},
+        h("div",{style:{textAlign:"center"}},
+          h("div",{style:{fontSize:10,color:"#6b7994"}},"当前值"),
+          h("div",{style:{fontSize:20,fontWeight:900,color:"#e2e8f0",fontFamily:"var(--fm)"}},lv.current)),
+        h("div",{style:{textAlign:"center",fontSize:18,color:lv.color}},"→"),
+        h("div",{style:{textAlign:"center"}},
+          h("div",{style:{fontSize:10,color:"#6b7994"}},"目标值"),
+          h("div",{style:{fontSize:20,fontWeight:900,color:lv.color,fontFamily:"var(--fm)"}},lv.needed)),
+        h("div",{style:{textAlign:"center",fontSize:14,color:"#f59e0b"}},"="),
+        h("div",{style:{textAlign:"center"}},
+          h("div",{style:{fontSize:10,color:"#6b7994"}},"12个月利润增量"),
+          h("div",{style:{fontSize:20,fontWeight:900,color:"#34d399",fontFamily:"var(--fm)"}},"+100万"))),
+
+      // Explanation
+      h("div",{style:{marginBottom:14}},
+        h("div",{style:{fontSize:12,fontWeight:800,color:"#c0cbdd",marginBottom:8}},"📖 影响原理"),
+        lv.explanation.map((line,i)=>h("p",{key:i,style:{fontSize:12,color:"#8892a4",lineHeight:1.8,margin:"0 0 2px 0"}},
+          line.startsWith("→")?h("span",null,h("span",{style:{color:lv.color,fontWeight:700}},"→ "),line.slice(2)):line))),
+
+      // Action Items
+      h("div",null,
+        h("div",{style:{fontSize:12,fontWeight:800,color:"#c0cbdd",marginBottom:8}},"✅ 落地动作清单"),
+        h("div",{style:{display:"grid",gridTemplateColumns:"1fr 1fr",gap:6}},
+          lv.actionItems.map((item,i)=>h("div",{key:i,style:{display:"flex",gap:6,padding:"6px 10px",borderRadius:6,background:"rgba(255,255,255,.02)",border:"1px solid rgba(255,255,255,.04)",fontSize:11,color:"#8892a4",lineHeight:1.5}},
+            h("span",{style:{color:lv.color,fontWeight:800,flexShrink:0}},(i+1)+"."),item))))
+    )),
+
+    // Summary
+    h("div",{style:{background:"linear-gradient(135deg,rgba(16,185,129,.08),rgba(59,130,246,.05))",borderRadius:14,padding:"18px 22px",border:"1px solid rgba(16,185,129,.15)",marginTop:4}},
+      h("div",{style:{fontSize:14,fontWeight:900,color:"#f8fafc",marginBottom:10}},"💡 麦肯锡视角：优先级排序建议"),
+      h("div",{style:{fontSize:12.5,color:"#94a3b8",lineHeight:2}},
+        h("p",{style:{margin:"0 0 8px 0"}},h("span",{style:{color:"#ef4444",fontWeight:800}},"第一优先级：续报率"),
+          " — 这是唯一的「乘数杠杆」。续费的学员不需要重新花 CAC，每一个续费都是纯利润增量。提升续报率的投入（优化教学体验、AI点评、社群运营）本身成本很低，但回报是指数级的。"),
+        h("p",{style:{margin:"0 0 8px 0"}},h("span",{style:{color:"#f59e0b",fontWeight:800}},"第二优先级：营期月数"),
+          " — 缩短周期能加速资金回笼，让更多学员在12个月内走到高价阶段。但这是一把双刃剑：必须用A/B测试验证缩短后续费率不下降，否则反而亏钱。"),
+        h("p",{style:{margin:0}},h("span",{style:{color:"#6366f1",fontWeight:800}},"第三优先级：带班人数"),
+          " — 这是最容易执行但天花板最低的杠杆。通过AI自动化和合班可以快速实现，但对利润的影响是线性的（加减法），不像续报率那样有复利效应。建议作为「基本功」持续优化，但不要指望它独立撬动大额利润增长。")),
+      h("div",{style:{marginTop:14,padding:"10px 14px",background:"rgba(255,255,255,.04)",borderRadius:8,fontSize:12,color:"#fbbf24",fontWeight:700,textAlign:"center",letterSpacing:.5}},
+        "\"不要用投放的钱去补续费的洞。续报率是北极星指标，其他都是卫星指标。\""))
+  );
+}
+
+// ═══ MAIN APP ═══
+function App(){
+  const[params,setParams]=useState({initialStudents:1000,priceS2:2980,priceS3:2980,priceS4:3980,priceS5:4980,periodS2:3,periodS3:3,periodS4:3,periodS5:3,renewalS2toS3:.50,renewalS3toS4:.50,renewalS4toS5:.50,cacPaid:3500,cacMgm:1000,mgmRatio:.50,serviceTeacherCount:3,serviceTeacherSalary:15000,assistantSalary:25000,teamCapacity:1200,aiCostPerUse:.85,aiUsesPerMonth:30});
+  const set=useCallback((k,v)=>setParams(p=>({...p,[k]:v})),[]);
+  const result=useMemo(()=>runModel(params),[params]);
+  const[open,setOpen]=useState({pricing:true,renewal:true,cac:true,team:true,ai:false});
+  const tog=k=>setOpen(p=>({...p,[k]:!p[k]}));
+  const[mode,setMode]=useState("12m"); // "life" or "12m"
+  const isProft=mode==="12m"?result.totalProfit12>=0:result.totalProfit>=0;
+  const curProfit=mode==="12m"?result.totalProfit12:result.totalProfit;
+  const curRev=mode==="12m"?result.totalRevenue12:result.totalRevenue;
+  const curCost=mode==="12m"?result.totalCost12:result.totalCost;
+  const curMargin=mode==="12m"?result.profitMargin12:result.profitMargin;
+  const curMonths=mode==="12m"?result.months12:result.totalMonths;
+
+  const SH=({id,title,icon})=>h("div",{onClick:()=>tog(id),style:{display:"flex",justifyContent:"space-between",alignItems:"center",cursor:"pointer",padding:"9px 0",borderBottom:"1px solid rgba(255,255,255,.06)",marginBottom:open[id]?10:0,userSelect:"none"}},
+    h("span",{style:{fontSize:12.5,fontWeight:800,color:"#c0cbdd"}},icon+" "+title),
+    h("span",{style:{fontSize:13,color:"#5a6478",transform:open[id]?"rotate(0)":"rotate(-90deg)",transition:"transform .2s"}},"▼"));
+
+  // Build KPI formulas based on mode
+  const revFL=mode==="12m"?[
+    {type:"label",text:"12个月口径：只计入12个月窗口内的收入"},
+    ...result.stageDetails.filter(s=>s.ratio12>0).map(s=>({type:"calc",desc:s.name+(s.ratio12<1?" ("+((s.ratio12*100).toFixed(0))+"%)":""),formula:f(s.students)+"人 × "+f(s.price)+"元"+(s.ratio12<1?" × "+((s.ratio12*100).toFixed(0))+"%":"")+" = "+f(Math.round(s.revenue12))+"元"})),
+    {type:"divider"},{type:"result",value:f(Math.round(result.totalRevenue12))+" 元"}
+  ]:[
+    {type:"label",text:"全生命周期口径：S2→S5全部计入"},
+    ...result.stageDetails.map(s=>({type:"calc",desc:s.name,formula:f(s.students)+"人 × "+f(s.price)+"元 = "+f(Math.round(s.revenue))+"元"})),
+    {type:"divider"},{type:"result",value:f(Math.round(result.totalRevenue))+" 元"}
+  ];
+
+  const costFL=mode==="12m"?[
+    {type:"label",text:"12个月口径成本"},
+    {type:"calc",desc:"获客成本",formula:f(Math.round(result.totalCAC12))+" 元"},
+    {type:"calc",desc:"人力成本",formula:f(Math.round(result.totalServiceCost12))+" 元"},
+    {type:"calc",desc:"AI成本",formula:f(Math.round(result.totalAICost12))+" 元"},
+    {type:"divider"},{type:"result",value:f(Math.round(result.totalCost12))+" 元"}
+  ]:[
+    {type:"label",text:"全周期成本"},{type:"calc",desc:"获客成本",formula:f(Math.round(result.totalCAC))+" 元"},{type:"calc",desc:"人力成本",formula:f(Math.round(result.totalServiceCost))+" 元"},{type:"calc",desc:"AI成本",formula:f(Math.round(result.totalAICost))+" 元"},{type:"divider"},{type:"result",value:f(Math.round(result.totalCost))+" 元"}
+  ];
+
+  const profitFL=[{type:"label",text:(mode==="12m"?"12个月":"全周期")+"利润 = 收入 - 成本"},{type:"calc",desc:"计算",formula:f(Math.round(curRev))+" - "+f(Math.round(curCost))},{type:"result",value:f(Math.round(curProfit))+" 元",negative:curProfit<0},{type:"divider"},{type:"calc",desc:"利润率",formula:fm(curMargin)},{type:"result",value:fm(curMargin),negative:curMargin<0}];
+
+  const ltvFL=[{type:"label",text:"LTV = 单个S2学员全生命周期价值"},
+    ...result.stageDetails.map(s=>({type:"calc",desc:s.name,formula:f(Math.round(s.revenue))+" ÷ "+f(params.initialStudents)+" = "+f(Math.round(s.revenue/params.initialStudents))+"元"})),
+    {type:"divider"},{type:"result",value:"LTV = "+f(Math.round(result.ltv))+" 元"},
+    {type:"calc",desc:"LTV ÷ 混合CAC",formula:f(Math.round(result.ltv))+" ÷ "+f(Math.round(result.blendedCAC))},
+    {type:"result",value:result.ltvCacRatio.toFixed(2)+"x"}];
+
+  return h("div",{style:{minHeight:"100vh",background:"var(--bg)"}},
+    // Top Bar
+    h("div",{style:{padding:"11px 24px",borderBottom:"1px solid var(--border)",display:"flex",justifyContent:"space-between",alignItems:"center",background:"rgba(10,14,26,.95)",backdropFilter:"blur(20px)",position:"sticky",top:0,zIndex:100}},
+      h("div",{style:{display:"flex",alignItems:"center",gap:12}},
+        h("div",{style:{width:30,height:30,borderRadius:7,background:"linear-gradient(135deg,#f59e0b,#ef4444)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:15,fontWeight:900,color:"#fff"}},"华"),
+        h("div",null,
+          h("div",{style:{fontSize:14,fontWeight:800}},"华彩 · 作战指挥仪表盘 v3"),
+          h("div",{style:{fontSize:10,color:"var(--dim)"}},"双口径利润模型 · 全参数模拟 · 战略杠杆分析"))),
+      h("div",{style:{display:"flex",alignItems:"center",gap:12}},
+        // Mode Toggle
+        h("div",{style:{display:"flex",gap:4,background:"rgba(255,255,255,.05)",borderRadius:10,padding:3}},
+          h("div",{className:"tab-btn "+(mode==="12m"?"tab-active":"tab-inactive"),onClick:()=>setMode("12m")},"📅 12个月口径"),
+          h("div",{className:"tab-btn "+(mode==="life"?"tab-active":"tab-inactive"),onClick:()=>setMode("life")},"♾️ 全生命周期")),
+        h("div",{style:{padding:"3px 10px",borderRadius:20,fontSize:10.5,fontWeight:700,background:isProft?"#10b98120":"#ef444420",color:isProft?"#34d399":"#f87171",border:"1px solid "+(isProft?"#34d39944":"#f8717144")}},isProft?"✓ 盈利":"✗ 亏损"))),
+
+    h("div",{style:{display:"grid",gridTemplateColumns:"290px 1fr",minHeight:"calc(100vh - 52px)"}},
+
+      // ═══ LEFT ═══
+      h("div",{style:{borderRight:"1px solid var(--border)",padding:"16px 14px",overflowY:"auto",background:"rgba(255,255,255,.015)",maxHeight:"calc(100vh - 52px)"}},
+        h(ParamInput,{label:"S2 入学人数",value:params.initialStudents,unit:"人",onChange:v=>set("initialStudents",v),min:100,max:5000,step:100,accent:"#f59e0b",hint:"每批次新招生人数"}),
+        h(SH,{id:"pricing",title:"定价与服务周期",icon:"💰"}),
+        open.pricing&&h("div",null,
+          ...[["S2定价","priceS2","#60a5fa"],["S3定价","priceS3","#60a5fa"],["S4定价","priceS4","#a78bfa"],["S5定价","priceS5","#c084fc"]].map(([l,k,a])=>h(ParamInput,{key:k,label:l,value:params[k],unit:"元",onChange:v=>set(k,v),min:980,max:9980,step:100,accent:a})),
+          h("div",{style:{height:3,borderTop:"1px solid rgba(255,255,255,.04)"}}),
+          ...[["S2周期","periodS2"],["S3周期","periodS3"],["S4周期","periodS4"],["S5周期","periodS5"]].map(([l,k])=>h(ParamInput,{key:k,label:l,value:params[k],unit:"月",onChange:v=>set(k,v),min:1,max:12,step:1,accent:"#fbbf24"}))),
+        h(SH,{id:"renewal",title:"续报率（分阶段）",icon:"🔄"}),
+        open.renewal&&h("div",null,
+          h(PctInput,{label:"S2→S3 续报率",value:params.renewalS2toS3,onChange:v=>set("renewalS2toS3",v),min:0,max:100,accent:"#ef4444",hint:"最关键！首次续费门槛"}),
+          h(PctInput,{label:"S3→S4 续报率",value:params.renewalS3toS4,onChange:v=>set("renewalS3toS4",v),min:0,max:100,accent:"#f97316",hint:"进入提价阶段"}),
+          h(PctInput,{label:"S4→S5 续报率",value:params.renewalS4toS5,onChange:v=>set("renewalS4toS5",v),min:0,max:100,accent:"#f59e0b",hint:"高客单忠诚用户"})),
+        h(SH,{id:"cac",title:"获客成本 (CAC)",icon:"📢"}),
+        open.cac&&h("div",null,
+          h(ParamInput,{label:"付费投放 CAC",value:params.cacPaid,unit:"元",onChange:v=>set("cacPaid",v),min:1000,max:6000,step:100,accent:"#ef4444"}),
+          h(ParamInput,{label:"MGM 转介绍 CAC",value:params.cacMgm,unit:"元",onChange:v=>set("cacMgm",v),min:200,max:2000,step:100,accent:"#10b981"}),
+          h(PctInput,{label:"MGM 流量占比",value:params.mgmRatio,onChange:v=>set("mgmRatio",v),min:0,max:100,accent:"#22d3ee",hint:"目标50%+来自老带新"}),
+          h("div",{className:"fb",style:{marginTop:6}},
+            h("div",{className:"fl"},"混合CAC"),
+            h("div",{style:{paddingLeft:8}},h("span",{className:"fd"},f(params.cacPaid)+"×"+(100-params.mgmRatio*100).toFixed(0)+"% + "+f(params.cacMgm)+"×"+(params.mgmRatio*100).toFixed(0)+"% = "),h("span",{className:result.blendedCAC<params.priceS2?"fr":"fn"},f(Math.round(result.blendedCAC))+"元")),
+            h("div",{style:{fontSize:10,color:result.blendedCAC<params.priceS2?"#34d399":"#f87171",paddingLeft:8,marginTop:2}},result.blendedCAC<params.priceS2?"✓ 首单可覆盖":"✗ 首单亏损"+f(Math.round(result.blendedCAC-params.priceS2))+"元/人"))),
+        h(SH,{id:"team",title:"3+1 蜂巢战队",icon:"👥"}),
+        open.team&&h("div",null,
+          h(ParamInput,{label:"服务二讲人数",value:params.serviceTeacherCount,unit:"人",onChange:v=>set("serviceTeacherCount",v),min:1,max:6,step:1,accent:"#60a5fa"}),
+          h(ParamInput,{label:"服务二讲月薪",value:params.serviceTeacherSalary,unit:"元",onChange:v=>set("serviceTeacherSalary",v),min:8e3,max:25e3,step:1e3,accent:"#60a5fa"}),
+          h(ParamInput,{label:"专业助教月薪",value:params.assistantSalary,unit:"元",onChange:v=>set("assistantSalary",v),min:15e3,max:4e4,step:1e3,accent:"#a78bfa"}),
+          h(ParamInput,{label:"战队满载人数",value:params.teamCapacity,unit:"人",onChange:v=>set("teamCapacity",v),min:400,max:2e3,step:50,accent:"#22d3ee"})),
+        h(SH,{id:"ai",title:"AI 技术成本",icon:"🤖"}),
+        open.ai&&h("div",null,
+          h(ParamInput,{label:"AI单次成本",value:params.aiCostPerUse,unit:"元",onChange:v=>set("aiCostPerUse",v),min:.1,max:3,step:.05,accent:"#8b5cf6"}),
+          h(ParamInput,{label:"月均使用次数",value:params.aiUsesPerMonth,unit:"次",onChange:v=>set("aiUsesPerMonth",v),min:5,max:60,step:5,accent:"#8b5cf6"}))),
+
+      // ═══ RIGHT ═══
+      h("div",{style:{padding:"16px 22px",overflowY:"auto",maxHeight:"calc(100vh - 52px)"}},
+
+        // Mode indicator
+        h("div",{style:{display:"flex",alignItems:"center",gap:8,marginBottom:14}},
+          h("div",{style:{width:4,height:20,borderRadius:2,background:mode==="12m"?"#3b82f6":"#a855f7"}}),
+          h("div",null,
+            h("span",{style:{fontSize:14,fontWeight:800}},mode==="12m"?"📅 12个月利润口径":"♾️ 全生命周期利润口径"),
+            h("span",{style:{fontSize:11,color:"var(--dim)",marginLeft:8}},mode==="12m"?"只计算前12个月内产生的收入和成本":"S2→S5 全部阶段完整计入（"+result.totalMonths+"个月）"))),
+
+        // KPIs
+        h("div",{style:{display:"grid",gridTemplateColumns:"repeat(5,1fr)",gap:10,marginBottom:18}},
+          h(KPICardFull,{icon:"💰",label:"总收入",value:fw(curRev),color:"#3b82f6",sub:curMonths+"个月",formulaLines:revFL}),
+          h(KPICardFull,{icon:"📉",label:"总成本",value:fw(curCost),color:"#f59e0b",sub:"CAC+人力+AI",formulaLines:costFL}),
+          h(KPICardFull,{icon:isProft?"✅":"🚨",label:"总利润",value:fw(curProfit),color:isProft?"#10b981":"#ef4444",sub:"利润率 "+fm(curMargin),formulaLines:profitFL}),
+          h(KPICardFull,{icon:"📊",label:"LTV/CAC",value:result.ltvCacRatio.toFixed(2)+"x",color:result.ltvCacRatio>=3?"#10b981":result.ltvCacRatio>=2?"#f59e0b":"#ef4444",sub:"LTV "+f(Math.round(result.ltv))+"元",formulaLines:ltvFL}),
+          h(KPICardFull,{icon:"🔀",label:"双口径对比",value:fw(result.totalProfit12),color:"#60a5fa",sub:"12个月 vs 全周期 "+fw(result.totalProfit),formulaLines:[
+            {type:"label",text:"两种利润口径对比"},
+            {type:"calc",desc:"12个月口径",formula:fw(result.totalRevenue12)+" - "+fw(result.totalCost12)+" = "+fw(result.totalProfit12)},
+            {type:"result",value:fw(result.totalProfit12)+" (利润率"+fm(result.profitMargin12)+")",negative:result.totalProfit12<0},
+            {type:"divider"},
+            {type:"calc",desc:"全生命周期口径",formula:fw(result.totalRevenue)+" - "+fw(result.totalCost)+" = "+fw(result.totalProfit)},
+            {type:"result",value:fw(result.totalProfit)+" (利润率"+fm(result.profitMargin)+")",negative:result.totalProfit<0},
+            {type:"divider"},
+            {type:"note",text:"差异原因：12个月窗口可能无法容纳全部阶段。当前"+result.totalMonths+"个月全周期，"+(result.totalMonths>12?"超出12个月的部分不计入短期口径":"全部落在12个月内，两个口径一致")+"。"}
+          ]})),
+
+        // Funnel + Stages
+        h("div",{style:{display:"grid",gridTemplateColumns:"180px 1fr",gap:14,marginBottom:18}},
+          h("div",{style:{background:"var(--card)",borderRadius:14,padding:14,border:"1px solid var(--border)"}},
+            h("div",{style:{fontSize:11,fontWeight:800,color:"var(--label)",marginBottom:10}},"📊 学员漏斗"),
+            h(FunnelVisual,{details:result.stageDetails,initial:params.initialStudents}),
+            h("div",{className:"fb",style:{marginTop:10}},
+              h("div",{className:"fl"},"全程留存"),
+              h("div",{style:{paddingLeft:8}},h("span",{className:"fd"},f(result.stageDetails[3]?.students||0)+" ÷ "+f(params.initialStudents)+" = "),h("span",{className:(result.stageDetails[3]?.students||0)/params.initialStudents>=.1?"fr":"fn"},((result.stageDetails[3]?.students||0)/params.initialStudents*100).toFixed(1)+"%")))),
+          h("div",{style:{display:"flex",flexDirection:"column",gap:8}},
+            result.stageDetails.map((s,i)=>h(StageCard,{key:i,s,params,result,isFirst:i===0,mode})))),
+
+        // Cost + Tornado
+        h("div",{style:{display:"grid",gridTemplateColumns:"1fr 1.5fr",gap:14,marginBottom:18}},
+          h("div",{style:{background:"var(--card)",borderRadius:14,padding:16,border:"1px solid var(--border)"}},
+            h("div",{style:{fontSize:11,fontWeight:800,color:"var(--label)",marginBottom:10}},"💸 成本结构（"+( mode==="12m"?"12个月":"全周期")+"）"),
+            h(CostBreakdownFull,{result,params,mode}),
+            h("div",{className:"fb",style:{marginTop:10}},
+              h("div",{className:"fl"},"👥 战队配置"),
+              h("div",{style:{paddingLeft:8}},h("span",{className:"fd"},params.serviceTeacherCount+"×"+f(params.serviceTeacherSalary)+" + 1×"+f(params.assistantSalary)+" = "),h("span",{className:"fv"},f(result.teamMonthlyCost)+"元/月")),
+              h("div",{style:{paddingLeft:8}},h("span",{className:"fd"},"单生月成本 = "+f(result.teamMonthlyCost)+"÷"+f(params.teamCapacity)+" = "),h("span",{className:"fv"},fc(result.monthlyCostPS)+"元")),
+              h("div",{style:{paddingLeft:8}},h("span",{className:"fd"},"需 "),h("span",{className:"fv"},result.teamsNeeded+"个战队")
+            ))),
+          h("div",{style:{background:"var(--card)",borderRadius:14,padding:16,border:"1px solid var(--border)"}},
+            h("div",{style:{fontSize:11,fontWeight:800,color:"var(--label)",marginBottom:3}},"🌪️ 全变量敏感性排名（12个月口径）"),
+            h("div",{style:{fontSize:10,color:"var(--dim)",marginBottom:8}},"竖线=基准利润 "+fw(result.totalProfit12)),
+            h(MiniTornado,{bp:params,result}))),
+
+        // ═══ STRATEGIC LEVER ANALYSIS ═══
+        h(LeverAnalysis,{params,result})
+      ))
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(React.createElement(App));
+</script>
+</body>
+</html>

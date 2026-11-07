@@ -1,0 +1,11 @@
+[Unit]
+Description=Watch Leige Toolbox access policy changes
+After=toolbox-control.service
+
+[Path]
+PathChanged=/var/lib/toolbox-control/state.json
+PathChanged=/var/lib/toolbox-control/credentials.json
+Unit=toolbox-control-apply.service
+
+[Install]
+WantedBy=multi-user.target

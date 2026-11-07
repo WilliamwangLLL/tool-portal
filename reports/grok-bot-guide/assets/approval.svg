@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 220" role="img" aria-labelledby="t">
+  <title id="t">发送、发布、删除、购买、改生产必须审批</title>
+  
+<style>
+  .p { fill: #fffaf1; }
+  .ink { fill: #1a1611; }
+  .muted { fill: #6a5f52; }
+  .stroke { stroke: #c4b59a; fill: none; }
+  .box { fill: #fffaf1; stroke: #c4b59a; }
+  .cin { fill: #b1321a; }
+  .pine { fill: #245848; }
+  .gold { fill: #9a7428; }
+  .cinb { fill: #f3ddd6; stroke: #b1321a; }
+  .pineb { fill: #d7ebe2; stroke: #245848; }
+  .goldb { fill: #f3e6c4; stroke: #9a7428; }
+  .soft { fill: #f3eee4; stroke: #d8cdbb; }
+  text { font-family: "Noto Sans SC", "PingFang SC", "Hiragino Sans GB", sans-serif; }
+  @media (prefers-color-scheme: dark) {
+    .p { fill: #1c1914; }
+    .ink { fill: #f3eadc; }
+    .muted { fill: #b3a693; }
+    .stroke { stroke: #5a5044; }
+    .box { fill: #1c1914; stroke: #5a5044; }
+    .cin { fill: #e06a4c; }
+    .pine { fill: #7ec9ae; }
+    .gold { fill: #e0c078; }
+    .cinb { fill: #3a221c; stroke: #e06a4c; }
+    .pineb { fill: #1b322b; stroke: #7ec9ae; }
+    .goldb { fill: #332a16; stroke: #e0c078; }
+    .soft { fill: #13110e; stroke: #3a342b; }
+  }
+</style>
+
+  <rect class="p" width="720" height="220"/>
+  <rect class="pineb" x="30" y="36" width="320" height="148" rx="14" stroke-width="1.6"/>
+  <text class="pine" x="190" y="74" text-anchor="middle" font-size="15" font-weight="700">可以先做</text>
+  <text class="ink" x="190" y="108" text-anchor="middle" font-size="14">起草 · 汇总 · 对比 · 建议</text>
+  <text class="muted" x="190" y="136" text-anchor="middle" font-size="13">只读、草稿、调查计划</text>
+  <rect class="cinb" x="370" y="36" width="320" height="148" rx="14" stroke-width="1.6"/>
+  <text class="cin" x="530" y="74" text-anchor="middle" font-size="15" font-weight="700">必须停下来</text>
+  <text class="ink" x="530" y="108" text-anchor="middle" font-size="14">发送 · 发布 · 删除</text>
+  <text class="ink" x="530" y="132" text-anchor="middle" font-size="14">购买 · 改生产</text>
+  <text class="muted" x="530" y="160" text-anchor="middle" font-size="13">审批不能撤销已经完成的事</text>
+</svg>

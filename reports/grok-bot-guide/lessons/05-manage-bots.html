@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>管理 Bot · Grok Bot 教程</title>
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body data-page="05">
+  <a class="skip" href="#main">跳到正文</a>
+  <header class="topbar">
+    <button class="nav-toggle" type="button" aria-controls="course-nav" aria-expanded="false">课程目录</button>
+    <a class="brand" href="../index.html" style="margin:0;font-size:1rem">Grok Bot 教程</a>
+  </header>
+  <div class="layout">
+    <aside class="sidebar" id="course-nav">
+      <a class="brand" href="../index.html">Grok Bot 教程</a>
+      <p class="brand-sub">能上班的命名同事</p>
+      <div class="nav-group">课程</div>
+      <nav><a href="../index.html"><span class="n">00</span><span>学习路径</span></a><a href="01-what-is.html"><span class="n">01</span><span>这是什么</span></a><a href="02-install.html"><span class="n">02</span><span>安装与登录</span></a><a href="03-first-bot.html"><span class="n">03</span><span>第一个 Bot</span></a><a href="04-multiple-bots.html"><span class="n">04</span><span>多个 Bot</span></a><a href="05-manage-bots.html" class="current"><span class="n">05</span><span>管理 Bot</span></a><a href="06-computer.html"><span class="n">06</span><span>云电脑</span></a><a href="07-skills-routines.html"><span class="n">07</span><span>Skill 与 Routine</span></a><a href="08-settings.html"><span class="n">08</span><span>设置与通知</span></a><a href="09-approvals.html"><span class="n">09</span><span>审批与安全</span></a><a href="10-practice.html"><span class="n">10</span><span>练习课</span></a><a href="11-faq.html"><span class="n">11</span><span>FAQ + 小抄</span></a></nav>
+      <div class="nav-group">官方</div>
+      <nav>
+        <a href="https://docs.x.ai/grok-bot/overview"><span class="n">↗</span><span>文档总览</span></a>
+        <a href="https://x.ai/bot"><span class="n">↗</span><span>下载 App</span></a>
+      </nav>
+    </aside>
+    <div>
+      <main id="main" class="main">
+        <p class="kicker">第 05 课</p>
+        <h1>创建、钉住、藏起、复制、分享、删除</h1>
+        <p class="lead">这些动作都在侧边栏和 Bot 面板里，不在 Settings。删错没有后悔药。</p>
+        
+<p>这一课是侧边栏动作说明书。删除是永久的；不确定就先 Hide。</p>
+
+<h2>看一个 Bot 的详情</h2>
+<p>点聊天标题里的 Bot 名字，或按 <kbd>Cmd</kbd>+<kbd>Shift</kbd>+<kbd>I</kbd>，或选 <strong>View conversation details</strong>。用 <strong>X</strong> 关闭。</p>
+<p>面板里通常有：实时电脑预览（点一下可全屏）、<strong>Routines</strong>、Channels、群成员。齿轮 / <strong>Agent settings</strong>：头像、名字、title、description、该 Bot 的通知。具体分区以你当前版本界面为准。</p>
+
+<h2>创建</h2>
+<ol class="steps">
+  <li>侧边栏 <strong>New</strong> 或 <kbd>Cmd/Ctrl</kbd>+<kbd>N</kbd>。</li>
+  <li>选 <strong>Create new agent</strong>。</li>
+  <li>打开的是 <strong>New Agent</strong>。用 <strong>Bot actions → Edit Profile</strong> 改名字、title、description、头像。</li>
+</ol>
+<p>上限：<strong>50 个 Bot + 群聊合计</strong>。</p>
+
+<h2>编辑</h2>
+<p>从 Bot 菜单改名字或描述。发现一条应长期有效的偏好、边界或职责，写进 description，不要只留在某一条消息里。</p>
+
+<h2>固定 Pin</h2>
+<p>把活跃的 Bot 钉在侧边栏顶部，方便每天找。</p>
+
+<h2>隐藏 Hide</h2>
+<ul class="clean">
+  <li><strong>Hide from sidebar</strong>：从主列表拿掉，不删除工作。</li>
+  <li>侧边栏底部 <strong>Show hidden chats</strong> → <strong>Unhide</strong> 可恢复。</li>
+  <li><strong>隐藏不会暂停 Bot，也不会暂停它的 Routines。</strong></li>
+</ul>
+
+<h2>复制 Duplicate</h2>
+<p>适合「同一角色、不同范围」，例如每个地区一个 Account Health Bot。副本名称形如原名 + copy，会带上：profile、settings、已启用 skills、routines、头像。 <strong>不会</strong>复制：聊天历史、学到的 memory、附件。先改名、写清新范围，再派活。</p>
+
+<h2>分享 Share</h2>
+<ol class="steps">
+  <li>打开该 Bot，复制公开分享链接。</li>
+  <li>对方在 <a href="https://x.ai">x.ai</a> 预览，选 <strong>Add to Grok Bot</strong>。</li>
+  <li>需要有 Grok Bot App 才能加完。</li>
+</ol>
+<div class="callout warn">
+  <p class="label">分享前先扫一遍</p>
+  <p>链接是公开的。拿到链接的人能看到被分享的配置：身份、描述、skills、routines。先去掉 API key、内部 URL、客户数据和任何你不会写进公开文档的东西。对方得到的是配置的<strong>副本</strong>，不是你的电脑、登录或聊天记录。共享 Bot 由其他用户创建，加入即接受第三方 bot 条款。</p>
+</div>
+
+<h2>删除 Delete</h2>
+<ol class="steps">
+  <li>在侧边栏对该 Bot <strong>右键</strong> → <strong>Delete</strong>，再确认。</li>
+  <li>不在 Settings 里。不要翻设置找删除。</li>
+</ol>
+<p>永久去掉：profile、对话、routines。共享电脑上的文件和登录<strong>可能还在</strong>。以后可能还要用，就 Hide，别 Delete。后端保留遵循适用的 Cursor 条款。</p>
+
+<h2>它记得什么</h2>
+<p>Bot 可以留下稳定偏好、重要事实和工作摘要，这样不必重放每一条旧消息。记忆替代不了权威数据源：变动的事实放在源系统；重大决策让它引用或重新打开当前数据；过期假设直接纠正；安全边界写进 description。</p>
+
+<h2>本课核对</h2>
+<div class="check-card">
+  <ul class="checks">
+    <li><label><input type="checkbox"> 能用标题或 Cmd+Shift+I 打开 conversation details</label></li>
+    <li><label><input type="checkbox"> 分得清 Hide（不停 Routine）和 Delete（永久）</label></li>
+    <li><label><input type="checkbox"> 知道 Duplicate 不复制聊天与 memory</label></li>
+    <li><label><input type="checkbox"> 分享前会先去掉密钥和内部信息</label></li>
+  </ul>
+</div>
+
+        <nav class="pager"><a href="04-multiple-bots.html"><span class="dir">上一课</span><span class="to">多个 Bot</span></a><a href="06-computer.html" style="text-align:right"><span class="dir">下一课</span><span class="to">云电脑</span></a></nav>
+      </main>
+      <footer class="footer">
+        <p>界面以你的 App 当前版本为准。本教程只收录官方文档与课程说明里的路径；若按钮文案不同，以当前界面为准，并查阅 <a href="https://docs.x.ai/grok-bot/overview">Grok Bot 官方文档</a>。</p>
+        <p>Grok Bot 是 xAI / Cursor 产品，不是 grok.com 聊天窗口。产品词保持英文：Grok Bot、Bot、Cursor、Plugins、Auto-review、Skill、Routine。</p>
+      </footer>
+    </div>
+  </div>
+  <script src="../js/app.js"></script>
+</body>
+</html>

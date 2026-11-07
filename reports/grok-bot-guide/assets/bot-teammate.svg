@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 280" role="img" aria-labelledby="t">
+  <title id="t">一个 Bot 是一位有名字的同事</title>
+  
+<style>
+  .p { fill: #fffaf1; }
+  .ink { fill: #1a1611; }
+  .muted { fill: #6a5f52; }
+  .stroke { stroke: #c4b59a; fill: none; }
+  .box { fill: #fffaf1; stroke: #c4b59a; }
+  .cin { fill: #b1321a; }
+  .pine { fill: #245848; }
+  .gold { fill: #9a7428; }
+  .cinb { fill: #f3ddd6; stroke: #b1321a; }
+  .pineb { fill: #d7ebe2; stroke: #245848; }
+  .goldb { fill: #f3e6c4; stroke: #9a7428; }
+  .soft { fill: #f3eee4; stroke: #d8cdbb; }
+  text { font-family: "Noto Sans SC", "PingFang SC", "Hiragino Sans GB", sans-serif; }
+  @media (prefers-color-scheme: dark) {
+    .p { fill: #1c1914; }
+    .ink { fill: #f3eadc; }
+    .muted { fill: #b3a693; }
+    .stroke { stroke: #5a5044; }
+    .box { fill: #1c1914; stroke: #5a5044; }
+    .cin { fill: #e06a4c; }
+    .pine { fill: #7ec9ae; }
+    .gold { fill: #e0c078; }
+    .cinb { fill: #3a221c; stroke: #e06a4c; }
+    .pineb { fill: #1b322b; stroke: #7ec9ae; }
+    .goldb { fill: #332a16; stroke: #e0c078; }
+    .soft { fill: #13110e; stroke: #3a342b; }
+  }
+</style>
+
+  <rect class="p" width="720" height="280"/>
+  <rect class="cinb" x="40" y="40" width="200" height="200" rx="18" stroke-width="2"/>
+  <circle class="cin" cx="140" cy="108" r="28"/>
+  <text x="140" y="116" text-anchor="middle" fill="#fffaf1" font-size="18" font-weight="700">P</text>
+  <text class="ink" x="140" y="158" text-anchor="middle" font-size="18" font-weight="700">Piper</text>
+  <text class="muted" x="140" y="182" text-anchor="middle" font-size="13">产品表现</text>
+  <text class="muted" x="140" y="204" text-anchor="middle" font-size="12">自己的聊天</text>
+  <g transform="translate(270,86)">
+    <path class="stroke" d="M0 20 H70" stroke-width="2"/>
+    <polygon class="cin" points="70,14 88,20 70,26"/>
+  </g>
+  <rect class="box" x="380" y="36" width="300" height="52" rx="10" stroke-width="1.5"/>
+  <text class="ink" x="396" y="68" font-size="15">独立聊天线程</text>
+  <rect class="box" x="380" y="100" width="300" height="52" rx="10" stroke-width="1.5"/>
+  <text class="ink" x="396" y="132" font-size="15">角色记忆与偏好</text>
+  <rect class="box" x="380" y="164" width="300" height="52" rx="10" stroke-width="1.5"/>
+  <text class="ink" x="396" y="196" font-size="15">自己的 Routines 与屏幕</text>
+</svg>

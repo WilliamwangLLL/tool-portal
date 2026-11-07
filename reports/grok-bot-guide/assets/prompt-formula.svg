@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 200" role="img" aria-labelledby="t">
+  <title id="t">任务五件套</title>
+  
+<style>
+  .p { fill: #fffaf1; }
+  .ink { fill: #1a1611; }
+  .muted { fill: #6a5f52; }
+  .stroke { stroke: #c4b59a; fill: none; }
+  .box { fill: #fffaf1; stroke: #c4b59a; }
+  .cin { fill: #b1321a; }
+  .pine { fill: #245848; }
+  .gold { fill: #9a7428; }
+  .cinb { fill: #f3ddd6; stroke: #b1321a; }
+  .pineb { fill: #d7ebe2; stroke: #245848; }
+  .goldb { fill: #f3e6c4; stroke: #9a7428; }
+  .soft { fill: #f3eee4; stroke: #d8cdbb; }
+  text { font-family: "Noto Sans SC", "PingFang SC", "Hiragino Sans GB", sans-serif; }
+  @media (prefers-color-scheme: dark) {
+    .p { fill: #1c1914; }
+    .ink { fill: #f3eadc; }
+    .muted { fill: #b3a693; }
+    .stroke { stroke: #5a5044; }
+    .box { fill: #1c1914; stroke: #5a5044; }
+    .cin { fill: #e06a4c; }
+    .pine { fill: #7ec9ae; }
+    .gold { fill: #e0c078; }
+    .cinb { fill: #3a221c; stroke: #e06a4c; }
+    .pineb { fill: #1b322b; stroke: #7ec9ae; }
+    .goldb { fill: #332a16; stroke: #e0c078; }
+    .soft { fill: #13110e; stroke: #3a342b; }
+  }
+</style>
+
+  <rect class="p" width="720" height="200"/>
+  <g font-size="13">
+    <rect class="cinb" x="16" y="40" width="128" height="110" rx="12" stroke-width="1.6"/>
+    <text class="cin" x="80" y="78" text-anchor="middle" font-size="12" font-weight="700">1</text>
+    <text class="ink" x="80" y="104" text-anchor="middle" font-size="15" font-weight="700">Outcome</text>
+    <text class="muted" x="80" y="126" text-anchor="middle">做成什么</text>
+    <rect class="box" x="156" y="40" width="128" height="110" rx="12" stroke-width="1.5"/>
+    <text class="gold" x="220" y="78" text-anchor="middle" font-size="12" font-weight="700">2</text>
+    <text class="ink" x="220" y="104" text-anchor="middle" font-size="15" font-weight="700">Sources</text>
+    <text class="muted" x="220" y="126" text-anchor="middle">去哪找</text>
+    <rect class="box" x="296" y="40" width="128" height="110" rx="12" stroke-width="1.5"/>
+    <text class="gold" x="360" y="78" text-anchor="middle" font-size="12" font-weight="700">3</text>
+    <text class="ink" x="360" y="104" text-anchor="middle" font-size="15" font-weight="700">Constraints</text>
+    <text class="muted" x="360" y="126" text-anchor="middle">不能做什么</text>
+    <rect class="box" x="436" y="40" width="128" height="110" rx="12" stroke-width="1.5"/>
+    <text class="gold" x="500" y="78" text-anchor="middle" font-size="12" font-weight="700">4</text>
+    <text class="ink" x="500" y="104" text-anchor="middle" font-size="15" font-weight="700">Deliverable</text>
+    <text class="muted" x="500" y="126" text-anchor="middle">交什么回来</text>
+    <rect class="pineb" x="576" y="40" width="128" height="110" rx="12" stroke-width="1.6"/>
+    <text class="pine" x="640" y="78" text-anchor="middle" font-size="12" font-weight="700">5</text>
+    <text class="ink" x="640" y="104" text-anchor="middle" font-size="15" font-weight="700">Review</text>
+    <text class="muted" x="640" y="126" text-anchor="middle">何时停给你</text>
+  </g>
+</svg>

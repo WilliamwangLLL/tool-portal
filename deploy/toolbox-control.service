@@ -1,0 +1,28 @@
+[Unit]
+Description=Leige Toolbox Control Panel
+After=network.target
+
+[Service]
+Type=simple
+User=toolbox-control
+Group=www
+WorkingDirectory=/opt/toolbox-control
+Environment=TOOLBOX_CONTROL_APP_ROOT=/opt/toolbox-control
+Environment=TOOLBOX_CONTROL_DATA_ROOT=/var/lib/toolbox-control
+Environment=TOOLBOX_CONTROL_HOST=127.0.0.1
+Environment=TOOLBOX_CONTROL_PORT=3520
+ExecStart=/usr/bin/node /opt/toolbox-control/server.mjs
+Restart=on-failure
+RestartSec=3
+UMask=0027
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectHome=true
+ProtectSystem=strict
+ReadOnlyPaths=/opt/toolbox-control
+ReadWritePaths=/var/lib/toolbox-control
+RestrictSUIDSGID=true
+
+[Install]
+WantedBy=multi-user.target
+

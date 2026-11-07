@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>设置与通知 · Grok Bot 教程</title>
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body data-page="08">
+  <a class="skip" href="#main">跳到正文</a>
+  <header class="topbar">
+    <button class="nav-toggle" type="button" aria-controls="course-nav" aria-expanded="false">课程目录</button>
+    <a class="brand" href="../index.html" style="margin:0;font-size:1rem">Grok Bot 教程</a>
+  </header>
+  <div class="layout">
+    <aside class="sidebar" id="course-nav">
+      <a class="brand" href="../index.html">Grok Bot 教程</a>
+      <p class="brand-sub">能上班的命名同事</p>
+      <div class="nav-group">课程</div>
+      <nav><a href="../index.html"><span class="n">00</span><span>学习路径</span></a><a href="01-what-is.html"><span class="n">01</span><span>这是什么</span></a><a href="02-install.html"><span class="n">02</span><span>安装与登录</span></a><a href="03-first-bot.html"><span class="n">03</span><span>第一个 Bot</span></a><a href="04-multiple-bots.html"><span class="n">04</span><span>多个 Bot</span></a><a href="05-manage-bots.html"><span class="n">05</span><span>管理 Bot</span></a><a href="06-computer.html"><span class="n">06</span><span>云电脑</span></a><a href="07-skills-routines.html"><span class="n">07</span><span>Skill 与 Routine</span></a><a href="08-settings.html" class="current"><span class="n">08</span><span>设置与通知</span></a><a href="09-approvals.html"><span class="n">09</span><span>审批与安全</span></a><a href="10-practice.html"><span class="n">10</span><span>练习课</span></a><a href="11-faq.html"><span class="n">11</span><span>FAQ + 小抄</span></a></nav>
+      <div class="nav-group">官方</div>
+      <nav>
+        <a href="https://docs.x.ai/grok-bot/overview"><span class="n">↗</span><span>文档总览</span></a>
+        <a href="https://x.ai/bot"><span class="n">↗</span><span>下载 App</span></a>
+      </nav>
+    </aside>
+    <div>
+      <main id="main" class="main">
+        <p class="kicker">第 08 课</p>
+        <h1>设置在左下角，不在菜单栏</h1>
+        <p class="lead">账号按钮、逗号快捷键、命令面板。分区因账号而异，看得到什么就用什么。</p>
+        
+<p>App 级和桌面本地行为在 Settings；某一个 Bot 的档案和通知在 conversation details。</p>
+
+<h2>怎么打开设置</h2>
+<ul class="clean">
+  <li>侧边栏<strong>左下角账号按钮</strong>（头像 + 账号名）→ Settings</li>
+  <li><kbd>Cmd/Ctrl</kbd>+<kbd>,</kbd></li>
+  <li>命令面板输入 <code>Open settings</code></li>
+</ul>
+<div class="callout">
+  <p class="label">没有这些入口</p>
+  <p>没有 macOS「系统设置 / Preferences」菜单项，也没有菜单栏齿轮。分区因账号和推送而异，有的选项可能不出现。以你当前版本界面为准。</p>
+</div>
+
+<h2>General</h2>
+<h3>Account</h3>
+<p><strong>Sign In with Cursor / Sign Out</strong>。账号菜单还可能显示 About、已安装 Grok Bot 版本、iOS App 链接。</p>
+<h3>Appearance</h3>
+<p><strong>Follow System / Light / Dark</strong>。</p>
+<h3>Agent</h3>
+<ul class="clean">
+  <li><strong>Default Model</strong>（若提供模型选择）</li>
+  <li><strong>Timezone</strong>：Routine 按此时区跑日程</li>
+  <li><strong>Execution on Local Computer</strong>：Ask every time / always allow / never allowed。建议无理由则 Never allowed。只约束你面前这台电脑，不挡住云电脑。</li>
+  <li><strong>Auto-review</strong> 与个人审批规则。Require Approval 永远压过 Always Allow。下一课细讲。</li>
+</ul>
+<p>本机执行和 Auto-review 是当前这套桌面安装的设置，不是「所有设备自动同一套政策」。换一台电脑要再确认。</p>
+
+<h2>Plugins</h2>
+<p><strong>Marketplace</strong> 发现连接器和打包 Skill；<strong>Yours</strong> 查看已装插件和私有 Skill。已装连接器仍可能要在浏览器里授权。连接器工具可逐个开或关。若 Skill 不在 <code>/</code> 菜单里，到 Yours 为当前 Bot 启用。</p>
+
+<h2>Usage &amp; Billing</h2>
+<p>出现时会显示每周包含用量，以及符合条件的非企业账号的按需用量。账号菜单也可能显示 Weekly usage。两处都没有，就去 Cursor 账号页或问组织管理员。价格以官方当前条款为准，这里不编造数字。同时有 Cursor 和 SuperGrok 时，用用量更多的那一份。</p>
+
+<h2>Team Setup</h2>
+<p>团队成员可能看到 Team Setup。管理员可提供在指定 Grok Bot 电脑上跑的托管设置；成员可查看或重装当前设置。<strong>不要把密钥直接写进托管设置说明。</strong> 没有看到该分区就跳过，以你当前版本界面为准。</p>
+
+<h2>Updates 或 Beta</h2>
+<p>这块可能叫 Updates，也可能叫 Beta。常见动作：</p>
+<ul class="clean">
+  <li><strong>Check for Updates</strong> 或 Restart to Update：更新 <strong>App</strong></li>
+  <li><strong>Update Agent Computer</strong>：更新<strong>共享云电脑</strong>（保留持久状态；手动安装的软件要重装）</li>
+  <li><strong>Reset Agent Computer</strong>：最后手段，可能丢掉最近未同步工作</li>
+  <li>若提供：安全密钥或出口路由等选项</li>
+</ul>
+<p>App 更新和云电脑更新是两件事。需要时还可能看到 Recover Agent Computer。</p>
+
+<h2>某一个 Bot 的设置</h2>
+<p><strong>View conversation details → Agent settings</strong>：名字、title、description、头像、该 Bot 的通知偏好。群聊<strong>没有</strong>同样的逐 Bot 通知开关。</p>
+
+<h2>侧边栏状态</h2>
+<ul class="clean">
+  <li><strong>Needs attention</strong>：问题、审批、交接</li>
+  <li><strong>Unread</strong>：新结果</li>
+  <li><strong>Working / typing</strong>：进行中</li>
+</ul>
+<p>打开对话会把当前活动标为已读。也可用 Bot 菜单手动标已读 / 未读。</p>
+
+<h2>通知</h2>
+<p>在该 Bot 的 Agent settings 打开 Notifications 后，完成或需要你输入时会发操作系统或手机通知。Grok Bot 处于前台焦点时，通知通常被抑制；<strong>侧边栏和 Dock 角标仍会亮</strong>。iPhone 首次运行会要通知权限；设备权限和 Bot 通知开关都得允许。移动推送可能仍在分批开放，以你当前版本为准。应用内错误出现在 composer 上方的 Notifications：可关掉一条或清空列表；有的带 Copy request ID，把完整 ID 发给支持。清空通知不会撤销外部动作，也不会删 Bot 历史。</p>
+
+<h2>本课核对</h2>
+<div class="check-card">
+  <ul class="checks">
+    <li><label><input type="checkbox"> 能用左下角账号按钮或 Cmd/Ctrl+, 打开设置</label></li>
+    <li><label><input type="checkbox"> 已确认 Routine 时区</label></li>
+    <li><label><input type="checkbox"> 分得清 Check for Updates 与 Update Agent Computer</label></li>
+    <li><label><input type="checkbox"> 知道群聊没有逐 Bot 通知开关</label></li>
+  </ul>
+</div>
+
+        <nav class="pager"><a href="07-skills-routines.html"><span class="dir">上一课</span><span class="to">Skill 与 Routine</span></a><a href="09-approvals.html" style="text-align:right"><span class="dir">下一课</span><span class="to">审批与安全</span></a></nav>
+      </main>
+      <footer class="footer">
+        <p>界面以你的 App 当前版本为准。本教程只收录官方文档与课程说明里的路径；若按钮文案不同，以当前界面为准，并查阅 <a href="https://docs.x.ai/grok-bot/overview">Grok Bot 官方文档</a>。</p>
+        <p>Grok Bot 是 xAI / Cursor 产品，不是 grok.com 聊天窗口。产品词保持英文：Grok Bot、Bot、Cursor、Plugins、Auto-review、Skill、Routine。</p>
+      </footer>
+    </div>
+  </div>
+  <script src="../js/app.js"></script>
+</body>
+</html>

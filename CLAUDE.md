@@ -2,7 +2,7 @@
 
 开始任务前读取：
 
-1. `/Users/wanglei/Desktop/入口/00_项目中枢/00_统一规则/AI_COMMON_PROTOCOL.md`
+1. `/Users/wanglei/Desktop/入口/4_系统管理/项目中枢/00_统一规则/AI_COMMON_PROTOCOL.md`
 2. `PROJECT.md`
 3. `_ai/handoff.md`
 

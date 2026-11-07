@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Skill 与 Routine · Grok Bot 教程</title>
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body data-page="07">
+  <a class="skip" href="#main">跳到正文</a>
+  <header class="topbar">
+    <button class="nav-toggle" type="button" aria-controls="course-nav" aria-expanded="false">课程目录</button>
+    <a class="brand" href="../index.html" style="margin:0;font-size:1rem">Grok Bot 教程</a>
+  </header>
+  <div class="layout">
+    <aside class="sidebar" id="course-nav">
+      <a class="brand" href="../index.html">Grok Bot 教程</a>
+      <p class="brand-sub">能上班的命名同事</p>
+      <div class="nav-group">课程</div>
+      <nav><a href="../index.html"><span class="n">00</span><span>学习路径</span></a><a href="01-what-is.html"><span class="n">01</span><span>这是什么</span></a><a href="02-install.html"><span class="n">02</span><span>安装与登录</span></a><a href="03-first-bot.html"><span class="n">03</span><span>第一个 Bot</span></a><a href="04-multiple-bots.html"><span class="n">04</span><span>多个 Bot</span></a><a href="05-manage-bots.html"><span class="n">05</span><span>管理 Bot</span></a><a href="06-computer.html"><span class="n">06</span><span>云电脑</span></a><a href="07-skills-routines.html" class="current"><span class="n">07</span><span>Skill 与 Routine</span></a><a href="08-settings.html"><span class="n">08</span><span>设置与通知</span></a><a href="09-approvals.html"><span class="n">09</span><span>审批与安全</span></a><a href="10-practice.html"><span class="n">10</span><span>练习课</span></a><a href="11-faq.html"><span class="n">11</span><span>FAQ + 小抄</span></a></nav>
+      <div class="nav-group">官方</div>
+      <nav>
+        <a href="https://docs.x.ai/grok-bot/overview"><span class="n">↗</span><span>文档总览</span></a>
+        <a href="https://x.ai/bot"><span class="n">↗</span><span>下载 App</span></a>
+      </nav>
+    </aside>
+    <div>
+      <main id="main" class="main">
+        <p class="kicker">第 07 课</p>
+        <h1>Skill 是怎么做，Routine 是何时做</h1>
+        <p class="lead">可靠的一次，才配得上自动化。先测通，再排程。</p>
+        
+<figure class="diagram">
+  <img src="../assets/skill-routine.svg" alt="Skill 是怎么做，Routine 是哪个 Bot 在何时做">
+  <figcaption>先做成一次，再写成 Skill，最后才变成 Routine。</figcaption>
+</figure>
+<p><strong>Skill</strong>：可复用的「怎么做」。步骤、决策规则、预期输出、安全边界。Skill 可在多个 Bot 间使用，但 Bot 仍需要相应连接器或登录。<strong>Routine</strong>：指定<strong>哪一个 Bot</strong>、<strong>何时</strong>跑——日程，或在支持时由事件触发。</p>
+
+<h2>把刚刚的流程存成 Skill</h2>
+<div class="prompt">
+  <p class="label">保存 Skill</p>
+  <button class="copy" type="button" data-copy="#p-skill">复制</button>
+  <pre id="p-skill">把我们刚用的流程存成一个叫 “Weekly account health” 的 Skill。写上源系统、风险定义、输出格式，以及「联系客户必须审批」这条规则。</pre>
+</div>
+<p>有用的 Skill 应写明：何时用、必需输入与权限、工作顺序、如何验收、交什么、什么必须审批。用 <strong>Settings → Plugins</strong> 发现并安装连接器和打包 Skill。桌面 composer 里 <code>/</code> 引用 Skill；<code>@</code> 点名 Bot、群、Routine、连接器。私有 Skill 按 Bot 启用；<code>/</code> 里看不到时，到 <strong>Settings → Plugins → Yours</strong> 为当前 Bot 打开。</p>
+
+<h2>Teach a task（若界面提供）</h2>
+<figure class="diagram">
+  <img src="../assets/teach-task.svg" alt="从一对一聊天加电脑画面，到 Teach a task、演示、审草稿、再测试">
+  <figcaption>演示最多约 10 分钟，不录麦克风。没有入口就改口让 Bot 从已完成任务保存 Skill。</figcaption>
+</figure>
+<ol class="steps">
+  <li>打开一对一 Bot 对话，并打开电脑画面。</li>
+  <li>选 <strong>Teach a task</strong>。</li>
+  <li>描述你即将演示的结果。</li>
+  <li>完整做一遍。</li>
+  <li>停止录制，审 Bot 生成的草稿 Skill。</li>
+  <li>用安全例子测试，再考虑排程。</li>
+</ol>
+<p>只记录可见的电脑操作，最多约十分钟，不录麦克风。演示时不要暴露密钥，凭据走安全交接。学来的 Skill 是草稿：补上一次示例看不出来的决策规则、失败处理和审批边界。该能力可能分批开放；若看不到控件，就让 Bot 根据文字说明和刚做完的任务来保存 Skill。以你当前版本界面为准。</p>
+
+<h2>创建 Routine：问「拥有它的那个 Bot」</h2>
+<div class="prompt">
+  <p class="label">向拥有者 Bot 下达 Routine</p>
+  <button class="copy" type="button" data-copy="#p-routine">复制</button>
+  <pre id="p-routine">每个工作日早上 8:00，对当前账号列表运行 Daily customer-risk Skill。在本对话发布一份带链接的观察名单。不要联系客户。若源数据不可用，报告失败，不要用旧数据凑数。</pre>
+</div>
+<p>创建前确认这六项：拥有者 Bot、日程 + 时区、输入来源、预期结果、审批边界、缺数据时怎么办。Bot 建好后会显示下次运行。笔记本合上，后台 Routine 仍可跑。时区在 <strong>Settings → General → Agent → timezone</strong>，Routine 用这个时区。</p>
+
+<h3>事件触发</h3>
+<p>Cursor 账号集成可以从事件启动 Routine，例如一条 Slack 消息或 GitHub 通知。它们和 Slack / GitHub 的 <strong>Plugins 连接器是分开的</strong>，可能要走自己的连接流程。规则写窄，回应写清。不要监听「每一条新消息」：又吵又耗用量，还容易对不相干输入动手。</p>
+<div class="prompt">
+  <p class="label">窄事件，而不是「每一条」</p>
+  <button class="copy" type="button" data-copy="#p-event">复制</button>
+  <pre id="p-event">当 #customer-escalations 里的消息同时包含支持工单链接和短语 “needs repro” 时：打开工单，在 staging 复现，并在本对话发布一份复现包。未经审批，绝不回帖到 Slack。</pre>
+</div>
+
+<h2>先 Test run</h2>
+<div class="callout warn">
+  <p class="label">Test run 是真干活</p>
+  <p>测试会导航网站、改文件、调用已连接工具。用安全输入，写操作继续放在审批后面。</p>
+</div>
+<p>检查：是否选了当前输入；输出格式对不对；每个动作有没有来源或审计痕迹；有没有在预定审批点停下；失败是否写得明白。</p>
+
+<h2>管理 Routines</h2>
+<p>打开 Bot → <strong>View conversation details</strong> → <strong>Routines</strong>，可：启用或暂停、测试运行、改日程或说明、查看最近成败、删除。一个 Bot 最多 <strong>50</strong> 条 Routine；每条保留最近 <strong>20</strong> 次运行记录。删除立即生效、<strong>不能撤销</strong>。删除 Bot 会删掉它拥有的 Routines。长时间离开后，Grok Bot 可能问你是否继续跑 Routine，不答就暂停；回来后检查被暂停的那些。</p>
+<p>设计原则：先自动化准备，再自动化执行；先起草、对账、建议；发送 / 购买 / 删除 / 发布 / 改生产必须审批；写无数据和过期数据政策；重试尽量幂等；告诉它部分完成时汇报到哪里；网站、连接器或源格式一变就重测。</p>
+
+<h2>本课核对</h2>
+<div class="check-card">
+  <ul class="checks">
+    <li><label><input type="checkbox"> 能用一句话说清 Skill 与 Routine 的差别</label></li>
+    <li><label><input type="checkbox"> 知道 Teach a task 没有入口时的替代做法</label></li>
+    <li><label><input type="checkbox"> 创建 Routine 前会确认拥有者、时区、缺数据策略</label></li>
+    <li><label><input type="checkbox"> 明白 Test run 有真实副作用</label></li>
+  </ul>
+</div>
+
+        <nav class="pager"><a href="06-computer.html"><span class="dir">上一课</span><span class="to">云电脑</span></a><a href="08-settings.html" style="text-align:right"><span class="dir">下一课</span><span class="to">设置与通知</span></a></nav>
+      </main>
+      <footer class="footer">
+        <p>界面以你的 App 当前版本为准。本教程只收录官方文档与课程说明里的路径；若按钮文案不同，以当前界面为准，并查阅 <a href="https://docs.x.ai/grok-bot/overview">Grok Bot 官方文档</a>。</p>
+        <p>Grok Bot 是 xAI / Cursor 产品，不是 grok.com 聊天窗口。产品词保持英文：Grok Bot、Bot、Cursor、Plugins、Auto-review、Skill、Routine。</p>
+      </footer>
+    </div>
+  </div>
+  <script src="../js/app.js"></script>
+</body>
+</html>

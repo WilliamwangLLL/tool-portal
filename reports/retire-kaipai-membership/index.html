@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="退休开拍吧980元年度会员内部产品文档，包含5＋2权益、会员规则、服务交付与运营建议。">
+<title>退休开拍吧 · 内部产品文档</title>
+<style>
+:root{--ink:#172f36;--muted:#657378;--brand:#075b5a;--orange:#d75d23;--line:#dde5e5;--paper:#fff;--bg:#f3f6f5}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:30px}body{margin:0;color:var(--ink);background:var(--bg);font:16px/1.85 -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif}a{color:var(--brand)}a:focus-visible,button:focus-visible,summary:focus-visible,.table-wrap:focus-visible{outline:3px solid var(--orange);outline-offset:4px}
+.skip{position:fixed;left:16px;top:-80px;z-index:10;background:#fff;padding:10px}.skip:focus{top:10px}
+.layout{max-width:1460px;margin:auto;display:grid;grid-template-columns:260px minmax(0,1fr);gap:38px;padding:34px 38px 60px}
+aside{position:sticky;top:28px;align-self:start;max-height:calc(100vh - 56px);overflow:auto;padding:10px 10px 20px 0}.brand{font-size:23px;font-weight:760;letter-spacing:.5px}.brand em{color:var(--orange);font-style:normal}.eyebrow{font-size:12px;letter-spacing:2px;color:var(--muted);font-weight:650}.side-meta{font-size:12px;color:var(--muted);margin:6px 0 26px}nav a{display:flex;gap:12px;text-decoration:none;font-size:14px;line-height:1.5;padding:10px 12px;margin:4px 0;border-radius:8px;color:#42565b}nav a span{font-size:12px;color:#899a9b;min-width:20px}nav a:hover,nav a.active{background:#e1eeea;color:#065b50}nav a.active{font-weight:650}.side-foot{border-top:1px solid var(--line);margin-top:22px;padding-top:15px;font-size:12px;color:var(--muted)}
+main{min-width:0}.hero{background:linear-gradient(120deg,#123c40,#0b5b53);color:#fff;border-radius:20px;padding:42px 42px 34px;position:relative;overflow:hidden}.hero .eyebrow{color:#afd0c7}.hero h1{font-size:clamp(27px,3vw,40px);letter-spacing:-1px;line-height:1.3;margin:12px 0 14px}.hero p{color:#e2eeeb;margin:0;max-width:680px;font-size:17px}.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:25px}.meta span{border:1px solid #668983;color:#eff7f4;border-radius:30px;font-size:12px;padding:3px 12px}
+.toolbar{display:flex;gap:12px;justify-content:space-between;align-items:center;margin:22px 2px;color:var(--muted);font-size:13px}button{font:inherit;cursor:pointer;background:#fff;border:1px solid #c6d4d3;border-radius:8px;padding:7px 14px;color:var(--ink)}button:hover{background:#e8f1ee}.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:20px 0 28px}.metric{background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px 22px}.metric b{font-size:28px;line-height:1.25;display:block;color:var(--brand)}.metric span{color:var(--muted);font-size:12px}
+article{background:#fff;border:1px solid var(--line);border-radius:16px;padding:30px 42px 42px}article>p{color:#4a5f64}p{margin:12px 0 18px;overflow-wrap:anywhere}strong{color:#183e42;font-weight:650}section{border-top:1px solid var(--line);padding-top:26px;margin-top:34px;scroll-margin-top:28px}h2{font-size:25px;line-height:1.5;letter-spacing:-.3px;margin:0 0 22px;color:#153f43}h3{font-size:18px;line-height:1.5;margin:26px 0 12px;color:#214c50}.note{background:#f5f8f6;padding:12px 16px;border-radius:8px;font-size:15px}.table-wrap{overflow-x:auto;margin:20px 0 24px;border:1px solid var(--line);border-radius:9px}table{width:100%;border-collapse:collapse;font-size:14px;line-height:1.75;min-width:620px}th{background:#eaf1ef;text-align:left;color:#254b4a;font-weight:650}th,td{padding:12px 14px;border-bottom:1px solid var(--line);border-right:1px solid var(--line);vertical-align:top}th:last-child,td:last-child{border-right:0}tbody tr:last-child td{border-bottom:0}tbody tr:nth-child(even){background:#fafcfb}td:first-child{min-width:88px}footer{text-align:center;font-size:12px;color:var(--muted);padding-top:26px}.mobile-nav{display:none}
+@media(min-width:1450px){article{padding-left:50px;padding-right:50px}}
+@media(max-width:1000px){.layout{grid-template-columns:220px minmax(0,1fr);gap:22px;padding:24px 22px}article{padding:25px}.hero{padding:30px}nav a{font-size:13px;padding:9px 7px}}
+@media(max-width:760px){.layout{display:block;padding:14px 14px 35px}aside{display:none}.hero{padding:27px 23px;border-radius:14px}.hero h1{font-size:29px}.hero p{font-size:15px}.metrics{gap:8px;margin-bottom:18px}.metric{padding:13px 12px}.metric b{font-size:24px}.metric span{font-size:11px}article{padding:20px 18px;border-radius:12px}body{font-size:15px}h2{font-size:22px}h3{font-size:17px}.mobile-nav{display:block;background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 15px;margin:18px 0}.mobile-nav summary{cursor:pointer;font-weight:600}.mobile-nav nav{display:grid;grid-template-columns:1fr 1fr;gap:0 8px;margin-top:12px}.toolbar{font-size:12px;gap:8px}.toolbar button{white-space:nowrap}.table-wrap{margin-left:-2px;margin-right:-2px}table{font-size:13px}section{margin-top:28px;padding-top:22px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+@media print{@page{size:A4;margin:18mm 16mm}body{background:#fff;color:#000;font-size:10pt;line-height:1.6}.layout{display:block;max-width:none;padding:0}aside,.toolbar,.mobile-nav,.skip,.metrics{display:none}.hero{background:none!important;color:#000;padding:0;border-radius:0;margin-bottom:18px}.hero h1{font-size:24pt;color:#000}.hero p,.hero .eyebrow{color:#333}.meta{margin-top:12px}.meta span{color:#333;border-color:#bbb}article{border:0;padding:0;border-radius:0}section{margin-top:20px;padding-top:16px}h2{font-size:16pt;color:#000}h3{font-size:12pt;color:#000}h2,h3{break-after:avoid}p{orphans:3;widows:3;overflow-wrap:anywhere}.table-wrap{overflow:visible;border:0;border-radius:0}table{min-width:0;font-size:9pt;table-layout:auto}thead{display:table-header-group}tr{break-inside:avoid}th,td{padding:7px;border:1px solid #bbb}strong{color:#000}.note{background:none;padding:0}footer{margin-top:16px;padding-top:12px;border-top:1px solid #bbb}}
+
+.brief{background:#fff;border:1px solid var(--line);border-radius:16px;padding:30px 36px;margin:0 0 28px;scroll-margin-top:24px}.brief-top{display:flex;align-items:center;justify-content:space-between;gap:16px}.brief h2{margin:4px 0 0;font-size:28px}.detail-link{white-space:nowrap;text-decoration:none;font-size:13px;background:#edf4f0;padding:6px 12px;border-radius:8px}.brief-intro{font-size:16px;margin:20px 0 16px}.brief-price{display:flex;flex-wrap:wrap;gap:6px 18px;align-items:baseline;padding-bottom:18px;border-bottom:1px solid var(--line)}.brief-price strong{font-size:20px;color:var(--orange)}.brief-price span{font-size:13px;color:var(--muted)}.brief h3{font-size:19px;margin:22px 0 12px}.benefit{display:flex;gap:14px;padding:13px 0;border-bottom:1px solid #edf1ef}.benefit:last-child{border:0}.benefit-num{background:#edf4f0;flex-shrink:0;width:30px;height:30px;display:grid;place-items:center;border-radius:50%;font-size:12px;color:var(--brand);font-weight:700;margin-top:2px}.brief h4{font-size:16px;margin:0;color:var(--brand);line-height:1.7}.brief h4 small{font-size:13px;color:var(--muted);font-weight:400;margin-left:9px}.benefit p,.extra-grid p{font-size:14px;line-height:1.8;margin:5px 0 0;color:#4b5f63}.extra-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.extra-grid>div{background:#f5f8f6;border-radius:10px;padding:17px 20px}.brief-note{font-size:12px;color:var(--muted);margin:20px 0 0;line-height:1.8}.detail-heading{scroll-margin-top:24px;margin:36px 2px 20px}.detail-heading h2{margin:4px 0 8px}.detail-heading p{font-size:14px;color:var(--muted);margin:0}
+@media(max-width:760px){.brief{padding:23px 18px;border-radius:12px}.brief h2{font-size:25px}.brief-intro{font-size:15px}.brief h4 small{display:block;margin-left:0}.benefit{gap:10px}.extra-grid{grid-template-columns:1fr}.brief-top{gap:9px}.detail-link{font-size:12px;padding:5px 9px}.brief-price{display:block}.brief-price span{display:block;margin-top:5px}}
+@media print{.brief{padding:0;border:0;border-radius:0;margin:0 0 18px}.brief-top .detail-link{display:none}.brief h2{font-size:19pt}.brief h3{font-size:12pt;margin:12px 0 8px}.brief-intro,.brief h4{font-size:10pt}.benefit p,.extra-grid p,.brief h4 small{font-size:9pt}.benefit{padding:7px 0;break-inside:avoid}.extra-grid>div{padding:7px;border:1px solid #ccc;background:none;break-inside:avoid}.brief-note{font-size:8pt}.brief-price strong{color:#000;font-size:13pt}.detail-heading{break-before:page;margin-top:0}.brief-num{color:#000}}
+</style></head><body>
+<a class="skip" href="#content">跳到正文</a>
+<div class="layout"><aside aria-label="文档导航"><div class="brand">退休<em>开拍吧</em></div><div class="side-meta">产品文档 · 内部分享版</div><div class="eyebrow">章节导航</div><nav><a href="#brief"><span>速览</span>精简版</a><a href="#full-detail"><span>全文</span>详细版</a><a href="#section-1"><span>01</span>产品定位与用户价值</a><a href="#section-2"><span>02</span>价格期限与会员类型</a><a href="#section-3"><span>03</span>五大核心权益总览</a><a href="#section-4"><span>04</span>技能学习与教学交付</a><a href="#section-5"><span>05</span>旅行兴趣与形象服务</a><a href="#section-6"><span>06</span>分享圈与旅游津贴</a><a href="#section-7"><span>07</span>两项附加权益</a><a href="#section-8"><span>08</span>会员旅程与团队分工</a><a href="#section-9"><span>09</span>收费售后与统一口径</a><a href="#section-10"><span>10</span>产品吸引力与经营验证</a><a href="#section-11"><span>11</span>待确认事项与内部讨论顺序</a><a href="#section-12"><span>12</span>内部分享常见问答</a><a href="#section-13"><span>13</span>版本与材料来源</a></nav><div class="side-foot">V1 · 2026年9月9日<br>已确认规则 / 运营建议 / 待确认事项</div></aside>
+<main id="content"><header class="hero"><div class="eyebrow">内部产品文档</div><h1>退休开拍吧</h1><p>掌握技能，记录生活，分享美好，创造价值。</p><div class="meta"><span>年度生活会员</span><span>V1 · 2026年9月9日</span><span>内部分享与执行讨论</span></div></header>
+<div class="toolbar"><span>产品定位 · 会员权益 · 交付与运营</span><button id="print" type="button">打印 / 保存 PDF</button></div>
+<div class="metrics" aria-label="产品速览"><div class="metric"><b>980<span> 元</span></b><span>年度正式会员</span></div><div class="metric"><b>5＋2</b><span>五大核心 · 两项附加</span></div><div class="metric"><b>8＋4</b><span>教学课 · 答疑课</span></div></div>
+<details class="mobile-nav"><summary>精简版与详细目录</summary><nav><a href="#brief"><span>速览</span>精简版</a><a href="#full-detail"><span>全文</span>详细版</a><a href="#section-1"><span>01</span>产品定位与用户价值</a><a href="#section-2"><span>02</span>价格期限与会员类型</a><a href="#section-3"><span>03</span>五大核心权益总览</a><a href="#section-4"><span>04</span>技能学习与教学交付</a><a href="#section-5"><span>05</span>旅行兴趣与形象服务</a><a href="#section-6"><span>06</span>分享圈与旅游津贴</a><a href="#section-7"><span>07</span>两项附加权益</a><a href="#section-8"><span>08</span>会员旅程与团队分工</a><a href="#section-9"><span>09</span>收费售后与统一口径</a><a href="#section-10"><span>10</span>产品吸引力与经营验证</a><a href="#section-11"><span>11</span>待确认事项与内部讨论顺序</a><a href="#section-12"><span>12</span>内部分享常见问答</a><a href="#section-13"><span>13</span>版本与材料来源</a></nav></details><section class="brief" id="brief" aria-labelledby="brief-title">
+<div class="brief-top"><div><div class="eyebrow">一分钟读懂产品</div><h2 id="brief-title">精简版</h2></div><a class="detail-link" href="#full-detail">查看详细版 ↓</a></div>
+<p class="brief-intro"><strong>退休开拍吧，是以短视频与AI学习为起点的年度生活会员。</strong><br>用手机记录生活，在学习、旅行与相聚中，过自己喜欢的退休生活。</p>
+<p class="brief-price"><strong>980元／年度正式会员</strong><span>付款当天生效，满12个月后到期日延至当月末。</span></p>
+<h3>5大核心权益</h3>
+<div class="core-list">
+<div class="benefit"><span class="benefit-num">01</span><div><h4>技能 <small>把生活拍成美好作品</small></h4><p>首月<strong>8次教学课＋4次答疑课</strong>，学习拍摄、剪辑、发布与AI提效；会员期回放和群答疑，总部每季度1场线下学习。</p></div></div>
+<div class="benefit"><span class="benefit-num">02</span><div><h4>旅行 <small>和朋友去不同城市走走</small></h4><p>总部<strong>每月一次城市串门</strong>，行程另付费，含住宿与城内活动，往返交通自理。</p></div></div>
+<div class="benefit"><span class="benefit-num">03</span><div><h4>兴趣 <small>给喜欢的事一个开始</small></h4><p><strong>每月兴趣探索</strong>，每项至少3次体验课；想深入学习，可另报长期课程。</p></div></div>
+<div class="benefit"><span class="benefit-num">04</span><div><h4>形象 <small>留下此刻自信的自己</small></h4><p><strong>每年1次形象设计与妆造拍摄</strong>，含2张肖像照＋1份Vlog；串门期间统一交付，多选照片另付。</p></div></div>
+<div class="benefit"><span class="benefit-num">05</span><div><h4>分享 <small>让美好连接更多同路人</small></h4><p>优秀正式会员自愿申请，经总部选拔加入分享圈；直接分享980元新会员首购，享<strong>20%旅游津贴</strong>。同行、补差升级与续费不计奖，退款追回对应津贴。</p></div></div>
+</div>
+<h3>2项附加权益</h3>
+<div class="extra-grid"><div><h4>＋ 好友同行</h4><p><strong>380元／位，最多3位同城好友</strong>，增购首年同行生活权益，不含技能学习与分享圈；可补600元升级，次年按980元续费。</p></div><div><h4>＋ 同城相聚</h4><p><strong>同城会员超过30人，每周至少1场活动。</strong>总部统筹、选拔班长组织，活动按次收费。</p></div></div>
+<p class="brief-note">线下学习学费已含，交通食宿自理；串门行程另收费。续费后各项权益继续提供并更新升级。津贴使用、权益有效期与售后等规则，见下方详细版。</p>
+</section>
+<div class="detail-heading" id="full-detail"><div class="eyebrow">供团队逐项核对</div><h2>详细版</h2><p>产品定位、完整权益、交付规则、运营建议与待确认事项。</p></div>
+<article><p>本文供产品、教学、运营、销售、客服和财务团队使用，统一理解980元年度会员的定位、5＋2权益、交付安排和会员规则。内容以本轮对话的最新确认及现有产品材料为依据。</p>
+<p><strong>核心结论：退休开拍吧是以短视频与AI技能学习为起点的年度生活会员。</strong> 首月学习提供明确的购买理由，持续学习、兴趣体验、旅行和同城相聚提供后续参与场景。团队需要把“会拍、会剪、会发布、会分享、会用AI提效”落实到教学，把生活权益落实到可报名、可参加、可交付的服务。</p>
+<p>本文区分三类内容：<strong>已确认规则</strong>用于统一产品口径；<strong>运营建议</strong>用于内部讨论，不自动形成对外承诺；<strong>待确认事项</strong>保留缺口，不补写成已决定。产品设计已较完整，但本文未核验全部服务已上线，也未取得本产品的成交、成本和续费数据。</p>
+<section id="section-1" aria-labelledby="heading-1"><h2 id="heading-1">1 产品定位与用户价值</h2>
+<h3>产品基础信息</h3>
+<p>产品名称为“退休开拍吧”，正式会员价格为980元，按年度提供权益。产品理念为“掌握技能，记录生活，分享美好，创造价值”。权益统一呈现为“5大核心权益＋2项附加权益”，核心依次为技能、旅行、兴趣、形象、分享，附加为好友同行、同城相聚。</p>
+<p>内部的一句话介绍：我们帮助退休生活中的学习者，用手机学会短视频和AI，把生活记录下来，在持续学习与相聚中认识朋友、探索兴趣，并让具备条件的会员通过真实分享获得旅游津贴。</p>
+<h3>目标用户与购买动机</h3>
+<p>以下为基于现有设计的目标人群判断，尚需访谈和实际报名验证。主要面向愿意使用手机、希望学习拍摄与表达、对旅行和兴趣生活有参与意愿的退休及临近退休人群。目前没有确认具体年龄限制，不自行添加报名年龄门槛。</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table><thead><tr>
+<th scope="col">用户愿望</th>
+<th scope="col">产品回应</th>
+<th scope="col">团队应观察的体验</th>
+</tr></thead><tbody>
+<tr><td>想记录生活，缺少拍摄和剪辑方法</td><td>首月12次课与会员期答疑</td><td>能否把所学用于自己的日常内容</td></tr>
+<tr><td>想尝试新的兴趣和生活方式</td><td>月度兴趣探索与城市串门</td><td>是否有愿意持续参加的主题</td></tr>
+<tr><td>想认识聊得来的朋友</td><td>好友同行与有条件的同城活动</td><td>是否形成真实、持续的交往</td></tr>
+<tr><td>想呈现更自信的自己</td><td>形象设计与肖像、Vlog</td><td>是否愿意保存、展示个人作品</td></tr>
+<tr><td>有分享能力，希望创造价值</td><td>经选拔加入分享圈</td><td>能否带来真实新会员并准确结算</td></tr>
+</tbody></table></div>
+<p>产品属于C端学习与生活服务。购买980元会员不附带城市经营权、主理人身份、客户分配或岗位安排；班长与分享圈均有各自条件，不能由销售自动授予。</p>
+<h3>价值表达原则</h3>
+<p>对外先讲“加入后能体验怎样的生活”，再用课程与服务安排支撑。主张可使用“把退休后的日子，过成自己喜欢的样子”。技能价值应配真实作品和教学演示；生活愿景不能替代对另付费用、参与条件和服务安排的清楚说明。</p>
+</section>
+<section id="section-2" aria-labelledby="heading-2"><h2 id="heading-2">2 价格期限与会员类型</h2>
+<h3>价格与有效期</h3>
+<p>正式会员980元。付款当天生效，满12个月后，到期日延至当月最后一天，超过12个月的部分免费。例如2026年9月18日付款，有效期至2027年9月30日。不再使用“下月1日才生效”或单列“赠送期”的旧口径。</p>
+<p>第二年续费后继续提供各项权益，内容会更新升级。次年具体课表、主题与服务日历尚需运营落实，不能提前声称已经完成更新。</p>
+<h3>正式会员与同行会员对照</h3>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table><thead><tr>
+<th scope="col">项目</th>
+<th scope="col">980元正式会员</th>
+<th scope="col">380元同行会员</th>
+</tr></thead><tbody>
+<tr><td>购买方式</td><td>购买年度正式会员</td><td>由正式会员为同城好友优惠增购，最多3位</td></tr>
+<tr><td>首月短视频与AI课程</td><td>包含</td><td>不包含</td></tr>
+<tr><td>技能回放与技能群答疑</td><td>会员期内提供</td><td>不包含</td></tr>
+<tr><td>季度线下技能学习</td><td>包含培训学费</td><td>不包含</td></tr>
+<tr><td>月度兴趣探索</td><td>包含入门体验</td><td>享相应生活权益</td></tr>
+<tr><td>串门与同城活动</td><td>可按条件报名，费用另付</td><td>同样按条件报名，费用另付</td></tr>
+<tr><td>年度基础形象服务</td><td>包含</td><td>享相应形象权益</td></tr>
+<tr><td>分享圈</td><td>自愿申请并经总部选拔</td><td>不具备申请资格</td></tr>
+<tr><td>升级或续费</td><td>次年按980元续费</td><td>可补600元升级；次年按980元续费</td></tr>
+</tbody></table></div>
+<p>同行优惠仅限首年、同城好友。同行会员补600元成为正式会员后，到期日保持不变；补差升级不产生分享奖励。升级后的营期安排、已用次数型权益是否增发，见待确认事项。</p>
+<h3>组合支付示例</h3>
+<p>980元正式会员加1位同行会员，共1360元；加2位共1740元；加3位共2120元。每人权益不同，不能宣传为“980元含好友名额”或按人数均摊成同一种会员。主会员退费时，已经购买的同行会员资格可以保留，订单与权益需分别管理。</p>
+</section>
+<section id="section-3" aria-labelledby="heading-3"><h2 id="heading-3">3 五大核心权益总览</h2>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table><thead><tr>
+<th scope="col">核心权益</th>
+<th scope="col">主要内容与频次</th>
+<th scope="col">980元包含范围</th>
+<th scope="col">主要参与条件</th>
+</tr></thead><tbody>
+<tr><td>技能</td><td>首月8次教学课＋4次答疑课；会员期答疑；总部每季度1场线下学习</td><td>课程、回放、群答疑及线下培训学费</td><td>按营期学习；线下交通食宿自理</td></tr>
+<tr><td>旅行</td><td>总部每月组织一次城市串门</td><td>会员参与安排</td><td>行程另付，往返交通自理</td></tr>
+<tr><td>兴趣</td><td>每月兴趣探索；每项至少3次体验课</td><td>入门探索体验</td><td>长期深入课程另报另付</td></tr>
+<tr><td>形象</td><td>每年一次形象设计与妆造拍摄；2张肖像照＋1份Vlog</td><td>基础形象与影像服务</td><td>串门期间统一交付，行程另付</td></tr>
+<tr><td>分享</td><td>优秀会员申请加入分享圈；有效直接首购20%旅游津贴</td><td>符合条件者的申请与计奖机制</td><td>总部选拔，按有效订单结算</td></tr>
+</tbody></table></div>
+<p>“每季度一场”“每月一次城市串门”指总部组织频次，不代表每座城市每月或每季度均有同样场次。“兴趣每项至少3次”指该主题的体验课程次数，具体课表随主题设计。</p>
+</section>
+<section id="section-4" aria-labelledby="heading-4"><h2 id="heading-4">4 技能学习与教学交付</h2>
+<h3>首月学习安排</h3>
+<p>学习期为1个月，半个月开一期，统一对外表达为“8次教学课＋4次答疑课，共12次课”。学习内容包括手机拍摄、剪辑、发布、分享，以及使用AI提高内容创作效率。手机即可学习，不需要额外购买设备或付费工具。</p>
+<p>内部排课按既定交付方式执行：8次教学课为预先制作的教学内容，按所属营期固定时间播放；4次答疑课由同一位老师直播讲解，提前整理日常高频问题。用户已要求宣传材料不使用“录播课”标签；“教学课”的名称调整不改变实际形式，也不应被解释成12次全部直播授课。</p>
+<p>用户此前反馈课程已基本制作完成；本次没有检查课程文件、逐课内容和上线状态。开营前应由教学负责人核对完整性。当前不设作业环节，不自行增加强制打卡、逐人批改或指定数量毕业作品的承诺。</p>
+<h3>会员期持续学习</h3>
+<p>课程回放在会员有效期内可看。日常技能群答疑由助教老师负责，不同营期共享答疑服务。当前未确认固定答疑时段、响应时限或一对一服务，不以“随时秒回”“全天候私教”销售。</p>
+<p>总部每季度滚动举办1场线下培训，安排在不同城市的串门活动之后。培训学费已含，交通、住宿、餐饮等自理。正式会员可以不购买串门行程，单独报名参加培训。正常提供场次后，会员自行不参加，不另行补偿；总部取消或未提供服务的情况需要另作处理。</p>
+<h3>学习效果如何表达</h3>
+<p>教学目标是让会员能拍摄、剪辑、发布与分享，并使用AI辅助完成内容工作。没有确认统一的学习结果保证、涨粉数量或收益目标。建议用“旅行记录、家庭生活、个人兴趣”三类真实内容演示课程用途，在取得会员同意后展示真实学习作品。</p>
+<p class="note"><strong>运营建议：</strong>记录自愿提交作品的人数、常见操作困难、问题解决情况与课程满意度，用于改进教学。这些是内部评估方式，不构成新的强制作业制度。</p>
+</section>
+<section id="section-5" aria-labelledby="heading-5"><h2 id="heading-5">5 旅行兴趣与形象服务</h2>
+<h3>旅行权益</h3>
+<p>总部每月组织一场“城市串门吧”，到不同城市体验生活。总部统一提供行程价格，费用另付；报价包含住宿和城内活动，会员自行承担往返目的地交通。餐饮、门票、接送等具体项目以该次行程明细为准，现有规则没有确认这些项目全部包含。</p>
+<p>权益价值在于有组织的出行与相聚，让学到的拍摄技能有使用场景。旅游津贴可用于抵扣串门费用。对外可以说“和聊得来的朋友走走看看，把一路的风景变成共同的回忆”，同时清楚保留行程另收费信息。</p>
+<p class="note"><strong>运营建议：</strong>每次发布目的地、日期、价格、包含项目、集合方式、报名方式和变更安排。具体成团条件、接待容量及供应商责任应在该次行程中落实，目前未确认统一数值。</p>
+<h3>兴趣权益</h3>
+<p>每月提供兴趣探索课程，解锁不同领域；每个主题至少3次体验课，具体次数根据主题安排。入门体验包含在会员权益中，想深入学习的会员可以自愿另报长期学习体系。</p>
+<p>对外可以说“把曾经的想学，变成今天的开始”。具体兴趣主题、线上或线下形式、排课时间尚需列入服务日历；不把举例主题写成已经排定的年度课程。</p>
+<h3>形象权益</h3>
+<p>每年提供1次个人形象设计及妆造拍摄，包含2张肖像照和1份Vlog，在串门期间统一交付。基础服务无额外收费，多选照片才另行付费，串门行程本身另收费。</p>
+<p>会员可以暂不使用。当年未使用并连续续费，未用肖像权益可累计；例如第一年未使用，续费后第二年可拥有2次。到期不续费，未使用肖像权益失效。形象服务的完整累计范围、成片规格、精修安排、Vlog时长和交付天数尚未逐项确认。</p>
+<p class="note"><strong>运营建议：</strong>建立预约与核销记录，在拍摄前说明基础交付和自愿加购项目；作品对外展示另征得会员同意。服务话术可用“为此刻的自己，留一份漂亮纪念”。</p>
+</section>
+<section id="section-6" aria-labelledby="heading-6"><h2 id="heading-6">6 分享圈与旅游津贴</h2>
+<h3>资格与计奖范围</h3>
+<p>分享圈面向视频号能吸引新客户的优秀正式会员，按“本人自愿＋总部选拔”加入。购买会员不自动获得分享圈资格，380元同行会员不能申请；补差升级成为正式会员后，可以按标准申请。</p>
+<p>本人直接分享带来的980元正式会员新客户首购，按20%产生旅游津贴。一笔符合条件的980元订单对应196元津贴。380元同行订单、600元升级订单及会员续费均不计奖。发生退费时需要退回对应津贴；退款部分与津贴追回金额的映射仍需结算细则明确。</p>
+<p>目前只确认直接分享，不包含团队、下级或间接分享奖励。实际到账、订单归属确认、退款观察期、入账周期等操作规则尚需制定。</p>
+<h3>使用与折现</h3>
+<p>津贴用于抵扣串门费用，不限制抵扣额度。尚未使用的津贴余额超过5000元，可以申请将全部余额按80%折现，税费自理。折现后再次累计，仍需重新满足余额门槛才能再次申请。</p>
+<p>示例仅用于理解计算：全部为符合条件的980元首购且没有使用、退款时，25笔对应4900元，未超过门槛；26笔对应5096元，超过门槛。按80%计算可申请4076.80元，税费另计。示例不代表任何会员可以获得相应订单或收入。</p>
+<p>会员到期前完成有效行程订单的津贴抵扣，计为已使用，可以在之后出行。如总部取消行程，恢复的津贴需给予合理使用期限，具体天数待定。到期不续费，未用津贴失效；连续续费时余额如何结转，尚未明确。</p>
+<h3>内部执行建议</h3>
+<p>建立订单与津贴明细，至少记录分享人、被分享订单、资格状态、计奖基数、津贴入账、抵扣、折现、退款追回和余额变动。所有变动应能追溯至具体订单，避免把津贴余额直接视为现金余额。</p>
+<p>分享圈的产品表达采用“分享美好，积攒下一次出发的旅费”。不把它包装成工作岗位、固定工资或保本回报；也不让奖励压过技能与生活体验的主体价值。</p>
+</section>
+<section id="section-7" aria-labelledby="heading-7"><h2 id="heading-7">7 两项附加权益</h2>
+<h3>好友同行</h3>
+<p>980元正式会员可按380元每位，为最多3位同城好友增购首年同行会员。同行会员享相应兴趣、形象、串门和同城参与权益，另收费项目遵守相同规则。</p>
+<p>同行会员不参加短视频与AI课程、技能答疑、技能陪跑、季度线下技能培训，也不能申请分享圈。可以补600元成为正式会员，补差不产生分享奖励；次年继续参加须按980元续费。</p>
+<p>这项权益的价值是让会员能邀请熟悉的朋友一起参加生活活动。销售需先说清正式会员包含的学习价值，再介绍好友增购选项。不能将380元视作可向所有人独立销售的同等正式会员。</p>
+<h3>同城相聚</h3>
+<p>同一个城市会员人数超过30人后，总部选拔班长，统一协调，由班长执行，保证每周至少举办1次同城活动。正式会员与同行会员均计入人数。按字面规则，30人整尚未满足“超过30人”的条件。</p>
+<p>活动每次收费，其中给班长一定组织费用，具体标准尚未明确。未达到人数条件的城市不承诺已经开通固定周活动；达到条件后的开通时限、会员人数减少后的服务安排，需要形成执行规则。</p>
+<p>班长是总部选拔的组织角色，不自动附带城市经营权或分享圈资格。对外可以表达“在熟悉的城市，有一群常见的朋友”，活动价格与参与方式另行说明。</p>
+</section>
+<section id="section-8" aria-labelledby="heading-8"><h2 id="heading-8">8 会员旅程与团队分工</h2>
+<h3>会员服务流程建议</h3>
+<p>以下是将已确认权益落地的运营建议，尚未确认系统、人员姓名或响应时限。</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table><thead><tr>
+<th scope="col">阶段</th>
+<th scope="col">建议动作</th>
+<th scope="col">需要留下的记录</th>
+</tr></thead><tbody>
+<tr><td>购买前</td><td>说明会员类型、有效期、包含及另付费用</td><td>适用版本与购买告知</td></tr>
+<tr><td>付款后</td><td>建立会员档案，记录城市、起止日期与订单</td><td>会员编号、类型和权益台账</td></tr>
+<tr><td>开营前</td><td>分配营期，提供12次课安排与学习入口</td><td>所属营期、开营和预计结束日期</td></tr>
+<tr><td>首月</td><td>按课表教学、答疑，登记实际开课进度</td><td>已完成教学进度及通知记录</td></tr>
+<tr><td>会员期</td><td>推送兴趣、串门、线下学习及形象预约</td><td>报名、支付、参加与核销记录</td></tr>
+<tr><td>城市达标</td><td>核实人数，选拔班长并排期</td><td>达标日期、班长及活动记录</td></tr>
+<tr><td>分享圈</td><td>审核申请，归属订单并核算津贴</td><td>资格审核、有效订单与余额变动</td></tr>
+<tr><td>到期前后</td><td>告知续费、有效期和未用权益处理</td><td>续费、结转或失效的记录</td></tr>
+</tbody></table></div>
+<h3>职责建议</h3>
+<p>总部组织串门和季度培训、选拔班长与分享圈成员，助教负责群答疑，班长执行同城活动，这些角色已确认。下列责任划分用于团队进一步指定具体负责人。</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table><thead><tr>
+<th scope="col">职能</th>
+<th scope="col">建议负责内容</th>
+</tr></thead><tbody>
+<tr><td>产品负责人</td><td>维护唯一权益版本，确认价格、规则与变更</td></tr>
+<tr><td>教学与助教</td><td>课表、内容完整性、实际进度、答疑与教学质量</td></tr>
+<tr><td>总部活动运营</td><td>月度串门、兴趣体验、季度培训及形象服务衔接</td></tr>
+<tr><td>同城班长</td><td>执行活动、现场组织、参加记录及反馈</td></tr>
+<tr><td>销售与客服</td><td>购买说明、营期指引、报名协助、售后受理</td></tr>
+<tr><td>财务或结算人员</td><td>订单对账、津贴台账、折现及退款联动</td></tr>
+</tbody></table></div>
+<p>建议每月维护一份服务日历，提前核对哪些场次已经确定、哪些仍在筹备。宣传可以表达愿景，报名通知必须对应真实的时间、地点与承接能力。</p>
+</section>
+<section id="section-9" aria-labelledby="heading-9"><h2 id="heading-9">9 收费售后与统一口径</h2>
+<h3>收费分类</h3>
+<p>980元覆盖首月课程、会员期回放与群答疑、季度培训学费、兴趣入门体验、年度基础形象服务，以及按条件参与其他会员安排的资格。</p>
+<p>另外收费的项目包括串门行程、往返交通、线下学习的交通食宿、同城活动、长期兴趣课程、自愿多选照片和380元好友增购。串门报价已经包含的住宿与城内活动不重复计费，具体行程明细应清晰列示。</p>
+<h3>售后已确认方向与未定细则</h3>
+<p>已确认退费按所属营期教学进度核算，不按本人实际观看课次核算。用户提出课程结束后不退费。此处记录产品负责人的经营方向，完整退款公式尚未形成，不能直接作为已经定稿的售后条款。</p>
+<p>以12次课作为计算分母属于此前建议，尚未得到清晰的单独确认。课程与全年服务的计价拆分、部分退款、机构取消服务以及不同原因下的结算方式，均需补齐。因此本版不计算“每上一节固定扣多少钱”。未实际提供的课程也不能仅因计划日期已到就登记为已完成。</p>
+<p>售后受理时建议核实订单、营期、实际开课进度、已履行服务和关联津贴，再依据确定后的规则给出处理结果。主会员退款不自动撤销已购买的同行会员资格。</p>
+<h3>销售与客服共同遵守的表达</h3>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table><thead><tr>
+<th scope="col">建议统一使用</th>
+<th scope="col">避免产生的误解</th>
+</tr></thead><tbody>
+<tr><td>8次教学课＋4次答疑课</td><td>12次全部实时直播或提供一对一辅导</td></tr>
+<tr><td>每月组织城市串门，行程另付</td><td>980元包含全年免费旅游</td></tr>
+<tr><td>每季度总部组织线下学习</td><td>每座城市每季度都有培训</td></tr>
+<tr><td>超过30人后，每周至少1次收费同城活动</td><td>全国每城已开通或活动全部免费</td></tr>
+<tr><td>正式会员经申请选拔加入分享圈</td><td>付款即有岗位、收入或分享资格</td></tr>
+<tr><td>380元为好友增购首年同行权益</td><td>980元内免费赠送，或两档权益相同</td></tr>
+</tbody></table></div>
+</section>
+<section id="section-10" aria-labelledby="heading-10"><h2 id="heading-10">10 产品吸引力与经营验证</h2>
+<h3>当前判断</h3>
+<p>以下属于内部分析，并非市场验证结论。产品将技能成长、生活体验、社交和个人表达结合起来，首年购买理由较清楚；其中短视频与AI学习是980元与380元的关键差异。实际成交应验证用户是否愿意为学习付费，而不只对活动参与资格感兴趣。</p>
+<p>第二年续费需要更具体的进阶内容与真实关系积累。建议将续费价值建立在持续可用的技能、更好的作品、稳定的朋友和可信的服务日历上，逐步明确第二年升级的内容。</p>
+<h3>成本核算建议</h3>
+<p>980元收入需要覆盖获客、教学内容摊销、讲师与助教、线上服务、兴趣体验、形象基础服务、季度培训学费承担、客服结算和其他实际成本。旅行与同城活动虽另收费，组织协调仍会消耗人力。尚无成本数据，不能据此判断毛利率或盈利能力。</p>
+<p>通过分享圈产生的一笔有效980元新会员首购，津贴面值196元；980减196为784元，仅是扣除名义津贴后的金额，不是利润。按80%折现时该笔面值对应156.80元，但实际是否折现、是否使用及服务履行成本均不同，内部预算应分别测算。</p>
+<p>380元同行会员仍然带来兴趣、形象及生活服务的交付需求，应单独核算成本，不能因不含技能课而把380元全部视为利润。</p>
+<h3>建议跟踪的指标</h3>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table><thead><tr>
+<th scope="col">验证问题</th>
+<th scope="col">建议记录的指标</th>
+</tr></thead><tbody>
+<tr><td>用户为何付980元</td><td>购买动机、正式与同行会员占比、同行升级率</td></tr>
+<tr><td>用户是否真正用上课程</td><td>到课或观看情况、自愿作品展示、困难与答疑记录</td></tr>
+<tr><td>生活权益是否产生价值</td><td>各权益参加率、重复参与率、满意度及投诉原因</td></tr>
+<tr><td>服务是否按承诺发生</td><td>月度与季度场次完成率、达标城市周活动兑现情况</td></tr>
+<tr><td>津贴是否准确可持续</td><td>有效首购、退款追回、抵扣、折现与待兑余额</td></tr>
+<tr><td>第二年是否值得继续</td><td>续费意愿、真实续费率及不续费原因</td></tr>
+</tbody></table></div>
+<p>先建立真实基线，再决定目标，不在缺少数据时编造转化率、学习成功率或续费率。</p>
+</section>
+<section id="section-11" aria-labelledby="heading-11"><h2 id="heading-11">11 待确认事项与内部讨论顺序</h2>
+<p>这些事项不影响团队理解已确认的产品，但相关人员需要在执行对应业务前补齐。优先级为内部建议，未指定完成日期。</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table><thead><tr>
+<th scope="col">优先级</th>
+<th scope="col">待确认事项</th>
+<th scope="col">影响与建议承接人</th>
+</tr></thead><tbody>
+<tr><td>高</td><td>退款分母、服务计价、结束后的处理及部分退款联动</td><td>影响售后报价与津贴追回；产品、客服、财务</td></tr>
+<tr><td>高</td><td>津贴归属、入账周期、部分退款追回及现金结算流程</td><td>影响账务准确性；产品、财务</td></tr>
+<tr><td>高</td><td>连续续费津贴结转、行程取消后恢复有效期</td><td>影响会员余额；产品、活动运营</td></tr>
+<tr><td>高</td><td>首批营期、12次课表、实际课程验收与学习入口</td><td>影响开营；教学负责人</td></tr>
+<tr><td>高</td><td>串门、兴趣、培训及形象的实际排期与容量</td><td>影响承诺兑现；总部活动运营</td></tr>
+<tr><td>中</td><td>同行会员起止日期与升级入营安排</td><td>影响权益开通；产品、客服</td></tr>
+<tr><td>中</td><td>升级后次数型权益是否增发，形象累计的完整范围</td><td>影响核销与成本；产品、运营</td></tr>
+<tr><td>中</td><td>城市人数统计口径、达标后开通时限与人数下降处理</td><td>影响固定活动；同城运营</td></tr>
+<tr><td>中</td><td>班长选拔、组织费与替换机制</td><td>影响执行稳定性；总部运营</td></tr>
+<tr><td>中</td><td>助教答疑时段与响应标准、兴趣课形式、成片规格</td><td>影响服务预期；教学、活动运营</td></tr>
+</tbody></table></div>
+<p>建议本次内部分享先统一产品定位和两类会员差异，再逐项核对交付负责人、资源与场次，最后讨论高优先级待定事项。会议形成的新决定应写入后续版本，并明确是否影响已经购买的会员。</p>
+</section>
+<section id="section-12" aria-labelledby="heading-12"><h2 id="heading-12">12 内部分享常见问答</h2>
+<h3>980元到底为谁解决什么问题</h3>
+<p>为希望学习手机短视频与AI、记录生活并参与兴趣和相聚的退休生活人群，提供首月学习与年度持续服务。能否产生满意体验，要由真实教学和活动交付证明。</p>
+<h3>380元会不会让980元难卖</h3>
+<p>存在需要验证的影响。两档最清楚的差别是技能学习及持续支持。对学习有需求的人购买正式会员，希望陪朋友参加生活活动的人可以使用符合条件的同行增购。应跟踪购买原因和升级情况，再判断结构是否需要调整。</p>
+<h3>不去旅行还能使用哪些权益</h3>
+<p>正式会员仍可使用线上课程、回放与群答疑、兴趣探索，以及达到开通条件的同城活动；还可独立报名季度线下学习。形象服务目前安排在串门期间交付，不能承诺已有独立的就近拍摄安排。</p>
+<h3>没有看课是否代表营期进度没有发生</h3>
+<p>不代表。已确认依据所属营期的教学进度处理，实际退款仍需使用后续确定的完整售后规则。</p>
+<h3>会员能否通过分享把学费赚回来</h3>
+<p>产品没有这样的保证。符合条件并通过选拔后，才按有效直接首购订单计旅游津贴；是否有订单、能否使用津贴或满足折现门槛均取决于实际情况。</p>
+<h3>如何理解产品当前成熟度</h3>
+<p>权益结构、价格和主要规则已整理清楚，用户反馈首月课程已基本制作完成。具体上线、首批交付、成本与满意度未在本次核验，不能将产品文档完成等同于服务全部就绪或市场已经验证。</p>
+</section>
+<section id="section-13" aria-labelledby="heading-13"><h2 id="heading-13">13 版本与材料来源</h2>
+<p>本版整理于2026年9月9日。事实优先采用本轮对话中最新明确的用户确认，再参照以下项目文件；冲突处保留待确认状态。本文未进行外部市场调查，不引用其他业务的订单量证明本会员产品的成交能力。</p>
+<p>资料目录位于“图片素材/退休开拍吧_会员权益_v1”。已核对《退休开拍吧_产品规则与待定项_v1.md》《退休开拍吧_5+2会员权益说明_v2.md》，宣传风格参照《退休开拍吧_5+2会员权益长图_v3_美好生活版.png》及对应文案。</p>
+<p>本版保留的最新口径包括：5＋2权益结构；8次教学课＋4次答疑课；付款当天生效、到期延至月末；季度滚动线下培训；380元同行补600元升级且升级不计分享奖励；退款按营期进度而非个人观看课次。</p>
+<p>旧版本“下月1日生效”“3场以上线上培训”“使用任何权益后均不能退费”等表述不作为本版执行口径。本文新增的团队分工、台账、指标和验证安排均标为建议，未改变已确认权益。</p>
+</section></article><footer>退休开拍吧 · 内部产品文档 · 2026年9月9日</footer></main></div>
+<script>
+document.getElementById('print').addEventListener('click',()=>window.print());
+const navLinks=[...document.querySelectorAll('nav a')];
+navLinks.forEach(a=>a.addEventListener('click',()=>{const d=a.closest('details');if(d)d.open=false;}));
+if('IntersectionObserver' in window){const observer=new IntersectionObserver(entries=>{for(const e of entries){if(e.isIntersecting){navLinks.forEach(a=>{const active=a.hash==='#'+e.target.id;a.classList.toggle('active',active);if(active)a.setAttribute('aria-current','location');else a.removeAttribute('aria-current');});}}},{rootMargin:'-5% 0px -70% 0px',threshold:0});document.querySelectorAll('#brief, article section').forEach(s=>observer.observe(s));}
+</script></body></html>

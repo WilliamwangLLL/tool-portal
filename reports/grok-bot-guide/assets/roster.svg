@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 240" role="img" aria-labelledby="t">
+  <title id="t">最小编制：一个稳定岗位一个 Bot</title>
+  
+<style>
+  .p { fill: #fffaf1; }
+  .ink { fill: #1a1611; }
+  .muted { fill: #6a5f52; }
+  .stroke { stroke: #c4b59a; fill: none; }
+  .box { fill: #fffaf1; stroke: #c4b59a; }
+  .cin { fill: #b1321a; }
+  .pine { fill: #245848; }
+  .gold { fill: #9a7428; }
+  .cinb { fill: #f3ddd6; stroke: #b1321a; }
+  .pineb { fill: #d7ebe2; stroke: #245848; }
+  .goldb { fill: #f3e6c4; stroke: #9a7428; }
+  .soft { fill: #f3eee4; stroke: #d8cdbb; }
+  text { font-family: "Noto Sans SC", "PingFang SC", "Hiragino Sans GB", sans-serif; }
+  @media (prefers-color-scheme: dark) {
+    .p { fill: #1c1914; }
+    .ink { fill: #f3eadc; }
+    .muted { fill: #b3a693; }
+    .stroke { stroke: #5a5044; }
+    .box { fill: #1c1914; stroke: #5a5044; }
+    .cin { fill: #e06a4c; }
+    .pine { fill: #7ec9ae; }
+    .gold { fill: #e0c078; }
+    .cinb { fill: #3a221c; stroke: #e06a4c; }
+    .pineb { fill: #1b322b; stroke: #7ec9ae; }
+    .goldb { fill: #332a16; stroke: #e0c078; }
+    .soft { fill: #13110e; stroke: #3a342b; }
+  }
+</style>
+
+  <rect class="p" width="720" height="240"/>
+  <rect class="soft" x="30" y="36" width="200" height="168" rx="14" stroke-width="1.5"/>
+  <text class="ink" x="130" y="70" text-anchor="middle" font-size="15" font-weight="700">一个岗位</text>
+  <text class="muted" x="130" y="100" text-anchor="middle" font-size="13">一个 Bot</text>
+  <text class="muted" x="130" y="128" text-anchor="middle" font-size="12">目标明确</text>
+  <text class="muted" x="130" y="150" text-anchor="middle" font-size="12">工具稳定</text>
+  <text class="muted" x="130" y="172" text-anchor="middle" font-size="12">审批边界清楚</text>
+  <rect class="pineb" x="260" y="36" width="200" height="168" rx="14" stroke-width="1.6"/>
+  <text class="ink" x="360" y="70" text-anchor="middle" font-size="15" font-weight="700">需要群聊时</text>
+  <text class="muted" x="360" y="108" text-anchor="middle" font-size="13">交接本身要可见</text>
+  <text class="muted" x="360" y="136" text-anchor="middle" font-size="12">协调者 + 专员</text>
+  <text class="muted" x="360" y="158" text-anchor="middle" font-size="12">不要为了热闹建群</text>
+  <rect class="cinb" x="490" y="36" width="200" height="168" rx="14" stroke-width="1.6"/>
+  <text class="ink" x="590" y="70" text-anchor="middle" font-size="15" font-weight="700">不要</text>
+  <text class="muted" x="590" y="108" text-anchor="middle" font-size="13">一个万能助手</text>
+  <text class="muted" x="590" y="136" text-anchor="middle" font-size="12">也不要用多个 Bot</text>
+  <text class="muted" x="590" y="158" text-anchor="middle" font-size="12">当安全隔离</text>
+</svg>
