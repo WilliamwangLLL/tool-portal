@@ -33,7 +33,9 @@
       "report-national-day-travel-2026",
       "silver-observer",
       "china-footprint-map",
-      "youshanhe"
+      "youshanhe",
+      "cpc36",
+      "ming-people"
     ],
     "owner": [
       "huacai-dashboard",
@@ -207,6 +209,14 @@
         {
           "kind": "items",
           "id": "youshanhe"
+        },
+        {
+          "kind": "items",
+          "id": "cpc36"
+        },
+        {
+          "kind": "items",
+          "id": "ming-people"
         },
         {
           "kind": "items",
@@ -1058,6 +1068,52 @@
             "www.haoyunlai.fun"
           ],
           "exact": "/youshanhe"
+        }
+      ]
+    },
+    {
+      "id": "cpc36",
+      "title": "从一大到开国 · 36 人",
+      "group": "知识项目",
+      "target": "/cpc36/",
+      "note": "1921—1949 中共人物志：36 篇人物长文，五卷，含可点选的关键抉择、手绘地图，附 EPUB/PDF 下载。",
+      "routes": [
+        {
+          "hosts": [
+            "haoyunlai.fun",
+            "www.haoyunlai.fun"
+          ],
+          "prefix": "/cpc36/"
+        },
+        {
+          "hosts": [
+            "haoyunlai.fun",
+            "www.haoyunlai.fun"
+          ],
+          "exact": "/cpc36"
+        }
+      ]
+    },
+    {
+      "id": "ming-people",
+      "title": "明朝人物志",
+      "group": "知识项目",
+      "target": "/ming/",
+      "note": "跟着《明朝那些事儿》读懂 36 位明朝关键人物：人物长文、生平年表、点评与关键记忆点，全系列已完结。",
+      "routes": [
+        {
+          "hosts": [
+            "haoyunlai.fun",
+            "www.haoyunlai.fun"
+          ],
+          "prefix": "/ming/"
+        },
+        {
+          "hosts": [
+            "haoyunlai.fun",
+            "www.haoyunlai.fun"
+          ],
+          "exact": "/ming"
         }
       ]
     }
