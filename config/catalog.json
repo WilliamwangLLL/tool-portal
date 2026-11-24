@@ -35,7 +35,10 @@
       "china-footprint-map",
       "youshanhe",
       "cpc36",
-      "ming-people"
+      "ming-people",
+      "guojia",
+      "kecheng",
+      "jiaotang"
     ],
     "owner": [
       "huacai-dashboard",
@@ -202,6 +205,18 @@
       "title": "📚 知识项目",
       "page": "home",
       "members": [
+        {
+          "kind": "items",
+          "id": "guojia"
+        },
+        {
+          "kind": "items",
+          "id": "kecheng"
+        },
+        {
+          "kind": "items",
+          "id": "jiaotang"
+        },
         {
           "kind": "items",
           "id": "china-footprint-map"
@@ -1114,6 +1129,75 @@
             "www.haoyunlai.fun"
           ],
           "exact": "/ming"
+        }
+      ]
+    },
+    {
+      "id": "guojia",
+      "title": "国家详细介绍：意大利 · 瑞士 · 梵蒂冈",
+      "group": "知识项目",
+      "target": "/guojia/",
+      "note": "按行政区划（意大利 20 大区、瑞士 26 州逐个讲）、经济人口与国际地位全面介绍三国的图文长篇，另附罗马梳理一篇，配大量实景图片。",
+      "routes": [
+        {
+          "hosts": [
+            "haoyunlai.fun",
+            "www.haoyunlai.fun"
+          ],
+          "prefix": "/guojia/"
+        },
+        {
+          "hosts": [
+            "haoyunlai.fun",
+            "www.haoyunlai.fun"
+          ],
+          "exact": "/guojia"
+        }
+      ]
+    },
+    {
+      "id": "kecheng",
+      "title": "课程梳理：CEIBS 欧洲学习模块",
+      "group": "知识项目",
+      "target": "/kecheng/",
+      "note": "CEIBS DBA 欧洲学习模块逐日梳理：博科尼、布契拉提与米兰大教堂，外加法拉利、兰博基尼、布契拉提三篇专题。",
+      "routes": [
+        {
+          "hosts": [
+            "haoyunlai.fun",
+            "www.haoyunlai.fun"
+          ],
+          "prefix": "/kecheng/"
+        },
+        {
+          "hosts": [
+            "haoyunlai.fun",
+            "www.haoyunlai.fun"
+          ],
+          "exact": "/kecheng"
+        }
+      ]
+    },
+    {
+      "id": "jiaotang",
+      "title": "世界名教堂：五大教堂与基督教三派对比",
+      "group": "知识项目",
+      "target": "/jiaotang/",
+      "note": "圣索菲亚、巴黎圣母院、科隆、米兰、圣彼得五座教堂的建造史与参看指南，外加天主教、新教、东正教三派对比。",
+      "routes": [
+        {
+          "hosts": [
+            "haoyunlai.fun",
+            "www.haoyunlai.fun"
+          ],
+          "prefix": "/jiaotang/"
+        },
+        {
+          "hosts": [
+            "haoyunlai.fun",
+            "www.haoyunlai.fun"
+          ],
+          "exact": "/jiaotang"
         }
       ]
     }

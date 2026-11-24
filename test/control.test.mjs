@@ -33,14 +33,14 @@ const workspace = fs.readFileSync(path.join(root, 'workspace', 'index.html'), 'u
 test('catalog classifies every current section and content entry exactly once', () => {
   assert.equal(catalog.sections.length, 2);
   assert.equal(catalog.boards.length, 7);
-  assert.equal(catalog.items.length, 45);
+  assert.equal(catalog.items.length, 48);
   const classified = Object.values(catalog.audienceDefaults).flat();
-  assert.equal(classified.length, 47);
-  assert.equal(new Set(classified).size, 47);
-  assert.equal(catalog.audienceDefaults.public.length, 34);
+  assert.equal(classified.length, 50);
+  assert.equal(new Set(classified).size, 50);
+  assert.equal(catalog.audienceDefaults.public.length, 37);
   assert.equal(catalog.audienceDefaults.owner.length, 9);
   assert.equal(catalog.audienceDefaults.shared.length, 4);
-  assert.equal(catalog.boards.flatMap((board) => board.members).length, 46);
+  assert.equal(catalog.boards.flatMap((board) => board.members).length, 49);
 });
 
 test('V1 state migrates to V3 approved defaults instead of preserving mixed modes', () => {
@@ -69,7 +69,7 @@ test('V2 production policies migrate to V3 without losing access decisions', () 
   assert.equal(migrated.version, 3);
   assert.deepEqual(migrated.sections['business-page'], { audience: 'owner', listed: false, status: 'online' });
   assert.deepEqual(migrated.items['huacai-dashboard'], { audience: 'shared', listed: false, status: 'maintenance' });
-  assert.equal(migrated.boards.flatMap((board) => board.members).length, 46);
+  assert.equal(migrated.boards.flatMap((board) => board.members).length, 49);
 });
 
 test('public portal renders only listed, online, public entries', () => {
