@@ -38,7 +38,9 @@
       "ming-people",
       "guojia",
       "kecheng",
-      "jiaotang"
+      "jiaotang",
+      "more-page",
+      "lishi"
     ],
     "owner": [
       "huacai-dashboard",
@@ -106,105 +108,43 @@
           "exact": "/my/business/index.html"
         }
       ]
+    },
+    {
+      "id": "more-page",
+      "title": "更多内容页面",
+      "page": "more",
+      "kind": "page",
+      "boardable": true,
+      "heading": "🗂 更多内容",
+      "target": "/my/more/",
+      "routes": [
+        {
+          "hosts": [
+            "haoyunlai.fun",
+            "www.haoyunlai.fun"
+          ],
+          "exact": "/my/more/"
+        },
+        {
+          "hosts": [
+            "haoyunlai.fun",
+            "www.haoyunlai.fun"
+          ],
+          "exact": "/my/more/index.html"
+        }
+      ]
     }
   ],
   "boards": [
     {
-      "id": "business-gateway",
-      "title": "📊 商业工具",
-      "page": "home",
-      "members": [
-        {
-          "kind": "sections",
-          "id": "business-page"
-        }
-      ]
-    },
-    {
-      "id": "creative-tools",
-      "title": "✍️ 创作工具",
-      "page": "home",
-      "members": [
-        {
-          "kind": "items",
-          "id": "wechat-editor"
-        }
-      ]
-    },
-    {
-      "id": "personal-growth",
-      "title": "🌱 个人成长",
-      "page": "home",
-      "members": [
-        {
-          "kind": "items",
-          "id": "report-dan-koe"
-        }
-      ]
-    },
-    {
-      "id": "company-research",
-      "title": "🏢 公司调研",
-      "page": "home",
-      "members": [
-        {
-          "kind": "items",
-          "id": "report-starlink"
-        },
-        {
-          "kind": "items",
-          "id": "report-tesla-optimus"
-        },
-        {
-          "kind": "items",
-          "id": "report-micron"
-        },
-        {
-          "kind": "items",
-          "id": "report-global-ai"
-        },
-        {
-          "kind": "items",
-          "id": "report-apple-price"
-        },
-        {
-          "kind": "items",
-          "id": "report-musk-x"
-        },
-        {
-          "kind": "items",
-          "id": "report-apple-outlook"
-        },
-        {
-          "kind": "items",
-          "id": "report-storage-cycle"
-        },
-        {
-          "kind": "items",
-          "id": "report-online-education-2026-07"
-        }
-      ]
-    },
-    {
-      "id": "community-research",
-      "title": "👥 社群调研",
-      "page": "home",
-      "members": [
-        {
-          "kind": "items",
-          "id": "report-women-45-70"
-        },
-        {
-          "kind": "items",
-          "id": "report-senior-acquisition"
-        }
-      ]
-    },
-    {
       "id": "knowledge-projects",
-      "title": "📚 知识项目",
+      "title": "🆕 最近更新",
       "page": "home",
       "members": [
+        {
+          "kind": "items",
+          "id": "lishi"
+        },
         {
           "kind": "items",
           "id": "guojia"
@@ -216,7 +156,14 @@
         {
           "kind": "items",
           "id": "jiaotang"
-        },
+        }
+      ]
+    },
+    {
+      "id": "favorites",
+      "title": "⭐ 常用",
+      "page": "home",
+      "members": [
         {
           "kind": "items",
           "id": "china-footprint-map"
@@ -231,43 +178,33 @@
         },
         {
           "kind": "items",
-          "id": "ming-people"
+          "id": "report-tesla-optimus"
+        }
+      ]
+    },
+    {
+      "id": "more-entry",
+      "title": "🗂 更多",
+      "page": "home",
+      "members": [
+        {
+          "kind": "sections",
+          "id": "more-page"
+        }
+      ]
+    },
+    {
+      "id": "research",
+      "title": "📈 调研报告",
+      "page": "more",
+      "members": [
+        {
+          "kind": "items",
+          "id": "report-micron"
         },
         {
           "kind": "items",
-          "id": "silver-observer"
-        },
-        {
-          "kind": "items",
-          "id": "report-national-day-travel-2026"
-        },
-        {
-          "kind": "items",
-          "id": "pi-digit-explorer"
-        },
-        {
-          "kind": "items",
-          "id": "songjian-home"
-        },
-        {
-          "kind": "items",
-          "id": "lunar-rover"
-        },
-        {
-          "kind": "items",
-          "id": "manhattan-atlas"
-        },
-        {
-          "kind": "items",
-          "id": "grok-bot-guide"
-        },
-        {
-          "kind": "items",
-          "id": "report-world-classics-100"
-        },
-        {
-          "kind": "items",
-          "id": "report-ai-methods"
+          "id": "report-starlink"
         },
         {
           "kind": "items",
@@ -275,11 +212,135 @@
         },
         {
           "kind": "items",
-          "id": "mao-legacy-v1"
+          "id": "report-global-ai"
+        },
+        {
+          "kind": "items",
+          "id": "report-apple-price"
+        },
+        {
+          "kind": "items",
+          "id": "report-apple-outlook"
+        },
+        {
+          "kind": "items",
+          "id": "report-musk-x"
+        },
+        {
+          "kind": "items",
+          "id": "report-storage-cycle"
+        },
+        {
+          "kind": "items",
+          "id": "silver-observer"
+        },
+        {
+          "kind": "items",
+          "id": "report-women-45-70"
+        },
+        {
+          "kind": "items",
+          "id": "report-senior-acquisition"
+        },
+        {
+          "kind": "items",
+          "id": "report-online-education-2026-07"
+        }
+      ]
+    },
+    {
+      "id": "business-gateway",
+      "title": "📊 商业工具",
+      "page": "more",
+      "members": [
+        {
+          "kind": "sections",
+          "id": "business-page"
+        },
+        {
+          "kind": "items",
+          "id": "wechat-editor"
+        },
+        {
+          "kind": "items",
+          "id": "vocal-quiz"
+        },
+        {
+          "kind": "items",
+          "id": "organizer-quiz"
+        }
+      ]
+    },
+    {
+      "id": "personal-growth",
+      "title": "📚 读书与成长",
+      "page": "more",
+      "members": [
+        {
+          "kind": "items",
+          "id": "report-world-classics-100"
+        },
+        {
+          "kind": "items",
+          "id": "report-dan-koe"
+        },
+        {
+          "kind": "items",
+          "id": "report-ai-methods"
         },
         {
           "kind": "items",
           "id": "mao-legacy-v2"
+        },
+        {
+          "kind": "items",
+          "id": "ming-people"
+        }
+      ]
+    },
+    {
+      "id": "works",
+      "title": "🧪 作品与实验",
+      "page": "more",
+      "members": [
+        {
+          "kind": "items",
+          "id": "manhattan-atlas"
+        },
+        {
+          "kind": "items",
+          "id": "lunar-rover"
+        },
+        {
+          "kind": "items",
+          "id": "songjian-home"
+        },
+        {
+          "kind": "items",
+          "id": "pi-digit-explorer"
+        }
+      ]
+    },
+    {
+      "id": "archive",
+      "title": "🗄 归档",
+      "page": "more",
+      "members": [
+        {
+          "kind": "items",
+          "id": "grok-bot-guide"
+        },
+        {
+          "kind": "items",
+          "id": "openclaw-manual"
+        },
+        {
+          "kind": "items",
+          "id": "report-national-day-travel-2026"
+        },
+        {
+          "kind": "items",
+          "id": "mao-legacy-v1"
         }
       ]
     },
@@ -318,10 +379,6 @@
         },
         {
           "kind": "items",
-          "id": "openclaw-manual"
-        },
-        {
-          "kind": "items",
           "id": "cohort-dashboard"
         },
         {
@@ -334,15 +391,7 @@
         },
         {
           "kind": "items",
-          "id": "vocal-quiz"
-        },
-        {
-          "kind": "items",
           "id": "vocal-admin"
-        },
-        {
-          "kind": "items",
-          "id": "organizer-quiz"
         },
         {
           "kind": "items",
@@ -1198,6 +1247,29 @@
             "www.haoyunlai.fun"
           ],
           "exact": "/jiaotang"
+        }
+      ]
+    },
+    {
+      "id": "lishi",
+      "title": "历史长河：每 500 年看中国与欧洲",
+      "group": "知识项目",
+      "target": "/lishi/",
+      "note": "从公元前 500 年到公元 2000 年，每 500 年讲一个故事：中国与欧洲同框对照，六站六句记忆锚点。",
+      "routes": [
+        {
+          "hosts": [
+            "haoyunlai.fun",
+            "www.haoyunlai.fun"
+          ],
+          "prefix": "/lishi/"
+        },
+        {
+          "hosts": [
+            "haoyunlai.fun",
+            "www.haoyunlai.fun"
+          ],
+          "exact": "/lishi"
         }
       ]
     }

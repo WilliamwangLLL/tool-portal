@@ -33,6 +33,19 @@ ${SERVER_INCLUDE}
         add_header Cache-Control "no-store" always;
         include /www/server/nginx/conf/kkhc-sec-headers.conf;
     }
+    location = /my/more { return 301 /my/more/; }
+    location = /my/more/ {
+        proxy_pass http://127.0.0.1:3520/page/more;
+        proxy_set_header Host $host;
+        add_header Cache-Control "no-store" always;
+        include /www/server/nginx/conf/kkhc-sec-headers.conf;
+    }
+    location = /my/more/index.html {
+        proxy_pass http://127.0.0.1:3520/page/more;
+        proxy_set_header Host $host;
+        add_header Cache-Control "no-store" always;
+        include /www/server/nginx/conf/kkhc-sec-headers.conf;
+    }
 
     location = /toolbox-control/admin { return 301 /toolbox-control/admin/; }
     location ^~ /toolbox-control/admin/ {

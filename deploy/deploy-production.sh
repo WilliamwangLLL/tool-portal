@@ -19,12 +19,13 @@ cd "$project_dir"
 npm run check
 npm test
 
-mkdir -p "$stage_dir/lib" "$stage_dir/config" "$stage_dir/scripts" "$stage_dir/business" "$stage_dir/admin" "$stage_dir/workspace"
+mkdir -p "$stage_dir/lib" "$stage_dir/config" "$stage_dir/scripts" "$stage_dir/business" "$stage_dir/admin" "$stage_dir/workspace" "$stage_dir/more"
 cp server.mjs package.json index.html "$stage_dir/"
 cp lib/control.mjs "$stage_dir/lib/"
 cp config/catalog.json "$stage_dir/config/"
 cp scripts/apply-nginx.mjs scripts/patch-nginx.mjs "$stage_dir/scripts/"
 cp business/index.html "$stage_dir/business/"
+cp more/index.html "$stage_dir/more/"
 cp admin/index.html "$stage_dir/admin/"
 cp workspace/index.html "$stage_dir/workspace/"
 

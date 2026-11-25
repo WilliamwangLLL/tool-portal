@@ -303,6 +303,9 @@ const server = http.createServer(async (req, res) => {
     if (req.method === 'GET' && url.pathname === '/page/business') {
       return htmlFile(res, path.join(dataRoot, 'rendered', 'business.html'));
     }
+    if (req.method === 'GET' && url.pathname === '/page/more') {
+      return htmlFile(res, path.join(dataRoot, 'rendered', 'more.html'));
+    }
     if (req.method === 'GET' && url.pathname === '/healthz') {
       return json(res, 200, {
         ok: true,

@@ -36,14 +36,14 @@
   <details class="advanced"><summary>高级：总页面访问策略</summary><section class="grid" id="sections"></section></details>
 </main>
 
-<dialog id="board-dialog"><div class="dialog-body"><h2>创建新板块</h2><p>为了不产生空板块，请同时选择这个板块里的第一个项目或页面。</p><div class="field"><label>板块名称</label><input id="board-title" maxlength="48" placeholder="例如：AI 实用工具"></div><div class="field"><label>显示在哪个页面</label><select id="board-page"><option value="home">公开工具箱首页</option><option value="business">商业工具页</option></select></div><div class="field"><label>首个项目 / 页面</label><select id="board-first-member"></select></div><div class="dialog-actions"><button class="primary" id="save-board" type="button">创建板块并移动项目</button><button id="close-board" type="button">取消</button></div></div></dialog>
+<dialog id="board-dialog"><div class="dialog-body"><h2>创建新板块</h2><p>为了不产生空板块，请同时选择这个板块里的第一个项目或页面。</p><div class="field"><label>板块名称</label><input id="board-title" maxlength="48" placeholder="例如：AI 实用工具"></div><div class="field"><label>显示在哪个页面</label><select id="board-page"><option value="home">公开工具箱首页</option><option value="more">更多内容页</option><option value="business">商业工具页</option></select></div><div class="field"><label>首个项目 / 页面</label><select id="board-first-member"></select></div><div class="dialog-actions"><button class="primary" id="save-board" type="button">创建板块并移动项目</button><button id="close-board" type="button">取消</button></div></div></dialog>
 
 <dialog id="credential-dialog"><div class="dialog-body"><h2 id="credential-title">设置项目分享密码</h2><p>这个账号只用于当前项目。服务器只保存加盐哈希，关闭后无法找回明文。</p><div class="field"><label>分享用户名</label><input id="credential-username" value="guest" maxlength="32" autocomplete="off"></div><div class="field"><label>新密码（至少 10 位）</label><div class="inline"><input id="credential-password" type="password" maxlength="128" autocomplete="new-password"><button id="generate-password" type="button">随机生成</button></div></div><div class="field"><label>再次输入密码</label><input id="credential-confirm" type="password" maxlength="128" autocomplete="new-password"></div><label class="listed"><input id="show-password" type="checkbox">显示密码</label><div id="credential-result" class="result"></div><div class="dialog-actions"><button class="primary" id="save-credential" type="button">保存项目密码</button><button id="copy-credential" type="button" hidden>复制账号、密码和链接</button><button id="close-credential" type="button">关闭</button></div></div></dialog>
 
 <script>
 const audienceLabels={public:'公开',owner:'仅自己',shared:'小范围分享'};
 const statusLabels={online:'正常运行',maintenance:'维护中',offline:'已停用'};
-const pageLabels={home:'工具箱首页',business:'商业工具页'};
+const pageLabels={home:'工具箱首页',more:'更多内容页',business:'商业工具页'};
 let payload=null,activeTab='public',editing=null,lastSecret='';
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const adminHeaders={'Content-Type':'application/json','X-Toolbox-Admin':'1'};

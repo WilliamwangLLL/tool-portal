@@ -27,20 +27,21 @@ const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const catalog = validateCatalog(JSON.parse(fs.readFileSync(path.join(root, 'config', 'catalog.json'), 'utf8')));
 const home = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
 const business = fs.readFileSync(path.join(root, 'business', 'index.html'), 'utf8');
+const more = fs.readFileSync(path.join(root, 'more', 'index.html'), 'utf8');
 const admin = fs.readFileSync(path.join(root, 'admin', 'index.html'), 'utf8');
 const workspace = fs.readFileSync(path.join(root, 'workspace', 'index.html'), 'utf8');
 
 test('catalog classifies every current section and content entry exactly once', () => {
-  assert.equal(catalog.sections.length, 2);
-  assert.equal(catalog.boards.length, 7);
-  assert.equal(catalog.items.length, 48);
+  assert.equal(catalog.sections.length, 3);
+  assert.equal(catalog.boards.length, 9);
+  assert.equal(catalog.items.length, 49);
   const classified = Object.values(catalog.audienceDefaults).flat();
-  assert.equal(classified.length, 50);
-  assert.equal(new Set(classified).size, 50);
-  assert.equal(catalog.audienceDefaults.public.length, 37);
+  assert.equal(classified.length, 52);
+  assert.equal(new Set(classified).size, 52);
+  assert.equal(catalog.audienceDefaults.public.length, 39);
   assert.equal(catalog.audienceDefaults.owner.length, 9);
   assert.equal(catalog.audienceDefaults.shared.length, 4);
-  assert.equal(catalog.boards.flatMap((board) => board.members).length, 49);
+  assert.equal(catalog.boards.flatMap((board) => board.members).length, 51);
 });
 
 test('V1 state migrates to V3 approved defaults instead of preserving mixed modes', () => {
@@ -52,7 +53,7 @@ test('V1 state migrates to V3 approved defaults instead of preserving mixed mode
   };
   const migrated = normalizeState(catalog, legacy, new Date('2026-07-20T00:00:00Z'));
   assert.equal(migrated.version, 3);
-  assert.equal(migrated.boards.length, 7);
+  assert.equal(migrated.boards.length, 9);
   assert.deepEqual(migrated.sections['business-page'], { audience: 'public', listed: true, status: 'online' });
   assert.deepEqual(migrated.items['huacai-dashboard'], { audience: 'owner', listed: false, status: 'online' });
   assert.deepEqual(migrated.items['openclaw-manual'], { audience: 'public', listed: true, status: 'online' });
@@ -69,25 +70,22 @@ test('V2 production policies migrate to V3 without losing access decisions', () 
   assert.equal(migrated.version, 3);
   assert.deepEqual(migrated.sections['business-page'], { audience: 'owner', listed: false, status: 'online' });
   assert.deepEqual(migrated.items['huacai-dashboard'], { audience: 'shared', listed: false, status: 'maintenance' });
-  assert.equal(migrated.boards.flatMap((board) => board.members).length, 49);
+  assert.equal(migrated.boards.flatMap((board) => board.members).length, 51);
 });
 
 test('public portal renders only listed, online, public entries', () => {
   const state = defaultState(catalog, new Date('2026-07-20T00:00:00Z'));
   const renderedHome = renderPortal(home, 'home', catalog, state);
   const renderedBusiness = renderPortal(business, 'business', catalog, state);
+  const library = buildCardLibrary(catalog, [{ page: 'home', template: home }, { page: 'business', template: business }]);
+  const renderedMore = renderPortal(more, 'more', catalog, state, library.cards);
   assert.deepEqual(renderedHome.unmatched, []);
   assert.deepEqual(renderedBusiness.unmatched, []);
-  assert.match(renderedHome.html, /toolbox-control\/go\/report-world-classics-100/);
-  assert.match(renderedHome.html, /toolbox-control\/go\/report-online-education-2026-07/);
-  assert.match(renderedHome.html, /toolbox-control\/go\/grok-bot-guide/);
-  assert.match(renderedHome.html, /toolbox-control\/go\/manhattan-atlas/);
-  assert.match(renderedHome.html, /toolbox-control\/go\/pi-digit-explorer/);
-  assert.match(renderedHome.html, /toolbox-control\/go\/silver-observer/);
   assert.match(renderedHome.html, /toolbox-control\/go\/youshanhe/);
-  assert.match(renderedHome.html, /toolbox-control\/go\/songjian-home/);
-  assert.match(renderedHome.html, /toolbox-control\/go\/lunar-rover/);
-  assert.match(renderedBusiness.html, /OpenClaw 实战手册/);
+  for (const id of ['report-world-classics-100', 'report-online-education-2026-07', 'grok-bot-guide', 'manhattan-atlas',
+    'pi-digit-explorer', 'silver-observer', 'songjian-home', 'lunar-rover', 'openclaw-manual']) {
+    assert.match(renderedMore.html, new RegExp(`toolbox-control/go/${id}"`));
+  }
   assert.doesNotMatch(renderedBusiness.html, /同城活动作战包生成器/);
   assert.doesNotMatch(renderedBusiness.html, /华彩作战指挥仪表盘/);
   assert.doesNotMatch(renderedBusiness.html, /toolbox-managed-lock/);
@@ -97,23 +95,22 @@ test('public portal renders only listed, online, public entries', () => {
 
 test('empty public child pages disappear from every visible navigation entry', () => {
   const library = buildCardLibrary(catalog, [{ page: 'home', template: home }, { page: 'business', template: business }]);
-  let state = defaultState(catalog);
-  for (const id of ['openclaw-manual', 'vocal-quiz', 'organizer-quiz']) {
-    state = moveBoardMember(catalog, state, 'business-gateway', { kind: 'items', id });
-  }
-  const renderedHome = renderPortal(home, 'home', catalog, state, library.cards).html;
+  const state = defaultState(catalog);
+  const renderedMore = renderPortal(more, 'more', catalog, state, library.cards).html;
   const renderedBusiness = renderPortal(business, 'business', catalog, state, library.cards).html;
-  assert.doesNotMatch(renderedHome, /toolbox-control\/section\/business-page/);
-  assert.match(renderedHome, /公众号排版器/);
-  assert.match(renderedHome, /黄金歌曲匹配测评/);
-  assert.match(renderedHome, /主理人测评/);
+  assert.doesNotMatch(renderedMore, /toolbox-control\/section\/business-page/);
+  assert.match(renderedMore, /公众号排版器/);
+  assert.match(renderedMore, /黄金歌曲匹配测评/);
+  assert.match(renderedMore, /主理人测评/);
   assert.doesNotMatch(renderedBusiness, /class="card"/);
 });
 
 test('public listing and runtime status are independent controls', () => {
   let state = defaultState(catalog);
   state = updatePolicy(catalog, state, 'items', 'report-starlink', { listed: false });
-  assert.doesNotMatch(renderPortal(home, 'home', catalog, state).html, /星链 Starlink 全景调研/);
+  const library = buildCardLibrary(catalog, [{ page: 'home', template: home }]);
+  assert.match(renderPortal(more, 'more', catalog, defaultState(catalog), library.cards).html, /星链 Starlink 全景调研/);
+  assert.doesNotMatch(renderPortal(more, 'more', catalog, state, library.cards).html, /星链 Starlink 全景调研/);
   assert.equal(state.items['report-starlink'].audience, 'public');
   assert.equal(state.items['report-starlink'].status, 'online');
   state = updatePolicy(catalog, state, 'items', 'report-starlink', { audience: 'owner' });
@@ -125,10 +122,11 @@ test('public listing and runtime status are independent controls', () => {
 test('boards can be removed from the public catalog without disabling member targets', () => {
   let state = defaultState(catalog);
   state = updatePolicy(catalog, state, 'boards', 'personal-growth', { listed: false });
-  const rendered = renderPortal(home, 'home', catalog, state);
-  assert.doesNotMatch(rendered.html, /🌱 个人成长/);
+  const library = buildCardLibrary(catalog, [{ page: 'home', template: home }]);
+  const rendered = renderPortal(more, 'more', catalog, state, library.cards);
+  assert.doesNotMatch(rendered.html, /📚 读书与成长/);
   assert.doesNotMatch(rendered.html, /Dan Koe/);
-  assert.match(rendered.html, /🏢 公司调研/);
+  assert.match(rendered.html, /📈 调研报告/);
   assert.equal(state.items['report-dan-koe'].status, 'online');
 });
 
@@ -136,27 +134,27 @@ test('creating and moving boards keeps one membership and auto-deletes empty boa
   const at = new Date('2026-07-20T01:02:03Z');
   let state = defaultState(catalog, at);
   state = createBoard(catalog, state, {
-    title: 'AI 实用工具', page: 'home', member: { kind: 'items', id: 'report-dan-koe' }
+    title: 'AI 实用工具', page: 'home', member: { kind: 'sections', id: 'more-page' }
   }, at);
   const created = state.boards.find((board) => board.title === 'AI 实用工具');
   assert.ok(created);
-  assert.equal(state.boards.some((board) => board.id === 'personal-growth'), false);
-  assert.deepEqual(created.members, [{ kind: 'items', id: 'report-dan-koe' }]);
-  state = moveBoardMember(catalog, state, 'company-research', { kind: 'items', id: 'report-dan-koe' }, at);
+  assert.equal(state.boards.some((board) => board.id === 'more-entry'), false);
+  assert.deepEqual(created.members, [{ kind: 'sections', id: 'more-page' }]);
+  state = moveBoardMember(catalog, state, 'favorites', { kind: 'sections', id: 'more-page' }, at);
   assert.equal(state.boards.some((board) => board.id === created.id), false);
-  assert.equal(state.boards.flatMap((board) => board.members).filter((member) => member.id === 'report-dan-koe').length, 1);
+  assert.equal(state.boards.flatMap((board) => board.members).filter((member) => member.id === 'more-page').length, 1);
 });
 
 test('board rename, page move, and order changes affect dynamic public rendering', () => {
   const library = buildCardLibrary(catalog, [{ page: 'home', template: home }, { page: 'business', template: business }]);
   let state = defaultState(catalog);
-  state = updateBoard(catalog, state, 'creative-tools', { title: '内容生产', page: 'business', position: 0 });
+  state = updateBoard(catalog, state, 'works', { title: '内容生产', page: 'business', position: 0 });
   const businessPage = renderPortal(business, 'business', catalog, state, library.cards).html;
-  const homePage = renderPortal(home, 'home', catalog, state, library.cards).html;
+  const morePage = renderPortal(more, 'more', catalog, state, library.cards).html;
   assert.match(businessPage, /内容生产/);
-  assert.match(businessPage, /公众号排版器/);
-  assert.doesNotMatch(homePage, /✍️ 创作工具/);
-  assert.equal(state.boards[0].id, 'creative-tools');
+  assert.match(businessPage, /曼哈顿 3D/);
+  assert.doesNotMatch(morePage, /🧪 作品与实验/);
+  assert.equal(state.boards[0].id, 'works');
   assert.throws(
     () => updateBoard(catalog, state, 'business-gateway', { page: 'business' }),
     /不能放进商业工具页面自身/
@@ -251,4 +249,33 @@ test('server include enforces maintenance before authentication', () => {
   assert.match(include, /\$toolbox_hidden = 1/);
   assert.match(include, /\$toolbox_maintenance = 1/);
   assert.ok(include.indexOf('$toolbox_maintenance') < include.indexOf('auth_basic $toolbox_access_realm'));
+});
+
+test('home keeps a short featured list and everything else renders on the more page', () => {
+  const library = buildCardLibrary(catalog, [
+    { page: 'home', template: home }, { page: 'business', template: business }, { page: 'more', template: more }
+  ]);
+  assert.deepEqual(library.unmatched, []);
+  const state = defaultState(catalog);
+  const renderedHome = renderPortal(home, 'home', catalog, state, library.cards).html;
+  const renderedMore = renderPortal(more, 'more', catalog, state, library.cards).html;
+  const homeCards = renderedHome.match(/<div class="card"/g) || [];
+  assert.equal(homeCards.length, 9);
+  assert.match(renderedHome, /data-toolbox-board="knowledge-projects"/);
+  assert.match(renderedHome, /toolbox-control\/section\/more-page/);
+  assert.match(renderedHome, /toolbox-control\/go\/lishi/);
+  assert.doesNotMatch(renderedHome, /toolbox-control\/go\/report-micron/);
+  for (const id of ['report-micron', 'wechat-editor', 'ming-people', 'manhattan-atlas', 'grok-bot-guide', 'mao-legacy-v1']) {
+    assert.match(renderedMore, new RegExp(`toolbox-control/go/${id}"`));
+  }
+  assert.match(renderedMore, /data-toolbox-board="archive"/);
+  assert.doesNotMatch(renderedMore, /toolbox-control\/section\/more-page/);
+  const homePolicy = renderedHome.indexOf('data-toolbox-board="knowledge-projects"');
+  assert.ok(homePolicy < renderedHome.indexOf('data-toolbox-board="favorites"'));
+});
+
+test('nginx stage block serves the more page', () => {
+  const stage = `server {\n    root /www/wwwroot/default;\n    # BEGIN toolbox-control\n    # END toolbox-control\n}`;
+  const patched = patchStageNginx(stage);
+  assert.match(patched, /location = \/my\/more\/ \{\n\s*proxy_pass http:\/\/127\.0\.0\.1:3520\/page\/more;/);
 });
